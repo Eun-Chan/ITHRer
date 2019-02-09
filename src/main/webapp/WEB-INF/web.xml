@@ -28,10 +28,24 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>appServlet2</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>*.ithrer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>appServlet2</servlet-name>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 	
 	<!-- utf-8 처리 시작 -->
