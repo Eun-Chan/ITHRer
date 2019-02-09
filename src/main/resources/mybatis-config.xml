@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC 
+		"-//mybatis.org//DTD Config 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-config.dtd" >
+<configuration>
+	<settings>
+		<!-- api주소 : http://www.mybatis.org/mybatis-3/ko/configuration.html#settings -->
+		<!-- 실제 데이터가 null이면 문자 NULL로 처리하도록 만드는 것 -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+		<!-- _로 되어있는 칼럼 네임을 자동으로 카멜식으로 바꿔줌 -->
+		<setting name="mapUnderscoreToCamelCase" value="true"/>
+	</settings>
+
+	<!-- 풀네임의 경로를 별칭처리하는 것 -->
+	<typeAliases>
+		<typeAlias type="com.spring.ithrer.test.model.vo.Member" alias="member"/>
+	</typeAliases>
+
+</configuration>
+
+<!-- jdbc에서는 connection객체를 통해 가져왔지만 mybatis는 sqlsession을 통해 연결해서 디비와 연동 -->
