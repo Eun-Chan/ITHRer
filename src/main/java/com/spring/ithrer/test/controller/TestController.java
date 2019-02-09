@@ -16,7 +16,7 @@ public class TestController {
 	@Autowired
 	TestService testService;
 	
-	@RequestMapping(value="/test/test.do")
+	@RequestMapping(value="/test/test.ithrer")
 	public ModelAndView test(ModelAndView mav) {
 		
 		List<Member> list = testService.selectMemberList();

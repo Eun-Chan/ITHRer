@@ -46,7 +46,7 @@
   	
   	<filter-mapping>
     	<filter-name>encodingFilter</filter-name>
-    	<url-pattern>*.do</url-pattern>
+    	<url-pattern>*.ithrer</url-pattern>
   	</filter-mapping>
 	
 	<!-- 모든 커맨드에 utf*8 처리 끝 -->
