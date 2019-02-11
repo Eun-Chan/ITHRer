@@ -56,7 +56,9 @@ public class TestController {
 			StringBuffer sbDetail = new StringBuffer(doc.html());
 			System.out.println(sbDetail.indexOf("src="));
 			sbDetail.insert(sbDetail.indexOf("src=")+5, "http://www.saramin.co.kr");
+			sbDetail.insert(sbDetail.lastIndexOf("height=\"\""), "onload=\"$(this).height($(this.contentWindow.document.body).find(\"div\").first().height())\"");
 			System.out.println(sbDetail);
+			System.out.println();
 			mav.addObject("doc", sbDetail);
 			mav.setViewName("/test/testCrawling");
 			

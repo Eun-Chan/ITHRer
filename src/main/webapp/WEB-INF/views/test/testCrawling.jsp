@@ -11,5 +11,13 @@
 		될라나 어쩔라나
 		${doc}
 	</div>
-
+<script>
+	$(function(){
+		function IframeResize(id){
+		    var ifrm = document.getElementById("iframe_content_0");
+		    var the_height = ifrm.contentWindow.document.body.scrollHeight;
+		    console.log(ifrm.height);
+		}
+	});
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
