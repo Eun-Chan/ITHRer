@@ -75,14 +75,36 @@
 		<c:forEach items="${jobList }" var="map">
 					<li class="open">
 						<div class="content">
-							<span>${map.name}</span>
-							${map.title}
-							${map.jobType}
-							${map.exLevel}
-							${map.salary}
+							<span><a href="http://www.saramin.co.kr/zf_user/jobs/relay/pop_view?rec_idx=${map.id}" target="_blank">${map.name}</a></span><br />
+							<span><a href="#" onclick="moveCrwaling('${map.id}');">${map.name}</a></span><br />
+							${map.title} <br />
+							${map.jobType} <br />
+							${map.exLevel} <br />
+							${map.salary} <br />
 						</div>
 					</li>
 		</c:forEach>	
 	</ul>
 </div>
+
+<script>
+function moveCrwaling(id){
+	var id = id;
+	console.log("id?? = ",id);
+	
+	location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id;
+	//window.open("'${pageContext.request.contextPath}/index/notice.ithrer?id='+id", "test", 'width=600,height=500,location=no,status=no,scrollbars=yes');
+	
+	/* $.ajax({
+		url: "${pageContext.request.contextPath}/companyInformation.ithrer",
+		data: {id: id},
+		success: function(data){
+			console.log(data);
+		},error:function(request,status,error){
+		    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}				
+	}); */
+};
+</script>
+
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
