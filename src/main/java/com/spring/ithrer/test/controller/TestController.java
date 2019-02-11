@@ -53,8 +53,11 @@ public class TestController {
 		
 		try {
 			Element doc = Utils.apiCrwaling(id);
-			
-			mav.addObject("doc", doc.html());
+			StringBuffer sbDetail = new StringBuffer(doc.html());
+			System.out.println(sbDetail.indexOf("src="));
+			sbDetail.insert(sbDetail.indexOf("src=")+5, "http://www.saramin.co.kr");
+			System.out.println(sbDetail);
+			mav.addObject("doc", sbDetail);
 			mav.setViewName("/test/testCrawling");
 			
 		} catch (ClientProtocolException e) {			

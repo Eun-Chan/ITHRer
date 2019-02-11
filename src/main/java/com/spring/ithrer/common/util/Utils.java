@@ -132,6 +132,8 @@ public class Utils {
 		System.out.println("여기는 유틸즈 디테일src"+detail.text());
 		System.out.println("여기는 유틸즈 디테일html"+detail.html());
 		
+
+
 		return detail;
 	}
 	
