@@ -53,13 +53,16 @@ public class TestController {
 		
 		try {
 			Element doc = Utils.apiCrwaling(id);
-			StringBuffer sbDetail = new StringBuffer(doc.html());
-			System.out.println(sbDetail.indexOf("src="));
-			sbDetail.insert(sbDetail.indexOf("src=")+5, "http://www.saramin.co.kr");
-			sbDetail.insert(sbDetail.lastIndexOf("height=\"\""), "onload=\"$(this).height($(this.contentWindow.document.body).find(\"div\").first().height())\"");
-			System.out.println(sbDetail);
-			System.out.println();
-			mav.addObject("doc", sbDetail);
+			
+			String addUrl = "http://www.saramin.co.kr";
+			
+			StringBuffer sb = new StringBuffer(doc.html());
+			
+			sb.insert(doc.html().indexOf("src=")+5, addUrl);
+			sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");
+			
+			
+			mav.addObject("doc", sb);
 			mav.setViewName("/test/testCrawling");
 			
 		} catch (ClientProtocolException e) {			
