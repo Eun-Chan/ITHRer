@@ -16,9 +16,9 @@ public class TestController {
 	@Autowired
 	TestService testService;
 	
-	@RequestMapping(value="/test/test.do")
+	@RequestMapping(value="/test/test.ithrer")
 	public ModelAndView test(ModelAndView mav) {
-		
+	    System.out.println("??");
 		List<Member> list = testService.selectMemberList();
 		
 		if(list != null) {
@@ -29,7 +29,7 @@ public class TestController {
 			System.out.println("실패");
 		
 		mav.addObject("list", list);
-		mav.setViewName("/common/test");
+		mav.setViewName("common/test");
 		return mav;
 	}
 	
