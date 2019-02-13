@@ -1,0 +1,35 @@
+@charset "UTF-8";
+/* resume 이력서 css */
+#content{
+	margin : 0 auto;
+}
+#resumeTitle{
+	margin : 5px auto;
+	width : 900px;
+	background : white;
+}
+[id$=Wrap]{
+	margin : 5px auto;
+	width : 900px;
+	background : white;
+}
+.container {
+	background : #b89dff;
+	padding-bottom : 30px;
+}
+h3{
+	margin-left : 104px;
+}
+.btn-outline-info{
+	margin : 0 auto;
+	width : 900px;
+}
+#addUrl{
+	width : 450px;
+}
+#addFile{
+	width : 450px;
+}
+#finishButtonWrap{
+	width : 100px;
+}

@@ -5,27 +5,22 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:requestEncoding value="UTF-8" />
 
-<!-- 부트스트랩관련 라이브러리 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-<!-- jquery -->
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<br />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/resume.css" />
+<br /><br />
+<div class="container">
+<br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" id="userResumeTitle" 
 		   class="form-control" aria-label="Sizing example input" 
 		   aria-describedby="inputGroup-sizing-lg" placeholder="기업에게 나에 대해 알려줍시다.강점,목표,관심분야도 좋아요."/>
 </div>
 <br />
+<h3>인적사항</h3>
 <div id="profileWrap">
-	<h3>인적사항</h3>
 	<div id="formProfile1" class="input-group-prepend">
 		<input type="text" id="name" class="form-control" placeholder="이름"/>
-		<input type="text" id="birth" class="form-control" placeholder="생년월일"/>
+		<input type="text" id="birth" class="form-control" placeholder="생년월일(예.1991.01.01)"/>
 		<select id="gender" class="custom-select">
 			<option value="" disabled selected>성별</option>
 		  	<option value="M">남</option>
@@ -34,13 +29,15 @@
 		<input type="email" id="email" class="form-control" placeholder="이메일"/>
 	</div>
 	<div id="formProfile2" class="input-group-prepend">
-		<input type="tel" id="tel" class="form-control" placeholder="전화번호(01012345678)" maxlength="11"/>
+		<input type="tel" id="tel" class="form-control" 
+			   placeholder="전화번호(01012345678)" maxlength="11"
+			   onkeydown="validateText(event)"/>
 		<input type="text" id="address" class="form-control" placeholder="주소"/>	
 	</div>		
 </div>
 <br />
+<h3>학력</h3>
 <div id="educationWrap">
-	<h3>학력</h3>
 	<!-- <div id="formEducation">
 		<select id="school">
 			<option value="" disabled selected>학교구분</option>
@@ -64,11 +61,11 @@
 	</div>
 </div>
 <br />
+<h3>희망근무조건</h3>
 <div id="hopeworkWrap">
-	<h3>희망근무조건</h3>
 	<div id="formHopework1" class="input-group-prepend">
 		<input type="text" id="jobType" class="form-control" placeholder="고용형태"/>
-		<input type="text" id="wantPay" class="form-control" placeholder="희망연봉"/>
+		<input type="text" id="wantPay" class="form-control" onkeydown="validateText(event)" placeholder="희망연봉(단위 :만원)"/>
 	<div id="formHopeworkCheckbox"class="input-group-text">
 		<input type="checkbox" id="visitDetermine" value="visitDetermine" aria-label="Checkbox for following text input"/>&nbsp;면접 후 결정
 	</div>
@@ -91,8 +88,8 @@
 	</div>
 </div>
 <br />
+<h3>인턴,대외활동</h3>
 <div id="internWrap">
-	<h3>인턴,대외활동</h3>
 	<div id="formIntern1" class="input-group-prepend">
 		<select id="internDivision" class="custom-select">
 			<option value="" disabled selected>활동구분</option>
@@ -104,8 +101,8 @@
 			<option value="schoolActivity">교내활동</option>
 		</select>
 		<input type="text" id="socialInst" class="form-control" placeholder="회사/기관/단체명"/>
-		<input type="text" id="acstartDate" class="form-control" placeholder="시작년월"/>
-		<input type="text" id="acendDate" class="form-control" placeholder="종료년월"/>
+		<input type="text" id="acstartDate" class="form-control" placeholder="시작년월(예.1991.01)"/>
+		<input type="text" id="acendDate" class="form-control" placeholder="종료년월(예.2019.01)"/>
 	</div>
 	<br />
 	<div id="formIntern2" >
@@ -119,13 +116,13 @@
 	</div>
 </div>
 <br />
+<h3>교육</h3>
 <div id="learnWrap">
-	<h3>교육</h3>
 	<div id="formLearn1" class="input-group-prepend">
 		<input type="text" id="learnTitle" class="form-control" placeholder="교육명"/>
 		<input type="text" id="learnAgency" class="form-control" placeholder="교육기관"/>
-		<input type="text" id="learnstartDate" class="form-control" placeholder="시작년월"/>
-		<input type="text" id="learnendDate" class="form-control" placeholder="종료년월"/>
+		<input type="text" id="learnstartDate" class="form-control" placeholder="시작년월(예.1991.01)"/>
+		<input type="text" id="learnendDate" class="form-control" placeholder="종료년월(예.2019.01)"/>
 		<br />
 	</div>
 	<div id="formLearn2" class="input-group-prepend">
@@ -136,24 +133,24 @@
 	</div>
 </div>
 <br />
+<h3>자격증</h3>
 <div id="certificateWrap">
-	<h3>자격증</h3>
 	<div id="formCertificate" class="input-group-prepend">
 		<input type="text" id="certName" class="form-control" placeholder="자격증 명"/>
 		<input type="text" id="certPublisher" class="form-control" placeholder="발행처"/>
-		<input type="text" id="certDate" class="form-control"placeholder="취득년월"/>
+		<input type="text" id="certDate" class="form-control"placeholder="취득년월(예.2019.01)"/>
 	</div>
 	<div id="buttonCert" class="input-group-prepend">
 		<button id="addCert" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
 <br />
+<h3>수상</h3>
 <div id="awardWrap">
-	<h3>수상</h3>
 	<div id="formAward1" class="input-group-prepend">
 		<input type="text" id="awardName" class="form-control" placeholder="수상명"/>
 		<input type="text" id="awardAgency" class="form-control" placeholder="수여기관"/>
-		<input type="text" id="awardDate" class="form-control" placeholder="수상연도"/>
+		<input type="text" id="awardDate" class="form-control" placeholder="수상연도(예.2019)"/>
 	</div>
 	<div id="formAward2" >
 		<div id="awardTextarea" class="input-group-prepend">
@@ -166,12 +163,12 @@
 	</div>
 </div>
 <br />
+<h3>해외경험</h3>
 <div id="overseasWrap">
-	<h3>해외경험</h3>
 	<div id="formOverseas1" class="input-group-prepend">
 		<input type="text" id="country" class="form-control" placeholder="국가명"/>
-		<input type="text" id="overseasstartDate" class="form-control" placeholder="시작년월"/>
-		<input type="text" id="overseasendDate" class="form-control" placeholder="종료년월"/>
+		<input type="text" id="overseasstartDate" class="form-control" placeholder="시작년월(예.1991.01)"/>
+		<input type="text" id="overseasendDate" class="form-control" placeholder="종료년월(예.2019.01)"/>
 	</div>
 	<div id="formOverseas2" >
 		<div id="overseasTextarea" class="input-group-prepend">
@@ -184,8 +181,8 @@
 	</div>
 </div>
 <br />
+<h3>어학</h3>
 <div id="languageWrap">
-	<h3>어학</h3>
 	<div id="formLanguage" class="input-group-prepend">
 		<select id="languageDivision" class="custom-select">
 			<option value="" disabled selected>구분</option>
@@ -211,20 +208,20 @@
 	</div>
 </div>
 <br />
+<h3>포트폴리오</h3>
 <div id="potfolioWrap">
-	<h3>포트폴리오</h3>
 	<div id="formpotfolio" class="input-group-prepend">
 		<span>
-			<button class="btn btn-outline-info">URL추가</button>
+			<button id="addUrl" class="btn btn-outline-info">URL추가</button>
 		</span>
 		<span>
-			<button class="btn btn-outline-info">파일추가</button>
+			<button id="addFile" class="btn btn-outline-info">파일추가</button>
 		</span>
 	</div>
 </div>
 <br />
+<h3>취업우대</h3>
 <div id="preferenceWrap">
-	<h3>취업우대</h3>
 	<div id="formPreference" class="input-group-prepend">
 		<div id="divCheckbox" class="input-group-text">
 			<input type="checkbox" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>
@@ -249,8 +246,8 @@
 	</div>
 </div>
 <br />
+<h3>자기소개서</h3>
 <div id="letterWrap">
-	<h3>자기소개서</h3>
 	<div id="formLetter">
 		<div id="buttonLetter" class="input-group-prepend">
 			<button id="addLetter" class="btn btn-outline-info">추가</button>	
@@ -258,20 +255,20 @@
 	</div>
 </div>
 <br />
+<h3>경력</h3>
 <div id="careerWrap">
-	<h3>경력</h3>
 	<div id="formCareer1" class="input-group-prepend">
 		<input type="text" id="corpName" class="form-control" placeholder="회사명"/>
 		<input type="text" id="department" class="form-control" placeholder="부서명"/>
-		<input type="text" id="hiredDate" class="form-control" placeholder="입사년월"/>
-		<input type="text" id="retiredDate" class="form-control" placeholder="퇴사년월"/>
+		<input type="text" id="hiredDate" class="form-control" placeholder="입사년월(예.1991.01)"/>
+		<input type="text" id="retiredDate" class="form-control" placeholder="퇴사년월(예.2019.01)"/>
 		<div id="formWorkingCheckbox" class="input-group-text">
 			<input type="checkbox" id="buttonWorking" value="working" aria-label="Checkbox for following text input"/>&nbsp;재직중
 		</div>
 	</div>
 	<div id="formCareer2" class="input-group-prepend">
 		<input type="text" id="job" class="form-control" placeholder="직무"/>
-		<input type="text" id="income" class="form-control" placeholder="연봉"/>
+		<input type="text" id="income" class="form-control" onkeydown="validateText(event)" placeholder="연봉(단위 :만원)"/>
 	</div>
 	<div id="formCareer3" class="input-group-prepend">
 		<input type="text" id="description" class="form-control" placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요."/>
@@ -280,8 +277,26 @@
 			<button id="addCareer" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</div>
 <br />
-<div id="finishButton" class="input-group-prepend">
+<div id="finishButtonWrap" class="input-group-prepend">
 	<button id="saveButton" class="btn btn-primary">작성완료</button>
 </div>
+<script>
+function validateText(event) {
+	var code = event.keyCode;
+	if (code > 47 && code < 58) {
+	   return;
+	}
+	else if (code == 8) {
+		return;
+	}
+	else if (code == 46){
+		return;
+	}
+	else {
+		event.preventDefault();		
+	}
+}
+</script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
