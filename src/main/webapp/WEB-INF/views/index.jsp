@@ -116,7 +116,7 @@
 			<div class="bar-option area">
 			
 			</div>
-			<button type ="button"class="bar-button">
+			<button type ="button"class="bar-button" id="btn-search-notice">
 				<span>
 					검색
 				</span>
@@ -207,6 +207,14 @@ function moveCrwaling(id){
 		}				
 	}); */
 };
+
+$("#btn-search-notice").on("click", function(){
+	var searchKeyWord = $("#searchKeyWord").val();
+	//지역검색 추가 해야함
+	
+	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord;
+	
+})
 </script>
 
 
