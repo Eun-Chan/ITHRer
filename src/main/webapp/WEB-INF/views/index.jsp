@@ -104,7 +104,7 @@
     top: 13px;
     left: 10px;
 }
-}
+
 </style>
 <div class="main-search">
 	<div class="search-bar">
@@ -174,7 +174,7 @@
 
 <div id="job">
 	<ul id ="list-open">
-		<c:forEach items="${jobList }" var="map">
+		<c:forEach items="${jobList}" var="map">
 					<li class="open">
 						<div class="content">
 							<span><a href="http://www.saramin.co.kr/zf_user/jobs/relay/pop_view?rec_idx=${map.id}" target="_blank">${map.name}</a></span><br />
@@ -214,7 +214,7 @@ $("#btn-search-notice").on("click", function(){
 	
 	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord;
 	
-})
+});
 </script>
 
 
