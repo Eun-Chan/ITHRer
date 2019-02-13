@@ -32,6 +32,7 @@
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
 				<ul class="navbar-nav mr-auto">
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}">Home</a></li>		     
+			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume">이력서</a></li>		     
 			    </ul>
 			    
 			    
