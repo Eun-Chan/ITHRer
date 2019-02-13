@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* 아이프래임 css */
+iframe{
+	height: 100vh;
+	width: 877px;
+	position: relative;
+	left: 2.5%;
+}
+/* .notice-container{
+	text-align: center;
+} */
+
+/* 디테일 바디 부분 css */
+.job-searchDetail-Container{
+	position: relative;
+	margin:0 auto;
+	width:1000px;
+	padding: 40px 44px 100px;
+	background: #fff;
+}
+
+/* 해더 */
+.job-searchDetail-Header{
+	padding-bottom: 20px;
+	min-height: 80px;
+}
+.searchDetail-Header{
+	line-height: 20px;
+	letter-spacing: -1px;
+	position: relative;
+}
+.company-title{
+	font-size:1.5em;
+	margin-top: 4px;
+	font-weight: bold;
+	line-height: 34px;
+	
+}
+.company-name{
+	display: inline-block;
+	overflow: hidden;
+	height: 27px;
+	font-size: 1.0em;
+	font-weight: normal;
+	line-height: 23px;
+	text-overflow: ellipsis;
+	vertical-align: middle;
+	white-space: nowrap;
+	text-decoration: none;
+	color:#444;
+}
+
+/*메인 컨텐츠 영역*/
+.searchDetail-cont{
+	position: relative;	
+}
+.searchDetail-cont .searchDetail-content+.searchDetail-content{
+	margin-left: 30px;
+}
+.searchDetail-content{
+	float: left;
+	padding: 25px 0 30px;
+	width:430px;
+	letter-spacing: -0.5px;
+	border-top: 1px solid black;
+}
+.searchDetail-content>dl{
+	display:block;
+	position: relative;
+	padding-left:86px;
+	min-height: 22px;
+}
+.searchDetail-content>dl>dt{
+	position: absolute;
+	top:0;
+	left: 0;
+	line-height: 23px;
+}
+.searchDetail-content>dl>dd{
+	line-height: 23px;
+}

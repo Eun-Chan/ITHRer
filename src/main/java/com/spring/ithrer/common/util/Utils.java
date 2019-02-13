@@ -78,6 +78,56 @@ public class Utils {
 		
 		return list;
 	}
+	public static Map<String, String> selectOne(String url){
+		Map<String, String> map = null;
+		List<Map<String, String>> list = null;
+		try {
+			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = dbFactoty.newDocumentBuilder();
+			Document doc = dBuilder.parse(url);
+			
+			doc.getDocumentElement().normalize();
+			System.out.println("Root element:"+doc.getDocumentElement().getNodeName());
+			
+			NodeList nList = doc.getElementsByTagName("job");
+			System.out.println("파싱할 리스트 수 : "+nList.getLength());
+			
+			for(int i = 0 ; i<nList.getLength() ; i++) {
+				map = new HashMap<String, String>();
+				Node nNode = nList.item(i);
+				if(nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+//					System.out.println("####################");
+//					System.out.println(i);
+//					System.out.println("공고ID:"+getTagValue("id", eElement));
+//					System.out.println("기업명 :"+ getTagValue("name",eElement));
+//					System.out.println("공고 제목 :"+ getTagValue("title",eElement));
+//					System.out.println("근무형태 :"+ getTagValue("job-type",eElement));
+//					System.out.println("경력 : "+getTagValue("experience-level", eElement));
+//					System.out.println("학력 : "+getTagValue("required-education-level", eElement));
+//					System.out.println("연봉 : "+getTagValue("salary", eElement));
+//					System.out.println("마감일시 :"+getTagValue("expiration-date", eElement));
+//					System.out.println(getTagValue("expiration-date", eElement).substring(0,10));
+					
+					map.put("name", getTagValue("name",eElement)); //기업명
+					map.put("title", getTagValue("title",eElement)); //공고제목
+					map.put("jobType", getTagValue("job-type",eElement)); //근무형태
+					map.put("exLevel", getTagValue("experience-level",eElement)); //경력
+					map.put("level", getTagValue("required-education-level",eElement)); //학력
+					map.put("salary", getTagValue("salary",eElement)); //연봉
+					map.put("location", getTagValue("location", eElement)); //근무지역 
+					map.put("apply-cnt", getTagValue("apply-cnt", eElement)); //지원자 수
+					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
+					map.put("end", getTagValue("expiration-timestamp", eElement)); //접수 마감일
+				}
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		return map;
+	}
 	
 	public static org.jsoup.nodes.Element apiCrwaling(int id) throws ClientProtocolException, IOException {
 		
