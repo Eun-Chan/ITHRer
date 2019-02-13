@@ -97,21 +97,6 @@
     line-height: 23px;
     background: #fff;
 }
-#locationKeyWord{
-/* 	position: relative; */
-    z-index: 1;
-    padding: 12px 40px 15px 49px;
-    width: 100%;
-    height: 60px;
-    border: 0;
-    box-sizing: border-box;
-    color: #666;
-    font-size: 17px;
-    letter-spacing: -1px;
-    line-height: 23px;
-    background: #fff;
-    text-align: left;
-}
 .bar-option img{
 	position:absolute;
 	width: 32px;
@@ -129,9 +114,9 @@
 				<input type="text" id="searchKeyWord" maxlength="30" placeholder="검색어 입력" />
 			</div>
 			<div class="bar-option area">
-				<input type="button" id="locationKeyWord" maxlength="30" value="지역 선택"/>
+			
 			</div>
-			<button type ="button"class="bar-button">
+			<button type ="button"class="bar-button" id="btn-search-notice">
 				<span>
 					검색
 				</span>
@@ -208,7 +193,7 @@
 function moveCrwaling(id){
 	var id = id;
 	console.log("id?? = ",id);
-/*  	location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id; */
+ 	//location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id;
 	window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id);
 	
  	/* 
@@ -222,6 +207,14 @@ function moveCrwaling(id){
 		}				
 	}); */
 };
+
+$("#btn-search-notice").on("click", function(){
+	var searchKeyWord = $("#searchKeyWord").val();
+	//지역검색 추가 해야함
+	
+	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord;
+	
+})
 </script>
 
 

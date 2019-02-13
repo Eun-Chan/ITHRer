@@ -1,4 +1,4 @@
-package com.spring.ithrer.test.controller;
+package com.spring.ithrer.index.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.common.util.Utils;
-
+import com.spring.ithrer.index.model.service.IndexService;
 
 @Controller
-public class TestController {
+public class IndexController {
    
-
+   @Autowired
+   IndexService indexService;
+   
+   
    @RequestMapping(value="/")
    public ModelAndView index(ModelAndView mav) {
       //System.out.println("왓니?");
@@ -47,7 +50,7 @@ public class TestController {
          
          mav.addObject("selectOneJob", selectOneJob);
          mav.addObject("doc", sb);
-         mav.setViewName("/test/testCrawling");
+         mav.setViewName("/notice/noticeDetail");
          
       } catch (ClientProtocolException e) {         
          e.printStackTrace();
