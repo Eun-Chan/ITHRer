@@ -97,6 +97,21 @@
     line-height: 23px;
     background: #fff;
 }
+#locationKeyWord{
+/* 	position: relative; */
+    z-index: 1;
+    padding: 12px 40px 15px 49px;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 17px;
+    letter-spacing: -1px;
+    line-height: 23px;
+    background: #fff;
+    text-align: left;
+}
 .bar-option img{
 	position:absolute;
 	width: 32px;
@@ -114,7 +129,7 @@
 				<input type="text" id="searchKeyWord" maxlength="30" placeholder="검색어 입력" />
 			</div>
 			<div class="bar-option area">
-			
+				<input type="button" id="locationKeyWord" maxlength="30" value="지역 선택"/>
 			</div>
 			<button type ="button"class="bar-button">
 				<span>
@@ -178,7 +193,7 @@
 					<li class="open">
 						<div class="content">
 							<span><a href="http://www.saramin.co.kr/zf_user/jobs/relay/pop_view?rec_idx=${map.id}" target="_blank">${map.name}</a></span><br />
-							<span><a href="" onclick="moveCrwaling('${map.id}');">${map.name}</a></span><br />
+							<span><a href="#" onclick="moveCrwaling('${map.id}');">${map.name}</a></span><br />
 							${map.title} <br />
 							${map.jobType} <br />
 							${map.exLevel} <br />
@@ -193,7 +208,7 @@
 function moveCrwaling(id){
 	var id = id;
 	console.log("id?? = ",id);
- 	location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id;
+/*  	location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id; */
 	window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id);
 	
  	/* 

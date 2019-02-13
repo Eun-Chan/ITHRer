@@ -37,9 +37,7 @@
 			    <c:if test="${memberLoggedIn == null }">
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
-		        		<!--https://getbootstrap.com/docs/4.1/components/buttons/#outline-buttons-->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">회원가입</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">개인회원</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">기업회원</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">고객센터</a></li>
