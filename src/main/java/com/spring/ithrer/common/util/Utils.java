@@ -130,7 +130,7 @@ public class Utils {
 					map.put("level", getTagValue("required-education-level",eElement)); //학력
 					map.put("salary", getTagValue("salary",eElement)); //연봉
 					map.put("location", getTagValue("location", eElement)); //근무지역 
-					map.put("apply-cnt", getTagValue("apply-cnt", eElement)); //지원자 수
+					//map.put("apply-cnt", getTagValue("apply-cnt", eElement)); //지원자 수
 					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
 					map.put("end", getTagValue("expiration-timestamp", eElement)); //접수 마감일
 				}
