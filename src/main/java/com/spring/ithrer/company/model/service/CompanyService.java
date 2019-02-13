@@ -1,9 +1,9 @@
 package com.spring.ithrer.company.model.service;
 
-import com.spring.ithrer.company.model.vo.Company;
+import java.util.Map;
 
 public interface CompanyService {
 
-	Company selectCompanyOne(String compId);
+	Map<String, Object> selectCompanyOne(String compId);
 
 }

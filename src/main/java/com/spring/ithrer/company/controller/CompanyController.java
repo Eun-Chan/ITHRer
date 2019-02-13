@@ -1,5 +1,7 @@
 package com.spring.ithrer.company.controller;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.company.model.service.CompanyService;
-import com.spring.ithrer.company.model.vo.Company;
 
 @RestController
 @RequestMapping("/company")
@@ -21,14 +22,14 @@ public class CompanyController {
 	@Autowired
 	CompanyService companyService;
 	
-	@GetMapping("/info")
+	@GetMapping("/info.ithrer")
 	public ModelAndView selectCompanyOne(@RequestParam("compId") String compId, ModelAndView mav) {
 		
-		Company company = null;
+		// 회사, 인사담당자 정보 가져오기
+		Map<String, Object> companyMap = companyService.selectCompanyOne(compId);
 		
-		company = companyService.selectCompanyOne(compId);
 		
-		mav.addObject("company",company);
+		mav.addObject("companyMap",companyMap);
 		
 		mav.setViewName("company/companyInfo");
 		
