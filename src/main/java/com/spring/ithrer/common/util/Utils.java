@@ -67,6 +67,11 @@ public class Utils {
 					map.put("exLevel", getTagValue("experience-level",eElement));
 					map.put("level", getTagValue("required-education-level",eElement));
 					map.put("salary", getTagValue("salary",eElement));
+					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
+					String endTime = getTagValue("expiration-timestamp", eElement);
+					int endTimes = Integer.parseInt(endTime)/(24*60*60*1000);
+					
+					map.put("end", String.valueOf(endTimes)); //접수 마감일
 					
 					list.add(map);
 				}
@@ -108,7 +113,6 @@ public class Utils {
 //					System.out.println("연봉 : "+getTagValue("salary", eElement));
 //					System.out.println("마감일시 :"+getTagValue("expiration-date", eElement));
 //					System.out.println(getTagValue("expiration-date", eElement).substring(0,10));
-					
 					map.put("name", getTagValue("name",eElement)); //기업명
 					map.put("title", getTagValue("title",eElement)); //공고제목
 					map.put("jobType", getTagValue("job-type",eElement)); //근무형태
@@ -118,7 +122,9 @@ public class Utils {
 					map.put("location", getTagValue("location", eElement)); //근무지역 
 					//map.put("apply-cnt", getTagValue("apply-cnt", eElement)); //지원자 수
 					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
-					map.put("end", getTagValue("expiration-timestamp", eElement)); //접수 마감일
+					String endTime = getTagValue("expiration-timestamp", eElement);
+					int endTimes = Integer.parseInt(endTime)/(24*60*60*1000);
+					map.put("end", String.valueOf(endTimes)); //접수 마감일
 				}
 			}
 		}catch(Exception e) {

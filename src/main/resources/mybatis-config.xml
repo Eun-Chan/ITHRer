@@ -14,6 +14,7 @@
 	<!-- 풀네임의 경로를 별칭처리하는 것 -->
 	<typeAliases>
 		<typeAlias type="com.spring.ithrer.company.model.vo.Company" alias="company"/>
+		<typeAlias type="com.spring.ithrer.company.model.vo.Recruitment" alias="recruitment"/>
 	</typeAliases>
 
 </configuration>

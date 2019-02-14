@@ -29,8 +29,7 @@
 		  	</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
-				<ul class="navbar-nav mr-auto">
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}">Home</a></li>		     
+				<ul class="navbar-nav mr-auto">	     
 			    </ul>
 			    
 			    

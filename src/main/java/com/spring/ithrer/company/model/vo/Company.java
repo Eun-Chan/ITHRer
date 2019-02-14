@@ -17,30 +17,30 @@ public class Company implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private String comp_id;
-	private String comp_name;
+	private String compId;
+	private String compName;
 	private String representive;
-	private String license_no;
-	private String date_of_establishment;
+	private String licenseNo;
+	private String dateOfEstablishment;
 	private String category;
-	private String main_business;
+	private String mainBusiness;
 	private String classfication;
 	private String capital;
 	private String sales;
 	private String listed;
 	private String introduction;
-	private String right_people;
+	private String rightPeople;
 	private int personnel;
 	private String history;
 	private String phone;
 	private String fax;
 	private String homepage;
-	private String business_scale;
+	private String businessScale;
 	private String location;
-	private String pay_condition;
-	private String nearby_station;
+	private String payCondition;
+	private String nearbyStation;
 	private String welfare;
 	private String enrollDate;
-	private String del_flag;
+	private String delFlag;
 	
 }

@@ -1,6 +1,10 @@
 package com.spring.ithrer.index.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.common.util.Utils;
+import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
 
 @Controller
@@ -25,10 +31,31 @@ public class IndexController {
    
    
    @RequestMapping(value="/")
-   public ModelAndView index(ModelAndView mav) {
+   public ModelAndView index(ModelAndView mav) throws ParseException {
       //System.out.println("왓니?");
       List<Map<String, String>> jobList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=50&ind_cd=3&job_type=4&fields=expiration-date");
       //System.out.println("jobList="+jobList.size());
+      //임시 셀렉트 원 
+      Recruitment rc = indexService.selectOneRecruitment();
+      
+      Company cp = indexService.selectOneCompany(rc.getCompId()); //기업 아이디를 바탕으로 회사정보를 가져옴
+     
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+      //공고 끝나는 날짜 가져오기
+      Date date = format.parse(rc.getClosingDate());
+      
+      //오늘날짜 가져오기
+      Date sysdate = new Date();
+      String sysdate1 = format.format(sysdate);
+      Date sysdate2 = format.parse(sysdate1);
+
+      System.out.println((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+      
+      int endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+
+      mav.addObject("endTime", endTime);
+      mav.addObject("cp", cp);
+      mav.addObject("rc", rc);
       mav.addObject("jobList", jobList);
       mav.setViewName("index");
       return mav;
