@@ -3,6 +3,16 @@
 #content{
 	margin : 0 auto;
 }
+#deleteBox {
+	float : right;
+}
+#content input {
+	margin : 5px;
+}
+#content select {
+	margin-top : 5px;
+}
+
 #resumeTitle{
 	margin : 5px auto;
 	width : 900px;
@@ -25,11 +35,40 @@ h3{
 	width : 900px;
 }
 #addUrl{
-	width : 450px;
+	width : 435px;
 }
 #addFile{
-	width : 450px;
+	width : 435px;
+}
+#saveButton{
+	width : 100px;
 }
 #finishButtonWrap{
 	width : 100px;
+}
+/* 인적사항 */
+#name {
+	width : 200px;
+}
+#birth {
+	width : 200px;
+}
+#gender {
+	width : 150px;
+}
+#tel {
+	width : 200px;
+}
+/* 희망근무조건 */
+#hopeworkWrap input {
+	margin : 5px;
+}
+
+#hopeworkList span{
+	margin-top : 5px;
+	margin-left : 20px;
+}
+#dutyList span{
+	margin-left : 20px;
+	margin-bottom : 5px;
 }
