@@ -379,9 +379,7 @@
 		width="890px" height="300px" scrolling="auto"></iframe>	
 	</div>	
 </div>
-<<<<<<< HEAD
-=======
-	
+
 <br /><br />
 	
 <div id="cal">
@@ -406,7 +404,6 @@
 	</ul>
 </div>
 
->>>>>>> 61d4aee842e88db2543e8eb62c9ccf70deb7b346
 <script>
 function moveCrwaling(id){
 	var id = id;
