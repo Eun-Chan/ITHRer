@@ -29,17 +29,12 @@ public class Company implements Serializable {
 	private String sales;
 	private String listed;
 	private String introduction;
-	private String rightPeople;
 	private int personnel;
-	private String history;
 	private String phone;
 	private String fax;
 	private String homepage;
 	private String businessScale;
 	private String location;
-	private String payCondition;
-	private String nearbyStation;
-	private String welfare;
 	private String enrollDate;
 	private String delFlag;
 	

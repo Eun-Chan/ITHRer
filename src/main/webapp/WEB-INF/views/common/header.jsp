@@ -29,7 +29,10 @@
 		  	</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
-				<ul class="navbar-nav mr-auto">	     
+
+				<ul class="navbar-nav mr-auto">
+			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}">Home</a></li>		     
+			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume">이력서</a></li>		     
 			    </ul>
 			    
 			    
@@ -38,7 +41,7 @@
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">개인회원</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">기업회원</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=audgnsdlsp">기업회원</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">고객센터</a></li>
 	        		</ul>
 			 	</c:if>

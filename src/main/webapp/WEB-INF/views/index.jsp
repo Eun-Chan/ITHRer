@@ -137,6 +137,7 @@
     top: 13px;
     left: 10px;
 }
+<<<<<<< HEAD
 .location-hide{
 	display:none;
 	width: 419px;
@@ -214,6 +215,9 @@
     padding: 0;
     display: inline-block;
 }
+=======
+
+>>>>>>> 61d4aee842e88db2543e8eb62c9ccf70deb7b346
 </style>
 	<div class="main-search">
 		<div class="search-bar">
@@ -378,6 +382,34 @@
 		width="890px" height="300px" scrolling="auto"></iframe>	
 	</div>	
 </div>
+<<<<<<< HEAD
+=======
+	
+<br /><br />
+	
+<div id="cal">
+	<iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/week" frameborder="0"
+	width="890px" height="300px" scrolling="auto"></iframe>	
+</div>	
+
+<div id="job">
+	<ul id ="list-open">
+		<c:forEach items="${jobList}" var="map">
+					<li class="open">
+						<div class="content">
+							<span><a href="http://www.saramin.co.kr/zf_user/jobs/relay/pop_view?rec_idx=${map.id}" target="_blank">${map.name}</a></span><br />
+							<span><a href="#" onclick="moveCrwaling('${map.id}');">${map.name}</a></span><br />
+							${map.title} <br />
+							${map.jobType} <br />
+							${map.exLevel} <br />
+							${map.salary} <br />
+						</div>
+					</li>
+		</c:forEach>	
+	</ul>
+</div>
+
+>>>>>>> 61d4aee842e88db2543e8eb62c9ccf70deb7b346
 <script>
 function moveCrwaling(id){
 	var id = id;
@@ -402,7 +434,8 @@ $("#btn-search-notice").on("click", function(){
 	//지역검색 추가 해야함
 	
 	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord;
-})
+}
+
 $("#locationKeyWord").on("click",function(){
 	if(!$(".location-hide").hasClass("on")){
 		$(".location-hide").addClass("on");
@@ -442,6 +475,10 @@ $(".open").hover(function(){
 );
 
 
+=======
+	
+});
+>>>>>>> 61d4aee842e88db2543e8eb62c9ccf70deb7b346
 </script>
 
 
