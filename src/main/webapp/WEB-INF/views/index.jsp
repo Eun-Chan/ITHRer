@@ -137,7 +137,6 @@
     top: 13px;
     left: 10px;
 }
-<<<<<<< HEAD
 .location-hide{
 	display:none;
 	width: 419px;
@@ -215,9 +214,7 @@
     padding: 0;
     display: inline-block;
 }
-=======
 
->>>>>>> 61d4aee842e88db2543e8eb62c9ccf70deb7b346
 </style>
 	<div class="main-search">
 		<div class="search-bar">
@@ -434,7 +431,7 @@ $("#btn-search-notice").on("click", function(){
 	//지역검색 추가 해야함
 	
 	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord;
-}
+});
 
 $("#locationKeyWord").on("click",function(){
 	if(!$(".location-hide").hasClass("on")){
@@ -475,10 +472,7 @@ $(".open").hover(function(){
 );
 
 
-=======
-	
-});
->>>>>>> 61d4aee842e88db2543e8eb62c9ccf70deb7b346
+
 </script>
 
 
