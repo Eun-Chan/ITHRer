@@ -124,7 +124,7 @@ $(function(){
 function timestamp(time){
 	var timeStamp = time*1000;
 	console.log(parseInt(timeStamp));
-	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+	
 	
 	var dt = new Date(timeStamp);
     //document.writeln(dt.getHours() + '/' + dt.getMinutes() + '/' + dt.getSeconds() + ' -- ' + dt + '<br>');

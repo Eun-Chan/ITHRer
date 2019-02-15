@@ -76,6 +76,8 @@ public class Utils {
 					map.put("level", getTagValue("required-education-level",eElement));
 					map.put("salary", getTagValue("salary",eElement));
 					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
+					map.put("expiration", getTagValue("expiration-timestamp", eElement));
+					
 					String endTime = getTagValue("expiration-timestamp", eElement);
 					int endTimes = Integer.parseInt(endTime)/(24*60*60*1000);
 					
