@@ -93,4 +93,70 @@ public class CompanyServiceImpl implements CompanyService {
 		return map;
 	}
 
+	@Override
+	public Map<String, Object> updateHrManager(HRManager hrManager) {
+
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.updateHrManager(hrManager);
+		
+		String msg = "";
+		List<HRManager> hrManagerList = null;
+		
+		if(result > 0) {
+			msg = "수정 성공!";
+			hrManagerList = companyDao.selectHRManagerList(hrManager.getCompId());
+		}
+		else {
+			msg = "수정 실패!";
+		}
+		
+		map.put("msg", msg);
+		map.put("hrManagerList",hrManagerList);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> updateCompany(Company company) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.updateCompany(company);
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "수정 성공!";
+		}
+		else {
+			msg = "수정 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> updateSales(Sales sales) {
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.updateSales(sales);
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "수정 성공!";
+		}
+		else {
+			msg = "수정 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
+	}
+
 }

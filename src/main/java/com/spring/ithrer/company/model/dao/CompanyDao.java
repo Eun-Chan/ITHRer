@@ -19,4 +19,10 @@ public interface CompanyDao {
 
 	int insertHrManager(HRManager hrManager);
 
+	int updateHrManager(HRManager hrManager);
+
+	int updateCompany(Company company);
+
+	int updateSales(Sales sales);
+
 }
