@@ -150,23 +150,36 @@ public class Utils {
 		
 		org.jsoup.nodes.Element detail = null;
 		org.jsoup.nodes.Element address = null;
+		org.jsoup.nodes.Element compInfo = null;
+		org.jsoup.nodes.Element logo = null;
+		
 		try {
 			detail = doc4.select("div.cont").get(1);
 			address = doc4.select("div#map_0").get(0);
+			compInfo = doc4.select("div.wrap_info").get(0);
+			logo = doc4.select("div.logo").get(0);
 		}catch(IndexOutOfBoundsException e) {
 			
 		}
 		
 		//System.out.println("여기는 유틸즈 디테일src"+detail.text());
 		//System.out.println("여기는 유틸즈 디테일html"+detail.html());
-		if(address != null) {
-			System.out.println("주소를 긁어왔느냐"+address.html());			
+//		if(address != null) {
+//			System.out.println("주소를 긁어왔느냐"+address.html());			
+//		}
+		if(compInfo != null) {
+			System.out.println("기업정보를 긁어왔느냐"+compInfo.html());			
+		}
+		if(logo != null) {
+			System.out.println("기업로고를 긁어왔느냐"+logo.html());			
 		}
 		
 		Map<String, org.jsoup.nodes.Element> map = new HashMap<>();
 		map.put("detail", detail);
 		map.put("address", address);
-
+		map.put("compInfo", compInfo);
+		map.put("logo", logo);
+		
 		return map;
 	}
 	

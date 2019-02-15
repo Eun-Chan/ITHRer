@@ -4,7 +4,23 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <fmt:requestEncoding value="utf-8"/>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<%-- <jsp:include page="/WEB-INF/views/common/header.jsp"/> --%>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hello Spring</title>
+<!-- 부트스트랩관련 라이브러리 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+<!-- jquery -->
+<script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
+
+</head>
+
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/jobSearchDetail.css" />
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd95d92bd2f84bc07966142257229bba&libraries=services"></script>
@@ -14,7 +30,30 @@
 #address{
 	color:gray;
 }
+#logo{
+	overflow:hidden;float:left;width:260px;height:180px;line-height:155px;text-align:center
+}
+#compInfo dl{
+	display:block;float:left;position:relative;margin-left:15px;width:190px;min-height:28px;line-height:28px
+}
+#compInfo dl dt{
+	width:100%;color:#444;font-size:14px;line-height:28px;text-overflow:ellipsis;white-space:nowrap;
+}
+#compInfo dl dd{
+	width:100%;color:#444;font-size:14px;line-height:28px;text-overflow:ellipsis;white-space:nowrap;
+}
+
+#compInfo dl dd>span {color:#949494}
+#compInfo dl dd>a {display:inline-block;overflow:hidden;padding-right:1px;max-width:99%;color:#4876ef;text-decoration:underline;text-overflow:ellipsis;vertical-align:top;white-space:nowrap}
+#compInfo dl.wide {width:465px}
+#compInfo dl.wide dd {padding-top:5px;line-height:18px}
+
 </style>
+
+	
+<body>
+<div id="container">
+	<section id="content">
 
 <div class="job-searchDetail-Container">
 	<div class="job-searchDetail-Header">
@@ -69,8 +108,29 @@
 
 		</div>
 	</c:if>
+	
+	<br /><br />
+	
+	<div id="companyInfo-container">
+		<h3><i class="fas fa-building"></i>  기업정보</h3>
+		<div style="border:1px solid gray">
+			<div id="logo">
+				${logo}
+			</div>
+			<div id="compInfo">
+				<dl>${compType}</dl>
+				<dl>${empCount}</dl>
+				<dl>${jobType}</dl>
+				<dl>${publichedDate}</dl>
+				<dl>${revenue}</dl>
+				<dl>${representative}</dl>
+				<dl>${homePage}</dl>
+				<dl>${compAddr}</dl>
+			</div>
+		</div>
+	</div>
+	
 </div>
-
 
 <script>
 
@@ -110,9 +170,13 @@ geocoder.addressSearch('${address}', function(result, status) {
     map.setCenter(coords);
 } 
 });    
-	
-	
 
+//마우스 휠로 지도 확대,축소 가능여부를 설정합니다
+map.setZoomable(false);    
+	
+//지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+var zoomControl = new daum.maps.ZoomControl();
+map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
 
 </script>
 	

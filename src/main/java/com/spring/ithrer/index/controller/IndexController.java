@@ -88,12 +88,36 @@ public class IndexController {
          sb.insert(doc.get("detail").html().indexOf("src=")+5, addUrl);//src의 값에 추가
          sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");//스크롤이 가능하게 변경
          
-         //크롤링으로 들고오는 주소값 부분
+         //크롤링으로 들고오는 근무지 주소값 부분
          if(doc.get("address") != null) {
         	 StringBuffer sb2 = new StringBuffer(doc.get("address").html());        	 
         	 mav.addObject("address", sb2.substring(doc.get("address").html().indexOf("<span class=\"spr_jview txt_adr\">")+42, doc.get("address").html().indexOf("</span>")));
          }
-         //sb2.substring(doc.get("address").html().indexOf("<span class=\"spr_jview txt_adr\">")+32, doc.get("address").html().indexOf("</span> <span class=\"spr_jview txt_subway\">"));
+         
+         //크롤링으로 기업정보를 가져오는 부분
+         if(doc.get("logo")!= null) {
+        	 StringBuffer sb3 = new StringBuffer(doc.get("logo").html());   
+        	 mav.addObject("logo", sb3);
+         }
+         
+         //StringBuffer sb4 = new StringBuffer(doc.get("compInfo").html());
+         String compType = doc.get("compInfo").select("dl").eq(0).html();
+         String empCount = doc.get("compInfo").select("dl").eq(1).html();
+         String jobType = doc.get("compInfo").select("dl").eq(2).html();
+         String publichedDate = doc.get("compInfo").select("dl").eq(3).html();
+         String revenue = doc.get("compInfo").select("dl").eq(4).html();
+         String representative = doc.get("compInfo").select("dl").eq(5).html();
+         String homePage = doc.get("compInfo").select("dl").eq(6).html();
+         String compAddr = doc.get("compInfo").select("dl").eq(7).html();
+         
+         mav.addObject("compType", compType);
+         mav.addObject("empCount", empCount);
+         mav.addObject("jobType", jobType);
+         mav.addObject("publichedDate", publichedDate);
+         mav.addObject("revenue", revenue);
+         mav.addObject("representative", representative);
+         mav.addObject("homePage", homePage);
+         mav.addObject("compAddr", compAddr);
          
          
          mav.addObject("selectOneJob", selectOneJob);
