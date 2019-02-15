@@ -4,7 +4,27 @@
 
 	<!-- compId를 통해서 하나의 Company 정보 가져오기 -->
 	<select id="selectCompanyOne" parameterType="string" resultType="company">
-		select * from company where comp_id = #{compId}
+		select * from company where comp_id = #{compId} and del_flag = 'N'
 	</select>
+	
+	<!-- compId를 통해서 인사담당자 리스트 가져오기 -->
+	<select id="selectHRManagerList" parameterType="string" resultType="hrManager">
+		select * from humanresources where comp_id = #{compId} order by enrolldate
+	</select>
+	
+	<!-- compId를 통해서 매출액 리스트 가져오기 -->
+	<select id="selectSalesList" parameterType="string" resultType="sales">
+		select * from sales where comp_id = #{compId} order by year desc
+	</select>
+	
+	<!-- HrManager 하나 지우기 -->
+	<delete id="deleteHrManager" parameterType="_int">
+		delete from humanresources where no = #{no}
+	</delete>
+	
+	<!-- HrManager 추가 -->
+	<insert id="insertHrManager">
+		insert into humanresources values (seq_hr_no.nextval,#{compId},#{name},#{department},#{position},#{phone},#{email},default)
+	</insert>
 	
 </mapper>
