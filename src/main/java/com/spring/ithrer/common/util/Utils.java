@@ -143,19 +143,31 @@ public class Utils {
 		return map;
 	}
 	
-	public static org.jsoup.nodes.Element apiCrwaling(int id) throws ClientProtocolException, IOException {
+	//사람인 공고 상세보기를 크롤링하기 위한 메소드
+	public static Map<String, org.jsoup.nodes.Element> apiCrwaling(int id) throws ClientProtocolException, IOException {
 		
 		org.jsoup.nodes.Document doc4 = Jsoup.connect("http://www.saramin.co.kr/zf_user/jobs/relay/pop_view?rec_idx="+String.valueOf(id)).timeout(5000).get();
 		
-		org.jsoup.nodes.Element detail = doc4.select("div.cont").get(1);
+		org.jsoup.nodes.Element detail = null;
+		org.jsoup.nodes.Element address = null;
+		try {
+			detail = doc4.select("div.cont").get(1);
+			address = doc4.select("div#map_0").get(0);
+		}catch(IndexOutOfBoundsException e) {
+			
+		}
 		
-		System.out.println("여기는 유틸즈 디테일src"+detail.text());
-		System.out.println("여기는 유틸즈 디테일html"+detail.html());
+		//System.out.println("여기는 유틸즈 디테일src"+detail.text());
+		//System.out.println("여기는 유틸즈 디테일html"+detail.html());
+		if(address != null) {
+			System.out.println("주소를 긁어왔느냐"+address.html());			
+		}
 		
-		
+		Map<String, org.jsoup.nodes.Element> map = new HashMap<>();
+		map.put("detail", detail);
+		map.put("address", address);
 
-
-		return detail;
+		return map;
 	}
 	
 	

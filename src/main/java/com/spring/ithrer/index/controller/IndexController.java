@@ -33,8 +33,14 @@ public class IndexController {
    @RequestMapping(value="/")
    public ModelAndView index(ModelAndView mav) {
       //System.out.println("왓니?");
-      List<Map<String, String>> jobList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=50&ind_cd=3&job_type=4&fields=expiration-date");
+      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=50&ind_cd=3&job_type=4&fields=expiration-date");
       //System.out.println("jobList="+jobList.size());
+      
+      List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
+      for(int i = 1; i < tempList.size(); i++) {
+		   jobList.add(tempList.get(i));
+	   }
+      
       mav.addObject("jobList", jobList);
       mav.setViewName("index");
       return mav;
@@ -45,14 +51,23 @@ public class IndexController {
        
       try {
     	 Map<String, String> selectOneJob = Utils.selectOne("http://api.saramin.co.kr/job-search?id="+id);
-         Element doc = Utils.apiCrwaling(id);
+    	 Map<String, org.jsoup.nodes.Element> doc = Utils.apiCrwaling(id);
          
-         String addUrl = "http://www.saramin.co.kr";
+    	 //크롤링으로 들고오는 iframe의 설정을 변경하는 부분
+         String addUrl = "http://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
          
-         StringBuffer sb = new StringBuffer(doc.html());
+         StringBuffer sb = new StringBuffer(doc.get("detail").html());
          
-         sb.insert(doc.html().indexOf("src=")+5, addUrl);
-         sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");
+         sb.insert(doc.get("detail").html().indexOf("src=")+5, addUrl);//src의 값에 추가
+         sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");//스크롤이 가능하게 변경
+         
+         //크롤링으로 들고오는 주소값 부분
+         if(doc.get("address") != null) {
+        	 StringBuffer sb2 = new StringBuffer(doc.get("address").html());        	 
+        	 mav.addObject("address", sb2.substring(doc.get("address").html().indexOf("<span class=\"spr_jview txt_adr\">")+42, doc.get("address").html().indexOf("</span>")));
+         }
+         //sb2.substring(doc.get("address").html().indexOf("<span class=\"spr_jview txt_adr\">")+32, doc.get("address").html().indexOf("</span> <span class=\"spr_jview txt_subway\">"));
+         
          
          mav.addObject("selectOneJob", selectOneJob);
          mav.addObject("doc", sb);
