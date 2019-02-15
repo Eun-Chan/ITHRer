@@ -1,6 +1,7 @@
 package com.spring.ithrer.company.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
@@ -13,5 +14,9 @@ public interface CompanyDao {
 	List<HRManager> selectHRManagerList(String compId);
 
 	List<Sales> selectSalesList(String compId);
+
+	int deleteHrManager(int no);
+
+	int insertHrManager(HRManager hrManager);
 
 }
