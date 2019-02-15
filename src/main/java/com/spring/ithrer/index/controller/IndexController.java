@@ -95,6 +95,14 @@ public class IndexController {
       return mav;
    }
    
+   /*
+   @RequestMapping("/index/ithrerNotice.ithrer")
+   public ModelAndView ithrerCompanyInformation(ModelAndView mav) {
+	   mav.setViewName("/notice/ithrerNoticeDetail");
+	   return mav;
+   }
+   */
+   
    @GetMapping("/searchNotice.ithrer")
    public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,
 		   							@RequestParam(value="cPage", defaultValue="1") int cPage,
@@ -162,5 +170,22 @@ public class IndexController {
 	   
 	   return mav;
    }
+   
+   @GetMapping("/index/ithrerNotice.ithrer")
+   public ModelAndView ithrerNoticeDetail(@RequestParam("id") String compId,ModelAndView mav) {
+	   Recruitment rc = indexService.selectOneRecruitment();
+	   Company com = indexService.selectOneCompany(compId);
+	   System.out.println(rc.getOpeningDate());
+	   System.out.println(rc.getClosingDate());
+	   System.out.println(rc.getOpeningDate().substring(0, 10));
+	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
+	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
+	   
+	   mav.addObject("rc", rc);
+	   mav.addObject("com", com);
+	   mav.setViewName("/notice/ithrerNoticeDetail");
+	   return mav;
+   }
+	   
    
 }
