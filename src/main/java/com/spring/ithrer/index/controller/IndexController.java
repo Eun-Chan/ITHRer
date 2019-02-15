@@ -39,7 +39,7 @@ public class IndexController {
    @RequestMapping(value="/")
    public ModelAndView index(ModelAndView mav) throws ParseException {
       //System.out.println("왓니?");
-      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=50&ind_cd=3&job_type=4&fields=expiration-date");
+      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=40&ind_cd=3&job_type=4&fields=expiration-date");
       //System.out.println("jobList="+jobList.size());
       
       List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();

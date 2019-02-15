@@ -29,7 +29,7 @@ import org.w3c.dom.NodeList;
 public class Utils {
 
 	public static List<Map<String, String>> apiList(String url){
-		Map<String, String> map = null;
+		Map<String, String> map = new HashMap<String, String>();
 		List<Map<String, String>> list = null;
 		try {
 			DocumentBuilderFactory dbFactoty = DocumentBuilderFactory.newInstance();
@@ -43,6 +43,14 @@ public class Utils {
 			System.out.println("파싱할 리스트 수 : "+nList.getLength());
 
 			list = new ArrayList<Map<String,String>>();
+			
+			NodeList nList2 = doc.getElementsByTagName("jobs");
+			String total = nList2.item(0).getAttributes().getNamedItem("total").getNodeValue();
+			System.out.println("totalcontent!!!!!!!!!!="+total);
+			
+			map.put("totlaContent", total);
+			list.add(map);
+			
 			for(int i = 0 ; i<nList.getLength() ; i++) {
 				map = new HashMap<String, String>();
 				Node nNode = nList.item(i);

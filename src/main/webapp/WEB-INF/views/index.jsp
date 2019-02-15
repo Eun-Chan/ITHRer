@@ -19,7 +19,7 @@
   width: 100%;
   height: 250px;
 }
-.container{
+#banner-container{
 	width:1000px;
 }
 #cal{
@@ -267,7 +267,7 @@
 			</div>
 		</div>
 	</div>
-		<div class="container">
+		<div id="banner-container" class="container">
 		  <div id="myCarousel" class="carousel slide" data-ride="carousel">
 		    <!-- Indicators -->
 		    <ul class="carousel-indicators">
@@ -381,28 +381,6 @@
 </div>
 
 <br /><br />
-	
-<div id="cal">
-	<iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/week" frameborder="0"
-	width="890px" height="300px" scrolling="auto"></iframe>	
-</div>	
-
-<div id="job">
-	<ul id ="list-open">
-		<c:forEach items="${jobList}" var="map">
-					<li class="open">
-						<div class="content">
-							<span><a href="http://www.saramin.co.kr/zf_user/jobs/relay/pop_view?rec_idx=${map.id}" target="_blank">${map.name}</a></span><br />
-							<span><a href="#" onclick="moveCrwaling('${map.id}');">${map.name}</a></span><br />
-							${map.title} <br />
-							${map.jobType} <br />
-							${map.exLevel} <br />
-							${map.salary} <br />
-						</div>
-					</li>
-		</c:forEach>	
-	</ul>
-</div>
 
 <script>
 function moveCrwaling(id){
