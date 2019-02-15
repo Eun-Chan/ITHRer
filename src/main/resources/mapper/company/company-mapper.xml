@@ -4,8 +4,16 @@
 
 	<!-- compId를 통해서 하나의 Company 정보 가져오기 -->
 	<select id="selectCompanyOne" parameterType="string" resultType="company">
-		select * from company where comp_id = #{compId} and del_flag = 'N'
+		select c.*, to_char(date_of_establishment, 'yyyy-mm-dd') as doe from company c where comp_id = #{compId} and del_flag = 'N'
 	</select>
+	
+	<!-- company 수정 -->
+	<update id="updateCompany" parameterType="company">
+		update company set comp_name=#{compName},representive=#{representive},license_no=#{licenseNo},date_of_establishment=to_date(#{dateOfEstablishment},'yyyy-mm-dd'),
+		category=#{category},main_bussiness=#{mainBussiness},classification=#{classification},capital=#{capital},listed=#{listed},introduction=#{introduction},
+		personnel=#{personnel},phone=#{phone},fax=#{fax},homepage=#{homepage},bussiness_scale=#{bussinessScale},location=#{location}
+		where comp_id=#{compId}
+	</update>
 	
 	<!-- compId를 통해서 인사담당자 리스트 가져오기 -->
 	<select id="selectHRManagerList" parameterType="string" resultType="hrManager">
@@ -23,8 +31,19 @@
 	</delete>
 	
 	<!-- HrManager 추가 -->
-	<insert id="insertHrManager">
+	<insert id="insertHrManager" parameterType="hrManager">
 		insert into humanresources values (seq_hr_no.nextval,#{compId},#{name},#{department},#{position},#{phone},#{email},default)
 	</insert>
+	
+	<!-- HrManager 데이터 수정 -->
+	<update id="updateHrManager" parameterType="hrManager">
+		update humanresources set name = #{name}, department = #{department}, position = #{position}, phone = #{phone}, email = #{email}
+		where comp_Id = #{compId} and no = #{no}
+	</update>
+	
+	<!-- Sales 수정 -->
+	<update id="updateSales" parameterType="sales">
+		
+	</update>
 	
 </mapper>
