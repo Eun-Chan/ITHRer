@@ -387,7 +387,7 @@ function moveCrwaling(id){
 	var id = id;
 	console.log("id?? = ",id);
  	//location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id;
-	window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id);
+	window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id, "채용정보", "width=1200px, height=800px");
 	
  	/* 
 	$.ajax({
