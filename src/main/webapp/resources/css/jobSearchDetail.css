@@ -17,15 +17,12 @@ html{
 	font-family: 'SungDongGothic';
 }
 /* 아이프래임 css */
-iframe{
-/* 	height: 100vh; */
+iframe#iframe_content_0{
+	height: 100vh;
 	width: 877px;
 	position: relative;
 	left: 2.5%;
 }
-/* .notice-container{
-	text-align: center;
-} */
 
 #list-open{
 	width: 1000px;

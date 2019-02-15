@@ -20,7 +20,11 @@
   height: 250px;
 }
 #banner-container{
+<<<<<<< HEAD
    width:1000px;
+=======
+	width:1000px;
+>>>>>>> be041583a273c4807d4865ea1457d065821c49aa
 }
 #cal{
    text-align: center;
@@ -216,6 +220,7 @@
 }
 
 </style>
+<<<<<<< HEAD
    <div class="main-search">
       <div class="search-bar">
          <div class="bar-main">
@@ -378,6 +383,170 @@
       <iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/week" frameborder="0"
       width="890px" height="300px" scrolling="auto"></iframe>   
    </div>   
+=======
+	<div class="main-search">
+		<div class="search-bar">
+			<div class="bar-main">
+				<div class="bar-option">
+					<input type="text" id="searchKeyWord" maxlength="30" placeholder="검색어 입력" />
+					<img src="${pageContext.request.contextPath }/resources/images/search.svg" alt=""/>
+				</div>
+				<div class="bar-option area">
+					<img src="${pageContext.request.contextPath }/resources/images/location.svg" alt="" />
+					<label for="locationKeyWord" class="placeholder">
+						지역 선택
+					</label>
+					<button id="locationKeyWord" class="locationKeyWord">
+						<span class="locationKeyWordSelected"></span>
+					</button>
+	<!-- 				<input type="button" value="지역 선택" id="locationKeyWord"> -->
+					<div class="location-hide">
+						<div class="location-category">
+							<div class="location-view">
+								<ul>
+									<li><button value="서울" class="loc">서울</button></li>
+									<li><button value="경기" class="loc">경기</button></li>
+									<li><button value="인천" class="loc">인천</button></li>
+									<li><button value="부산" class="loc">부산</button></li>
+									<li><button value="대구" class="loc">대구</button></li>
+									<li><button value="광주" class="loc">광주</button></li>
+									<li><button value="대전" class="loc">대전</button></li>
+									<li><button value="울산" class="loc">울산</button></li>
+									<li><button value="세종" class="loc">세종</button></li>
+									<li><button value="강원" class="loc">강원</button></li>
+									<li><button value="경남" class="loc">경남</button></li>
+									<li><button value="경북" class="loc">경북</button></li>
+									<li><button value="전남" class="loc">전남</button></li>
+									<li><button value="전북" class="loc">전북</button></li>
+									<li><button value="충남" class="loc">충남</button></li>
+									<li><button value="충북" class="loc">충북</button></li>
+									<li><button value="제주" class="loc">제주</button></li>
+									<li><button value="전국" class="loc">전국</button></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button type ="button"class="bar-button" id="btn-search-notice">
+					<span>
+						검색
+					</span>
+				</button>
+			</div>
+		</div>
+	</div>
+		<div id="banner-container" class="container">
+		  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+		    <!-- Indicators -->
+		    <ul class="carousel-indicators">
+		      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+		      <li data-target="#myCarousel" data-slide-to="1"></li>
+		      <li data-target="#myCarousel" data-slide-to="2"></li>
+		    </ul>
+		   <div class="carousel-inner">
+		    <div class="carousel-item active">
+		      <img src="${pageContext.request.contextPath }/resources/images/la.jpg" alt="Los Angeles" >
+		      <div class="carousel-caption">
+		        <h3>Los Angeles</h3>
+		        <p>We had such a great time in LA!</p>
+		      </div>   
+		    </div>
+		    <div class="carousel-item">
+		      <img src="${pageContext.request.contextPath }/resources/images/chicago.jpg" alt="Chicago" >
+		      <div class="carousel-caption">
+		        <h3>Chicago</h3>
+		        <p>Thank you, Chicago!</p>
+		      </div>   
+		    </div>
+		    <div class="carousel-item">
+		      <img src="${pageContext.request.contextPath }/resources/images/ny.jpg" alt="New York" >
+		      <div class="carousel-caption">
+		        <h3>New York</h3>
+		        <p>We love the Big Apple!</p>
+		      </div>   
+		    </div>
+		  </div>
+		  <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+		    <span class="carousel-control-prev-icon"></span>
+		  </a>
+		  <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+		    <span class="carousel-control-next-icon"></span>
+		  </a>
+		</div>
+	</div>
+	<div class="main">
+	<div class="section-header">
+		<div class="section-content">
+				<h3 style="text-align: center; font-weight: 900;">ITHRer 추천 공고!!</h3>
+			<ul style="list-style: none; padding-left: 20px;">
+				<li class="recommend-open">
+					<div class="recommend-content">
+						<strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
+						<span class="recruitTitle">${rc.recruitmentTitle }</span>
+						<div class="endDate">D-${endTime }</div>
+		<%-- 				${rc.employmentType }
+						<br>
+						${rc.typeOfOccupation} --%>
+					</div>
+				</li>
+				<li class="recommend-open">
+					<div class="recommend-content">
+				
+					</div>
+				</li>
+				<li class="recommend-open">
+					<div class="recommend-content">
+					
+					</div>
+				</li>
+				<li class="recommend-open">
+					<div class="recommend-content">
+					
+					</div>
+				</li>
+				<li class="recommend-open">
+					<div class="recommend-content">
+					
+					</div>
+				</li>
+				<li class="recommend-open">
+					<div class="recommend-content">
+					
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="Ad2">
+			<img src="${pageContext.request.contextPath }/resources/images/sana.jpg" alt="" style="width:200px; height:400px;"/>
+		</div>	
+	</div>
+	<br />
+	<div id="job">
+		<ul id ="list-open">
+			<c:forEach items="${jobList }" var="map">
+						<li class="open" onclick="moveCrwaling('${map.id}');">
+							<div class="content">
+								<strong style="font-family: 'SungDongGothic', sans-serif; font-weight:800; font-size: 1.25em">
+										${map.name}
+								</strong>
+								<span class="recruitTitle" style="font-size: 1.0em">
+									${map.title}								
+								</span>
+								<div class="APiendDate">
+									D-${map.end }
+								</div>
+							</div>
+						</li>
+			<script>
+			</script>
+			</c:forEach>	
+		</ul>
+	</div>
+	<div id="cal">
+		<iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/week" frameborder="0"
+		width="890px" height="300px" scrolling="auto"></iframe>	
+	</div>	
+>>>>>>> be041583a273c4807d4865ea1457d065821c49aa
 </div>
 
 <br /><br />
@@ -386,24 +555,14 @@
 function moveCrwaling(id){
    var id = id;
    console.log("id?? = ",id);
-    //location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id;
-   window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id);
+   window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id, "채용정보", "width=1200px, height=800px");
    
-    /* 
-   $.ajax({
-      url: "${pageContext.request.contextPath}/index/notice.ithrer",
-      data: {id: id},
-      success: function(data){
-         $(".modal-body").append(data);
-      },error:function(request,status,error){
-          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }            
-   }); */
+
 };
 function moveDetail(id){
    var id = id;
    window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?id="+id);
-};
+}
 
 $("#btn-search-notice").on("click", function(){
    var searchKeyWord = $("#searchKeyWord").val();

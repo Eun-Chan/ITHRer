@@ -17,4 +17,14 @@
 		select * from sales where comp_id = #{compId} order by year desc
 	</select>
 	
+	<!-- HrManager 하나 지우기 -->
+	<delete id="deleteHrManager" parameterType="_int">
+		delete from humanresources where no = #{no}
+	</delete>
+	
+	<!-- HrManager 추가 -->
+	<insert id="insertHrManager">
+		insert into humanresources values (seq_hr_no.nextval,#{compId},#{name},#{department},#{position},#{phone},#{email},default)
+	</insert>
+	
 </mapper>
