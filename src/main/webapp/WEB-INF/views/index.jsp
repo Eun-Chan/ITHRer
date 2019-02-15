@@ -261,7 +261,7 @@
             </div>
             <button type ="button"class="bar-button" id="btn-search-notice">
                <span>
-                 	 검색
+                     검색
                </span>
             </button>
          </div>
