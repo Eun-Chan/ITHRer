@@ -10,9 +10,11 @@
 	margin : 5px;
 }
 #content select {
-	margin-top : 5px;
+	margin : 5px;
 }
-
+#content textarea {
+	margin-left : 5px;
+}
 #resumeTitle{
 	margin : 5px auto;
 	width : 900px;
@@ -44,7 +46,8 @@ h3{
 	width : 100px;
 }
 #finishButtonWrap{
-	width : 100px;
+	width : 250px;
+	background : #b89dff;
 }
 /* 인적사항 */
 #name {
@@ -59,11 +62,25 @@ h3{
 #tel {
 	width : 200px;
 }
+/* 학력 */
+#educationHeader {
+	width : 900px;
+	margin : 0 auto;
+}
+#headerText {
+	display : inline-block;
+}
+#headerText h3 {
+	margin-left : 0;
+}
+#headerInput {
+	display : inline-block;
+	float : right;
+}
 /* 희망근무조건 */
 #hopeworkWrap input {
 	margin : 5px;
 }
-
 #hopeworkList span{
 	margin-top : 5px;
 	margin-left : 20px;
@@ -71,4 +88,30 @@ h3{
 #dutyList span{
 	margin-left : 20px;
 	margin-bottom : 5px;
+}
+/* 취업우대 */
+#formPreference {
+	width : 850px;
+	margin-left : 50px;
+	margin-right : 10px;
+}
+/* 자기소개서 */
+#formLetter input {
+	width : 860px;
+	height : 50px;
+}
+#formLetter textarea {
+	width : 885px;
+	height : 300px;
+	resize : none;
+}
+.deleteLetter {
+	float : right;
+}
+.letterDiv {
+	display : inline-block;
+}
+.deleteLetter {
+	margin-top : 3px;
+	margin-right : 3px;
 }

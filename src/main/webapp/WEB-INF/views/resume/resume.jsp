@@ -20,11 +20,6 @@
 <div id="profileTotal" class="wrap-container">
 	<h3>인적사항</h3>
 	<div id="profileWrap">
-		<div id="deleteBox">
-			<button type="button" id="deleteProfile" class="deleteWrap">
-				<span aria-hidden="true">X</span>
-			</button>
-		</div>
 		<div id="formProfile1" class="input-group-prepend">
 			<input type="text" id="name" name="name" class="form-control" placeholder="이름"/>
 			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)"/>
@@ -44,14 +39,22 @@
 	</div>
 </div>
 <div id="educationTotal" class="wrap-container">
-	<h3>학력</h3>
+	<div id="educationHeader">
+		<div id="headerText">
+			<h3>학력</h3>		
+		</div>
+		<div id="headerInput">
+			<input type="checkbox" id="nonHigh"/>
+			<label for="nonHigh">고등학교 미만 졸업</label>
+		</div>
+	</div>
 	<div id="educationWrap">
 		<div id="deleteBox">
 			<button type="button" id="deleteEdu" class="deleteWrap">
 				<span aria-hidden="true">X</span>
 			</button>
 		</div>
-		<!-- <div id="formEducation">
+		<div id="formEducation">
 			<select id="school">
 				<option value="" disabled selected>학교구분</option>
 				<option value="high">고등학교</option>
@@ -68,7 +71,7 @@
 				<option value="ungraduated">졸업예정</option>
 			</select> 
 			<input type="checkbox" id="ged" value="ged"/>대입검정고시
-		</div> -->
+		</div>
 		<div id="buttonEducation">
 			<button type="button" id="addEducation" class="btn btn-outline-info">추가</button>	
 		</div>
@@ -77,11 +80,6 @@
 <div id="hopeworkTotal" class="wrap-container">
 	<h3>희망근무조건</h3>
 	<div id="hopeworkWrap">
-		<div id="deleteBox">
-			<button type="button" id="deleteHW" class="deleteWrap">
-				<span aria-hidden="true">X</span>
-			</button>
-		</div>
 		<div id="formHopework1" class="input-group-prepend">
 			<input type="text" id="jobType" class="form-control" placeholder="고용형태"/>
 			<input type="text" id="wantPay" class="form-control" onkeydown="validateText(event)" placeholder="희망연봉(단위 :만원)"/>
@@ -91,23 +89,27 @@
 		</div>
 		<div id="formHopework2" class="input-group mb-3">
 			<div id="hopeworkList" class="input-group-prepend">
-				<div id="hopeHeader" class="row">
-					<span class="input-group-text">희망근무지</span>
+				<div id="hopeHeader">
+					희망근무지
 				</div>
-				<textarea id="hopePlace" class="form-control" aria-label="With textarea" row="500px"></textarea>
+				<div id="hopeText">
+					<textarea id="hopePlace" class="form-control" aria-label="With textarea"></textarea>				
+				</div>
 			</div>
 		</div>
 		<div id="formHopework3" class="input-group mb-3">
 			<div id="dutyList" class="input-group-prepend">
-				<div id="dutyHeader" class="row">
-					<span class="input-group-text">직무,산업,키워드</span>
+				<div id="dutyHeader">
+					직무,산업,키워드
 				</div>
-				<textarea id="hopeDuty" class="form-control" aria-label="With textarea" row="500px"></textarea>
+				<div id="dutyText">
+					<textarea id="hopeDuty" class="form-control" aria-label="With textarea"></textarea>				
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<div id="internTotal" class="wrap-container">
+<div id="internTotal" class="wrap-container" style="display:none;">
 	<h3>인턴,대외활동</h3>
 	<div id="internWrap">
 		<div id="deleteBox">
@@ -141,7 +143,7 @@
 		</div>
 	</div>
 </div>
-<div id="learnTotal" class="wrap-container">
+<div id="learnTotal" class="wrap-container" style="display:none;">
 	<h3>교육</h3>
 	<div id="learnWrap">
 		<div id="deleteBox">
@@ -164,7 +166,7 @@
 		</div>
 	</div>
 </div>
-<div id="certificateTotal" class="wrap-container">
+<div id="certificateTotal" class="wrap-container" style="display:none;">
 <h3>자격증</h3>
 	<div id="certificateWrap">
 		<div id="deleteBox">
@@ -182,7 +184,7 @@
 		</div>
 	</div>
 </div>
-<div id="awardTotal" class="wrap-container">
+<div id="awardTotal" class="wrap-container" style="display:none;">
 	<h3>수상</h3>
 	<div id="awardWrap">
 		<div id="deleteBox">
@@ -206,7 +208,7 @@
 		</div>
 	</div>
 </div>
-<div id="overseasTotal" class="wrap-container">
+<div id="overseasTotal" class="wrap-container" style="display:none;">
 	<h3>해외경험</h3>
 	<div id="overseasWrap">
 		<div id="deleteBox">
@@ -230,7 +232,7 @@
 		</div>
 	</div>
 </div>
-<div id="languageTotal" class="wrap-container">
+<div id="languageTotal" class="wrap-container" style="display:none;">
 	<h3>어학</h3>
 	<div id="languageWrap">
 		<div id="deleteBox">
@@ -263,7 +265,7 @@
 		</div>
 	</div>
 </div>
-<div id="potfolioTotal" class="wrap-container">
+<div id="potfolioTotal" class="wrap-container" style="display:none;">
 	<h3>포트폴리오</h3>
 	<div id="potfolioWrap">
 		<div id="deleteBox">
@@ -281,7 +283,7 @@
 		</div>
 	</div>
 </div>
-<div id="preferenceTotal" class="wrap-container">
+<div id="preferenceTotal" class="wrap-container" style="display:none;">
 	<h3>취업우대</h3>
 	<div id="preferenceWrap">
 		<div id="deleteBox">
@@ -292,35 +294,34 @@
 		<div id="formPreference" class="input-group-prepend">
 			<div id="divCheckbox" class="input-group-text">
 				<input type="checkbox" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>
-				<label for="veteran">보훈대상</label>		
+				<label for="veteran" class="input-group-text">보훈대상</label>		
 			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<div id="divProtected" class="input-group-text">
 				<input type="checkbox" id="protected" aria-label="Checkbox for following text input" value="protected"/>
-				<label for="protected">취업보호 대상</label>		
+				<label for="protected" class="input-group-text">취업보호 대상</label>		
 			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<div id="divSubsidy" class="input-group-text">
 				<input type="checkbox" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>
-				<label for="subsidy">고용지원금 대상</label>		
+				<label for="subsidy" class="input-group-text">고용지원금 대상</label>		
 			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<div id="divDisorder" class="input-group-text">
 				<input type="checkbox" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>
-				<label for="disorder">장애</label>		
+				<label for="disorder" class="input-group-text">장애</label>		
 			</div>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<div id="divMilitary" class="input-group-text">
 				<input type="checkbox" id="military" aria-label="Checkbox for following text input" value="military"/>
-				<label for="military">병역</label>		
+				<label for="military" class="input-group-text">병역</label>		
 			</div>
 		</div>
 	</div>
 </div>
-<div id="letterTotal" class="wrap-container">
+<div id="letterTotal" class="wrap-container" style="display:none;">
 	<h3>자기소개서</h3>
 	<div id="letterWrap">
-		<div id="deleteBox">
-			<button type="button" id="deleteLetter" class="deleteWrap">
-				<span aria-hidden="true">X</span>
-			</button>
-		</div>
 		<div id="formLetter">
 			<div id="buttonLetter" class="input-group-prepend">
 				<button type="button" id="addLetter" class="btn btn-outline-info">추가</button>	
@@ -328,7 +329,7 @@
 		</div>
 	</div>
 </div>
-<div id="careerTotal" class="wrap-container">
+<div id="careerTotal" class="wrap-container" style="display:none;">
 	<h3>경력</h3>
 	<div id="careerWrap">
 		<div id="deleteBox">
@@ -358,11 +359,13 @@
 	</div>
 </div>
 <div id="finishButtonWrap" class="input-group-prepend">
+	<button type="submit" id="emsisaveButton" class="btn btn-light">임시저장</button>&nbsp;&nbsp;&nbsp;&nbsp;
 	<button type="submit" id="saveButton" class="btn btn-primary">작성완료</button>
 </div>
 </form>
 </div>
 <script>
+/* 숫자만 되기 */
 function validateText(event) {
 	var code = event.keyCode;
 	if (code > 47 && code < 58) {
@@ -378,48 +381,32 @@ function validateText(event) {
 		event.preventDefault();		
 	}
 }
+/* 항목지우기 */
 $(".deleteWrap").on("click",function() {
 	$(this).parents(".wrap-container").hide();
 });
-/* $("#deleteProfile").on("click",function() {
-	$('#profileTotal').hide();
+/* 자기소개서추가 */
+$("#addLetter").on("click",function() {
+	var count = 0;
+	var button = '"<button type="button" id="deleteCareer" class="deleteWrap"><span aria-hidden="true">X</span></button>';
+	var html = '<div class="letterDiv"><input type="text" id="letterText'+count+'" placeholder="항목 제목을 입력하세요."><button type="button" class="deleteLetter" onclick="deleteone(event);"><span aria-hidden="true">X</span></button><div><textarea id="letterArea'+count+'" placeholder="해당내용을 입력하세요."></textarea></div></div>';
+	$('#formLetter').append(html);
+	count++;
 });
-$("#deleteEdu").on("click",function() {
-	$('#educationTotal').hide();
+function deleteone(event) {
+	var clicked = event.currentTarget.parentElement;//button을 가리키게 함
+	console.log(clicked);
+	clicked.remove();
+}
+/* 학력 */
+$("#nonHigh").change(function(){
+	if($(this).prop('checked')) {
+		$('#educationWrap').hide();
+	}
+	else {
+		$('#educationWrap').show();
+	}
 });
-$("#deleteHW").on("click",function() {
-	$('#hopeworkTotal').hide();
-});
-$("#deleteIT").on("click",function() {
-	$('#internTotal').hide();
-});
-$("#deleteLearn").on("click",function() {
-	$('#learnTotal').hide();
-});
-$("#deleteCertificate").on("click",function() {
-	$('#certificateTotal').hide();
-});
-$("#deleteAward").on("click",function() {
-	$('#awardTotal').hide();
-});
-$("#deleteOverseas").on("click",function() {
-	$('#overseasTotal').hide();
-});
-$("#deleteLanguage").on("click",function() {
-	$('#languageTotal').hide();
-});
-$("#deletePotfolio").on("click",function() {
-	$('#potfolioTotal').hide();
-});
-$("#deletePreference").on("click",function() {
-	$('#preferenceTotal').hide();
-});
-$("#deleteLetter").on("click",function() {
-	$('#letterTotal').hide();
-});
-$("#deleteCareer").on("click",function() {
-	$('#careerTotal').hide();
-}); */
-
+	
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

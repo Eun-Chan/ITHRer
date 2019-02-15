@@ -18,8 +18,8 @@
 	max-width: 180px;
 	background-color: #b89dff;
 	color: white;
-	margin-top: 50px;
-	margin-left:50px;
+	margin-top: 200px;
+	margin-left:75px;
 	cursor: pointer;
 	display: block;
 	float: left;
@@ -31,20 +31,57 @@
 }
 #category-container ul li {
 	list-style:none;
+	font-size : 20px;
+	margin-top : 5px;
 }
 </style>
 <div id="category-container">
 	<ul class="nav flex-column">
-		<li class="nav-item"><a><span>학력</span></a></li>
-		<li class="nav-item"><a><span>경력</span></a></li>
-		<li class="nav-item"><a><span>인턴,대외활동</span></a></li>
-		<li class="nav-item"><a><span>교육이수</span></a></li>
-		<li class="nav-item"><a><span>자격증</span></a></li>
-		<li class="nav-item"><a><span>수상</span></a></li>
-		<li class="nav-item"><a><span>해외경험</span></a></li>
-		<li class="nav-item"><a><span>어학</span></a></li>
-		<li class="nav-item"><a><span>포트폴리오</span></a></li>
-		<li class="nav-item"><a><span>취업우대</span></a></li>
-		<li class="nav-item"><a><span>자기소개서</span></a></li>
+		<li class="nav-item"><a onclick="addEducation();"><span>학력</span></a></li>
+		<li class="nav-item"><a onclick="addCareer();"><span>경력</span></a></li>
+		<li class="nav-item"><a onclick="addIntern();"><span>인턴,대외활동</span></a></li>
+		<li class="nav-item"><a onclick="addLearn();"><span>교육이수</span></a></li>
+		<li class="nav-item"><a onclick="addCertificate();"><span>자격증</span></a></li>
+		<li class="nav-item"><a onclick="addAward();"><span>수상</span></a></li>
+		<li class="nav-item"><a onclick="addOverseas();"><span>해외경험</span></a></li>
+		<li class="nav-item"><a onclick="addLanguage();"><span>어학</span></a></li>
+		<li class="nav-item"><a onclick="addPotfolio();"><span>포트폴리오</span></a></li>
+		<li class="nav-item"><a onclick="addPreference();"><span>취업우대</span></a></li>
+		<li class="nav-item"><a onclick="addLetter();"><span>자기소개서</span></a></li>
 	</ul>
 </div>
+<script>
+function addEducation() {
+	$("#educationTotal").show();
+}
+function addCareer() {
+	$("#careerTotal").show();
+}
+function addIntern() {
+	$("#internTotal").show();
+}
+function addLearn() {
+	$("#learnTotal").show();
+}
+function addCertificate() {
+	$("#certificateTotal").show();
+}
+function addAward() {
+	$("#awardTotal").show();
+}
+function addOverseas() {
+	$("#overseasTotal").show();
+}
+function addLanguage() {
+	$("#languageTotal").show();
+}
+function addPotfolio() {
+	$("#potfolioTotal").show();
+}
+function addPreference() {
+	$("#preferenceTotal").show();
+}
+function addLetter() {
+	$("#letterTotal").show();
+}
+</script>
