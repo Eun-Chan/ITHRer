@@ -39,8 +39,14 @@ public class IndexController {
    @RequestMapping(value="/")
    public ModelAndView index(ModelAndView mav) throws ParseException {
       //System.out.println("왓니?");
-      List<Map<String, String>> jobList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=50&ind_cd=3&job_type=4&fields=expiration-date");
+      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=40&ind_cd=3&job_type=4&fields=expiration-date");
       //System.out.println("jobList="+jobList.size());
+      
+      List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
+      for(int i = 1; i < tempList.size(); i++) {
+		   jobList.add(tempList.get(i));
+	   }
+
       //임시 셀렉트 원 
       Recruitment rc = indexService.selectOneRecruitment();
       
@@ -72,14 +78,47 @@ public class IndexController {
        
       try {
     	 Map<String, String> selectOneJob = Utils.selectOne("http://api.saramin.co.kr/job-search?id="+id);
-         Element doc = Utils.apiCrwaling(id);
+    	 Map<String, org.jsoup.nodes.Element> doc = Utils.apiCrwaling(id);
          
-         String addUrl = "http://www.saramin.co.kr";
+    	 //크롤링으로 들고오는 iframe의 설정을 변경하는 부분
+         String addUrl = "http://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
          
-         StringBuffer sb = new StringBuffer(doc.html());
+         StringBuffer sb = new StringBuffer(doc.get("detail").html());
          
-         sb.insert(doc.html().indexOf("src=")+5, addUrl);
-         sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");
+         sb.insert(doc.get("detail").html().indexOf("src=")+5, addUrl);//src의 값에 추가
+         sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");//스크롤이 가능하게 변경
+         
+         //크롤링으로 들고오는 근무지 주소값 부분
+         if(doc.get("address") != null) {
+        	 StringBuffer sb2 = new StringBuffer(doc.get("address").html());        	 
+        	 mav.addObject("address", sb2.substring(doc.get("address").html().indexOf("<span class=\"spr_jview txt_adr\">")+42, doc.get("address").html().indexOf("</span>")));
+         }
+         
+         //크롤링으로 기업정보를 가져오는 부분
+         if(doc.get("logo")!= null) {
+        	 StringBuffer sb3 = new StringBuffer(doc.get("logo").html());   
+        	 mav.addObject("logo", sb3);
+         }
+         
+         //StringBuffer sb4 = new StringBuffer(doc.get("compInfo").html());
+         String compType = doc.get("compInfo").select("dl").eq(0).html();
+         String empCount = doc.get("compInfo").select("dl").eq(1).html();
+         String jobType = doc.get("compInfo").select("dl").eq(2).html();
+         String publichedDate = doc.get("compInfo").select("dl").eq(3).html();
+         String revenue = doc.get("compInfo").select("dl").eq(4).html();
+         String representative = doc.get("compInfo").select("dl").eq(5).html();
+         String homePage = doc.get("compInfo").select("dl").eq(6).html();
+         String compAddr = doc.get("compInfo").select("dl").eq(7).html();
+         
+         mav.addObject("compType", compType);
+         mav.addObject("empCount", empCount);
+         mav.addObject("jobType", jobType);
+         mav.addObject("publichedDate", publichedDate);
+         mav.addObject("revenue", revenue);
+         mav.addObject("representative", representative);
+         mav.addObject("homePage", homePage);
+         mav.addObject("compAddr", compAddr);
+         
          
          mav.addObject("selectOneJob", selectOneJob);
          mav.addObject("doc", sb);
@@ -94,6 +133,14 @@ public class IndexController {
       
       return mav;
    }
+   
+   /*
+   @RequestMapping("/index/ithrerNotice.ithrer")
+   public ModelAndView ithrerCompanyInformation(ModelAndView mav) {
+	   mav.setViewName("/notice/ithrerNoticeDetail");
+	   return mav;
+   }
+   */
    
    @GetMapping("/searchNotice.ithrer")
    public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,
@@ -162,5 +209,22 @@ public class IndexController {
 	   
 	   return mav;
    }
+   
+   @GetMapping("/index/ithrerNotice.ithrer")
+   public ModelAndView ithrerNoticeDetail(@RequestParam("id") String compId,ModelAndView mav) {
+	   Recruitment rc = indexService.selectOneRecruitment();
+	   Company com = indexService.selectOneCompany(compId);
+	   System.out.println(rc.getOpeningDate());
+	   System.out.println(rc.getClosingDate());
+	   System.out.println(rc.getOpeningDate().substring(0, 10));
+	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
+	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
+	   
+	   mav.addObject("rc", rc);
+	   mav.addObject("com", com);
+	   mav.setViewName("/notice/ithrerNoticeDetail");
+	   return mav;
+   }
+	   
    
 }

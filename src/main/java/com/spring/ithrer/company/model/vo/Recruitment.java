@@ -33,7 +33,7 @@ public class Recruitment implements Serializable {
 	private String career; //경력
 	private String education; //학력
 	private String etcQualificationRequirement; //기타자격요건
-	private String employmentPreference; //우대사항
+	private String employmentPreference; //우대사항 
 	private int applicantAge; //나이
 	private String preliminaryQuestion; //자격요건
 	private String questionForHrmanager; //질문사항
