@@ -38,12 +38,12 @@ div.row{
 
 <div id="company-info-container" class="container">
 
-	<div id="account-info-container">
+	<div id="company-info-container">
 		<div class="text-center">
 			<span class="title badge badge-dark">기업 정보</span>
 		</div>
 		
-		<form id="account-info-form">
+		<form id="company-info-form">
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
@@ -85,14 +85,14 @@ div.row{
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="businessScale">기업규모</label>
-						<input type="text" class="form-control" id="businessScale" name="businessScale" value="${ companyMap.company.businessScale }">
+						<label for="bussinessScale">기업규모</label>
+						<input type="text" class="form-control" id="bussinessScale" name="bussinessScale" value="${ companyMap.company.bussinessScale }">
 					</div>
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="listed">상장여부</label>
-						<select id="listed" name="cars" class="custom-select">
+						<select id="listed" name="listed" class="custom-select">
 							<option value="Y" ${companyMap.company.listed=="Y"?"selected":"" }>상장</option>
 							<option value="N" ${companyMap.company.listed=="N"?"selected":"" }>비상장</option>
 						</select>
@@ -108,16 +108,16 @@ div.row{
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="mainBusiness">주요 사업내용</label>
-						<input type="text" class="form-control" id="mainBusiness" name="mainBusiness" value="${ companyMap.company.mainBusiness }">
+						<label for="mainBussiness">주요 사업내용</label>
+						<input type="text" class="form-control" id="mainBussiness" name="mainBussiness" value="${ companyMap.company.mainBussiness }">
 					</div>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="dateOfEstablishment">설립일</label>
-						<input type="text" class="form-control" id="dateOfEstablishment" name="dateOfEstablishment" value="${ companyMap.company.dateOfEstablishment }">
+						<label for="dateOfEstablishment">설립일</label><br />
+						<input type="date" name="dateOfEstablishment" id="" value="${ companyMap.company.doe }"/>
 					</div>
 				</div>
 				<div class="col-sm-6">
@@ -158,15 +158,36 @@ div.row{
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
+						<label for="introduction">회사 소개</label>
+						<input type="text" name="introduction" id="introduction" class="form-control" value="${companyMap.company.introduction }" />
+						
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="classification">기업구분</label>
+						<input type="text" name="classification" id="classification" class="form-control" value="${companyMap.company.classification }" />
+						
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
 						<label for="capital">자본금</label>
-						<input type="text" class="form-control" id="capital" name="capital" value="${ companyMap.company.capital }">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">₩</span>
+							</div>
+	 						<input type="text" class="form-control" id="capital" name="capital" onkeyup="inputNumberFormat(this)" value="${ companyMap.company.capital }">
+						</div>
 					</div>
 				</div>
 			</div>
 			
 			<div class="text-center">
-				<button type="submit" class="btn btn-outline-success">저장</button>
-				<button type="button" class="btn btn-outline-secondary">초기화</button>
+				<button type="button" id="company-info-submit" class="btn btn-outline-success">저장</button>
+				<button type="button" id="company-info-reset" class="btn btn-outline-secondary">초기화</button>
 			</div>
 		</form>
 	</div>
@@ -174,23 +195,46 @@ div.row{
 	
 	<div id="sales-info-container">
 		<span class="title badge badge-dark">매출액</span>
-		<form id="sales-info-form">
+		<button id="insert-sales-btn" class="btn btn-primary btn-sm visible-on-inline-block" data-toggle="modal" data-target="#insertSalesModal"><strong>+</strong></button>
+		
+		<div class="row">
+			<div class="col">연도</div>
+			<div class="col">매출</div>
+			<div class="col-sm-2"></div>
+		</div>
+		<c:forEach var="sales" items="${companyMap.salesList }" varStatus="vs">
+		<form id="sales-info-form${vs.count}">
 			<div class="row">
 				<div class="col">
-				
+					<div class="form-group">
+						<input type="text" class="form-control form-control-sm" id="year${vs.count}" name="year" value="${ sales.year }">
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<div class="input-group input-group-sm">
+							<div class="input-group-prepend">
+								<span class="input-group-text">₩</span>
+							</div>
+							<input type="text" class="form-control" id="sales${vs.count}" name="sales" onkeyup="inputNumberFormat(this)" value="${ sales.sales }">
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-2 text-center">
+					<button type="button" class="btn btn-outline-success btn-sm update-sales-btn">저장</button>
+					<button type="button" class="btn btn-outline-danger btn-sm delete-sales-btn">삭제</button>
 				</div>
 			</div>
-			<div class="text-center">
-				<button type="submit" class="btn btn-outline-success">저장</button>
-				<button type="button" class="btn btn-outline-secondary">초기화</button>
-			</div>
 		</form>
+		</c:forEach>
 	</div>
 	
 	
 	
 	<div id="location-info-container">
 		<span class="title badge badge-dark">위치</span>
+		
+		
 		
 		<form id="location-info-form">
 			<div class="row">
@@ -214,51 +258,55 @@ div.row{
 	<div id="hrmanager-info-container">
 		<span id="var-status" class="title badge badge-dark">인사담당자 정보 (인원: <span id="hrmanagerSize">${companyMap.hrManagerList.size()}</span>/3)</span>
 		
-		<button id="hrmanager-plus-btn" class="btn btn-primary btn-sm visible-on-inline-block" data-toggle="modal" data-target="#insertHrManagerModal"><strong>+</strong></button>
+		<button id="insert-hrmanager-btn" class="btn btn-primary btn-sm visible-on-inline-block" data-toggle="modal" data-target="#insertHrManagerModal"><strong>+</strong></button>
 		
+		<div class="row">
+			<div class="col-sm-1">no.</div>
+			<div class="col">이름</div>
+			<div class="col">부서</div>
+			<div class="col">직급</div>
+			<div class="col">휴대폰</div>
+			<div class="col">이메일</div>
+			<div class="col-sm-2"></div>
+		</div>		
 		<c:forEach var="i" begin="1" end="3" >
 			<form id="hrmanager-info-form${i}" class="visible-off">
+				<input type="hidden" id="compId${i}" name="compId" value="${companyMap.company.compId}"/>
 				<input type="hidden" id="hiddenNo${i}" name="no"/>
 				<div class="row">
 					<div class="col-sm-1">
 						<div class="form-group">
-							<label for="no${i}">no.</label>
 							<input type="text" class="form-control form-control-sm" id="no${i}" value="${i}" readonly>
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
-							<label for="name${i}">이름</label>
 							<input type="text" class="form-control form-control-sm" id="name${i}" name="name">
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
-							<label for="department${i}">부서</label>
 							<input type="text" class="form-control form-control-sm" id="department${i}" name="department">
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
-							<label for="position${i}">직급</label>
 							<input type="text" class="form-control form-control-sm" id="position${i}" name="position">
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
-							<label for="phone${i}">휴대폰</label>
 							<input type="text" class="form-control form-control-sm" id="phone${i}" name="phone">
 						</div>
 					</div>
 					<div class="col">
 						<div class="form-group">
-							<label for="email${i}">이메일</label>
 							<input type="text" class="form-control form-control-sm" id="email${i}" name="email">
 						</div>
 					</div>
-					<div class="col-sm-1 text-center">
-						<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#updateHrManagerModal">수정</button>
-						<button type="button" class="btn btn-outline-danger hrmanager-delete-btn">삭제</button>
+					<div class="col-sm-2 text-center">
+						<button type="button" id="update-hrmanager-btn${i}" class="btn btn-outline-success btn-sm">저장</button>
+						<button type="button" class="btn btn-outline-danger btn-sm delete-hrmanager-btn">삭제</button>
 					</div>
 				</div>
 			</form>
@@ -283,101 +331,43 @@ div.row{
 	        	<form id="hrmanager-insert-form">
 	        	<input type="hidden" name="compId" value="${companyMap.company.compId }" />
 				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<label for="nameModal">이름</label>
-							<input type="text" class="form-control form-control-sm" id="nameModal" name="name">
-						</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="nameModal">이름</label>
+						<input type="text" class="form-control form-control-sm" id="nameModal" name="name">
 					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="departmentModal">부서</label>
-							<input type="text" class="form-control form-control-sm" id="departmentModal" name="department">
-						</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="departmentModal">부서</label>
+						<input type="text" class="form-control form-control-sm" id="departmentModal" name="department">
 					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="positionModal">직급</label>
-							<input type="text" class="form-control form-control-sm" id="positionModal" name="position">
-						</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="positionModal">직급</label>
+						<input type="text" class="form-control form-control-sm" id="positionModal" name="position">
 					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="phoneModal">휴대폰</label>
-							<input type="text" class="form-control form-control-sm" id="phoneModal" name="phone">
-						</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="phoneModal">휴대폰</label>
+						<input type="text" id="phoneModal" class="form-control form-control-sm" name="phone" value="" placeholder="010-0000-0000"/>
 					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="emailModal">이메일</label>
-							<input type="text" class="form-control form-control-sm" id="emailModal" name="email">
-						</div>
+				</div>
+				<div class="col">
+					<div class="form-group">
+						<label for="emailModal">이메일</label>
+						<input type="text" name="email" class="form-control form-control-sm" id="emailModal" placeholder="abc@abc.com"/>
 					</div>
+				</div>
 				</div>
 			</form>
 	        </div>
 	        
 	        <!-- Modal footer -->
 	        <div class="modal-footer">
-	        	<button id="insert-hrmanager-btn" type="button" class="btn btn-outline-success">저장</button>
-	        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        </div>
-	        
-			</div>
-		</div>
-	</div>
-	<!-- updateHrManagerModal -->
-	<div class="modal fade" id="updateHrManagerModal">
-    	<div class="modal-dialog modal-dialog-centered modal-lg">
-			<div class="modal-content">
-	      
-	        <!-- Modal Header -->
-	        <div class="modal-header">
-	        	<h4 class="modal-title">인사담당자 수정</h4>
-	        	<button type="button" class="close" data-dismiss="modal">&times;</button>
-	        </div>
-	        
-	        <!-- Modal body -->
-	        <div class="modal-body">
-	        	<form id="hrmanager-update-form">
-				<div class="row">
-					<div class="col">
-						<div class="form-group">
-							<label for="nameModal2">이름</label>
-							<input type="text" class="form-control form-control-sm" id="nameModal2" name="name">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="departmentModal2">부서</label>
-							<input type="text" class="form-control form-control-sm" id="departmentModal2" name="department">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="positionModal2">직급</label>
-							<input type="text" class="form-control form-control-sm" id="positionModal2" name="position">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="phoneModal2">휴대폰</label>
-							<input type="text" class="form-control form-control-sm" id="phoneModal2" name="phone">
-						</div>
-					</div>
-					<div class="col">
-						<div class="form-group">
-							<label for="emailModal2">이메일</label>
-							<input type="text" class="form-control form-control-sm" id="emailModal2" name="email">
-						</div>
-					</div>
-				</div>
-			</form>
-	        </div>
-	        
-	        <!-- Modal footer -->
-	        <div class="modal-footer">
-	        	<button type="button" id="update-hrmanager-btn" class="btn btn-outline-success">저장</button>
+	        	<button id="insert-hrmanager-btn" type="button" class="btn btn-outline-success" data-dismiss="modal">저장</button>
 	        	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        </div>
 	        
@@ -390,10 +380,12 @@ div.row{
 
 <script>
 
+
+/* 페이지 로딩 후 데이터에 따라서 뷰단 조정 */
 $(function(){
-	/* 인사담당자 추가 버튼 */
+	/* 인사담당자 추가 버튼 보이기/안보이기*/
 	if(${companyMap.hrManagerList.size()} == 3){
-		$("#hrmanager-plus-btn").removeClass("visible-on-block").addClass("visible-off");
+		$("#insert-hrmanager-btn").removeClass("visible-on-block").addClass("visible-off");
 	}
 	
 	/* 인사담당자 form start */
@@ -436,8 +428,92 @@ $(function(){
 
 });
 
+
+/* form 제출 validate 함수 */
+
+//comma 자동으로 찍기
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+function inputNumberFormat(obj) {
+    obj.value = comma(uncomma(obj.value));
+}
+
+/* 기업정보 수정 버튼 */
+$("#company-info-submit").on("click",function(){
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+		type: "put",
+		success: function(data){
+			alert(data.msg);
+		},
+		error: function(){
+			console.log("기업정보 수정 ajax error!");
+		}
+	});
+	
+});
+
+/* 기업정보 초기화 버튼 */
+$("#company-info-reset").on("click",function(){
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/company/info?compId="+"${companyMap.company.compId}",
+		type: "get",
+		success: function(data){
+			
+			$("#compName").val(data.company.compName);
+			$("#representive").val(data.company.representive);
+			$("#dateOfEstablishment").val(data.company.doe);
+			$("#category").val(data.company.category);
+			$("#mainBussiness").val(data.company.mainBussiness);
+			$("#classification").val(data.company.classification);
+			$("#capital").val(data.company.capital);
+			$("#listed").val(data.company.listed);
+			$("#introduction").val(data.company.introduction);
+			$("#personnel").val(data.company.personnel);
+			$("#phone").val(data.company.phone);
+			$("#fax").val(data.company.fax);
+			$("#homepage").val(data.company.homepage);
+			$("#bussinessScale").val(data.company.bussinessScale);
+			$("#location").val(data.company.location);
+			
+		},
+		error: function(){
+			console.log("기업정보 수정 초기화 ajax error!");
+		}
+	});
+	
+});
+
+/* 매출액 수정 */
+$(".update-sales-btn").on("click",function(){
+	
+	var $salesForm = $(this).parents("form");
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/company/sales?"+$salesForm.serialize(),
+		type: "put",
+		success: function(data){
+			console.log(data);
+		},
+		error: function(){
+			console.log("매출액 수정 ajax error!");
+		}
+	});
+	
+});
+
+
 /* 인사담당자 등록 버튼 */
 $("#insert-hrmanager-btn").on("click",function(){
+	
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/hrManager",
@@ -445,26 +521,115 @@ $("#insert-hrmanager-btn").on("click",function(){
 		data: $("#hrmanager-insert-form").serialize(),
 		success: function(data){
 			alert(data.msg);
+			
+			$("#hrmanager-insert-form")[0].reset();
+			
+			for(var i=1; i<=3; i++){
+				$("form#hrmanager-info-form"+i)[0].reset();
+				$("form#hrmanager-info-form"+i).removeClass("visible-on-block").removeClass("visible-off").addClass("visible-off");
+			}
+			
+			for(var i=1; i<=data.hrManagerList.length; i++){
+				$("#hrmanager-info-form"+i+" #hiddenNo"+i).val(data.hrManagerList[(i-1)].no);
+				$("#hrmanager-info-form"+i+" #name"+i).val(data.hrManagerList[(i-1)].name);
+				$("#hrmanager-info-form"+i+" #department"+i).val(data.hrManagerList[(i-1)].department);
+				$("#hrmanager-info-form"+i+" #position"+i).val(data.hrManagerList[(i-1)].position);
+				$("#hrmanager-info-form"+i+" #phone"+i).val(data.hrManagerList[(i-1)].phone);
+				$("#hrmanager-info-form"+i+" #email"+i).val(data.hrManagerList[(i-1)].email);
+				
+				var $form = $("form#hrmanager-info-form"+i);
+				
+				
+				$form.removeClass("visible-off");
+				$form.addClass("visible-on-block");
+			}
+			
+			$("span#hrmanagerSize").html(data.hrManagerList.length);
+			
+			if(data.hrManagerList.length == 3){
+				$("#insert-hrmanager-btn").removeClass("visible-on-block").addClass("visible-off");
+			}
+			else{
+				$("#insert-hrmanager-btn").removeClass("visible-off").addClass("visible-on-block");
+			}
+			
 		},
 		error: function(){
-			console.log("인사담당자 저장 ajax error!")
+			console.log("인사담당자 저장 ajax error!");
 		}
 	});
 	
 	
 });
 
+/* 인사담당자 수정 버튼 */
+$("[id*=update-hrmanager-btn]").on("click",function(){
+	
+	$updateForm = $(this).parents("form");
+	
+	console.log($updateForm.serialize());
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/company/hrManager?"+$updateForm.serialize(),
+		type: "put",
+		success: function(data){
+			alert(data.msg);
+			
+			$("#hrmanager-insert-form")[0].reset();
+			
+			for(var i=1; i<=3; i++){
+				$("form#hrmanager-info-form"+i)[0].reset();
+				$("form#hrmanager-info-form"+i).removeClass("visible-on-block").removeClass("visible-off").addClass("visible-off");
+			}
+			
+			for(var i=1; i<=data.hrManagerList.length; i++){
+				$("#hrmanager-info-form"+i+" #hiddenNo"+i).val(data.hrManagerList[(i-1)].no);
+				$("#hrmanager-info-form"+i+" #name"+i).val(data.hrManagerList[(i-1)].name);
+				$("#hrmanager-info-form"+i+" #department"+i).val(data.hrManagerList[(i-1)].department);
+				$("#hrmanager-info-form"+i+" #position"+i).val(data.hrManagerList[(i-1)].position);
+				$("#hrmanager-info-form"+i+" #phone"+i).val(data.hrManagerList[(i-1)].phone);
+				$("#hrmanager-info-form"+i+" #email"+i).val(data.hrManagerList[(i-1)].email);
+				
+				var $form = $("form#hrmanager-info-form"+i);
+				
+				
+				$form.removeClass("visible-off");
+				$form.addClass("visible-on-block");
+			}
+			
+			$("span#hrmanagerSize").html(data.hrManagerList.length);
+			
+			if(data.hrManagerList.length == 3){
+				$("#insert-hrmanager-btn").removeClass("visible-on-block").addClass("visible-off");
+			}
+			else{
+				$("#insert-hrmanager-btn").removeClass("visible-off").addClass("visible-on-block");
+			}
+			
+		},
+		error: function(){
+			console.log("인사담당자 저장 ajax error!");
+		}
+	});
+	
+	
+});
+
+
+
 /* 인사담당자 삭제 버튼 */
-$(".hrmanager-delete-btn").on("click",function(){
+$(".delete-hrmanager-btn").on("click",function(){
+	if(!confirm("정말로 삭제하시겠습니까?")) return;
+	
 	var $no = $(this).parents("form").find("[id*=hiddenNo]").val();
 	var $compId = "${companyMap.company.compId}";
 	
-	if($no == ""){
+	/* if($no == ""){
 		$no = -1;
 	}
 	if($compId == ""){
 		$compId = "";
-	}
+	} */
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/hrManager?no="+$no+"&compId="+$compId,
@@ -495,10 +660,10 @@ $(".hrmanager-delete-btn").on("click",function(){
 			$("span#hrmanagerSize").html(data.hrManagerList.length);
 			
 			if(data.hrManagerList.length == 3){
-				$("#hrmanager-plus-btn").removeClass("visible-on-block").addClass("visible-off");
+				$("#insert-hrmanager-btn").removeClass("visible-on-block").addClass("visible-off");
 			}
 			else{
-				$("#hrmanager-plus-btn").removeClass("visible-off").addClass("visible-on-block");
+				$("#hrmanager-add-insert-hrmanager-btn").removeClass("visible-off").addClass("visible-on-block");
 			}
 			
 		},
@@ -509,6 +674,15 @@ $(".hrmanager-delete-btn").on("click",function(){
 	
 	
 });
+
+
+
+
+
+
+
+
+
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
