@@ -292,29 +292,29 @@
 			</button>
 		</div>
 		<div id="formPreference" class="input-group-prepend">
-			<div id="divCheckbox" class="input-group-text">
-				<input type="checkbox" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>
-				<label for="veteran" class="input-group-text">보훈대상</label>		
-			</div>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<div id="divProtected" class="input-group-text">
-				<input type="checkbox" id="protected" aria-label="Checkbox for following text input" value="protected"/>
-				<label for="protected" class="input-group-text">취업보호 대상</label>		
-			</div>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<div id="divSubsidy" class="input-group-text">
-				<input type="checkbox" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>
-				<label for="subsidy" class="input-group-text">고용지원금 대상</label>		
-			</div>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<div id="divDisorder" class="input-group-text">
-				<input type="checkbox" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>
-				<label for="disorder" class="input-group-text">장애</label>		
-			</div>
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<div id="divMilitary" class="input-group-text">
-				<input type="checkbox" id="military" aria-label="Checkbox for following text input" value="military"/>
-				<label for="military" class="input-group-text">병역</label>		
+			<div id="divCheckbox">
+				<ul>
+					<li>
+						<input type="checkbox" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>
+						<label for="veteran" class="input-group-text">보훈대상</label>		
+					</li>
+					<li>
+						<input type="checkbox" id="protected" aria-label="Checkbox for following text input" value="protected"/>
+						<label for="protected" class="input-group-text">취업보호 대상</label>
+					</li>
+					<li>
+						<input type="checkbox" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>
+						<label for="subsidy" class="input-group-text">고용지원금 대상</label>
+					</li>
+					<li>
+						<input type="checkbox" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>
+						<label for="disorder" class="input-group-text">장애</label>	
+					</li>
+					<li>
+						<input type="checkbox" id="military" aria-label="Checkbox for following text input" value="military"/>
+						<label for="military" class="input-group-text">병역</label>		
+					</li>
+				</ul>
 			</div>
 		</div>
 	</div>

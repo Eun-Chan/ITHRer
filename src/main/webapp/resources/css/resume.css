@@ -115,3 +115,15 @@ h3{
 	margin-top : 3px;
 	margin-right : 3px;
 }
+/* 취업우대 */
+#divCheckbox  ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#divCheckbox li {
+	margin : 0;
+	padding : 0;
+	border : 0;
+	float : left;
+}
