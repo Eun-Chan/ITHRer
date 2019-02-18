@@ -239,6 +239,7 @@ div.row{
 		<div class="row">
 			<div class="col">위치 이름</div>
 			<div class="col">주소</div>
+			<div class="col"></div>
 			<div class="col-sm-2"></div>
 		</div>
 		<c:forEach var="location" items="${companyMap.locationList }" varStatus="vs">
@@ -261,9 +262,15 @@ div.row{
 					</div>
 					<div class="col">
 						<div class="form-group">
-							<input type="text" class="form-control form-control-sm" id="address${vs.count}" name="address" value="${ location.address }">
+							<input type="text" class="form-control form-control-sm" id="address${vs.count}" name="address" value="${ location.address }" placeholder="클릭: 주소 검색">
 						</div>
 					</div>
+					<div class="col">
+						<div class="form-group">
+							<input type="text" class="form-control form-control-sm" id="addAddress${vs.count}" name="addAddress" value="${ location.addAddress }" placeholder="지번, 호수 등">
+						</div>
+					</div>
+							
 					<div class="col-sm-2 text-center">
 						<button type="button" class="btn btn-outline-success btn-sm update-location-btn">수정</button>
 						<button type="button" class="btn btn-outline-danger btn-sm delete-location-btn">삭제</button>
@@ -739,7 +746,12 @@ $("#insert-location-modal-btn").on("click",function(){
 	html += '</div>';
 	html += '<div class="col">';
 	html += '<div class="form-group">';
-	html += '<input type="text" class="form-control form-control-sm" id="address'+loIndex+'" name="address" value="${ location.address }">';
+	html += '<input type="text" class="form-control form-control-sm" id="address'+loIndex+'" name="address" placeholder="클릭: 주소 검색">';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="col">';
+	html += '<div class="form-group">';
+	html += '<input type="text" class="form-control form-control-sm" id="addAddress'+loIndex+'" name="addAddress" placeholder="지번, 호수 등">';
 	html += '</div>';
 	html += '</div>';
 	html += '<div class="col-sm-2 text-center">';
@@ -749,6 +761,8 @@ $("#insert-location-modal-btn").on("click",function(){
 	html += '</div>';
 	html += '</form>';
 	
+	
+	
 		
 	$("#location-info-container").append(html);
 	
@@ -756,11 +770,17 @@ $("#insert-location-modal-btn").on("click",function(){
 });
 
 /* 주소 추가 */
-$(document).on("click","[id*=address]",function(){
+$(document).on("click","[id^=address]",function(){
+	
+	var $this = $(this);
+	
 	new daum.Postcode({
 		oncomplete: function(data) {
 	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
 	        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        console.log(data.address);
+	        console.log($this);
+	    	$this.val(data.address);
 	    }
 	}).open();
 });
@@ -801,15 +821,21 @@ $(document).on("click",".insert-location-btn",function(){
 				html += '</div>';
 				html += '<div class="col">';
 				html += '<div class="form-group">';
-				html += '<input type="text" class="form-control form-control-sm" id="address'+i+'" name="address" value="${ location.address }">';
+				html += '<input type="text" class="form-control form-control-sm" id="address'+i+'" name="address" value="${ location.address }" placeholder="클릭: 주소 검색">';
+				html += '</div>';
+				html += '</div>';
+				html += '<div class="col">';
+				html += '<div class="form-group">';
+				html += '<input type="text" class="form-control form-control-sm" id="addAddress'+i+'" name="addAddress" placeholder="지번, 호수 등">';
 				html += '</div>';
 				html += '</div>';
 				html += '<div class="col-sm-2 text-center">';
-				html += '<button type="button" class="btn btn-outline-success btn-sm insert-location-btn">수정</button> ';
+				html += '<button type="button" class="btn btn-outline-success btn-sm update-location-btn">수정</button> ';
 				html += '<button type="button" class="btn btn-outline-danger btn-sm delete-location-btn">삭제</button>';
 				html += '</div>';
 				html += '</div>';
 				html += '</form>';
+				
 				
 				$("#location-info-container").append(html);
 				
@@ -820,7 +846,12 @@ $(document).on("click",".insert-location-btn",function(){
 				$form2.find("option[value="+data.locationList[(i-1)].name+"]").attr("selected",true);
 				$form2.find("[name=etc]").val(data.locationList[(i-1)].etc);
 				$form2.find("[name=address]").val(data.locationList[(i-1)].address);
+				$form2.find("[name=addAddress]").val(data.locationList[(i-1)].addAddress);
+				
+				/* 위치 옵션 기타일 경우 입력칸 보이게 하기 */
+				$("#location-info-container").find("option:selected[value=5]").parent().siblings("[name=etc]").removeClass("visible-off").addClass("visible");
 			}
+			
 			
 			
 			
@@ -836,7 +867,6 @@ $(document).on("click",".insert-location-btn",function(){
 /* 주소 수정 버튼 */
 $(document).on("click",".update-location-btn",function(){
 	
-	console.log($(this).parents("form").serialize());
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/location?"+$(this).parents("form").serialize(),
@@ -892,8 +922,13 @@ $("#location-info-container").on("click",".delete-location-btn",function(){
 				html += '</div>';
 				html += '</div>';
 				html += '</div>';
+				html += '<div class="col">';
+				html += '<div class="form-group">';
+				html += '<input type="text" class="form-control form-control-sm" id="Addaddress'+i+'" name="Addaddress" placeholder="지번, 호수 등">';
+				html += '</div>';
+				html += '</div>';
 				html += '<div class="col-sm-2 text-center">';
-				html += '<button type="button" class="btn btn-outline-success btn-sm insert-location-btn">수정</button> ';
+				html += '<button type="button" class="btn btn-outline-success btn-sm update-location-btn">수정</button> ';
 				html += '<button type="button" class="btn btn-outline-danger btn-sm delete-location-btn">삭제</button>';
 				html += '</div>';
 				html += '</div>';
@@ -907,7 +942,10 @@ $("#location-info-container").on("click",".delete-location-btn",function(){
 				$form2.find("option[value="+data.locationList[(i-1)].name+"]").attr("selected",true);
 				$form2.find("[name=etc]").val(data.locationList[(i-1)].etc);
 				$form2.find("[name=address]").val(data.locationList[(i-1)].address);
+				$form2.find("[name=addAddress]").val(data.locationList[(i-1)].addAddress);
 				
+				/* 위치 옵션 기타일 경우 입력칸 보이게 하기 */
+				$("#location-info-container").find("option:selected[value=5]").parent().siblings("[name=etc]").removeClass("visible-off").addClass("visible");
 			}
 			
 			

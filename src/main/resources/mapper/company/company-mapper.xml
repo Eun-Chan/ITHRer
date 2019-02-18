@@ -63,7 +63,7 @@
 	
 	<!-- Location 추가 -->
 	<select id="insertLocation" parameterType="location">
-		insert into location values (#{compId},seq_location_no.nextval,#{name},#{address},#{etc})
+		insert into location values (#{compId},seq_location_no.nextval,#{name},#{address},#{addAddress},#{etc})
 	</select>
 	
 	<!-- Location 삭제 -->
@@ -73,7 +73,7 @@
 	
 	<!-- Location 수정 -->
 	<update id="updateLocation" parameterType="location">
-		update location set name=#{name}, address=#{address}, etc=#{etc} where comp_id=#{compId} and no=#{no}
+		update location set name=#{name}, address=#{address}, add_address=#{addAddress}, etc=#{etc} where comp_id=#{compId} and no=#{no}
 	</update>
 	
 </mapper>

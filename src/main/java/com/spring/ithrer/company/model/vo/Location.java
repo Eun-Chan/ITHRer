@@ -21,6 +21,7 @@ public class Location implements Serializable {
 	private int no;
 	private int name;
 	private String address;
+	private String addAddress;
 	private String etc;
 	
 
