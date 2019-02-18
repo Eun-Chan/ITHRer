@@ -1,0 +1,5 @@
+/* 메뉴 탭 크기 50 : 50 나누기 */
+.nav-tabs > li.nav-item {
+	width : 50%;
+	text-align: center;
+}
