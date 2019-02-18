@@ -23,8 +23,8 @@ public class Company implements Serializable {
 	private String licenseNo;
 	private String dateOfEstablishment;
 	private String category;
-	private String mainBusiness;
-	private String classfication;
+	private String mainBussiness;
+	private String classification;
 	private String capital;
 	private String sales;
 	private String listed;
@@ -33,9 +33,12 @@ public class Company implements Serializable {
 	private String phone;
 	private String fax;
 	private String homepage;
-	private String businessScale;
+	private String bussinessScale;
 	private String location;
 	private String enrollDate;
 	private String delFlag;
+	
+	// 추가적으로 필요한 정보 담을 필드 (쿼리에서 생성한 것)
+	private String doe;
 	
 }

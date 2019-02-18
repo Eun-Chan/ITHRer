@@ -30,15 +30,15 @@ import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
+import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
 public class IndexController {
-   
-	Logger logger = Logger.getLogger(getClass());
-	
+
    @Autowired
    IndexService indexService;
    
+   Logger logger = Logger.getLogger(getClass());
    
    @RequestMapping(value="/")
    public ModelAndView index(ModelAndView mav) throws ParseException {
@@ -50,7 +50,7 @@ public class IndexController {
 	   }
 
       //임시 셀렉트 원 
-      Recruitment rc = indexService.selectOneRecruitment();
+      Recruitment rc = indexService.selectOneRecruitment(2);
       
       Company cp = indexService.selectOneCompany(rc.getCompId()); //기업 아이디를 바탕으로 회사정보를 가져옴
      
@@ -215,19 +215,32 @@ public class IndexController {
    }
    
    @GetMapping("/index/ithrerNotice.ithrer")
-   public ModelAndView ithrerNoticeDetail(@RequestParam("id") String compId,ModelAndView mav) {
-	   Recruitment rc = indexService.selectOneRecruitment();
-	   Company com = indexService.selectOneCompany(compId);
-	   System.out.println(rc.getOpeningDate());
-	   System.out.println(rc.getClosingDate());
-	   System.out.println(rc.getOpeningDate().substring(0, 10));
+   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav) {
+	   Recruitment rc = indexService.selectOneRecruitment(recruitmentNo);
+	   Company com = indexService.selectOneCompany(rc.getCompId());
+	 
+	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
 	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
 	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
 	   
+	   if(list!=null) {
+		   mav.addObject("list", list);
+	   }
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
 	   mav.setViewName("/notice/ithrerNoticeDetail");
 	   return mav;
    }
-  
+	
+   
+   //지원하기 창
+   @RequestMapping("/notice/companyApply.ithrer")
+   public ModelAndView ithrerCompanyApply(ModelAndView mav) {
+	   
+	   mav.setViewName("/notice/companyApply");
+	   
+	   return mav;
+   }
+   
+
 }

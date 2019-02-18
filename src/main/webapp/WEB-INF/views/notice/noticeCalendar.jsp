@@ -72,7 +72,7 @@ $(document).ready(function() {
 							var events = [];//이벤트를 담을 배열
 	
 							for(var i = 0; i < doc.length; i++){
-								var url = "${pageContext.request.contextPath}/index/ithrerNotice.ithrer?id="
+								var url = "${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="
 										+ doc[i].RECRUITMENT_NO;//(수정 요!!)추후에 공고 번호로 바꿔야함
 								var eventObject = {
 									title : "시작  "+doc[i].COMP_NAME,
