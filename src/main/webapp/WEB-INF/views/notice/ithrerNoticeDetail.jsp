@@ -174,7 +174,7 @@
 				<dt>설립년도</dt>
 				<dd>${com.enrollDate }</dd>
 				<dt>기업형태</dt>
-				<dd>${com.businessScale }</dd>
+				<dd>${com.bussinessScale }</dd>
 			</dl>
 	</div>
 	
