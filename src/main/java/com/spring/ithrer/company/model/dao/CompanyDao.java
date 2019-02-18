@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
 
 public interface CompanyDao {
@@ -24,5 +25,17 @@ public interface CompanyDao {
 	int updateCompany(Company company);
 
 	int updateSales(Sales sales);
+
+	int insertSales(Sales sales);
+
+	int deleteSales(Sales sales);
+
+	List<Location> selectLocationList(String compId);
+
+	int insertLocation(Location location);
+
+	int deleteLocation(Location location);
+
+	int updateLocation(Location location);
 
 }

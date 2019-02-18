@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.spring.ithrer.company.model.service.CompanyService;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
 
 @RestController
@@ -71,7 +72,36 @@ public class CompanyController {
 	
 	@PutMapping("/sales")
 	public Map<String, Object> updateSales(Sales sales){
+		logger.debug(""+sales);
 		return companyService.updateSales(sales);
+	}
+	
+	@PostMapping("/sales")
+	public Map<String, Object> insertSales(Sales sales){
+		return companyService.insertSales(sales);
+	}
+	
+	@DeleteMapping("/sales")
+	public Map<String, Object> deleteSales(Sales sales){
+		return companyService.deleteSales(sales);
+	}
+	
+	@PostMapping("/location")
+	public Map<String, Object> insertLocation(Location location){
+		logger.debug(""+location);
+		return companyService.insertLocation(location);
+	}
+	
+	@DeleteMapping("/location")
+	public Map<String, Object> deleteLocation(Location location){
+		logger.debug(""+location);
+		return companyService.deleteLocation(location);
+	}
+	
+	@PutMapping("/location")
+	public Map<String, Object> updateLocation(Location location){
+		logger.debug(""+location);
+		return companyService.updateLocation(location);
 	}
 	
 	

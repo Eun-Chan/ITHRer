@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.spring.ithrer.company.model.dao.CompanyDao;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
 
 @Service
@@ -31,11 +32,14 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		List<Sales> salesList = companyDao.selectSalesList(compId);
 		
+		List<Location> locationList = companyDao.selectLocationList(compId);
+		
 		
 		Map<String, Object> companyMap = new HashMap<>();
 		companyMap.put("company",company);
 		companyMap.put("hrManagerList",hrManagerList);
 		companyMap.put("salesList",salesList);
+		companyMap.put("locationList",locationList);
 		
 		return companyMap;
 	}
@@ -59,7 +63,8 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		
 		map.put("msg", msg);
-		map.put("hrManagerList",hrManagerList);
+		if(hrManagerList != null)
+			map.put("hrManagerList",hrManagerList);
 		
 		return map;
 	}
@@ -88,7 +93,8 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		
 		map.put("msg", msg);
-		map.put("hrManagerList",hrManagerList);
+		if(hrManagerList != null)
+			map.put("hrManagerList",hrManagerList);
 		
 		return map;
 	}
@@ -112,7 +118,9 @@ public class CompanyServiceImpl implements CompanyService {
 		}
 		
 		map.put("msg", msg);
-		map.put("hrManagerList",hrManagerList);
+		
+		if(hrManagerList != null)
+			map.put("hrManagerList",hrManagerList);
 		
 		return map;
 	}
@@ -144,6 +152,132 @@ public class CompanyServiceImpl implements CompanyService {
 		Map<String, Object> map = new HashMap<>();
 		
 		int result = companyDao.updateSales(sales);
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "수정 성공!";
+		}
+		else {
+			msg = "수정 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> insertSales(Sales sales) {
+
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.insertSales(sales);
+		List<Sales> salesList = null;
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "등록 성공!";
+			salesList = companyDao.selectSalesList(sales.getCompId());
+		}
+		else {
+			msg = "등록 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		if(salesList != null)
+			map.put("salesList",salesList);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> deleteSales(Sales sales) {
+
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.deleteSales(sales);
+		List<Sales> salesList = null;
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "삭제 성공!";
+			salesList = companyDao.selectSalesList(sales.getCompId());
+		}
+		else {
+			msg = "삭제 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		if(salesList != null)
+			map.put("salesList",salesList);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> insertLocation(Location location) {
+
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.insertLocation(location);
+		List<Location> locationList = null;
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "등록 성공!";
+			locationList = companyDao.selectLocationList(location.getCompId());
+		}
+		else {
+			msg = "등록 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		if(locationList != null)
+			map.put("locationList",locationList);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> deleteLocation(Location location) {
+
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.deleteLocation(location);
+		List<Location> locationList = null;
+		
+		String msg = "";
+		
+		if(result > 0) {
+			msg = "삭제 성공!";
+			locationList = companyDao.selectLocationList(location.getCompId());
+			logger.debug(""+locationList);
+		}
+		else {
+			msg = "삭제 실패!";
+		}
+		
+		map.put("msg", msg);
+		
+		if(locationList != null)
+			map.put("locationList",locationList);
+		
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> updateLocation(Location location) {
+
+		Map<String, Object> map = new HashMap<>();
+		
+		int result = companyDao.updateLocation(location);
 		
 		String msg = "";
 		
