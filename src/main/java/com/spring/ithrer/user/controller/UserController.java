@@ -284,8 +284,8 @@ public class UserController {
 		System.out.println("license_no = "+license_no);
 		logger.debug("하아아아아앙ㅇㅁㄴ암낭ㅁ나앙아아아아아아아아아아아아아아아아아아");
 		RestTemplate restTemplate = new RestTemplate();
-		String result = restTemplate.postForObject("https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=1360215714", request., String.class);
-		System.out.println(result);
+		//String result = restTemplate.postForObject("https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=1360215714", request., String.class);
+		//System.out.println(result);
 		return test;
 	}
 }

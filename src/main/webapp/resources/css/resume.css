@@ -1,0 +1,117 @@
+@charset "UTF-8";
+/* resume 이력서 css */
+#content{
+	margin : 0 auto;
+}
+#deleteBox {
+	float : right;
+}
+#content input {
+	margin : 5px;
+}
+#content select {
+	margin : 5px;
+}
+#content textarea {
+	margin-left : 5px;
+}
+#resumeTitle{
+	margin : 5px auto;
+	width : 900px;
+	background : white;
+}
+[id$=Wrap]{
+	margin : 5px auto;
+	width : 900px;
+	background : white;
+}
+.container {
+	background : #b89dff;
+	padding-bottom : 30px;
+}
+h3{
+	margin-left : 104px;
+}
+.btn-outline-info{
+	margin : 0 auto;
+	width : 900px;
+}
+#addUrl{
+	width : 435px;
+}
+#addFile{
+	width : 435px;
+}
+#saveButton{
+	width : 100px;
+}
+#finishButtonWrap{
+	width : 250px;
+	background : #b89dff;
+}
+/* 인적사항 */
+#name {
+	width : 200px;
+}
+#birth {
+	width : 200px;
+}
+#gender {
+	width : 150px;
+}
+#tel {
+	width : 200px;
+}
+/* 학력 */
+#educationHeader {
+	width : 900px;
+	margin : 0 auto;
+}
+#headerText {
+	display : inline-block;
+}
+#headerText h3 {
+	margin-left : 0;
+}
+#headerInput {
+	display : inline-block;
+	float : right;
+}
+/* 희망근무조건 */
+#hopeworkWrap input {
+	margin : 5px;
+}
+#hopeworkList span{
+	margin-top : 5px;
+	margin-left : 20px;
+}
+#dutyList span{
+	margin-left : 20px;
+	margin-bottom : 5px;
+}
+/* 취업우대 */
+#formPreference {
+	width : 850px;
+	margin-left : 50px;
+	margin-right : 10px;
+}
+/* 자기소개서 */
+#formLetter input {
+	width : 860px;
+	height : 50px;
+}
+#formLetter textarea {
+	width : 885px;
+	height : 300px;
+	resize : none;
+}
+.deleteLetter {
+	float : right;
+}
+.letterDiv {
+	display : inline-block;
+}
+.deleteLetter {
+	margin-top : 3px;
+	margin-right : 3px;
+}

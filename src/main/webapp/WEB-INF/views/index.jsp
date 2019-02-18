@@ -261,7 +261,7 @@
             </div>
             <button type ="button"class="bar-button" id="btn-search-notice">
                <span>
-                  검색
+                     검색
                </span>
             </button>
          </div>
@@ -311,7 +311,7 @@
       <div class="section-content">
             <h3 style="text-align: center; font-weight: 900;">ITHRer 추천 공고!!</h3>
          <ul style="list-style: none; padding-left: 20px;">
-            <li class="recommend-open">
+            <li class="recommend-open" onclick="moveDetail('${rc.compId}');">
                <div class="recommend-content">
                   <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
                   <span class="recruitTitle">${rc.recruitmentTitle }</span>
@@ -386,20 +386,14 @@
 function moveCrwaling(id){
    var id = id;
    console.log("id?? = ",id);
-    //location.href="${pageContext.request.contextPath}/index/notice.ithrer?id="+id;
-   window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id);
+   window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id, "채용정보", "width=1200px, height=800px");
    
-    /* 
-   $.ajax({
-      url: "${pageContext.request.contextPath}/index/notice.ithrer",
-      data: {id: id},
-      success: function(data){
-         $(".modal-body").append(data);
-      },error:function(request,status,error){
-          alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-      }            
-   }); */
+
 };
+function moveDetail(id){
+   var id = id;
+   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?id="+id);
+}
 
 $("#btn-search-notice").on("click", function(){
    var searchKeyWord = $("#searchKeyWord").val();
@@ -449,6 +443,6 @@ $(".open").hover(function(){
 
 
 </script>
-
+   
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

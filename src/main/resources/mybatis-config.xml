@@ -18,6 +18,7 @@
 		<typeAlias type="com.spring.ithrer.company.model.vo.HRManager" alias="hrManager"/>
 		<typeAlias type="com.spring.ithrer.company.model.vo.Sales" alias="sales"/>
 		<typeAlias type="com.spring.ithrer.user.model.vo.Member" alias="member"/>
+		<typeAlias type="com.spring.ithrer.board.model.vo.AnonyBoard" alias="anonyboard"/>
 	</typeAliases>
 
 </configuration>

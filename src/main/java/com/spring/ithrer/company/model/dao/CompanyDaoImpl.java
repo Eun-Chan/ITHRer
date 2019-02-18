@@ -44,4 +44,19 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.insert("company.insertHrManager",hrManager);
 	}
 
+	@Override
+	public int updateHrManager(HRManager hrManager) {
+		return sqlSession.update("company.updateHrManager",hrManager);
+	}
+
+	@Override
+	public int updateCompany(Company company) {
+		return sqlSession.update("company.updateCompany",company);
+	}
+
+	@Override
+	public int updateSales(Sales sales) {
+		return sqlSession.update("company.updateSales",sales);
+	}
+
 }
