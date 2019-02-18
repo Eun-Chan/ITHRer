@@ -33,7 +33,7 @@ public class Company implements Serializable {
 	private String phone;
 	private String fax;
 	private String homepage;
-	private String businessScale;
+	private String bussinessScale;
 	private String location;
 	private String enrollDate;
 	private String delFlag;

@@ -17,6 +17,8 @@
 		<typeAlias type="com.spring.ithrer.company.model.vo.Recruitment" alias="recruitment"/>
 		<typeAlias type="com.spring.ithrer.company.model.vo.HRManager" alias="hrManager"/>
 		<typeAlias type="com.spring.ithrer.company.model.vo.Sales" alias="sales"/>
+		<typeAlias type="com.spring.ithrer.user.model.vo.Member" alias="member"/>
+		<typeAlias type="com.spring.ithrer.index.model.vo.CompanyApplication" alias="ca"/>
 	</typeAliases>
 
 </configuration>
