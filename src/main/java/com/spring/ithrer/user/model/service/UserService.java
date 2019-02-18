@@ -18,4 +18,6 @@ public interface UserService {
 	Member kakaoLogin(String memberId);
 
 	Company companyCheck(Map<String, String> map);
+
+	int memberIdFindCheck(Map<String, String> member);
 }

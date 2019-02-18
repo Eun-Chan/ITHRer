@@ -48,4 +48,9 @@ public class UserDaoImpl implements UserDao {
 	public Company companyCheck(Map<String, String> map) {
 		return sqlSession.selectOne("user.companyCheck", map);
 	}
+
+	@Override
+	public int memberIdFindCheck(Map<String, String> member) {
+		return sqlSession.selectOne("user.memberIdFindCheck", member);
+	}
 }

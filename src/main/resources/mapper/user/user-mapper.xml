@@ -26,4 +26,8 @@
 	<select id="companyCheck" parameterType="map" resultType="company">
 		select * from company where comp_Id = #{companyId} and password = #{password} and del_flag = 'N'
 	</select>
+	<!-- 개인회원 아이디 찾기시 , 이름과 이메일로 회원가입한 것이 존재한지 확인 -->
+	<select id="memberIdFindCheck" parameterType="map" resultType="_int">
+		select count(*) from member where member_Name = #{memberName} and email = #{memberEmail}
+	</select>
 </mapper>

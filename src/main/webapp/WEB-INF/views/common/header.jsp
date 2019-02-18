@@ -136,7 +136,7 @@
 				  			<button type="button" class="btn btn-primary" onclick="memberLoginCheck();">로그인</button>
 				  			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/user/signUpGoing.ithrer?index=0'">회원가입</button>
 				  			<br /><br />
-				  			<a href="<%=request.getContextPath()%>/idAndPwdSearch.do">아이디 찾기</a>&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/idAndPwdSearch.do">비밀번호 찾기</a>
+				  			<a href="${pageContext.request.contextPath}/user/findingIdPwd.ithrer">아이디/비밀번호찾기</a>
 				  			<div class="form-group">
 				  			<br />
 				  				<p class="font-italic text-info">다른 계정으로 로그인</p>
@@ -163,7 +163,7 @@
 				  			<button type="button" class="btn btn-primary" onclick="companyLoginCheck();">로그인</button>
 				  			<button type="button" class="btn btn-primary" onclick="location.href='${pageContext.request.contextPath}/user/signUpGoing.ithrer?index=1'">회원가입</button>
 				  			<br /><br />
-				  			<a href="<%=request.getContextPath()%>/idAndPwdSearch.do">아이디 찾기</a>&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/idAndPwdSearch.do">비밀번호 찾기</a>
+				  			<a href="${pageContext.request.contextPath}/user/findingIdPwd.ithrer">아이디/비밀번호찾기</a>
 						</form>
 					</div>
                 </div>

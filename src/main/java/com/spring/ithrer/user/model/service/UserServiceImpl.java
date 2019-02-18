@@ -48,4 +48,9 @@ public class UserServiceImpl implements UserService {
 	public Company companyCheck(Map<String, String> map) {
 		return userDao.companyCheck(map);
 	}
+
+	@Override
+	public int memberIdFindCheck(Map<String, String> member) {
+		return userDao.memberIdFindCheck(member);
+	}
 }

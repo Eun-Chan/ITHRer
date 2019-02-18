@@ -49,10 +49,24 @@ public class UserController {
 	private static int getAuthNum() {return (int)(Math.random()*100000);};
 	private String from = "2019.khproject@gmail.com";
 	
+	/**
+	 * 회원가입 버튼
+	 */
 	@RequestMapping("/user/signUpGoing")
 	public ModelAndView signUpGoing(ModelAndView mav) {
 			
 		mav.setViewName("user/signUp");
+		
+		return mav;
+	}
+	
+	/**
+	 * 아이디/비밀번호 찾기 버튼
+	 */
+	@RequestMapping("/user/findingIdPwd")
+	public ModelAndView findingIdPwd(ModelAndView mav) {
+		
+		mav.setViewName("user/findingIdPwd");
 		
 		return mav;
 	}
@@ -286,6 +300,30 @@ public class UserController {
 		RestTemplate restTemplate = new RestTemplate();
 		//String result = restTemplate.postForObject("https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=1360215714", request., String.class);
 		//System.out.println(result);
+		return test;
+	}
+	
+	/**
+	 * 개인회원 아이디 찾기
+	 */
+	@RequestMapping(value="/user/memberIdFindCheck")
+	public Map<String,String> memberIdFindCheck(@RequestParam(name="memberName") String memberName,
+												@RequestParam(name="memberEmail") String memberEmail){
+		Map<String,String> test = new HashMap<>();
+		// 0. 이름과 이메일로 아이디가 존재하는지 확인
+		Map<String,String> member = new HashMap<>();
+		member.put("memberName", memberName);
+		member.put("memberEmail", memberEmail);
+		int result = userService.memberIdFindCheck(member);
+		// 정보 일치
+		if(result > 0) {
+			test.put("result", "true");
+		}
+		// 정보 불일치
+		else {
+			test.put("result", "false");
+		}
+		
 		return test;
 	}
 }

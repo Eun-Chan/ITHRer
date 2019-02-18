@@ -164,10 +164,11 @@
 			$("#name-help").text("이름은 한글만 가능하며, 2자리 이상이어야 합니다.");
 			$("#name-help").removeClass("text-success");
 			$("#name-help").addClass("text-danger");
-			memberName_OK = 1;
+	
 		}
 		else{
 			$("#name-help").text("");
+			memberName_OK = 1;
 		}
 	});
 	
