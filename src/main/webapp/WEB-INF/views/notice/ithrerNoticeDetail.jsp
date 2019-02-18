@@ -6,6 +6,10 @@
 <fmt:requestEncoding value="utf-8"/>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/jobSearchDetail.css" />
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fd95d92bd2f84bc07966142257229bba&libraries=services"></script>
+
+<!-- 구글 차트 스크립트 -->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <style>
 	.DetailHeader{
 	    width: 1000px;
@@ -116,6 +120,9 @@
 		font-size: 1.5em;
     	font-style: initial;
 	}
+	rect[Attributes]:last{
+		display: none;
+	}
 </style>
 <div class="DetailHeader">
 	<h1>채용정보</h1>
@@ -124,7 +131,7 @@
 	<div class="col-sm-8">
 		<h3>
 			<span class="noticeCompanyName">${com.compName }</span>
-			${rc.recruitmentTitle }
+			<span class="rcContent">${rc.recruitmentTitle }</span>
 		</h3>
 	</div>
 	<div class="col-sm-4" style="border-left:1px solid #dde2eb;">
@@ -174,7 +181,7 @@
 				<dt>설립년도</dt>
 				<dd>${com.enrollDate }</dd>
 				<dt>기업형태</dt>
-				<dd>${com.businessScale }</dd>
+				<dd>${com.bussinessScale }</dd>
 			</dl>
 	</div>
 	
@@ -193,7 +200,7 @@
 			</dl>
 		</div>
 		<div class="col-sm-9 resume">
-			<button type="button" class="btn btn-outline-primary">지원하기</button>
+			<button type="button" class="btn btn-outline-primary" id="apply">지원하기</button>
 			<dl class="resumeDl">
 				<dt>지원양식</dt>
 				<dd style="font-size: 0.8em;">ITHRer 이력서 양식</dd>
@@ -210,7 +217,7 @@
 		<div class="col-sm-9">
 			<dl class="personnel">
 				<dt>모집인원</dt>
-				<dd style="font-size: 0.8em">${rc.recruitmentPersonnel }</dd>
+				<dd style="font-size: 0.8em">${rc.recruitmentPersonnel }명</dd>
 			</dl>
 		</div>
 	</div>
@@ -224,7 +231,7 @@
 					지원자수
 				</div>
 				<div>
-					<em>00명</em>
+					<em>${list.size() }명</em>
 				</div>
 			</div>
 			<div class="col">
@@ -237,14 +244,25 @@
 			</div>
 		</div>
 		<div class="col-sm-3">
-			연령차트
+			<span>언령별</span>
+			<div  id="age" style="width: 220px; height: 160px;">
+			</div>
 		</div>
 		<div class="col-sm-3">
-			성별차트
+			<span>성별</span>
+			<div id= "gender" style="width: 220px; height: 160px;"></div>
 		</div>
 		<div class="col-sm-3">
-			학력차트
+			<span>학력별</span>
+			<div id="education" style="width: 220px; height: 160px;"></div>
 		</div>
+	</div>
+	<div class="DetailHeader">
+		<h1>근무자위치</h1>
+		<h1 style="color: #ffb6c1"><img src="${pageContext.request.contextPath }/resources/images/companylocation.svg" alt="" width="30px" height="30px"/>${com.location }</h1>
+	</div>
+	<div class="row main" id="map" style="height: 400px;">
+
 	</div>
 </div>
 <script>
@@ -279,6 +297,178 @@
 		    document.getElementById("d-day").innerHTML = d +"일  " + h + ":" + m + ":0" + s ;							
 		}
 	});
+	
+	
+ 
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+	    center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	    level: 2 // 지도의 확대 레벨
+	};  
+
+	//지도를 생성합니다    
+	var map = new daum.maps.Map(mapContainer, mapOption); 
+
+	//주소-좌표 변환 객체를 생성합니다
+	var geocoder = new daum.maps.services.Geocoder();
+
+	//주소로 좌표를 검색합니다
+	geocoder.addressSearch('${com.location}', function(result, status) {
+
+	// 정상적으로 검색이 완료됐으면 
+	 if (status === daum.maps.services.Status.OK) {
+
+	    var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+	    // 결과값으로 받은 위치를 마커로 표시합니다
+	    var marker = new daum.maps.Marker({
+	        map: map,
+	        position: coords
+	    });
+
+	    // 인포윈도우로 장소에 대한 설명을 표시합니다
+	    var infowindow = new daum.maps.InfoWindow({
+	        content: '<div style="width:150px;text-align:center;padding:6px 0;">${com.compName }</div>'
+	    });
+	    infowindow.open(map, marker);
+
+	    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	    map.setCenter(coords);
+	} 
+	});    
+
+	//마우스 휠로 지도 확대,축소 가능여부를 설정합니다
+	map.setZoomable(false);    
+		
+	//지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	var zoomControl = new daum.maps.ZoomControl();
+	map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+	
+	
+	
+	//차트를 최신버전으로 불러오고
+	google.charts.load('current', {packages: ['corechart', 'bar']});
+	//차트를 로드한다!(drawVisulization)는 차트를 불러오는 곳 함수 
+	//연령 차트
+	google.charts.setOnLoadCallback(ageChart);
+	function ageChart(){
+		 var list = new Array();
+		 var date = new Date();
+		 var one = 0; //25세이하
+		 var two = 0; //26~30
+		 var three = 0; //31~35
+		 var four = 0; //36~40
+		 var five = 0; //40~
+		 
+		 
+		 <c:forEach items="${list}" var="item">
+			list.push("${item.birth}");
+		 </c:forEach>
+		 
+		 for(var i = 0 ; i<list.length ; i++){
+			 console.log(date.getFullYear()-list[i].substr(0,4)+1);
+			 if(date.getFullYear()-list[i].substr(0,4)+1 <= 25){
+				 one++;
+			 }
+			 else if(date.getFullYear()-list[i].substr(0,4)+1 > 25 &&
+					 date.getFullYear()-list[i].substr(0,4)+1 < 31){
+				 two++;
+			 }
+			 else if(date.getFullYear()-list[i].substr(0,4)+1 > 30 &&
+					 date.getFullYear()-list[i].substr(0,4)+1 < 36){
+				 three++;
+			 }
+			 else if(date.getFullYear()-list[i].substr(0,4)+1 > 35 &&
+					 date.getFullYear()-list[i].substr(0,4)+1 < 41){
+				 four++;
+			 }
+			 else{
+				 five++;
+			 }
+		 }
+	 	 var data = google.visualization.arrayToDataTable([
+		        ['연령', '인원',{role:'style'}],
+		        ['25세 이하', one,'color:#6d8ff3'],
+		        ['26~30세', two,'color:#6d8ff3'],
+		        ['31~35세', three,'color:#6d8ff3'],
+		        ['36~40세', four,'color:#6d8ff3'],
+		        ['40세 이상', five,'color:#6d8ff3']
+		      ]);
+		      var options = {
+				 legend: 'none',
+				 fontSize:8,
+				 hAxis: {
+				     minValue: 0
+				 }
+		      }; 
+
+		      var chart = new google.visualization.BarChart(document.getElementById('age'));
+		      chart.draw(data, options);
+	}
+	//학력 차트
+	google.charts.setOnLoadCallback(educationChart);
+	function educationChart(){
+	 	 var data = google.visualization.arrayToDataTable([
+		        ['학력', '인원',{role:'style'}],
+		        ['고졸', 2,'color:#6d8ff3'],
+		        ['초대졸', 6,'color:#6d8ff3'],
+		        ['대졸', 3,'color:#6d8ff3'],
+		        ['대학원졸', 6,'color:#6d8ff3'],
+		      ]);
+		      var options = {
+				 legend: 'none',
+				 fontSize:8,
+				 hAxis: {
+				     minValue: 0
+				 }
+		      }; 
+
+		      var chart = new google.visualization.BarChart(document.getElementById('education'));
+		      chart.draw(data, options);
+	}
+</script>
+<script>
+google.charts.load('current', {packages:['corechart']});
+google.charts.setOnLoadCallback(genderChart);
+
+
+function genderChart() {
+	var list = new Array();
+	var man = 0 ;
+	var girl = 0;
+	//el을 스크립트 안에서 쓰는법
+	<c:forEach items="${list}" var="item">
+		list.push("${item.gender}");
+	</c:forEach>
+	for(var i = 0 ; i<list.length ; i++){
+		if(list[i]=='남'){
+			man++;
+		}
+		else{
+			girl++;
+		}
+	}
+	// 차트 데이터 설정
+	var data = google.visualization.arrayToDataTable([
+		['성별', '인원수',{role:'style'},{role: 'annotation'}], // 항목 정의
+		['남', man,'opacity:0.3;color:blue',man], // 항목, 값 (값은 숫자로 입력하면 그래프로 생성됨)
+		['여', girl,'red',girl],
+	]);
+
+	// 그래프 옵션
+	var options = {
+		legend : 'none',
+		bar : {
+			groupWidth : '30%' // 그래프 너비 설정 %
+		}
+	};
+
+	var chart = new google.visualization.ColumnChart(document.getElementById('gender'));
+	chart.draw(data, options);
+}
+$("#apply").on("click",function(){
+	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer","apply","width=570, height=600, resizable = no, scrollbars = no");
+});
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

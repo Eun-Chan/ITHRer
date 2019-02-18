@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
 
 public interface CompanyService {
@@ -21,5 +22,15 @@ public interface CompanyService {
 	Map<String, Object> updateCompany(Company company);
 
 	Map<String, Object> updateSales(Sales sales);
+
+	Map<String, Object> insertSales(Sales sales);
+
+	Map<String, Object> deleteSales(Sales sales);
+
+	Map<String, Object> insertLocation(Location location);
+
+	Map<String, Object> deleteLocation(Location location);
+
+	Map<String, Object> updateLocation(Location location);
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
 
 @Repository
@@ -57,6 +58,36 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public int updateSales(Sales sales) {
 		return sqlSession.update("company.updateSales",sales);
+	}
+
+	@Override
+	public int insertSales(Sales sales) {
+		return sqlSession.insert("company.insertSales",sales);
+	}
+
+	@Override
+	public int deleteSales(Sales sales) {
+		return sqlSession.delete("company.deleteSales",sales);
+	}
+
+	@Override
+	public List<Location> selectLocationList(String compId) {
+		return sqlSession.selectList("company.selectLocationList",compId);
+	}
+
+	@Override
+	public int insertLocation(Location location) {
+		return sqlSession.insert("company.insertLocation",location);
+	}
+
+	@Override
+	public int deleteLocation(Location location) {
+		return sqlSession.delete("company.deleteLocation",location);
+	}
+
+	@Override
+	public int updateLocation(Location location) {
+		return sqlSession.update("company.updateLocation",location);
 	}
 
 }

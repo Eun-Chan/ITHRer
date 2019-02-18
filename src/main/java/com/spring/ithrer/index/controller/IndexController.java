@@ -12,6 +12,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,19 +30,19 @@ import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
+import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
 public class IndexController {
-   
+
    @Autowired
    IndexService indexService;
    
+   Logger logger = Logger.getLogger(getClass());
    
    @RequestMapping(value="/")
    public ModelAndView index(ModelAndView mav) throws ParseException {
-      //System.out.println("왓니?");
       List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=40&ind_cd=3&job_type=4&fields=expiration-date");
-      //System.out.println("jobList="+jobList.size());
       
       List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
       for(int i = 1; i < tempList.size(); i++) {
@@ -48,7 +50,7 @@ public class IndexController {
 	   }
 
       //임시 셀렉트 원 
-      Recruitment rc = indexService.selectOneRecruitment();
+      Recruitment rc = indexService.selectOneRecruitment(2);
       
       Company cp = indexService.selectOneCompany(rc.getCompId()); //기업 아이디를 바탕으로 회사정보를 가져옴
      
@@ -84,7 +86,7 @@ public class IndexController {
          String addUrl = "http://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
          
          StringBuffer sb = new StringBuffer(doc.get("detail").html());
-         
+                  
          sb.insert(doc.get("detail").html().indexOf("src=")+5, addUrl);//src의 값에 추가
          sb.replace(sb.indexOf("scrolling=")+11, sb.indexOf("scrolling=")+13, "yes");//스크롤이 가능하게 변경
          
@@ -100,24 +102,26 @@ public class IndexController {
         	 mav.addObject("logo", sb3);
          }
          
-         //StringBuffer sb4 = new StringBuffer(doc.get("compInfo").html());
-         String compType = doc.get("compInfo").select("dl").eq(0).html();
-         String empCount = doc.get("compInfo").select("dl").eq(1).html();
-         String jobType = doc.get("compInfo").select("dl").eq(2).html();
-         String publichedDate = doc.get("compInfo").select("dl").eq(3).html();
-         String revenue = doc.get("compInfo").select("dl").eq(4).html();
-         String representative = doc.get("compInfo").select("dl").eq(5).html();
-         String homePage = doc.get("compInfo").select("dl").eq(6).html();
-         String compAddr = doc.get("compInfo").select("dl").eq(7).html();
+         if(doc.get("compInfo") != null) {
+        	 String compType = doc.get("compInfo").select("dl").eq(0).html();
+        	 String empCount = doc.get("compInfo").select("dl").eq(1).html();
+        	 String jobType = doc.get("compInfo").select("dl").eq(2).html();
+        	 String publichedDate = doc.get("compInfo").select("dl").eq(3).html();
+        	 String revenue = doc.get("compInfo").select("dl").eq(4).html();
+        	 String representative = doc.get("compInfo").select("dl").eq(5).html();
+        	 String homePage = doc.get("compInfo").select("dl").eq(6).html();
+        	 String compAddr = doc.get("compInfo").select("dl").eq(7).html();
+        	 
+        	 mav.addObject("compType", compType);
+        	 mav.addObject("empCount", empCount);
+        	 mav.addObject("jobType", jobType);
+        	 mav.addObject("publichedDate", publichedDate);
+        	 mav.addObject("revenue", revenue);
+        	 mav.addObject("representative", representative);
+        	 mav.addObject("homePage", homePage);
+        	 mav.addObject("compAddr", compAddr);
+         }
          
-         mav.addObject("compType", compType);
-         mav.addObject("empCount", empCount);
-         mav.addObject("jobType", jobType);
-         mav.addObject("publichedDate", publichedDate);
-         mav.addObject("revenue", revenue);
-         mav.addObject("representative", representative);
-         mav.addObject("homePage", homePage);
-         mav.addObject("compAddr", compAddr);
          
          
          mav.addObject("selectOneJob", selectOneJob);
@@ -211,20 +215,32 @@ public class IndexController {
    }
    
    @GetMapping("/index/ithrerNotice.ithrer")
-   public ModelAndView ithrerNoticeDetail(@RequestParam("id") String compId,ModelAndView mav) {
-	   Recruitment rc = indexService.selectOneRecruitment();
-	   Company com = indexService.selectOneCompany(compId);
-	   System.out.println(rc.getOpeningDate());
-	   System.out.println(rc.getClosingDate());
-	   System.out.println(rc.getOpeningDate().substring(0, 10));
+   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav) {
+	   Recruitment rc = indexService.selectOneRecruitment(recruitmentNo);
+	   Company com = indexService.selectOneCompany(rc.getCompId());
+	 
+	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
 	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
 	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
 	   
+	   if(list!=null) {
+		   mav.addObject("list", list);
+	   }
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
 	   mav.setViewName("/notice/ithrerNoticeDetail");
 	   return mav;
    }
-	   
+	
    
+   //지원하기 창
+   @RequestMapping("/notice/companyApply.ithrer")
+   public ModelAndView ithrerCompanyApply(ModelAndView mav) {
+	   
+	   mav.setViewName("/notice/companyApply");
+	   
+	   return mav;
+   }
+   
+
 }
