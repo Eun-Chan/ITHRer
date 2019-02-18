@@ -273,3 +273,101 @@ h3{
 	margin : 0 auto;
 	width : 900px; 
 }
+/*학력*/
+#educationTotal {
+	background : white;
+	margin : 0 auto;
+	width : 900px;
+}
+#educationHeader {
+	background : #b89dff;
+}
+#educationWrap {
+	background : #b89dff;
+}
+#headerInput {
+	margin-top : 5px;
+	font-size : 18px;
+}
+#formEducation1 {
+	float : left;
+}
+#formEducation1 input{
+	width : 200px;
+}
+#formEducation2 li:first-child {
+	width : 180px;
+}
+#formEducation2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formEducation2 li {
+	margin-right : 10px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#formEducation2 select {
+	width : 125px;
+	margin-top : 5px;
+	height : 38px;
+}
+#formEducation2 li:last-child {
+	margin-top : 12px;
+}
+#formEducation2 {
+	display : none;
+}
+#formEducation3 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+	float : right;
+}
+#formEducation3 li {
+	padding : 0;
+	border : 0;
+	display : inline-block;
+	vertical-align: bottom;
+}
+#formEducation3 input {
+	width : 130px;
+}
+#formEducation3 li:last-child {
+	margin-bottom : 10px;
+	margin-left : 10px;
+	font-size : 18px;
+}
+#formEducation3 input[name=transferuni] {
+	width : 25px;
+}
+#formEducation3 {
+	margin-right : 20px;
+	float : right;
+}
+#formEducation4 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formEducation4 li {
+	padding : 0;
+	border : 0;
+	margin-right : 5px;
+	display : inline-block;
+}
+#formEducation4 select{
+	margin-top : 0px;
+}
+#formEducation4 {
+	float : left;
+}
+#formEducation5 button {
+	margin-left : 5px;
+	margin-top : 8px;
+}
+#formEducation5 {
+	float : left;
+}
