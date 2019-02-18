@@ -4,8 +4,16 @@
 
 	<!-- compId를 통해서 하나의 Company 정보 가져오기 -->
 	<select id="selectCompanyOne" parameterType="string" resultType="company">
-		select * from company where comp_id = #{compId} and del_flag = 'N'
+		select c.*, to_char(date_of_establishment, 'yyyy-mm-dd') as doe from company c where comp_id = #{compId} and del_flag = 'N'
 	</select>
+	
+	<!-- company 수정 -->
+	<update id="updateCompany" parameterType="company">
+		update company set comp_name=#{compName},representive=#{representive},license_no=#{licenseNo},date_of_establishment=to_date(#{dateOfEstablishment},'yyyy-mm-dd'),
+		category=#{category},main_bussiness=#{mainBussiness},classification=#{classification},capital=#{capital},listed=#{listed},introduction=#{introduction},
+		personnel=#{personnel},phone=#{phone},fax=#{fax},homepage=#{homepage},bussiness_scale=#{bussinessScale},location=#{location}
+		where comp_id=#{compId}
+	</update>
 	
 	<!-- compId를 통해서 인사담당자 리스트 가져오기 -->
 	<select id="selectHRManagerList" parameterType="string" resultType="hrManager">
@@ -17,14 +25,55 @@
 		select * from sales where comp_id = #{compId} order by year desc
 	</select>
 	
-	<!-- HrManager 하나 지우기 -->
+	<!-- HrManager 삭제 -->
 	<delete id="deleteHrManager" parameterType="_int">
 		delete from humanresources where no = #{no}
 	</delete>
 	
 	<!-- HrManager 추가 -->
-	<insert id="insertHrManager">
+	<insert id="insertHrManager" parameterType="hrManager">
 		insert into humanresources values (seq_hr_no.nextval,#{compId},#{name},#{department},#{position},#{phone},#{email},default)
 	</insert>
+	
+	<!-- HrManager 업데이트 -->
+	<update id="updateHrManager" parameterType="hrManager">
+		update humanresources set name = #{name}, department = #{department}, position = #{position}, phone = #{phone}, email = #{email}
+		where comp_Id = #{compId} and no = #{no}
+	</update>
+	
+	<!-- Sales 업데이트 -->
+	<update id="updateSales" parameterType="sales">
+		update sales set sales=#{sales} where comp_id=#{compId} and year=#{year}
+	</update>
+	
+	<!-- Sales 추가 -->
+	<insert id="insertSales">
+		insert into sales values (#{compId},#{year},#{sales})
+	</insert>
+	
+	<!-- Sales 삭제 -->
+	<delete id="deleteSales" parameterType="sales">
+		delete from sales where comp_id=#{compId} and year=#{year}
+	</delete>
+	
+	<!-- Location List 선택 -->
+	<select id="selectLocationList" parameterType="string" resultType="location">
+		select * from location where comp_id=#{compId} order by name
+	</select>
+	
+	<!-- Location 추가 -->
+	<select id="insertLocation" parameterType="location">
+		insert into location values (#{compId},seq_location_no.nextval,#{name},#{address},#{addAddress},#{etc})
+	</select>
+	
+	<!-- Location 삭제 -->
+	<delete id="deleteLocation" parameterType="location">
+		delete from location where no = #{no}
+	</delete>
+	
+	<!-- Location 수정 -->
+	<update id="updateLocation" parameterType="location">
+		update location set name=#{name}, address=#{address}, add_address=#{addAddress}, etc=#{etc} where comp_id=#{compId} and no=#{no}
+	</update>
 	
 </mapper>
