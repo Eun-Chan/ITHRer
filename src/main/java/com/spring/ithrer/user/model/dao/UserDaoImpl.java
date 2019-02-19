@@ -53,4 +53,14 @@ public class UserDaoImpl implements UserDao {
 	public int memberIdFindCheck(Map<String, String> member) {
 		return sqlSession.selectOne("user.memberIdFindCheck", member);
 	}
+
+	@Override
+	public Member memberIdView(Map<String, String> member) {
+		return sqlSession.selectOne("user.memberIdView" , member);
+	}
+
+	@Override
+	public Member findPasswordEmailAuth(Map<String, String> member) {
+		return sqlSession.selectOne("user.findPasswordEmailAuth" , member);
+	}
 }

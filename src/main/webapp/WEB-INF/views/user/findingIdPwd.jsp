@@ -44,7 +44,7 @@
 								<div class="tab-content">
 										<!-- 개인회원 -->
 										<div class="tap-pane active" id="member">
-											<form action="${pageContext.request.contextPath}/user/memberIdFindCheck.ithrer" method="POST" class="form" method="POST" onsubmit="return memberIdFind()">
+											<form action="${pageContext.request.contextPath }/user/memberIdView.ithrer" method="POST" id="memberIdView">
 												<div class="form-group row mb-2">
 													<div class="col">
 														<input class="form-control" placeholder="이름" id="memberName" name="memberName"/>
@@ -59,8 +59,9 @@
 												</div>
 												<div class="form group row mb-2">
 													<div class="col">
-														<input type="submit" class="btn btn-secondary submitBtn" value="확인"/>
-														<span><p id="memberIdCheck-help"></p></span>
+														<span><p id="memberIdCheck-help"></p></span>														
+														<input type="button" class="btn btn-secondary submitBtn" value="확인" onclick="memberIdFind();"/>
+														<br />
 													</div>
 												</div>
 											</form>
@@ -77,6 +78,56 @@
 											</form>
 										</div>
 								</div>
+							</div>
+							<!-- 비밀번호 찾기 -->
+							<div class="tab-pane container" id="Password">
+								<!-- 개인회원 / 기업회원 으로 나누기 -->
+								<ul class="nav nav-pills nav-justified mb-5">
+									<li class="nav-item">
+										<a class="nav-link active" href="#member">개인회원</a>
+									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="#company">기업회원</a>
+									</li>									
+								</ul>
+								
+								<div class="tab-content">
+									<!-- 개인회원 -->
+									<div class="tap-pane active" id="member">
+										<form action="${pageContext.request.contextPath }/user/memberPasswordUpdateGoing.ithrer" method="POST" id="memberPasswordUpdateGoing">
+											<div class="form-group row mb-2">
+												<div class="col">
+													<input class="form-control" placeholder="아이디" id="memberId2" name="memberId2"/>
+													<span><p id="id-help"></p></span>
+												</div>
+											</div>
+											<div class="form-group row mb-2">
+												<div class="col-8">
+													<input class="form-control" placeholder="이메일주소(ithrer@ithrer.com)" type="email" id="memberEmail2" name="memberEmail2"/>
+													<span><p id="email-help2""></p></span>
+												</div>
+												<div class="col-4">
+													<input type="button" class="btn btn-secondary" value="인증번호 전송" onclick="memberEmailAuth();"/>
+												</div>
+											</div>
+											<div class="form-group row mb-2">
+												<div class="col">
+													<input class="form-control" placeholder="이메일 인증번호" type="text" id="emailAuth" name="emailAuth"/>
+													<span><p id="emailAuth-help"></p></span>
+												</div>
+											</div>
+											<div class="form group row mb-2">
+												<div class="col">
+													<span><p id="memberPasswordCheck-help"></p></span>												
+													<input type="button" class="btn btn-secondary submitBtn" value="확인" onclick="memberInfoCheck();"/>
+													<br />
+												</div>
+											</div>
+										</form>
+									</div>
+									
+									<!-- 기업회원 -->
+								</div>	
 							</div>
 						</div>
 					</div>
@@ -96,9 +147,12 @@
 	var regName = /^[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]{2,}$/;
 	var regEmail = /^[0-9a-zA-Z]([\-.\w]*[0-9a-zA-Z\-_+])*@([0-9a-zA-Z][\-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$/i;
 	
+	var memberName = $("#memberName").val().trim();
+	var memberEmail = $("#memberEmail").val().trim();
+	
 	/* 개인회원 이름 유효성 */
 	$("#memberName").keyup(function(e){
-		var memberName = $("#memberName").val().trim();
+		memberName = $("#memberName").val().trim();
 		
 		if(!regName.test(memberName)){
 			$("#name-help").text("이름은 한글만 가능하며, 2자리 이상이어야 합니다.");
@@ -116,7 +170,7 @@
 	
 	/* 개인회원 이메일 유효성 */
 	$("#memberEmail").keyup(function(e){
-		var memberEmail = $("#memberEmail").val().trim();
+		memberEmail = $("#memberEmail").val().trim();
 		
 		if(!regEmail.test(memberEmail)) {
 			$("#email-help").text("올바르지 않은 이메일 형식 입니다.");
@@ -141,19 +195,69 @@
 				type : "POST",
 				success : function(data){
 					if(data.result == "true"){
-						alert("true");
-						return true;
+						alert(data.result);
+						memberIdViewForm();
 					}
-					else {
+					else if(data.result == "false"){
 						$("#memberIdCheck-help").text("해당 회원정보는 존재하지 않습니다.");
-						alert("false");
+						alert("일치하는 회원정보가 없습니다. \n회원정보를 다시 확인하거나 회원가입을 진행해주십시오.");
+						location.reload();
 					}
-				}
+				},
+				error: function(jqXHR, textStatus, errorThrown){
+	                alert(jqXHR);
+	                alert(textStatus);
+	                alert(errorThrown);
+	            }
 			});
 		}
-		
-		return false;
 	}
+	
+	/* 멤버 아이디 form 전송 */
+	function memberIdViewForm(){
+		
+		$("#memberIdView").submit();
+	}
+	
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 개인회원 비밀번호 찾기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	var authNum;
+	
+	/* 이메일 인증번호 보내기 */
+	function memberEmailAuth(){
+		var memberId2 = $("#memberId2").val().trim();
+		var memberEmail2 = $("#memberEmail2").val().trim();
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/user/findPasswordEmailAuth.ithrer",
+			type : "POST",
+			data : {memberId2 : memberId2 , memberEmail2 : memberEmail2},
+			success : function(data){
+				if(data.result =="true"){
+					alert("메일에서 인증번호를 확인하시기 바랍니다.");
+					authNum = data.authNum;
+				}
+				else{
+					alert("일치하는 회원정보가 없습니다. \n회원정보를 다시 확인하거나 회원가입을 진행해주십시오.");
+					location.reload();
+				}
+			}
+		});
+	}
+	
+	function memberInfoCheck(){
+		var inputAuthNum = $("#emailAuth").val().trim();
+		
+		if(authNum == inputAuthNum){
+			$("#memberPasswordUpdateGoing").submit();
+		}
+		else{
+			$("#emailAuth-help").text("인증번호가 틀립니다.");
+			$("#name-help").removeClass("text-success");
+			$("#name-help").addClass("text-danger");
+		}
+	}
+	
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 개인회원 비밀번호 찾기  끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

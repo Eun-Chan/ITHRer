@@ -53,4 +53,14 @@ public class UserServiceImpl implements UserService {
 	public int memberIdFindCheck(Map<String, String> member) {
 		return userDao.memberIdFindCheck(member);
 	}
+
+	@Override
+	public Member memberIdView(Map<String, String> member) {
+		return userDao.memberIdView(member);
+	}
+
+	@Override
+	public Member findPasswordEmailAuth(Map<String, String> member) {
+		return userDao.findPasswordEmailAuth(member);
+	}
 }
