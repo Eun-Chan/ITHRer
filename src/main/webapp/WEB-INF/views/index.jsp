@@ -311,7 +311,7 @@
       <div class="section-content">
             <h3 style="text-align: center; font-weight: 900;">ITHRer 추천 공고!!</h3>
          <ul style="list-style: none; padding-left: 20px;">
-            <li class="recommend-open" onclick="moveDetail('${rc.compId}');">
+            <li class="recommend-open" onclick="moveDetail('${rc.recruitmentNo}');">
                <div class="recommend-content">
                   <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
                   <span class="recruitTitle">${rc.recruitmentTitle }</span>
@@ -390,9 +390,9 @@ function moveCrwaling(id){
    
 
 };
-function moveDetail(id){
-   var id = id;
-   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?id="+id);
+function moveDetail(no){
+   var no = no;
+   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no);
 }
 
 $("#btn-search-notice").on("click", function(){
@@ -443,6 +443,5 @@ $(".open").hover(function(){
 
 
 </script>
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

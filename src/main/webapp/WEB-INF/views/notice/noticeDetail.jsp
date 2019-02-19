@@ -103,7 +103,6 @@
 	<c:if test="${not empty address}">
 		<div id="map-container">
 			<h3><i class="fas fa-map-marker-alt"></i> 근무지 위치</h3><span id="address">${address}</span><br />
-
 			<div id="map" style="width:900px;height:400px;padding:3px;"></div>			
 
 		</div>
