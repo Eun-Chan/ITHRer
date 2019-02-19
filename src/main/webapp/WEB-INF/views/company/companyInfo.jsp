@@ -20,9 +20,6 @@ div[id$=-container]{
 	margin-top: 40px;
 	margin-bottom: 40px; 
 }
-div.row{
-	margin-bottom: 5px;
-}
 .visible-on-block{
 	display: block;
 }
