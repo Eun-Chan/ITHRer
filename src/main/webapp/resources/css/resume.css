@@ -62,21 +62,6 @@ h3{
 #tel {
 	width : 200px;
 }
-/* 학력 */
-#educationHeader {
-	width : 900px;
-	margin : 0 auto;
-}
-#headerText {
-	display : inline-block;
-}
-#headerText h3 {
-	margin-left : 0;
-}
-#headerInput {
-	display : inline-block;
-	float : right;
-}
 /* 희망근무조건 */
 #hopeworkWrap input {
 	margin : 5px;
@@ -282,9 +267,6 @@ h3{
 #educationHeader {
 	background : #b89dff;
 }
-#educationWrap {
-	background : #b89dff;
-}
 #headerInput {
 	margin-top : 5px;
 	font-size : 18px;
@@ -293,7 +275,7 @@ h3{
 	float : left;
 }
 #formEducation1 input{
-	width : 200px;
+	width : 160px;
 }
 #formEducation2 li:first-child {
 	width : 180px;
@@ -333,7 +315,7 @@ h3{
 	vertical-align: bottom;
 }
 #formEducation3 input {
-	width : 130px;
+	width : 100px;
 }
 #formEducation3 li:last-child {
 	margin-bottom : 10px;
@@ -346,6 +328,7 @@ h3{
 #formEducation3 {
 	margin-right : 20px;
 	float : right;
+	display : none;
 }
 #formEducation4 ul {
 	list-style : none;
@@ -355,7 +338,6 @@ h3{
 #formEducation4 li {
 	padding : 0;
 	border : 0;
-	margin-right : 5px;
 	display : inline-block;
 }
 #formEducation4 select{
@@ -363,11 +345,59 @@ h3{
 }
 #formEducation4 {
 	float : left;
+	display : none;
+	width : 900px;
+}
+#formEducation4 input {
+	width : 201px;
 }
 #formEducation5 button {
 	margin-left : 5px;
+	margin-bottom : 5px;
 	margin-top : 8px;
 }
 #formEducation5 {
+	margin-left : 12px;
 	float : left;
+	display : none;
+}
+#formEducation5 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formEducation5 li {
+	padding : 0;
+	border : 0;
+	display : inline-block;
+}
+#formEducation5 select{
+	width :150px;
+}
+#formEducation5 input{
+	width :250px;
+}
+#formEducation5 textarea {
+	margin-bottom : 5px;
+	width : 875px;
+	height : 75px;
+}
+#buttonEducation {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+#educationHeader {
+	width : 900px;
+	margin : 0 auto;
+}
+#headerText {
+	display : inline-block;
+}
+#headerText h3 {
+	margin-left : 0;
+}
+#headerInput {
+	display : inline-block;
+	float : right;
 }
