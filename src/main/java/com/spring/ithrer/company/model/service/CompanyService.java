@@ -6,10 +6,11 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.user.model.vo.Member;
 
 public interface CompanyService {
 
-	Map<String, Object> selectCompanyOne(String compId);
+	Map<String, Object> selectCompanyMap(String compId);
 
 	Map<String, Object> deleteHrManager(int no, String compId);
 
@@ -32,5 +33,9 @@ public interface CompanyService {
 	Map<String, Object> deleteLocation(Location location);
 
 	Map<String, Object> updateLocation(Location location);
+
+	Company selectCompanyOne(String compId);
+
+	Member selectApplicant(Map<String, Object> map);
 
 }
