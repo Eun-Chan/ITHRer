@@ -7,6 +7,8 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.index.model.vo.CompanyApplication;
+import com.spring.ithrer.user.model.vo.Member;
 
 public interface CompanyDao {
 
@@ -37,5 +39,9 @@ public interface CompanyDao {
 	int deleteLocation(Location location);
 
 	int updateLocation(Location location);
+
+	List<CompanyApplication> selectCompanyAppList(String compId);
+
+	Member selectApplicant(Map<String, Object> map);
 
 }
