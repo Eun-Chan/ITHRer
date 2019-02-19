@@ -56,25 +56,23 @@
 				</button>
 			</div>
 			<div id="formEducation1" class="input-group-prepend">
-				<select id="school0" name = "edu-school" class="custom-select">
-					<option value="" disabled selected>학교구분</option>
-					<option value="high">고등학교</option>
-					<option value="shortUniver">대학(2,3년)</option>
-					<option value="longUniver">대학교(4년)</option>			
-					<option value="graduate">대학원</option>			
-				</select>
-				<input type="text" id="schoolName0" class="form-control" placeholder="학교명"/>
+				<ul>
+					<li>
+						<select id="school0" name = "edu-school" class="custom-select">
+							<option value="" disabled selected>학교구분</option>
+							<option value="high">고등학교</option>
+							<option value="shortUniver">대학(2,3년)</option>
+							<option value="longUniver">대학교(4년)</option>			
+							<option value="graduate">대학원</option>			
+						</select>
+					</li>
+					<li>
+						<input type="text" id="schoolName0" class="form-control" placeholder="학교명"/>
+					</li>
+				</ul>
 			</div>
 			<div id="formEducation3" class="input-group-prepend">
 				<ul>
-					<li>
-						<select id="degree0" class="custom-select eduDegree">
-							<option value="" disabled selected>학위</option>
-							<option value="master">석사</option>
-							<option value="doctor">박사</option>
-							<option value="boss">석박사</option>
-						</select> 
-					</li>
 					<li><input type="text" id="uniadmissionDate0" class="form-control" placeholder="입학년월"/></li>
 					<li><input type="text" id="unigraduationDate0" class="form-control" placeholder="졸업년월"/></li>
 					<li>
@@ -105,11 +103,19 @@
 							<option value="hundred">100</option>
 						</select>
 					</li>
+					<li>
+						<select name="degree"id="degree0" class="custom-select eduDegree">
+							<option value="" disabled selected>학위</option>
+							<option value="master">석사</option>
+							<option value="doctor">박사</option>
+							<option value="boss">석박사</option>
+						</select> 
+					</li>
 				</ul>
 			</div>
 			<div id="formEducation5">
-				<button type ="button" name="otherDepartment" id="otherDepartment">다른전공</button>
-				<button type ="button" name="senierProject "id="senierProject">졸업 논문/작품</button>
+				<button type ="button" name="otherDepartment" id="otherDepartment0">다른전공</button>
+				<button type ="button" name="senierProject "id="senierProject0">졸업 논문/작품</button>
 			</div>
 			<div id="formEducation2" class="input-group-prepend">
 				<ul>
@@ -496,65 +502,66 @@ $(document).on("change","select[name=edu-school]",function() {
 	console.log("왔니?")
 	var state = $(this).val();
 	if(state =='high') {
-		console.log("나고딩");
-		$("#formEducation2").show();
-		$("#formEducation3").hide();
-		$("#formEducation4").hide();
-		$("#formEducation5").hide();
-		$("#formEducation1").children('select').css('width','125px');
-		$("#formEducation1").children('input').css('width','160px');
+		$(this).parent().parent().parent().parent().children("#formEducation2").show();
+		$(this).parent().parent().parent().parent().children("#formEducation3").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation4").hide();
+		$(this).parent().parent().parent().parent().find("select[name=degree]").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation5").hide();
 	}
 	else if(state == 'shortUniver' || state == 'longUniver') {
-		console.log("나대딩");
-		$("#formEducation2").hide();
-		$("#formEducation3").show();
-		$("#formEducation4").show();
-		$("#formEducation5").show();
-		$("#formEducation3").children().children().first().hide();
-		$("#formEducation1").children('input').css('width','275px');
+		$(this).parent().parent().parent().parent().children("#formEducation2").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation3").show();
+		$(this).parent().parent().parent().parent().children("#formEducation4").show();
+		$(this).parent().parent().parent().parent().find("select[name=degree]").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation5").show();
 	}
 	else {
-		console.log("나대학원");
-		$("#formEducation2").hide();
-		$("#formEducation3").show();
-		$("#formEducation4").show();
-		$("#formEducation5").show();
-		$("#formEducation3").children().children().first().show();
-		$("#formEducation1").children('input').css('width','160px');
+		$(this).parent().parent().parent().parent().children("#formEducation2").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation3").show();
+		$(this).parent().parent().parent().parent().children("#formEducation4").show();
+		$(this).parent().parent().parent().parent().find("select[name=degree]").show();
+		$(this).parent().parent().parent().parent().children("#formEducation5").show();
 	}
 })
 $(document).on("change","input[name=ged]",function() {
 	if($(this).prop('checked')) {
 		$(this).parent().parent().find("select").hide(); /* 졸업상태 */
 		$(this).parent().parent().find("input:text").attr("placeholder","합격년도")/* 졸업년도 */
-		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").hide(); /* 학교명 */
+		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").attr("placeholder",""); /* 학교명 */
+		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").val("대입자격검정고시"); /* 학교명 */
 	}
 	else {
 		$(this).parent().parent().find("select").show(); /* 졸업상태 */
 		$(this).parent().parent().find("input:text").attr("placeholder","졸업년도")/* 졸업년도 */
-		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").show(); /* 학교명 */
+		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").attr("placeholder","학교명"); /* 학교명 */
+		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").val(""); /* 학교명 */
 	}
 });
 
 $("#addEducation").on("click",function() {
 	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
-	html += '<div id="formEducation1" class="input-group-prepend"><select id="school'+eduFrmcount+'" name = "edu-school" class="custom-select"><option value="" disabled selected>학교구분</option>';
-	html += '<option value="high">고등학교</option><option value="shortUniver">대학(2,3년)</option><option value="longUniver">대학교(4년)</option><option value="graduate">대학원</option></select>';
-	html += '<input type="text" id="schoolName'+eduFrmcount+'" class="form-control" placeholder="학교명"/></div>';
-	html += '<div id="formEducation3" class="input-group-prepend"><ul><li><select id="degree'+eduFrmcount+'" class="custom-select eduDegree"><option value="" disabled selected>학위</option><option value="master">석사</option>';
-	html += '<option value="doctor">박사</option>	<option value="boss">석박사</option></select></li><li><input type="text" id="uniadmissionDate'+eduFrmcount+'" class="form-control" placeholder="입학년월"/></li>';
-	html += '<li><input type="text" id="unigraduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년월"/></li><li>	<select id="uniState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option>';
-	html += '<option value="graduated">졸업</option><option value="completion">수료</option><option value="ungraduated">졸업예정</option>	<option value="restschool">휴학</option><option value="leaveschool">중퇴</option></select></li>';
+	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="school'+eduFrmcount+'" name = "edu-school" class="custom-select"><option value="" disabled selected>학교구분</option>';
+	html += '<option value="high">고등학교</option><option value="shortUniver">대학(2,3년)</option><option value="longUniver">대학교(4년)</option><option value="graduate">대학원</option></select></li>';
+	html += '<li><input type="text" id="schoolName'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li></ul></div>';
+	html += '<div id="formEducation3" class="input-group-prepend"><ul><li><input type="text" id="uniadmissionDate'+eduFrmcount+'" class="form-control" placeholder="입학년월"/></li>';
+	html += '<li><input type="text" id="unigraduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년월"/></li>';
+	html += '<li><select id="uniState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option>	<option value="graduated">졸업</option>';
+	html += '<option value="completion">수료</option>	<option value="ungraduated">졸업예정</option><option value="restschool">휴학</option><option value="leaveschool">중퇴</option></select></li>';
 	html += '<li><input type="checkbox" name="transferuni" id="transferuni'+eduFrmcount+'" aria-label="Checkbox for following text input" value="transferuni"/>&nbsp;편입</li></ul></div>';
-	html += '<div id="formEducation4" class="input-group-prepend"><ul><li><input type="text" class="form-control" id="uniDepartment'+eduFrmcount+'" placeholder="전공명"/></li><li><input type="text" class="form-control" id="uniscore'+eduFrmcount+'" placeholder="학점"/></li>';
-	html += '<li><select id="scoreState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>총점</option><option value="fourdotfive">4.5</option><option value="fourdotthree">4.3</option>	<option value="fourdotzero">4.0</option>';
-	html += '<option value="hundred">100</option></select></li></ul></div><div id="formEducation5"><button type ="button" name="otherDepartment" id="otherDepartment">다른전공</button><button type ="button" name="senierProject "id="senierProject">졸업 논문/작품</button></div>';
-	html += '<div id="formEducation2" class="input-group-prepend"><ul><li><input type="text" name="graduationDate" id="graduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년도"/></li><li><select id="graduationState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option>';
-	html += '<option value="graduated">졸업</option><option value="ungraduated">졸업예정</option></select></li><li><input type="checkbox" name="ged" id="ged'+eduFrmcount+'" aria-label="Checkbox for following text input" value="ged"/>&nbsp;대입검정고시</li></ul></div></div>';
+	html += '<div id="formEducation4" class="input-group-prepend"><ul><li><input type="text" class="form-control" id="uniDepartment'+eduFrmcount+'" placeholder="전공명"/></li>';
+	html += '<li><input type="text" class="form-control" id="uniscore'+eduFrmcount+'" placeholder="학점"/></li>	<li><select id="scoreState'+eduFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>총점</option><option value="fourdotfive">4.5</option><option value="fourdotthree">4.3</option><option value="fourdotzero">4.0</option>';
+	html += '<option value="hundred">100</option></select></li><li><select name="degree"id="degree'+eduFrmcount+'" class="custom-select eduDegree">';
+	html += '<option value="" disabled selected>학위</option><option value="master">석사</option><option value="doctor">박사</option><option value="boss">석박사</option></select></li></ul></div>';
+	html += '<div id="formEducation5"><button type ="button" name="otherDepartment" id="otherDepartment'+eduFrmcount+'">다른전공</button><button type ="button" name="senierProject "id="senierProject'+eduFrmcount+'">졸업 논문/작품</button></div>';
+	html += '<div id="formEducation2" class="input-group-prepend"><ul><li><input type="text" name="graduationDate" id="graduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년도"/></li>';
+	html += '<li><select id="graduationState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option><option value="graduated">졸업</option><option value="ungraduated">졸업예정</option></select></li>';
+	html += '<li><input type="checkbox" name="ged" id="ged'+eduFrmcount+'" aria-label="Checkbox for following text input" value="ged"/>&nbsp;대입검정고시</li></ul></div></div>';
 	$('#educationWrap').append(html);
 	eduFrmcount++;
 });
-$("#otherDepartment").on("click",function() {
+$(document).on("click","button[name=otherDepartment]",function() {
+	console.log("넌되니?");
 	if(otherDepartcnt%2==0) {
 		if(otherDepartselcount == 0) {
 			var html = '<ul id="otherDepartselUl"><li><select id="otherDepartSel'+otherDepartselcount+'" class="custom-select"><option value="" disabled selected>전공선택</option>';
@@ -573,12 +580,13 @@ $("#otherDepartment").on("click",function() {
 	}
 	otherDepartcnt++;
 });
-$("#senierProject").on("click",function() {
+$(document).on("click","button[name=senierProject]",function() {
+	console.log("되니?");
 	if(otherDeparttextcnt%2==0) {
 		if(otherDeparttextcount == 0) {
 			var html = '<ul id="otherDeparttextUl"><li><textarea name="otherDepartText" id="otherDepartText0" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품"></textarea></li></ul>';
 			$("#formEducation5").append(html);
-			otherDeparttextcount++;
+			otherDeparttextcount = 1;
 		}
 		else {
 			return;

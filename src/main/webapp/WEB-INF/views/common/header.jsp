@@ -40,15 +40,15 @@
 <meta charset="UTF-8">
 <title>Hello Spring</title>
 <!-- 부트스트랩관련 라이브러리 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 <!-- 카카오톡 로그인용 -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-<!-- jquery -->
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
 
 </head>
 <body>
@@ -71,15 +71,24 @@
 			    </ul>
 			    
 			    
-			    <c:if test="${memberLoggedIn == null }">
+			    <c:if test="${empty memberLoggedIn and empty company }">
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">개인회원</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=audgnsdlsp">기업회원</a></li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/login.ithrer">기업로그인(임시)</a></li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=audgnsdlsp">기업정보</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer">공고등록 테스트</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">고객센터</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
+
 	        		</ul>
+			 	</c:if>
+			 	<c:if test="${!empty company }">
+					<ul class="navbar-nav">
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/index.ithrer?compId=${company.compId }">기업홈</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${company.compId }">기업정보관리</a></li>
+		        	</ul>
+		        	<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/company/logout.ithrer'">로그아웃</button>
 			 	</c:if>
 			 	<c:if test="${memberLoggedIn != null }">
 			 		<a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${memberLoggedIn.memberId}">${memberLoggedIn.memberName }</a>님, 안녕하세요
@@ -297,6 +306,11 @@
 			}
 		});
 	}
+	$(".nav-link").hover(function(){
+		$(this).css("color","#ffb6c1");
+	},function(){
+		$(this).css("color","rgba(0,0,0,.5)");
+	})
 </script>
 	
 	<section id="content">

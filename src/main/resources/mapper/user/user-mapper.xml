@@ -30,4 +30,12 @@
 	<select id="memberIdFindCheck" parameterType="map" resultType="_int">
 		select count(*) from member where member_Name = #{memberName} and email = #{memberEmail}
 	</select>
+	<!-- 바로 위에 SQL과 합쳐야함 나중에 해야딩 -->
+	<select id="memberIdView" parameterType="map" resultType="member">
+		select * from member where member_Name = #{memberName} and email = #{memberEmail}
+	</select>
+	<!-- 개인회원 비밀번호 찾기시 이메일 인증 -->
+	<select id="findPasswordEmailAuth" parameterType="map" resultType="member">
+		select * from member where member_id = #{memberId} and email = #{memberEmail}
+	</select>
 </mapper>

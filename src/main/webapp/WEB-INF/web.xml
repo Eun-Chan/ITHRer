@@ -69,4 +69,10 @@
   	</filter-mapping>
 	<!-- 모든 커맨드에 utf*8 처리 끝 -->
 	
+	<!-- 로그인 세션 유지 시간 지정 (단위: 분) -->
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+	
 </web-app>

@@ -259,26 +259,23 @@ h3{
 	width : 900px; 
 }
 /*학력*/
-#educationTotal {
-	background : white;
-	margin : 0 auto;
-	width : 900px;
-}
-#educationHeader {
-	background : #b89dff;
-}
-#headerInput {
-	margin-top : 5px;
-	font-size : 18px;
-}
 #formEducation1 {
-	float : left;
+	display : inline-block;	
 }
-#formEducation1 input{
-	width : 160px;
+#formEducation1 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
 }
-#formEducation2 li:first-child {
-	width : 180px;
+#formEducation1 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+}
+#formEducation2 {
+	float : right;
+	margin-right : 65px;
+	display : none;
 }
 #formEducation2 ul {
 	list-style : none;
@@ -286,48 +283,32 @@ h3{
 	padding : 0;
 }
 #formEducation2 li {
-	margin-right : 10px;
+	display : inline-block;
 	padding : 0;
 	border : 0;
-	float : left;
 }
-#formEducation2 select {
-	width : 125px;
-	margin-top : 5px;
-	height : 38px;
-}
-#formEducation2 li:last-child {
-	margin-top : 12px;
-}
-#formEducation2 {
+#formEducation3 {
+	float : right;
+	margin-right : 8px;
 	display : none;
+}
+#formEducation3 input{
+	width : 150px;
+}
+#formEducation3 input[name=transferuni]{
+	width : 20px;
 }
 #formEducation3 ul {
 	list-style : none;
 	margin : 0;
 	padding : 0;
-	float : right;
 }
 #formEducation3 li {
+	display : inline-block;
 	padding : 0;
 	border : 0;
-	display : inline-block;
-	vertical-align: bottom;
 }
-#formEducation3 input {
-	width : 100px;
-}
-#formEducation3 li:last-child {
-	margin-bottom : 10px;
-	margin-left : 10px;
-	font-size : 18px;
-}
-#formEducation3 input[name=transferuni] {
-	width : 25px;
-}
-#formEducation3 {
-	margin-right : 20px;
-	float : right;
+#formEducation4 {
 	display : none;
 }
 #formEducation4 ul {
@@ -336,30 +317,16 @@ h3{
 	padding : 0;
 }
 #formEducation4 li {
+	display : inline-block;
 	padding : 0;
 	border : 0;
-	display : inline-block;
-}
-#formEducation4 select{
-	margin-top : 0px;
-}
-#formEducation4 {
-	float : left;
-	display : none;
-	width : 900px;
-}
-#formEducation4 input {
-	width : 201px;
-}
-#formEducation5 button {
-	margin-left : 5px;
-	margin-bottom : 5px;
-	margin-top : 8px;
 }
 #formEducation5 {
-	margin-left : 12px;
-	float : left;
+	margin-left : 5px;
 	display : none;
+}
+#formEducation5 button {
+	margin-bottom : 5px;
 }
 #formEducation5 ul {
 	list-style : none;
@@ -371,21 +338,18 @@ h3{
 	border : 0;
 	display : inline-block;
 }
-#formEducation5 select{
-	width :150px;
-}
-#formEducation5 input{
-	width :250px;
-}
 #formEducation5 textarea {
 	margin-bottom : 5px;
 	width : 875px;
 	height : 75px;
-}
+} 
+*/
 #buttonEducation {
-	background : white;
 	margin : 0 auto;
 	width : 900px; 
+}
+#buttonEducation button{
+	background : white;
 }
 #educationHeader {
 	width : 900px;
