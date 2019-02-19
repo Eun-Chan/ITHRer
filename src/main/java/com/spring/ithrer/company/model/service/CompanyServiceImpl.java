@@ -13,6 +13,8 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.index.model.vo.CompanyApplication;
+import com.spring.ithrer.user.model.vo.Member;
 
 @Service
 public class CompanyServiceImpl implements CompanyService {
@@ -23,7 +25,7 @@ public class CompanyServiceImpl implements CompanyService {
 	CompanyDao companyDao;
 
 	@Override
-	public Map<String, Object> selectCompanyOne(String compId) {
+	public Map<String, Object> selectCompanyMap(String compId) {
 		
 		
 		Company company = companyDao.selectCompanyOne(compId);
@@ -34,12 +36,15 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		List<Location> locationList = companyDao.selectLocationList(compId);
 		
+		List<CompanyApplication> companyAppList = companyDao.selectCompanyAppList(compId);
+		
 		
 		Map<String, Object> companyMap = new HashMap<>();
 		companyMap.put("company",company);
 		companyMap.put("hrManagerList",hrManagerList);
 		companyMap.put("salesList",salesList);
 		companyMap.put("locationList",locationList);
+		companyMap.put("companyAppList",companyAppList);
 		
 		return companyMap;
 	}
@@ -291,6 +296,16 @@ public class CompanyServiceImpl implements CompanyService {
 		map.put("msg", msg);
 		
 		return map;
+	}
+
+	@Override
+	public Company selectCompanyOne(String compId) {
+		return companyDao.selectCompanyOne(compId);
+	}
+
+	@Override
+	public Member selectApplicant(Map<String, Object> map) {
+		return companyDao.selectApplicant(map);
 	}
 
 }

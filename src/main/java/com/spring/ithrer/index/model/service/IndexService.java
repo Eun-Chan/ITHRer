@@ -18,4 +18,6 @@ public interface IndexService {
 
 	Recruitment selectOneRecruitment(int recruitmentNo);
 
+	int insertLocation(Map<String, Object> map);
+
 }

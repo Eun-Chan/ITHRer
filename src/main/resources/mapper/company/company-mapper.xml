@@ -76,4 +76,14 @@
 		update location set name=#{name}, address=#{address}, add_address=#{addAddress}, etc=#{etc} where comp_id=#{compId} and no=#{no}
 	</update>
 	
+	<!-- 지원한 회사 List 가져오기 -->
+	<select id="selectCompanyAppList" parameterType="string" resultType="ca">
+		select * from companyapplication where comp_id=#{compId}
+	</select>
+	
+	<select id="selectApplicant" parameterType="map" resultType="member">
+		select * from member where member_id=#{memberId}
+	</select>
+	
+	
 </mapper>
