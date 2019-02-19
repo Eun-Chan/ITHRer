@@ -29,14 +29,22 @@
 	padding:10px;
 	width : 200px;
 }
+#category-container li {
+	margin-left : 5px;
+}
 #category-container ul li {
 	list-style:none;
 	font-size : 20px;
 	margin-top : 5px;
 }
+#category-container li:first-child{
+	margin-left : 27px;
+	margin-bottom : 5px;
+}
 </style>
 <div id="category-container">
 	<ul class="nav flex-column">
+		<li class="nav-item"><span>이력서 항목</span></li>
 		<li class="nav-item"><a onclick="addEducation();"><span>학력</span></a></li>
 		<li class="nav-item"><a onclick="addCareer();"><span>경력</span></a></li>
 		<li class="nav-item"><a onclick="addIntern();"><span>인턴,대외활동</span></a></li>
@@ -51,37 +59,105 @@
 	</ul>
 </div>
 <script>
+var count = 0;
 function addEducation() {
-	$("#educationTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#educationTotal").show();	
+	}
+	else {
+		$("#educationTotal").hide();		
+	}
+	console.log(count);
 }
 function addCareer() {
-	$("#careerTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#careerTotal").hide();
+	}
+	else {
+		$("#careerTotal").show();		
+	}
 }
 function addIntern() {
-	$("#internTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#internTotal").hide();		
+	}
+	else {
+		$("#internTotal").show();		
+	}
 }
 function addLearn() {
-	$("#learnTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#learnTotal").hide();		
+	}
+	else {
+		$("#learnTotal").show();	
+	}
 }
 function addCertificate() {
-	$("#certificateTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#certificateTotal").hide();	
+	}
+	else {
+		$("#certificateTotal").show();
+	}
 }
 function addAward() {
-	$("#awardTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#awardTotal").hide();	
+	}
+	else {
+		$("#awardTotal").show();
+	}
 }
 function addOverseas() {
-	$("#overseasTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#overseasTotal").hide();
+	}
+	else {
+		$("#overseasTotal").show();
+	}
 }
 function addLanguage() {
-	$("#languageTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#languageTotal").hide();
+	}
+	else {
+		$("#languageTotal").show();
+	}
 }
 function addPotfolio() {
-	$("#potfolioTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#potfolioTotal").hide();
+	}
+	else {
+		$("#potfolioTotal").show();
+	}
 }
 function addPreference() {
-	$("#preferenceTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#preferenceTotal").hide();
+	}
+	else {
+		$("#preferenceTotal").show();
+	}
 }
 function addLetter() {
-	$("#letterTotal").show();
+	count++;
+	if(count%2==0) {
+		$("#letterTotal").hide();
+	}
+	else {
+		$("#letterTotal").show();
+	}
 }
 </script>

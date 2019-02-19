@@ -1,9 +1,6 @@
 package com.spring.ithrer.user.model.vo;
 
 import java.io.Serializable;
-
-import com.spring.ithrer.index.model.vo.CompanyApplication;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,5 +26,4 @@ public class Member implements Serializable{
 	private String address;
 	private String photo;
 	private String delFlag;
-	private CompanyApplication ca;
 }

@@ -5,11 +5,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
@@ -26,6 +28,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
@@ -147,10 +151,17 @@ public class IndexController {
    */
    
    @GetMapping("/searchNotice.ithrer")
-   public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,
+   public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,@RequestParam("location") String location,
 		   							@RequestParam(value="cPage", defaultValue="1") int cPage,
 		   							ModelAndView mav, HttpServletRequest request) {
-	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&count=10&start="+cPage;
+	   System.out.println("location="+location);
+	   String [] locations = location.split(",");
+	   String loc_cd ="";
+	   for(int i = 0 ; i<locations.length ; i++) {
+		   loc_cd += locations[i]+"&";
+	   }
+	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&loc_cd="+loc_cd+"count=10&start="+cPage;
+	   logger.debug("url="+url);
 	   List<Map<String, String>> tempList = Utils.apiList(url);
 	   
 	   List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
@@ -220,11 +231,14 @@ public class IndexController {
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	 
 	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
+
 	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
 	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
 	   
+	   
 	   if(list!=null) {
-		   mav.addObject("list", list);
+		   mav.addObject("list", list);		   
+
 	   }
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
@@ -242,5 +256,28 @@ public class IndexController {
 	   return mav;
    }
    
+
+   //로케이션 코드에 넣어보자~
+   @RequestMapping("/index/locaton.ithrer")
+   public void ithrerLocation(@RequestParam("code") int code , @RequestParam("name") String name ,HttpServletResponse res) {
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("code", code);
+	   map.put("name", name);
+	   int result = indexService.insertLocation(map);
+	   
+	   Gson gson = new Gson();
+	   try {
+		gson.toJson(result , res.getWriter());
+	} catch (JsonIOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   
+   }
+   
+
 
 }

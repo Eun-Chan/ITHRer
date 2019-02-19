@@ -32,4 +32,9 @@ public class IndexServiceImpl implements IndexService{
 		List<Member> member = indexDao.selectStatistics(recruitmentNo);
 		return member;
 	}
+
+	@Override
+	public int insertLocation(Map<String, Object> map) {
+		return indexDao.insertLocation(map);
+	}
 }

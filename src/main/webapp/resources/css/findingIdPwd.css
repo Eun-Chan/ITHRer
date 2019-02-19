@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+/* 메뉴 탭 크기 50 : 50 나누기 */
+.nav-tabs > li.nav-item {
+	width : 50%;
+	text-align: center;
+}
+
+/* change border radius for the tab , apply corners on top*/
+
+.nav-pills > li > a {
+  border-radius: 4px 4px 0 0 ;
+}
+
+.tab-content {
+  /* color : white; */
+/*   background-color: #428bca; */
+  padding : 5px 15px;
+}
+
+.nav-link.active{
+	color: #fff;
+	background-color: coral;
+}
+
+.submitBtn {
+	width: 100%;
+	background: coral;
+	border-color: coral;
+}
+
+
+
