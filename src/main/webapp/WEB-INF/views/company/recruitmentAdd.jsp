@@ -297,7 +297,7 @@ html
 					<ul class="inlineblock-select" style="padding-top: 15px; padding-left: 10px;">
 						<li>
 							<!-- 경력 N년 이상 -->
-							<select class="form-control inlineblock-select fore-select" id="crr-cntUp">
+							<select class="form-control formStyleChange formStyleChange inlineblock-select fore-select" id="crr-cntUp">
 								<option value="select">선택</option>
 								<%
 									for(int i=1; i<=60; i++)
@@ -310,7 +310,7 @@ html
 						</li>
 						<li>
 							<!-- 경력 N년 미만 -->
-							<select class="form-control inlineblock-select fore-select" id="crr-cntDown">
+							<select class="form-control formStyleChange formStyleChange inlineblock-select fore-select" id="crr-cntDown">
 								<option value="select">선택</option>
 								<%
 									for(int i=1; i<=60; i++)
@@ -367,13 +367,13 @@ html
 							<th class="content-title"><span class="content-title-in hiddenTitle">계약직</span></th>
 							<td colspan="5" class="input-content">
 								<span class="content-content">근무기간&nbsp;</span>
-								<select class="form-control inlineblock-select fore-select" id="workDateRange" onchange="input_date_check_contract(this.value)">
+								<select class="form-control formStyleChange formStyleChange inlineblock-select fore-select" id="workDateRange" onchange="input_date_check_contract(this.value)">
 									<option value="select">합의 후 결정</option>
 									<option value="myinputDate-contract">직접 입력</option>
 								</select>
 								<div class="hiddenDiv-Date" id="hiddenDiv-Date-Contract">
 									<input type="text" id="date-cnt-contract" class="input-textBox date-cnt"/>&nbsp;
-									<select class="form-control inlineblock-select fore-select work-dateCntType" id="contract-select" >
+									<select class="form-control formStyleChange formStyleChange inlineblock-select fore-select work-dateCntType" id="contract-select" >
 										<option value="select">일</option>
 										<option value="select">주</option>
 										<option value="select">개월</option>
@@ -412,13 +412,13 @@ html
 							<th class="content-title"><span class="content-title-in hiddenTitle">인턴</span></th>
 							<td colspan="5" class="input-content">
 								<span class="content-content">근무기간&nbsp;</span>
-								<select class="form-control inlineblock-select fore-select" id="workDateRange-inturn" onchange="input_date_check_inturn(this.value)">
+								<select class="form-control formStyleChange formStyleChange inlineblock-select fore-select" id="workDateRange-inturn" onchange="input_date_check_inturn(this.value)">
 									<option value="select">합의 후 결정</option>
 									<option value="myinputDate-inturn">직접 입력</option>
 								</select>
 								<div class="hiddenDiv-Date" id="hiddenDiv-Date-inturn">
 									<input type="text" id="date-cnt-inturn" class="input-textBox date-cnt"/>&nbsp;
-									<select class="form-control inlineblock-select fore-select work-dateCntType" id="inturn-select" >
+									<select class="form-control formStyleChange inlineblock-select fore-select work-dateCntType" id="inturn-select" >
 										<option value="select">일</option>
 										<option value="select">주</option>
 										<option value="select">개월</option>
@@ -437,13 +437,13 @@ html
 							<th class="content-title"><span class="content-title-in hiddenTitle">프리랜서</span></th>
 							<td colspan="5" class="input-content">
 								<span class="content-content">근무기간&nbsp;</span>
-								<select class="form-control inlineblock-select fore-select" id="workDateRange-inturn" onchange="input_date_check_pre(this.value)">
+								<select class="form-control formStyleChange inlineblock-select fore-select" id="workDateRange-inturn" onchange="input_date_check_pre(this.value)">
 									<option value="select">합의 후 결정</option>
 									<option value="myinputDate-pre">직접 입력</option>
 								</select>
 								<div class="hiddenDiv-Date" id="hiddenDiv-Date-pre">
 									<input type="text" id="date-cnt-pre" class="input-textBox date-cnt"/>&nbsp;
-									<select class="form-control inlineblock-select fore-select work-dateCntType" id="pre-select" >
+									<select class="form-control formStyleChange inlineblock-select fore-select work-dateCntType" id="pre-select" >
 										<option value="select">일</option>
 										<option value="select">주</option>
 										<option value="select">개월</option>
@@ -462,13 +462,13 @@ html
 							<th class="content-title"><span class="content-title-in hiddenTitle">위촉직</span></th>
 							<td colspan="5" class="input-content">
 								<span class="content-content">근무기간&nbsp;</span>
-								<select class="form-control inlineblock-select fore-select" id="workDateRange-Commission" onchange="input_date_check_commision(this.value)">
+								<select class="form-control formStyleChange inlineblock-select fore-select" id="workDateRange-Commission" onchange="input_date_check_commision(this.value)">
 									<option value="select">합의 후 결정</option>
 									<option value="myinputDate-commision">직접 입력</option>
 								</select>
 								<div class="hiddenDiv-Date" id="hiddenDiv-Date-commision">
 									<input type="text" id="date-cnt-commision" class="input-textBox date-cnt"/>&nbsp;
-									<select class="form-control inlineblock-select fore-select work-dateCntType" id="commision-select" >
+									<select class="form-control formStyleChange inlineblock-select fore-select work-dateCntType" id="commision-select" >
 										<option value="select">일</option>
 										<option value="select">주</option>
 										<option value="select">개월</option>
@@ -493,13 +493,13 @@ html
 							<th class="content-title"><span class="content-title-in hiddenTitle">알바</span></th>
 							<td colspan="5" class="input-content">
 								<span class="content-content">근무기간&nbsp;</span>
-								<select class="form-control inlineblock-select fore-select" id="workDateRange-rbar" onchange="input_date_check_rbar(this.value)">
+								<select class="form-control formStyleChange inlineblock-select fore-select" id="workDateRange-rbar" onchange="input_date_check_rbar(this.value)">
 									<option value="select">합의 후 결정</option>
 									<option value="myinputDate-rbar">직접 입력</option>
 								</select>
 								<div class="hiddenDiv-Date" id="hiddenDiv-Date-rbar">
 									<input type="text" id="date-cnt-rbar" class="input-textBox date-cnt"/>&nbsp;
-									<select class="form-control inlineblock-select fore-select work-dateCntType" id="rbar-select" >
+									<select class="form-control formStyleChange inlineblock-select fore-select work-dateCntType" id="rbar-select" >
 										<option value="select">일</option>
 										<option value="select">주</option>
 										<option value="select">개월</option>
@@ -521,31 +521,10 @@ html
 				<input type="text" id="input-cnt" class="input-textBox" placeholder="1"/>명
 			</td>
 		</tr>
-		<!-- 모집부문 :: 직종과 중첩된다 판단되어 삭제대기 -->
-		<!-- <tr class="td-line">
-			<th class="content-title"><span class="content-title-in none-essential">모집부문</span></th>
-			<td colspan="5" class="input-content">
-				<ul class="inlineblock-jobDiv inlineblock-select">
-					<li class="radio-select">
-						<label for="new-Crr" class="radioDef">
-							<input type="radio" id="new-Crr" name="" selected />
-							<span>미입력</span>
-						</label>
-					</li class="radio-select">
-					<li>
-						<label for="normal-Crr" class="radioDef">
-							<input type="radio" id="normal-Crr" />
-							<span>입력</span>
-						</label>
-					</li>
-				</ul>
-			</td>
-		</tr> -->
 		<!-- 담당업무 -->
 		<tr class="td-line">
 			<th class="content-title"><span class="content-title-in none-essential">담당업무</span></th>
 			<td colspan="5" class="input-content">
-				<!-- <input type="text" id="input-task" class="input-textBox" placeholder="예) 자료입력 및 문서관리"/> -->
 				<textarea class="input-textBox" id="textarea" cols="30" rows="10"></textarea>
 			</td>
 		</tr>
@@ -566,13 +545,13 @@ html
 					</ul>
 				</div>
 				<!-- 체크 -->
-				<input type='checkbox' class='ipt-chkBox' name="job-Cd1" ><label for="job-Cd1 position-defaultChx">사원</label> 
-				<input type='checkbox' class='ipt-chkBox' name="job-Cd2" ><label for="job-Cd2 position-defaultChx">팀원</label> 
-				<input type='checkbox' class='ipt-chkBox' name="job-Cd3" ><label for="job-Cd3 position-defaultChx">대리</label> 
-				<input type='checkbox' class='ipt-chkBox' name="job-Cd4" ><label for="job-Cd4 position-defaultChx">파트장</label> 
-				<input type='checkbox' class='ipt-chkBox' name="job-Cd5" ><label for="job-Cd5 position-defaultChx">과장</label> 
-				<input type='checkbox' class='ipt-chkBox' name="job-Cd6" ><label for="job-Cd6 position-defaultChx">팀장</label> 
-				<input type="checkbox" class='ipt-chkBox' name="job-Cd7" ><label for="job-Cd7 position-defaultChx">차장</label>
+				<input type='checkbox' class='ipt-chkBox job-chkBox' name="job-Cd1" ><label for="job-Cd1 position-defaultChx" id="job-Cd1">사원</label> 
+				<input type='checkbox' class='ipt-chkBox job-chkBox' name="job-Cd2" ><label for="job-Cd2 position-defaultChx" id="job-Cd2">팀원</label> 
+				<input type='checkbox' class='ipt-chkBox job-chkBox' name="job-Cd3" ><label for="job-Cd3 position-defaultChx" id="job-Cd3">대리</label> 
+				<input type='checkbox' class='ipt-chkBox job-chkBox' name="job-Cd4" ><label for="job-Cd4 position-defaultChx" id="job-Cd4">파트장</label> 
+				<input type='checkbox' class='ipt-chkBox job-chkBox' name="job-Cd5" ><label for="job-Cd5 position-defaultChx" id="job-Cd5">과장</label> 
+				<input type='checkbox' class='ipt-chkBox job-chkBox' name="job-Cd6" ><label for="job-Cd6 position-defaultChx" id="job-Cd6">팀장</label> 
+				<input type="checkbox" class='ipt-chkBox job-chkBox' name="job-Cd7" ><label for="job-Cd7 position-defaultChx" id="job-Cd7">차장</label>
 				<button type="button" class="btn btn-primary" id="position-AllBtn" onclick="positionAllBtn();">전체보기</button>
 			</td>
 		</tr>
@@ -597,7 +576,7 @@ html
 		<tr class="td-line">
 			<th class="content-title"> <div class="essential">* </div><span class="content-title-in">학력</span></th>
 			<td colspan="5" class="input-content">
-				<select class="form-control" id="education-select">
+				<select class="form-control formStyleChange" id="education-select">
 					<option value="고등학교졸업">고등학교졸업</option>
 					<option value="대학(2,3년)졸업">대학(2,3년)졸업</option>
 					<option value="대학교(4년)졸업">대학교(4년)졸업</option>
@@ -612,7 +591,7 @@ html
 		<tr class="td-line">
 			<th class="content-title"><span class="content-title-in none-essential">전공계열</span></th>
 			<td colspan="5" class="input-content">
-				<select class="form-control" id="major-select">
+				<select class="form-control formStyleChange" id="major-select">
 					<option value="전공계열" selected>전공계열</option>
 					<option value="어문학계열">어문학계열</option>
 					<option value="사회과학계열">사회과학계열</option>
@@ -640,7 +619,7 @@ html
 					<ul class="inlineblock-select">
 						<li>
 							<!-- 1차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="fore-lang">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="fore-lang">
 								<option value="기타" selected>기타</option>
 								<option value="네덜란드어">네덜란드어</option>
 								<option value="노르웨이어">노르웨이어</option>
@@ -674,7 +653,7 @@ html
 						</li>
 						<li>
 							<!-- 2차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="fore-level">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="fore-level">
 								<option value="회화능력" selected>회화능력</option>
 								<option value="가능">가능</option>
 								<option value="능통">능통</option>
@@ -682,7 +661,7 @@ html
 						</li>
 						<li>
 							<!-- 3차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="fore-level">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="fore-level">
 								<option value="독해능력" selected>독해능력</option>
 								<option value="가능">가능</option>
 								<option value="능통">능통</option>
@@ -690,7 +669,7 @@ html
 						</li>
 						<li>
 							<!-- 4차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="fore-level">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="fore-level">
 								<option value="작문능력" selected>작문능력</option>
 								<option value="가능">가능</option>
 								<option value="능통">능통</option>
@@ -706,7 +685,7 @@ html
 					<ul class="inlineblock-select">
 						<li style="width: 214px;">
 							<!-- 1차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="fore-test">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="fore-test">
 								<option value="시험명" selected>시험명</option>
 								<option value="新BCT">新BCT</option>
 								<option value="OPIc(스페인어)">OPIc(스페인어)</option>
@@ -775,7 +754,7 @@ html
 						</li>
 						<li>
 							<!-- 3차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="verification-Btn">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="verification-Btn">
 								<option value="선택" selected>선택</option>
 							</select>
 						</li>
@@ -800,13 +779,13 @@ html
 				<ul class="inlineblock-select computer-abilityUl">
 					<li>
 						<!-- 기능구분 -->
-						<select class="form-control inlineblock-select fore-select" id="computer-ability">
+						<select class="form-control formStyleChange inlineblock-select fore-select" id="computer-ability">
 							<option value="기능구분" selected>기능구분</option>
 						</select>
 					</li>
 					<li>
 						<!-- 기능명 -->
-						<select class="form-control inlineblock-select fore-select" id="computer-ability-name">
+						<select class="form-control formStyleChange inlineblock-select fore-select" id="computer-ability-name">
 							<option value="기능명" selected>기능명</option>
 						</select>
 					</li>
@@ -915,19 +894,19 @@ html
 					<ul class="inlineblock-select">
 						<li>
 							<!-- 1차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="train-select">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="train-select">
 								<option value="지하철노선" selected>지하철노선</option>
 							</select>
 						</li>
 						<li>
 							<!-- 2차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="station-select">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="station-select">
 								<option value="지하철역" selected>지하철역</option>
 							</select>
 						</li>
 						<li>
 							<!-- 3차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="distance-select">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="distance-select">
 								<option value="거리" selected>거리</option>
 							</select>
 						</li>
@@ -947,13 +926,13 @@ html
 					<ul class="inlineblock-select">
 						<li>
 							<!-- 1차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="salary-select">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="salary-select">
 								<option value="연봉" selected>연봉</option>
 							</select>
 						</li>
 						<li>
 							<!-- 2차 선택지 -->
-							<select class="form-control inlineblock-select fore-select" id="salary-range">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="salary-range">
 								<option value="연봉범위" selected>연봉범위</option>
 							</select>
 						</li>
@@ -997,19 +976,19 @@ html
 						</li>
 						<!-- 시 -->
 						<li>
-							<select class="form-control inlineblock-select fore-select" id="time-hour">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="time-hour">
 								<option value="시" selected>시</option>
 							</select>
 						</li>
 						<!-- 분 -->
 						<li>
-							<select class="form-control inlineblock-select fore-select" id="time-min">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="time-min">
 								<option value="시" selected>분</option>
 							</select>
 						</li>
 						<!--마감일 -->
 						<li>
-							<select class="form-control inlineblock-select fore-select" id="time-end">
+							<select class="form-control formStyleChange inlineblock-select fore-select" id="time-end">
 								<option value="작문능력" selected>마감일지정</option>
 							</select>
 						</li>
@@ -1077,30 +1056,22 @@ html
 /* 체크된게 있는지 확인하여 div를 숨기고 보이는 함수 */
 function isChecked()
 {
-	//내가 선택한 클래스들 중에 한개라도 체크된게 없어?
-	if(!($(".ipt-chkBox").prop("checked")))
-	{
-		$("#job-code-result-Div").hide();
-	}
-	else
-	{
-		$("#job-code-result-Div").show();
-	}
+	if($("ul#job-select-result li").length) $("#job-code-result-Div").show();
+	else $("#job-code-result-Div").hide();
 }
 /* 모집직급/직책 선택 시 input태그에 추가하기 */
-$(".ipt-chkBox").on("click", function(){
+$(".job-chkBox").on("click", function(){
+	//첫요소인지 확인하기 위한 변수, 있다면 구분자를 추가
+	var divChar = $("ul#job-select-result li").length==0?"":"/&nbsp;";
+	//id값을 가져온다.(동적으로 생성되는 태그의 아이디로 주기위해)
+	var selectChkboxId = ($(this).next().attr("id"));
+	//실제값을 가져온다.
+	var resultText = $(this).next().text();
+	//체크가 될 경우 태그를 생성하고, 해제될 경우 제거한다.
+	if($(this).prop("checked"))	$("#job-select-result").append("<li class='resultJob' id='"+selectChkboxId+"'>"+divChar+resultText+"&nbsp;&nbsp;</li>");	
+	else $("li#"+selectChkboxId).remove();
+	//체크된 것이 하나도 있는지 확인한다. 결과에 따라 div를 보여주거나 숨긴다.
 	isChecked();
-	console.log($(this).prop("checked"));
-	var resultText = ($(this).next()).text();
-	console.log(resultText);
-	if($(this).prop("checked"))
-	{
-		$("#job-select-result").append("<li class='resultJob'>"+resultText+"&nbsp;</li>");	
-	}
-	else //선택한게 사라지면
-	{
-	
-	}
 });
 /* 모직직급/직책 팝업 취소 */
 $("#position-cancleBtn").on("click", function(){
@@ -1382,7 +1353,8 @@ $(".jobList li").on("click", function(){
 	width: 50px;
 }
 /* 지원자격 및 우대조건 */
-.form-control
+/* 클래스 수정할 것 */
+.formStyleChange
 {
 	width: 25%;
 	position: relative;
@@ -1648,13 +1620,18 @@ ul.inlineblock-select li
 	list-style: none;
 	float: left;
 }
-#job-code-result-Div
+#job-code-result-Div ul
 {
-	min-height: 50px;
-	min-width: 700px;
+	padding-left: 10px;
+	padding-top: 13px;
 }
 #job-code-result-Div
 {
-
+	min-height: 48px;
+	width: 100%;
+	display: none;
+	border: 1px solid #dcdcdc;
+	border-radius: 3px;
+	margin-bottom: 10px;
 }
 </style>
