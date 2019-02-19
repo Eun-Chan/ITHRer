@@ -20,4 +20,8 @@ public interface UserDao {
 	Company companyCheck(Map<String, String> map);
 
 	int memberIdFindCheck(Map<String, String> member);
+
+	Member memberIdView(Map<String, String> member);
+
+	Member findPasswordEmailAuth(Map<String, String> member);
 }

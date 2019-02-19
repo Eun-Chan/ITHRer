@@ -36,4 +36,9 @@ public class IndexDaoImpl implements IndexDao{
 			
 		return map;
 	}
+
+	@Override
+	public int insertLocation(Map<String, Object> map) {
+		return sqlSession.insert("index.insertLocation", map);
+	}
 }

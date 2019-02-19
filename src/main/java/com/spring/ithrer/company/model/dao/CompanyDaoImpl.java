@@ -1,6 +1,7 @@
 package com.spring.ithrer.company.model.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -11,6 +12,8 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.index.model.vo.CompanyApplication;
+import com.spring.ithrer.user.model.vo.Member;
 
 @Repository
 public class CompanyDaoImpl implements CompanyDao {
@@ -88,6 +91,16 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public int updateLocation(Location location) {
 		return sqlSession.update("company.updateLocation",location);
+	}
+
+	@Override
+	public List<CompanyApplication> selectCompanyAppList(String compId) {
+		return sqlSession.selectList("company.selectCompanyAppList",compId);
+	}
+
+	@Override
+	public Member selectApplicant(Map<String, Object> map) {
+		return sqlSession.selectOne("company.selectApplicant",map);
 	}
 
 }

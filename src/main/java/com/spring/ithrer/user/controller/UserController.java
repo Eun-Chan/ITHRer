@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,6 +31,7 @@ import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Controller
+@SessionAttributes(value= {"member" , "company"})
 public class UserController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -47,6 +49,7 @@ public class UserController {
 	private static int authNum;
 	// 랜덤번호 생성 메서드
 	private static int getAuthNum() {return (int)(Math.random()*100000);};
+	// 이메일 인증시 보낼 보낸이 이메일
 	private String from = "2019.khproject@gmail.com";
 	
 	/**
@@ -306,7 +309,8 @@ public class UserController {
 	/**
 	 * 개인회원 아이디 찾기
 	 */
-	@RequestMapping(value="/user/memberIdFindCheck")
+	@RequestMapping(value="/user/memberIdFindCheck", method=RequestMethod.POST)
+	@ResponseBody
 	public Map<String,String> memberIdFindCheck(@RequestParam(name="memberName") String memberName,
 												@RequestParam(name="memberEmail") String memberEmail){
 		Map<String,String> test = new HashMap<>();
@@ -315,15 +319,110 @@ public class UserController {
 		member.put("memberName", memberName);
 		member.put("memberEmail", memberEmail);
 		int result = userService.memberIdFindCheck(member);
+		System.out.println("result = "+result);
 		// 정보 일치
 		if(result > 0) {
+			System.out.println("true");
 			test.put("result", "true");
 		}
 		// 정보 불일치
 		else {
+			System.out.println("falseFalse");
 			test.put("result", "false");
 		}
 		
 		return test;
+	}
+	
+	/**
+	 * 개인회원 아이디 => 인증번호 입력하는 곳으로
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/memberIdView" , method=RequestMethod.POST)
+	public ModelAndView memberIdAuth(@RequestParam(name="memberName") String memberName,
+									 @RequestParam(name="memberEmail") String memberEmail,
+									 ModelAndView mav) throws Exception {
+		Map<String,String> member = new HashMap<>();
+		member.put("memberName", memberName);
+		member.put("memberEmail", memberEmail);
+		// 0. 이름과 이메일로 사용자 아이디 가져오기
+		Member mem = userService.memberIdView(member);
+		
+		// 1. 사용자의 이메일로 아이디 보내기
+		// 인증번호 생성
+		authNum = getAuthNum();
+		// 보낼 이메일 주소		
+		String to = memberEmail;
+		
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		messageHelper.setTo(new InternetAddress(to));
+		messageHelper.setText("회원 아이디 = "+mem.getMemberId());
+		messageHelper.setFrom(new InternetAddress(from));
+		messageHelper.setSubject("ITHRer 회원 아이디 조회");
+		
+		mailSender.send(message);
+		
+		mav.setViewName("/user/findIdEnd");
+		
+		return mav;
+	}
+	
+	/**
+	 * 개인회원 비밀번호 찾기 시 이메일 인증
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/findPasswordEmailAuth" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> findPasswordEmailAuth(@RequestParam(name="memberId2") String memberId ,
+													@RequestParam(name="memberEmail2") String memberEmail) throws Exception{
+		Map<String,String> test = new HashMap<>();
+		Map<String,String> member = new HashMap<>();
+		member.put("memberId" , memberId);
+		member.put("memberEmail", memberEmail);
+		logger.debug("memberId = "+memberId);
+		logger.debug("memberEmail = "+memberEmail);
+		// 0. 아이디와 이메일로 정보가있는지 확인
+		Member mem = userService.findPasswordEmailAuth(member);
+		
+		// 조회성공 => 이메일로 인증번호 보내주기
+		if(mem != null) {
+			test.put("result" , "true");
+			authNum = getAuthNum();
+			emailSend(memberEmail , "인증번호 = "+String.valueOf(authNum) , "ITHRer 비밀번호 찾기 인증번호");
+			test.put("authNum" , String.valueOf(authNum));
+			logger.debug("비밀번호 찾기 , mem 은 있당");
+		}
+		// 조회실패 => 정보가 없으므로 나가리
+		else {
+			test.put("result" , "false");
+			logger.debug("비밀번호 찾기 , mem 은 없다");
+		}
+		
+		return test;
+		
+	}
+	
+	@RequestMapping(value="/user/memberPasswordUpdateGoing" , method=RequestMethod.POST)
+	public ModelAndView memberPasswordUpdateGoing(Member member , ModelAndView mav) {
+		mav.addObject("member", member);
+		
+		
+		
+		return mav;
+	}
+	
+	/**
+	 * 이메일 보내기
+	 */
+	public void emailSend(String to , String text, String subject) throws Exception {
+		MimeMessage message = mailSender.createMimeMessage();
+		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+		messageHelper.setTo(new InternetAddress(to));
+		messageHelper.setText(text);
+		messageHelper.setFrom(new InternetAddress(from));
+		messageHelper.setSubject(subject);
+		
+		mailSender.send(message);
 	}
 }
