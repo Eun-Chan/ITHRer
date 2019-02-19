@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="calendar">
+
+	<select id="selectCalNotice" resultType="map">
+		<![CDATA[select comp_id, c.comp_name, r.recruitment_no,to_char(r.opening_date, 'yyyy-mm-dd') as OPENING_DATE, to_char(r.closing_date, 'yyyy-mm-dd') AS CLOSING_DATE from recruitment r join company c USING(comp_id) where sysdate <= r.closing_date]]>
+	</select>
+	
+</mapper>

@@ -37,16 +37,13 @@ public class Utils {
 			Document doc = dBuilder.parse(url);
 			
 			doc.getDocumentElement().normalize();
-			System.out.println("Root element:"+doc.getDocumentElement().getNodeName());
 			
 			NodeList nList = doc.getElementsByTagName("job");
-			System.out.println("파싱할 리스트 수 : "+nList.getLength());
 
 			list = new ArrayList<Map<String,String>>();
 			
 			NodeList nList2 = doc.getElementsByTagName("jobs");
 			String total = nList2.item(0).getAttributes().getNamedItem("total").getNodeValue();
-			System.out.println("totalcontent!!!!!!!!!!="+total);
 			
 			map.put("totlaContent", total);
 			list.add(map);
@@ -56,17 +53,6 @@ public class Utils {
 				Node nNode = nList.item(i);
 				if(nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-//					System.out.println("####################");
-//					System.out.println(i);
-//					System.out.println("공고ID:"+getTagValue("id", eElement));
-//					System.out.println("기업명 :"+ getTagValue("name",eElement));
-//					System.out.println("공고 제목 :"+ getTagValue("title",eElement));
-//					System.out.println("근무형태 :"+ getTagValue("job-type",eElement));
-//					System.out.println("경력 : "+getTagValue("experience-level", eElement));
-//					System.out.println("학력 : "+getTagValue("required-education-level", eElement));
-//					System.out.println("연봉 : "+getTagValue("salary", eElement));
-//					System.out.println("마감일시 :"+getTagValue("expiration-date", eElement));
-//					System.out.println(getTagValue("expiration-date", eElement).substring(0,10));
 					
 					map.put("id", getTagValue("id", eElement));
 					map.put("name", getTagValue("name",eElement));
@@ -76,6 +62,8 @@ public class Utils {
 					map.put("level", getTagValue("required-education-level",eElement));
 					map.put("salary", getTagValue("salary",eElement));
 					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
+					map.put("expiration", getTagValue("expiration-timestamp", eElement));
+					
 					String endTime = getTagValue("expiration-timestamp", eElement);
 					int endTimes = Integer.parseInt(endTime)/(24*60*60*1000);
 					
@@ -100,27 +88,15 @@ public class Utils {
 			Document doc = dBuilder.parse(url);
 			
 			doc.getDocumentElement().normalize();
-			System.out.println("Root element:"+doc.getDocumentElement().getNodeName());
 			
 			NodeList nList = doc.getElementsByTagName("job");
-			System.out.println("파싱할 리스트 수 : "+nList.getLength());
 			
 			for(int i = 0 ; i<nList.getLength() ; i++) {
 				map = new HashMap<String, String>();
 				Node nNode = nList.item(i);
 				if(nNode.getNodeType() == Node.ELEMENT_NODE) {
 					Element eElement = (Element) nNode;
-//					System.out.println("####################");
-//					System.out.println(i);
-//					System.out.println("공고ID:"+getTagValue("id", eElement));
-//					System.out.println("기업명 :"+ getTagValue("name",eElement));
-//					System.out.println("공고 제목 :"+ getTagValue("title",eElement));
-//					System.out.println("근무형태 :"+ getTagValue("job-type",eElement));
-//					System.out.println("경력 : "+getTagValue("experience-level", eElement));
-//					System.out.println("학력 : "+getTagValue("required-education-level", eElement));
-//					System.out.println("연봉 : "+getTagValue("salary", eElement));
-//					System.out.println("마감일시 :"+getTagValue("expiration-date", eElement));
-//					System.out.println(getTagValue("expiration-date", eElement).substring(0,10));
+					
 					map.put("name", getTagValue("name",eElement)); //기업명
 					map.put("title", getTagValue("title",eElement)); //공고제목
 					map.put("jobType", getTagValue("job-type",eElement)); //근무형태
@@ -153,6 +129,8 @@ public class Utils {
 		org.jsoup.nodes.Element compInfo = null;
 		org.jsoup.nodes.Element logo = null;
 		
+		Map<String, org.jsoup.nodes.Element> map = new HashMap<>();
+		
 		try {
 			detail = doc4.select("div.cont").get(1);
 			address = doc4.select("div#map_0").get(0);
@@ -162,23 +140,20 @@ public class Utils {
 			
 		}
 		
-		//System.out.println("여기는 유틸즈 디테일src"+detail.text());
-		//System.out.println("여기는 유틸즈 디테일html"+detail.html());
-//		if(address != null) {
-//			System.out.println("주소를 긁어왔느냐"+address.html());			
-//		}
+		if(address != null) {
+			//System.out.println("주소를 긁어왔느냐"+address.html());			
+			map.put("address", address);
+		}
 		if(compInfo != null) {
-			System.out.println("기업정보를 긁어왔느냐"+compInfo.html());			
+			//System.out.println("기업정보를 긁어왔느냐"+compInfo.html());			
+			map.put("compInfo", compInfo);
 		}
 		if(logo != null) {
-			System.out.println("기업로고를 긁어왔느냐"+logo.html());			
+			//System.out.println("기업로고를 긁어왔느냐"+logo.html());			
+			map.put("logo", logo);
 		}
 		
-		Map<String, org.jsoup.nodes.Element> map = new HashMap<>();
 		map.put("detail", detail);
-		map.put("address", address);
-		map.put("compInfo", compInfo);
-		map.put("logo", logo);
 		
 		return map;
 	}

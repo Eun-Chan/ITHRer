@@ -62,21 +62,6 @@ h3{
 #tel {
 	width : 200px;
 }
-/* 학력 */
-#educationHeader {
-	width : 900px;
-	margin : 0 auto;
-}
-#headerText {
-	display : inline-block;
-}
-#headerText h3 {
-	margin-left : 0;
-}
-#headerInput {
-	display : inline-block;
-	float : right;
-}
 /* 희망근무조건 */
 #hopeworkWrap input {
 	margin : 5px;
@@ -88,12 +73,6 @@ h3{
 #dutyList span{
 	margin-left : 20px;
 	margin-bottom : 5px;
-}
-/* 취업우대 */
-#formPreference {
-	width : 850px;
-	margin-left : 50px;
-	margin-right : 10px;
 }
 /* 자기소개서 */
 #formLetter input {
@@ -114,4 +93,311 @@ h3{
 .deleteLetter {
 	margin-top : 3px;
 	margin-right : 3px;
+}
+/* 취업우대 */
+#formPreference {
+	width : 850px;
+	margin-left : 50px;
+	margin-right : 10px;
+	margin-top : 10px;
+}
+#divCheckbox {
+	height : 30px;
+	font-size : 20px;
+	margin-top : 5px;
+	margin-bottom : 5px;
+}
+#divCheckbox  ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#divCheckbox li {
+	margin-right : 30px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#preferselect {
+	margin-left : 45px;
+	margin-top : 5px;
+}
+#preferselect select {
+	width : 150px;
+}
+#preferdisorder {
+	display : none;
+}
+#prefermilitary {
+	display : none;
+}
+/*어학*/
+#formLanguage input {
+	display : none;
+}
+#buttonLanguage {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+/* 해외경험 */
+#buttonOverseas {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+#formOverseas2 ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formOverseas2 li {
+	margin-right : 30px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#formOverseas2 li:first-child {
+	font-size : 20px;
+	margin-left : 25px;
+	margin-top : 20px;
+}
+#formOverseas2 textarea {
+	width : 761px;
+	margin-bottom : 5px;
+	min-height : 75px;
+	resize : vertical;	
+}
+/*수상*/
+#buttonAward {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+#formAward2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formAward2 li {
+	margin-right : 30px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#formAward2 li:first-child {
+	font-size : 20px;
+	margin-left : 25px;
+	margin-top : 25px;
+}
+#formAward2 textarea {
+	width : 720px;
+	margin-bottom : 5px;
+	min-height : 75px;
+	resize : vertical;	
+}
+/*자격증*/
+#buttonCert {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+/*교육*/
+#formLearn2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formLearn2 li {
+	margin-right : 30px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#formLearn2 li:first-child {
+	font-size : 20px;
+	margin-left : 26px;
+	margin-top : 23px;
+}
+#formLearn2 textarea {
+	width : 760px;
+	margin-bottom : 5px;
+	min-height : 75px;
+	resize : vertical;	
+}
+#buttonLearn {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+/*인턴*/
+#formIntern2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formIntern2 li {
+	margin-right : 30px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#formIntern2 li:first-child {
+	font-size : 20px;
+	margin-left : 26px;
+	margin-top : 23px;
+}
+#formIntern2 textarea {
+	width : 720px;
+	margin-bottom : 5px;
+	min-height : 75px;
+	resize : vertical;	
+}
+#buttonIntern {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+/*학력*/
+#educationTotal {
+	background : white;
+	margin : 0 auto;
+	width : 900px;
+}
+#educationHeader {
+	background : #b89dff;
+}
+#headerInput {
+	margin-top : 5px;
+	font-size : 18px;
+}
+#formEducation1 {
+	float : left;
+}
+#formEducation1 input{
+	width : 160px;
+}
+#formEducation2 li:first-child {
+	width : 180px;
+}
+#formEducation2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formEducation2 li {
+	margin-right : 10px;
+	padding : 0;
+	border : 0;
+	float : left;
+}
+#formEducation2 select {
+	width : 125px;
+	margin-top : 5px;
+	height : 38px;
+}
+#formEducation2 li:last-child {
+	margin-top : 12px;
+}
+#formEducation2 {
+	display : none;
+}
+#formEducation3 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+	float : right;
+}
+#formEducation3 li {
+	padding : 0;
+	border : 0;
+	display : inline-block;
+	vertical-align: bottom;
+}
+#formEducation3 input {
+	width : 100px;
+}
+#formEducation3 li:last-child {
+	margin-bottom : 10px;
+	margin-left : 10px;
+	font-size : 18px;
+}
+#formEducation3 input[name=transferuni] {
+	width : 25px;
+}
+#formEducation3 {
+	margin-right : 20px;
+	float : right;
+	display : none;
+}
+#formEducation4 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formEducation4 li {
+	padding : 0;
+	border : 0;
+	display : inline-block;
+}
+#formEducation4 select{
+	margin-top : 0px;
+}
+#formEducation4 {
+	float : left;
+	display : none;
+	width : 900px;
+}
+#formEducation4 input {
+	width : 201px;
+}
+#formEducation5 button {
+	margin-left : 5px;
+	margin-bottom : 5px;
+	margin-top : 8px;
+}
+#formEducation5 {
+	margin-left : 12px;
+	float : left;
+	display : none;
+}
+#formEducation5 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formEducation5 li {
+	padding : 0;
+	border : 0;
+	display : inline-block;
+}
+#formEducation5 select{
+	width :150px;
+}
+#formEducation5 input{
+	width :250px;
+}
+#formEducation5 textarea {
+	margin-bottom : 5px;
+	width : 875px;
+	height : 75px;
+}
+#buttonEducation {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+#educationHeader {
+	width : 900px;
+	margin : 0 auto;
+}
+#headerText {
+	display : inline-block;
+}
+#headerText h3 {
+	margin-left : 0;
+}
+#headerInput {
+	display : inline-block;
+	float : right;
 }
