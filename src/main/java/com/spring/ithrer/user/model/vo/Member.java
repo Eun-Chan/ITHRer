@@ -29,5 +29,7 @@ public class Member implements Serializable{
 	private String address;
 	private String photo;
 	private String delFlag;
+	
+	// join용 필드
 	private CompanyApplication ca;
 }
