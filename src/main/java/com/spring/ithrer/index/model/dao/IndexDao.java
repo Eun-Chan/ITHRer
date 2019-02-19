@@ -17,4 +17,6 @@ public interface IndexDao {
 
 	List<Member> selectStatistics(int recruitmentNo);
 
+	int insertLocation(Map<String, Object> map);
+
 }

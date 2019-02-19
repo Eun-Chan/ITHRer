@@ -21,4 +21,8 @@
 			<result column="cu_resdate" property="cuResdate"/>
 		</association>
 	</resultMap>
+	
+	<insert id="insertLocation" parameterType="map">
+		insert into area values(#{code},#{name})
+	</insert>
 </mapper>
