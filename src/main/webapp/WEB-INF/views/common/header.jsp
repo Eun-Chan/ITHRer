@@ -75,9 +75,9 @@
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/login.ithrer" >기업회원 로그인(임시)</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">개인회원</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">고객센터</a></li>
+						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=audgnsdlsp">공고등록</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty company }">
@@ -303,6 +303,11 @@
 			}
 		});
 	}
+	$(".nav-link").hover(function(){
+		$(this).css("color","#ffb6c1");
+	},function(){
+		$(this).css("color","rgba(0,0,0,.5)");
+	})
 </script>
 	
 	<section id="content">
