@@ -104,5 +104,13 @@ public class CompanyController {
 		return companyService.updateLocation(location);
 	}
 	
+	@GetMapping("/recruitmentAdd.ithrer")
+	public ModelAndView recruitmentAddView(ModelAndView mav)
+	{
+		logger.debug("공고등록 페이지 요청");
+		mav.setViewName("company/recruitmentAdd");
+		return mav;
+	}
+	
 	
 }
