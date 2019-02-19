@@ -257,23 +257,24 @@ public class CompanyController {
 			applicantCookie.setPath("/"); // -> 생략하면 자동으로 현재 디렉토리 기준(/company)으로 설정됨
 			res.addCookie(applicantCookie);
 		}
-		
-		
-		
-		
-		
 		// 임시
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("recruitmentNo", recruitmentNo);
 		map.put("memberId", memberId);
-		
-		
+
 		Member member = companyService.selectApplicant(map); 
 		
 		mav.addObject("member",member);
-		
 		mav.setViewName("company/viewApplicant");
+		
+		return mav;
+	}
+	
+	@GetMapping("/recruitmentAdd")
+	public ModelAndView recruitmentAddView(ModelAndView mav) {
+		
+		mav.setViewName("company/recruitmentAdd");
 		
 		return mav;
 	}
