@@ -25,15 +25,12 @@
 <script src="${pageContext.request.contextPath}/resources/js/ko.js"></script>
 
 <style>
-body {
-	margin: 40px 10px;
-	padding: 0;
-	font-size: 14px;
-}
-
 #calendar {
 	max-width: 1000px;
 	
+}
+#cal-container{
+	font-size: 14px;
 }
 </style>
 
