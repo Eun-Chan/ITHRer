@@ -8,231 +8,8 @@
 <!-- index.jsp ===> header.jsp 로 데이터 전송 -->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/jobSearchDetail.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/index.css" />
 
-<style>
-.main{
-   width:1000px;
-   margin:0 auto;
-}
-/* Make the image fully responsive */
-.carousel-inner img {
-  width: 100%;
-  height: 250px;
-}
-#banner-container{
-   width:1000px;
-}
-#cal{
-   text-align: center;
-}
-.main-search{
-   position: relative;
-   z-index: 1;
-   height: 200px;
-   background: #e4ebfe;
-}
-.search-bar{
-   position: absolute;
-   top: 59px;
-   left: 56.8%;
-   z-index: 5;
-   margin-left: -600px;
-   padding: 10px;
-   width: 1000px;
-   height: 80px;
-   box-sizing: border-box;
-   background: pink;
-}
-.bar-main{
-   position: relative;
-   z-index: 2;
-   margin: 0 auto;
-   width: 980px;
-   height: 60px;
-   background: #ddd;
-}
-.container{
-   margin-top: 20px;
-   padding: 0;
-}
-.bar-option{
-   position: absolute;
-    z-index: 1;
-   width: 420px;
-    height: 60px;;
-    box-sizing: border-box;
-    color: #666;
-    font-size: 15px;
-    letter-spacing: -1px;
-    text-align: left;
-    background: #fff;
-}
-.bar-option.area{
-   left: 423px;
-}
-.bar-option span{
-   z-index: 4;
-}
-.bar-button{
-   position: absolute;
-    left: 841px;
-    z-index: 1;
-    padding: 12px 0 15px;
-    width: 139px;
-    height: 59px;
-    background: cyan;
-    border: 0;
-    cursor: pointer;
-}
-.bar-button span{
-   color: #fff;
-    font-size: 17px;
-    font-weight: bold;
-    letter-spacing: -1px;
-}
-#searchKeyWord{
-/*    position: relative; */
-    z-index: 1;
-    padding: 12px 40px 15px 49px;
-    width: 100%;
-    height: 60px;
-    border: 0;
-    box-sizing: border-box;
-    color: #666;
-    font-size: 17px;
-    letter-spacing: -1px;
-    line-height: 23px;
-    background: #fff;
-}
-#locationKeyWord{
-    z-index: 1;
-    padding: 12px 40px 15px 49px;
-    width: 100%;
-    height: 60px;
-    border: 0;
-    box-sizing: border-box;
-    color: #666;
-    font-size: 17px;
-    letter-spacing: -1px;
-    line-height: 23px;
-    background: #fff;
-    text-align: left;
-    white-space: nowrap;
-    overflow: hidden;
-}
-.locationKeyWordSelected{
-   display: block;
-   overflow: hidden;
-   width: 100%;
-   height: 100%;
-   letter-spacing: -1px;
-   text-align: left;
-   text-overflow: ellipsis;
-   white-space: nowrap; 
-}
-.bar-option img{
-   position:absolute;
-   width: 32px;
-    height: 32px;
-    top: 13px;
-    left: 10px;
-}
-.location-hide{
-   display:none;
-   width: 860px;
-   position: absolute;
-   margin-top:5px;
-   border: 1px solid black;
-   box-sizing: border-box;
-   background: #fff;
-}
-.location-category{
-   height: 230px;
-}
-.location-view{
-   overflow: scroll;
-   position: relative;
-   z-index: 1;
-   width: 100%;
-   height:100%;
-   overflow-x:hidden;
-}
-.location-view ul li{
-   float: left;
-    width: 50%;
-    padding-right: 1px;
-}
-ul {
-   list-style: none;
-}
-.location-view ul li button{
-   padding: 8px 0 10px 20px;
-    width: 100%;
-    height: 35px;
-    color: #888;
-    font-size: 13px;
-    letter-spacing: -1px;
-    line-height: 17px;
-    text-align: left;
-    background: transparent;
-    border: 0;
-}
-.location-view::-webkit-scrollbar {
-/*     background: rgba(248,247,216,0.7); */
-}
-.location-hide.on{
-   display:block;
-
-}
-.placeholder{
-   overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    padding: 16px 40px 15px 49px;
-    width: 100%;
-    height: 50px;
-    box-sizing: border-box;
-    color: #9e9e9e;
-    font-size: 17px;
-    letter-spacing: -1px;
-    line-height: 23px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-.carousel-inner{
-   width:1000px;
-}
-.location-view-detail{
-	overflow: scroll;
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-}
-.location-view-detail li{
-    float: left;
-    width: 33%;
-    padding-right: 1px;
-    margin-top:20px;
-}
-/* 세션 몸통 */
-
-.section-content{
-   position: relative;
-    width: 750px;
-    height: 400px;
-    margin-top: 20px;
-    padding: 0;
-    display: inline-block;
-}
-.detail{
-	display: none;
-}
-
-</style>
    <div class="main-search">
       <div class="search-bar">
          <div class="bar-main">
@@ -276,6 +53,9 @@ ul {
                      <div class="col-sm-6 location-view-detail">
                      	<!-- 서울 -->
                      	<ul class="detail seoul">
+                     	<div class="deleteLocation">
+                     		<button class="reset">지역 초기화</button>
+                     	</div>
                      		<li>
                      			<input type="checkbox" name="101000" id="101000_1" class="loc-detail all"/>
                      			<label for="101000_1">서울전체</label>
@@ -383,6 +163,9 @@ ul {
                      	</ul>
                      	<!-- 경기도 -->
                      	<ul class="detail gyeonggi">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>
                      		<li>
                      			<input type="checkbox" name="102000" id="102000_1" class="loc-detail all"/>
                      			<label for="102000_1">경기전체</label>
@@ -514,6 +297,9 @@ ul {
                      	</ul>
                      	<!-- 인천 -->
                      	<ul class="detail incheon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="108000" id="108000_1" class="loc-detail all"/>
                      			<label for="108000_1">인천전체</label>
@@ -560,6 +346,9 @@ ul {
                      	</ul>
                      	<!-- 부산 -->
                      	<ul class="detail busan">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                    	
                      		<li>
                      			<input type="checkbox" name="106000" id="106000_1" class="loc-detail all"/>
                      			<label for="106000_1">부산전체</label>
@@ -631,6 +420,9 @@ ul {
                      	</ul>
                      	<!-- 대구 -->
                      	<ul class="detail daegu">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="104000" id="104000_1" class="loc-detail all"/>
                      			<label for="104000_1">대구전체</label>
@@ -670,6 +462,9 @@ ul {
                      	</ul>
                      	<!-- 광주 -->
                      	<ul class="detail gwangju">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="103000" id="103000_1" class="loc-detail all"/>
                      			<label for="103000_1">광주전체</label>
@@ -697,6 +492,9 @@ ul {
                      	</ul>
                      	<!-- 대전 -->
                      	<ul class="detail daejeon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="105000" id="105000_1" class="loc-detail all"/>
                      			<label for="105000_1">대전전체</label>
@@ -724,6 +522,9 @@ ul {
                      	</ul>
                      	<!-- 울산 -->
                      	<ul class="detail ulsan">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="107000" id="107000_1" class="loc-detail all"/>
                      			<label for="107000_1">울산전체</label>
@@ -751,6 +552,9 @@ ul {
                      	</ul>
                      	<!-- 세종 -->
                      	<ul class="detail sejong">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="118000" id="118000_1" class="loc-detail all"/>
                      			<label for="118000_1">세종특별자치시</label>
@@ -758,6 +562,9 @@ ul {
                      	</ul>
                      	<!-- 강원도 -->
                      	<ul class="detail kangwon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="109000" id="109000_1" class="loc-detail all"/>
                      			<label for="109000_1">강원전체</label>
@@ -837,6 +644,9 @@ ul {
                      	</ul>
                      	<!-- 경남 -->
                      	<ul class="detail gyeongnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="110000" id="110000_1" class="loc-detail all"/>
                      			<label for="110000_1">경남전체</label>
@@ -916,6 +726,9 @@ ul {
                      	</ul>
                      	<!-- 경북 -->
                      	<ul class="detail gyeongbuk">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="111000" id="111000_1" class="loc-detail all"/>
                      			<label for="111000_1">경북전체</label>
@@ -1015,6 +828,9 @@ ul {
                      	</ul>
                      	<!-- 전남 -->
                      	<ul class="detail chonnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="112000" id="112000_1" class="loc-detail all"/>
                      			<label for="112000_1">전남전체</label>
@@ -1110,6 +926,9 @@ ul {
                      	</ul>
                      	<!-- 전북 -->
                      	<ul class="detail chonbuk">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="113000" id="113000_1" class="loc-detail all"/>
                      			<label for="113000_1">전북전체</label>
@@ -1173,6 +992,9 @@ ul {
                      	</ul>
                      	<!-- 충남 -->
                      	<ul class="detail chungnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="115000" id="115000_1" class="loc-detail all"/>
                      			<label for="115000_1">충남전체</label>
@@ -1299,6 +1121,9 @@ ul {
                      	</ul>
                      	<!-- 제주 -->
                      	<ul class="detail jeju">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="116000" id="116000_1" class="loc-detail all"/>
                      			<label for="116000_1">제주전체</label>
@@ -1310,6 +1135,9 @@ ul {
                      	</ul>
                      	<!-- 전국 -->
                      	<ul class="detail jongok">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="117000" id="117000_1" class="loc-detail all"/>
                      			<label for="117000_1">전국</label>
@@ -1369,44 +1197,91 @@ ul {
    <div class="main">
    <div class="section-header">
       <div class="section-content">
-            <h3 style="text-align: center; font-weight: 900;">ITHRer 추천 공고!!</h3>
-         <ul style="list-style: none; padding-left: 20px;">
-            <li class="recommend-open" onclick="moveDetail('${rc.recruitmentNo}');">
-               <div class="recommend-content">
-                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
-                  <span class="recruitTitle">${rc.recruitmentTitle }</span>
-                  <div class="endDate">D-${endTime }</div>
-      <%--             ${rc.employmentType }
-                  <br>
-                  ${rc.typeOfOccupation} --%>
-               </div>
-            </li>
-            <li class="recommend-open">
-               <div class="recommend-content">
-            
-               </div>
-            </li>
-            <li class="recommend-open">
-               <div class="recommend-content">
-               
-               </div>
-            </li>
-            <li class="recommend-open">
-               <div class="recommend-content">
-               
-               </div>
-            </li>
-            <li class="recommend-open">
-               <div class="recommend-content">
-               
-               </div>
-            </li>
-            <li class="recommend-open">
-               <div class="recommend-content">
-               
-               </div>
-            </li>
-         </ul>
+         <h3 style="text-align: center; font-weight: 900;">ITHRer 추천 공고!!</h3>
+	     <ul class="nav nav-tabs" role="tablist">
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#lately">최근 공고</a>
+		    </li>
+		    <li class="nav-item">
+		      <a class="nav-link" data-toggle="tab" href="#popularity">TOP6</a>
+		    </li>
+  		</ul>
+  		<div class="tab-content">
+	         <ul style="list-style: none; padding-left: 20px;" id="lately" class="container tab-pane active">
+	            <li class="recommend-open" onclick="moveDetail('${rc.recruitmentNo}');">
+	               <div class="recommend-content">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
+	                  <span class="recruitTitle">${rc.recruitmentTitle }</span>
+	                  <div class="endDate">D-${endTime }</div>
+	      <%--             ${rc.employmentType }
+	                  <br>
+	                  ${rc.typeOfOccupation} --%>
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	            
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               
+	               </div>
+	            </li>
+	         </ul>
+	         <ul style="list-style: none; padding-left: 20px;" id="popularity" class="container tab-pane fade">
+	            <li class="recommend-open" onclick="moveDetail('${rc.recruitmentNo}');">
+	               <div class="recommend-content">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
+	                  <span class="recruitTitle">${rc.recruitmentTitle }</span>
+	                  <div class="endDate">D-${endTime }</div>
+	      <%--             ${rc.employmentType }
+	                  <br>
+	                  ${rc.typeOfOccupation} --%>
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	            		2
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               		3
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               		
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               
+	               </div>
+	            </li>
+	            <li class="recommend-open">
+	               <div class="recommend-content">
+	               
+	               </div>
+	            </li>
+	         </ul>
+         </div>
       </div>
       <div class="Ad2">
          <img src="${pageContext.request.contextPath }/resources/images/sana.jpg" alt="" style="width:200px; height:400px;"/>
@@ -1491,7 +1366,15 @@ $("html").click(function(e){
     	  $(".location-hide").addClass("on");
           return;
       }
-      
+      if($(e.target).hasClass("deleteLocation")){
+    	  $(".location-hide").addClass("on");
+          return;
+      }
+      if($(e.target).hasClass("reset")){
+    	  $(".location-hide").addClass("on");
+          return;
+      }
+	console.log($(e.target));
       $(".location-hide").removeClass("on");
    } 
 
@@ -1504,6 +1387,7 @@ $(".location-hide button").on("click",function(){
    }else{
       $(".locationKeyWordSelected").text($(".locationKeyWordSelected").html()+", "+$(this).val());
    } */
+   $(".deleteLocation").css("display","block");
    if($(this).val()=="101000"){
 	   $(".detail").css("display","none");
 	   $(".seoul").css("display","block");
@@ -1669,14 +1553,15 @@ $(".location-hide button").on("click",function(){
 	   }
    }
    var location_code =  new Array();
-   var text = "";
    var locationCode = "";
-   $('.loc-detail:checked').each(function() { 
-	   location_name.push($(this).siblings("label").text());
-     });
+   var text = "";
+   
 	$('.loc-detail:checked').each(function() { 
 		location_code.push($(this).attr("name"));
 	 });
+   $('.loc-detail:checked').each(function() { 
+	   location_name.push($(this).siblings("label").text());
+     });
 	for(var i = 0 ; i<location_name.length ; i++){
 		if(i==location_name.length-1){
 			text+=location_name[i];
@@ -1723,10 +1608,13 @@ $(".loc-detail").on("click",function(){
 	var locationCode = "";
 	if(!$(this).hasClass("all")){
 		$(this).parent("li").siblings("li").find(".all").prop("checked",false);
-	}else{
-		$(this).parent("li").siblings("li").find(".loc-detail").prop("checked",false);
-		$(this).prop("checked",true);
 	}
+	else if($(this).hasClass("all")){
+		console.log("체크 트루");
+		$(this).parent("li").siblings("li").find(".loc-detail").prop("checked",false);
+		$(this).prop("checked");
+	}
+	
 	$('.loc-detail:checked').each(function() { 
 		location_name.push($(this).siblings("label").text());
 	 });
@@ -1756,7 +1644,24 @@ $(".loc-detail").on("click",function(){
 	 $(".placeholder").hide();
 	
 });	 
+$(".reset").on("click",function(){
+	console.log("왓지?");
+	var location_name =  new Array();
+	var text="";
+	$(this).parents().siblings("li").find(".loc-detail").prop("checked",false);
 
+  	$('.loc-detail:checked').each(function() { 
+	   location_name.push($(this).siblings("label").text());
+    });
+	for(var i = 0 ; i<location_name.length ; i++){
+		if(i==location_name.length-1){
+				text+=location_name[i];
+		}else{			
+			text+=location_name[i]+",";
+		}
+	}
+	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
+});
 
 </script>
 
