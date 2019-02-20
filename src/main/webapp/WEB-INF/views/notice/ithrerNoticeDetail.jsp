@@ -123,16 +123,41 @@
 	rect[Attributes]:last{
 		display: none;
 	}
+	.detailStar{
+		width: 65px;
+		height:60px;
+		background:white;
+		border:1px solid #e9e9e9;
+	}
 </style>
 <div class="DetailHeader">
 	<h1>채용정보</h1>
 </div>
 <div class="row main">
 	<div class="col-sm-8">
+	<div class="row">
+		<div class="col-sm-10">
 		<h3>
 			<span class="noticeCompanyName">${com.compName }</span>
 			<span class="rcContent">${rc.recruitmentTitle }</span>
 		</h3>
+		</div>
+		<div class="col-sm-2">
+		<c:if test="${empty member }">
+			<button class="detailStar">
+				<img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;">
+			</button>
+		</c:if>
+		<c:if test="${not empty member }">
+       		<c:if test="${rc.favoritesCount == 1 }">
+       			<button class="detailStar"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+       		</c:if>
+       		<c:if test="${rc.favoritesCount ==0 }">
+       			<button class="detailStar"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+       		</c:if>
+	   </c:if>
+		</div>
+	</div>
 	</div>
 	<div class="col-sm-4" style="border-left:1px solid #dde2eb;">
 		<div style="text-align: center;">
@@ -468,6 +493,28 @@ function genderChart() {
 }
 $("#apply").on("click",function(){
 	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer","apply","width=570, height=600, resizable = no, scrollbars = no");
+});
+$(".detailStar").on("click",function(){
+	var recNo = "${rc.recruitmentNo}";
+	var compId = "${com.compId}";
+	var img = $(this).children("img");
+	 if(${empty member}){
+		alert("로그인 후 이용 해 주세용");
+		return;
+ 	}
+	 else{		 
+		$.ajax({
+				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,
+				success:function(data){
+					if(data == 1){
+						img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+					}
+					else {
+						img.attr("src","${pageContext.request.contextPath}/resources/images/star.svg");
+					}
+				}
+		});		 
+	 }
 });
 </script>
 
