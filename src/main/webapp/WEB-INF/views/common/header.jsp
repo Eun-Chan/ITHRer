@@ -10,6 +10,7 @@
 
 	// 전송된 쿠키확인
 	boolean memberSaveId = false;
+	
 	boolean companySaveId = false;
 	String memberId = "";
 	String companyId = "";

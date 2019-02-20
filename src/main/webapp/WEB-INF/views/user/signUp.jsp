@@ -23,6 +23,7 @@
     $(document).ready(function () {
         // popover demo
         $("[data-toggle=popover]").popover({trigger: "hover"});
+        
     });
 </script>
 
@@ -39,7 +40,7 @@
                             <!-- Nav tabs -->
                 			<ul class="nav nav-tabs">
                     			<li class="nav-item">
-                    				<a class="nav-link active" data-toggle="tab" href="#Member">개인회원</a>
+                    				<a class="nav-link" data-toggle="tab" href="#Member">개인회원</a>
                    				</li>
                     			<li class="nav-item">
                     				<a class="nav-link" data-toggle="tab" href="#Company">기업회원</a>
@@ -329,20 +330,6 @@
 	}
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 개인 회원가입 끝 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 	
-	
-	
-	/* 회원 가입 타입에 따라 해당 가입페이지가 먼저 뜨게 조정  */
-	if(${param.index} == "0")
-		/* 여긴 그냥 냅둬도 됨 */
-		console.log("회원가입 페이지!")
-   	else {
-   		// 기업 회원에서 가입했을경우 기업 회원 가입 페이지가 바로 뜨게하기
-   		$("#Member").removeClass("active");
-   		$("#Member").addClass("fade");
-   		$("#Company").removeClass("fade");
-   		$("#Company").addClass("active");
-   	}
-	
 	$("#license_no_Check").on("click" , function(){
 		var license_no = $("#license_no").val().trim();
 		console.log(license_no);
@@ -355,6 +342,8 @@
 			}
 		});
 	});
+	
+	
 </script>
 </body>
 </html>
