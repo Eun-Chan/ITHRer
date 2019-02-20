@@ -16,7 +16,7 @@
   crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
-
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/signUp.css" />
 
 <script type="text/javascript">
@@ -30,7 +30,7 @@
 </head>
 
 <body class="bg-light">
-	<div class="container py-5">
+	<div class="container py-5" style="max-width: 1000px">
     <div class="row">
         <div class="mx-auto col-sm-7">
                     <!-- form user info -->
@@ -69,7 +69,7 @@
 	                                    </div>
 	                                </div>
 	                                <div class="form-group row mb-2">
-	                                    <label class="col-md-2 col-form-label form-control-label">비밀번호</label>
+	                                    <label class="col-md-2 col-form-label form-control-label" style="padding-left:12px">비밀번호</label>
 	                                    <div class="col-md-7">
 	                                        <input class="form-control" type="password" placeholder="비밀번호" id="MemberPassword" name="password">
 	                                        <span><p id="password-help"></p></span>
@@ -119,15 +119,115 @@
 	                            </form>
                             </div>
                             <div class="tab-pane container fade" id="Company">
-                            	<form action="${pageContext.request.contextPath }/user/createCompany.ithrer" method="POST">
-                            		<label class="col-md-2 col-form-label form-control-label">이름</label>
-	                                    <div class="col-md-10">
-	                                        <input class="form-control" placeholder="사업자등록번호" id="license_no" name="license_no">
-	                                        <span><p id="name-help"></p></span>
+                            	<form action="${pageContext.request.contextPath }/user/createCompany.ithrer" method="POST" onsubmit="return createCompanySubmit()">
+                            		<h2>기업정보</h2>
+                            		<br />
+                            		<div class="form-group row mb-4">
+                            			<label class="col-md-4 col-form-label form-control-label" style="padding-left:12px">기업형태</label>
+                            			<div class="col-md-8">
+	                            			<select id="classification" class="form-control" required="required">
+	                            				<option selected placeholder="기업형태"></option>
+	                            				<option>대기업</option>
+	                            				<option>대기업 계열사&자회사</option>
+	                            				<option>중소기업(300명이하)</option>
+	                            				<option>중견기업(300명이상)</option>
+	                            				<option>벤처기업</option>
+	                            				<option>외국계(외국 투자기업)</option>
+	                            				<option>외국계(외국 법인기업)</option>
+	                            				<option>국내 공공기관&공기업</option>
+	                            				<option>비영리단체&협회&교육재단</option>
+	                            				<option>외국 기관&비영리기구&단체</option>
+	                            			</select>
+                            			</div>
+                            		</div>
+                            		<div class="form-group row mb-4">
+                            			<label class="col-md-4 col-form-label form-control-label">사업자등록번호</label>
+                            			<div class="col-md-8">
+                            				<input class="form-control" type="text" placeholder="사업자등록번호" name="licenseNo" required="required" maxlength="10"/>
+                            			</div>
+                            		</div>
+                            		<div class="form-group row mb-4">
+                            			<label class="col-md-4 col-form-label form-control-label">회사명</label>
+                            			<div class="col-md-8">
+                            				<input class="form-control" type="text" placeholder="회사명" name="compName" required="required"/>
+                            			</div>
+                            		</div>
+                            		<div class="form-group row mb-4">
+                            			<label class="col-md-4 col-form-label form-control-label">대표자명</label>
+                            			<div class="col-md-8">
+                            				<input class="form-control" type="text" placeholder="대표자명" name="representive" required="required"/>
+                            			</div>
+                            		</div>
+                            		<div class="form-group row mb-4">
+                            			<label class="col-md-4 col-form-label form-control-label">회사주소</label>
+                            			<div class="col-md-8">
+                            				<input class="form-control" type="text" placeholder="회사주소" id="address" name="location" required="required"/>
+                            			</div>
+                            		</div>
+                            		
+                            		<div class="form-group row mb-4" style="border-bottom: 1px solid">
+                            			<label class="col-md-4 col-form-label form-control-label"></label>
+                            		</div>
+                            		
+                            		<h2>회원정보</h2>
+                            		<br />
+									<div class="form-group row mb-2">
+	                                    <label class="col-md-2 col-form-label form-control-label">아이디</label>
+	                                    <div class="col-md-7">
+	                                        <input class="form-control" type="text" placeholder="아이디" id="compId" name="compId">
+	                                        <span><p id="comp-id-help"></p></span>
 	                                    </div>
 	                                    <div class="col-md-1">
-	                                    	<button type="button" class="btn btn-primary" id="license_no_Check">인증번호 확인</button>
+	                                    	<button type="button" class="btn btn-primary" id="compIdCheck">중복 검사</button>
 	                                    </div>
+	                                </div>
+	                                <div class="form-group row mb-2">
+	                                    <label class="col-md-2 col-form-label form-control-label" style="padding-left:12px">비밀번호</label>
+	                                    <div class="col-md-7">
+	                                        <input class="form-control" type="password" placeholder="비밀번호" id="companyPassword" name="password">
+	                                        <span><p id="comp-password-help"></p></span>
+	                                    </div>
+	                                    <div class="col-md-1">
+	                                   		<button type="button" class="btn btn-secondary" data-container="body" data-toggle="popover" data-placement="top" data-content="8~15자의 영문, 숫자, 특수기호 포함">?</button>
+	                                    </div>
+	                                    <div class="col-md-2">
+	                                    	<label class="btn btn-secondary"><input type="checkbox" class="btn btn-primary" id="pwd_see2"> 표시</label>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group row mb-2">
+	                                    <label class="col-md-2 col-form-label form-control-label">휴대폰</label>
+	                                    <div class="col-md-10">
+	                                        <input class="form-control" type="tel" placeholder="휴대폰번호" maxlength="11" id="tel2" name="phone">
+	                                        <span><p></p></span>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group row mb-2">
+	                                    <label class="col-md-2 col-form-label form-control-label">이메일</label>
+	                                    <div class="col-md-7">
+	                                        <input class="form-control" type="email" placeholder="이메일" id="companyEmail" name="compEmail">
+	                                        <span><p id="email-help2"></p></span>
+	                                    </div>
+	                                    <div class="col-md-1">
+	                                    	<button type="button" class="btn btn-primary" id="CompanyEmailAuth" disabled="disabled">인증번호 전송</button>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group row mb-2 authDiv2" style="display:none">
+	                                    <label class="col-md-2 col-form-label form-control-label">인증번호</label>
+	                                    <div class="col-md-7">
+	                                        <input class="form-control" type="text" placeholder="인증번호" id="CompanyAuthNum">
+	                                        <span><p id="emailAuth-help2"></p></span>
+	                                    </div>
+	                                    <div class="col-md-1">
+	                                    	<button type="button" class="btn btn-primary" onclick="auth_Check2()">인증번호 확인</button>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group row mb-2">
+	                                    <label class="col-md-2 col-form-label form-control-label"></label>
+	                                    <div class="col-md-9">
+	                                        <input type="submit" class="btn btn-primary" value="회원가입">
+	                                        <input type="button" class="btn btn-secondary" value="홈" onclick="location.href='/ithrer'">
+	                                    </div>
+	                                </div>
                             	</form>
                             </div>
                         </div>
@@ -300,12 +400,15 @@
 	function auth_Check(){
 		/* 유저가 입력한 인증번호 */
 		var input_Auth_Num = $("#MemberAuthNum").val().trim();
+		
+		
 		if(input_Auth_Num == authNum){
 			console.log("인증 완료!");
 			auth_OK = 1;
 			$("#emailAuth-help").text("인증 완료!");
 			$("#emailAuth-help").removeClass("text-danger");
 			$("#emailAuth-help").addClass("text-success");
+			
 		}
 		else{
 			console.log("인증 실패!");
@@ -313,6 +416,7 @@
 			$("#emailAuth-help").text("인증번호 인증 실패!");
 			$("#emailAuth-help").removeClass("text-success");
 			$("#emailAuth-help").addClass("text-danger");
+		
 		}
 	}
 
@@ -330,6 +434,14 @@
 	}
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 개인 회원가입 끝 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 	
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업 회원가입 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+	var comp_Id_OK = 0;
+	var comp_Password_OK = 0;
+	var comp_Email_OK = 0;
+	var comp_Email_Auth_OK = 0;
+	
+	var authNum2;
+	
 	$("#license_no_Check").on("click" , function(){
 		var license_no = $("#license_no").val().trim();
 		console.log(license_no);
@@ -343,7 +455,172 @@
 		});
 	});
 	
+	/* 주소 추가 */
+	$(document).on("click","[id=address]",function(){
+		
+		var $this = $(this);
+		
+		new daum.Postcode({
+			oncomplete: function(data) {
+		        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+		        console.log(data.address);
+		        console.log($this);
+		    	$this.val(data.address);
+		    }
+		}).open();
+	});	
 	
+	/* 기업 아이디 유효성 검사 */
+	$("#compId").keyup(function(e){
+		var compId = $(this).val().trim();
+		console.log(compId);
+		
+		if(!regId.test(compId)){
+			$("#comp-id-help").text("아이디는 영소문자/숫자만 가능하고, 단 소문자로 시작해야합니다.(8~15자리)");
+			$("#comp-id-help").removeClass("text-success");
+			$('#comp-id-help').addClass('text-danger');
+		}
+		else{
+			$("#comp-id-help").text("");
+			comp_Id_OK = 0;
+		}
+	});
+	
+	/* 기업 아이디 유효성 검사 - ajax */
+	$("#compIdCheck").on("click", function(){
+		var compId = $("#compId").val().trim();
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/user/compIdCheck.ithrer",
+			data : {compId : compId},
+			success : function(data){
+				if(data.result == "true"){
+					$("#comp-id-help").text("아이디 OK");
+					$("#comp-id-help").removeClass("text-danger");
+					$("#comp-id-help").addClass("text-success");
+					comp_Id_OK = 1
+				}
+				else{
+					$("#id-help").text("이미 사용중인 아이디거나 탈퇴된 아이디입니다.");
+					$("#id-help").removeClass("text-success");
+					$("#id-help").addClass("text-danger");
+					comp_Id_OK = 0;
+				}
+			}
+		});
+	});
+	
+	$("#companyPassword").keyup(function(e){
+		var password = $(this).val().trim();
+		
+		if(!regPassword.test(password)){
+			$("#comp-password-help").text("비밀번호는 숫자/문자/특수문자 포함형태로 8~15자리 입니다.");
+			$("#comp-password-help").removeClass("text-success");
+			$("#comp-password-help").addClass("text-danger");
+			comp_Password_OK = 0;
+		}
+		else {
+			$("#comp-password-help").text("사용 가능한 비밀번호 입니다.");
+			$("#comp-password-help").removeClass("text-danger");
+			$("#comp-password-help").addClass("text-success");
+			comp_Password_OK = 1;
+		}
+	});
+	
+	/* 비밀번호 표시 클릭 시 비밀번호 보여주기 */
+	$("#pwd_see2").on("click", function(){
+		if($("#pwd_see2").prop("checked") == true){
+			$("#companyPassword").attr('type','text');
+		}
+		else {
+			$("#companyPassword").attr('type','password');
+		}
+	});
+	
+	/* 이메일 유효성 검사 */
+	$("#companyEmail").keyup(function(e){
+		var email = $(this).val().trim();
+		var companyEmailAuth = $("#CompanyEmailAuth"); 
+		
+		if(!regEmail.test(email)){
+			$("#email-help2").text("올바르지 않은 이메일 형식 입니다.");
+			$("#email-help2").removeClass("text-success");
+			$("#email-help2").addClass("text-danger");
+			comp_Email_OK = 0;
+			
+			/* 이메일 버튼 비활성화 */
+			companyEmailAuth.prop("disabled", true);
+		}
+		else {
+			$("#email-help2").text("알맞은 이메일 형식 입니다.");
+			$("#email-help2").removeClass("text-danger");
+			$("#email-help2").addClass("text-success");
+			comp_Email_OK = 1;
+			/* 이메일 버튼 활성화 */
+			companyEmailAuth.prop("disabled", false);
+		}
+	});
+	
+	/* 이메일 인증 버튼 눌렀을 때 클릭 이벤트 */
+	$("#CompanyEmailAuth").on("click" , function(){
+		var email = $("#companyEmail").val().trim();
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/user/compEmailAuth.ithrer",
+			data : {email : email},
+			success : function(data){
+				if(data.result == "false"){
+					alert("이미 회원가입된 이메일 입니다.");
+					$("#email-help2").text("이미 회원가입된 이메일입니다!");
+					$("#email-help2").removeClass("text-success");
+					$("#email-help2").addClass("text-danger");
+				}
+				else{
+					console.log(data);
+					$(".authDiv2").css("display","flex");
+					
+					/* 인증번호 변수에 저장하기 */
+					authNum = data.result;
+				}
+				
+			}
+		});
+	});
+	
+	/* 인증번호 확인 버튼 눌렀을 시 클릭 이벤트 */
+	function auth_Check2(){
+		/* 유저가 입력한 인증번호 */
+		var input_Auth_Num = $("#CompanyAuthNum").val().trim();
+		if(input_Auth_Num == authNum){
+			console.log("인증 완료!");
+			var comp_Email_Auth_OK = 1;
+			$("#emailAuth-help2").text("인증 완료!");
+			$("#emailAuth-help2").removeClass("text-danger");
+			$("#emailAuth-help2").addClass("text-success");
+		}
+		else{
+			console.log("인증 실패!");
+			var comp_Email_Auth_OK = 1;
+			$("#emailAuth-help2").text("인증 실패!");
+			$("#emailAuth-help2").removeClass("text-success");
+			$("#emailAuth-help2").addClass("text-danger");
+		}
+	}
+	var comp_Id_OK = 0;
+	var comp_Password_OK = 0;
+	var comp_Email_OK = 0;
+	var comp_Email_Auth_OK = 0;
+	/* 기업회원 onSubmit */
+	function createCompanySubmit(){
+		if(comp_Id_OK == 1 && comp_Password_OK == 1 && comp_Email_OK == 1 && comp_Email_Auth_OK == 1){
+			alert("ITHRer ! 회원가입에 완료되었습니다.");	
+			return true;
+		}
+		alert("모든 입력사항을 제대로 입력 하십시오.");
+		return false;
+	}
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업 회원가입 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 </script>
 </body>
 </html>

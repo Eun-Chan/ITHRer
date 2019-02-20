@@ -24,4 +24,10 @@ public interface UserService {
 	Member memberIdView(Map<String, String> member);
 
 	Member findPasswordEmailAuth(Map<String, String> member);
+
+	Company compIdCheck(String compId);
+
+	int compEmailAuth(String email);
+
+	int createCompany(Company company);
 }

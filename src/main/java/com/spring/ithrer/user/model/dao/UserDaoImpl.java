@@ -63,4 +63,19 @@ public class UserDaoImpl implements UserDao {
 	public Member findPasswordEmailAuth(Map<String, String> member) {
 		return sqlSession.selectOne("user.findPasswordEmailAuth" , member);
 	}
+
+	@Override
+	public Company compIdCheck(String compId) {
+		return sqlSession.selectOne("user.compIdCheck" , compId);
+	}
+
+	@Override
+	public int compEmailAuth(String email) {
+		return sqlSession.selectOne("user.compEmailAuth" , email);
+	}
+
+	@Override
+	public int createCompany(Company company) {
+		return sqlSession.insert("user.createCompany", company);
+	}
 }

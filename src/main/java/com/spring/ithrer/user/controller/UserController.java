@@ -139,9 +139,14 @@ public class UserController {
 		// 0. 회원가입하러 가즈아 ! 서비스로
 		System.out.println("암호화전: "+member.getPassword());
 		String temp = member.getPassword();
+		
 		//BCrypt 방식 암호화
 		member.setPassword(bcryptPasswordEncoder.encode(temp));
 		System.out.println("암호화후: "+member.getPassword());
+		
+		//전화번호 구분자 (-) 넣기
+		String phone = member.getPhone();
+		member.setPhone(phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7));
 		
 		System.out.println("member = "+member);
 		int result = userService.createMember(member);
@@ -408,6 +413,85 @@ public class UserController {
 		mav.addObject("member", member);
 		
 		
+		
+		return mav;
+	}
+	
+	/**
+	 * 기업회원 회원가입 - 아이디 중복 검사
+	 */
+	@RequestMapping(value="/user/compIdCheck")
+	@ResponseBody
+	public Map<String,String> compIdCheck(@RequestParam(name="compId") String compId){
+		Map<String,String> test = new HashMap<>();
+		
+		Company company = userService.compIdCheck(compId);
+		
+		// 중복된 아이디가 있을 때
+		if(company != null) {
+			test.put("result" , "false");
+		}
+		else {
+			test.put("result" , "true");
+		}
+		
+		return test;
+	}
+	
+	/**
+	 * 기업회원 회원가입 - 이메일 인증 (메일 보내기)
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/compEmailAuth")
+	@ResponseBody
+	public Map<String,String> compEmailAuth(@RequestParam(name="email") String email) throws Exception{
+		Map<String,String> test = new HashMap<>();
+		
+		int result = userService.compEmailAuth(email);
+		authNum = getAuthNum();
+		
+		// 이메일 중복
+		if(result > 0) {
+			test.put("result" , "false");
+		}
+		// 이메일 회원가입 가능
+		else {
+			test.put("result" , String.valueOf(authNum));
+			emailSend(email , "인증번호 = "+String.valueOf(authNum) , "기업회원 회원가입 인증번호");
+		}
+		return test;
+	}
+	
+	/**
+	 * 기업회원 회원가입
+	 */
+	@RequestMapping(value="/user/createCompany" ,method=RequestMethod.POST)
+	public ModelAndView createCompany(Company company , ModelAndView mav) {
+		// 0. 비밀번호 암호화
+		logger.debug("기업 비밀번호 암호화전 : "+company.getPassword());
+		String temp = company.getPassword();
+		
+		// BCrypt 방식 암호화
+		company.setPassword(bcryptPasswordEncoder.encode(temp));
+		logger.debug("기업 비밀번호 암호화후 : "+company.getPassword());
+		
+		// 전화번호 구분자 (-) 넣기
+		String phone = company.getPhone();
+		company.setPhone(phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7));
+		
+		logger.debug("company = "+company);
+		
+		// 1. DB로 출바알!
+		int result = userService.createCompany(company);
+		
+		if(result > 0) {
+			logger.debug("기업 회원가입 성공!");
+		}
+		else {
+			logger.debug("기업 회원가입 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
 		
 		return mav;
 	}

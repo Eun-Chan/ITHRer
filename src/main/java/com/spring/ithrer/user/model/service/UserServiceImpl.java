@@ -63,4 +63,19 @@ public class UserServiceImpl implements UserService {
 	public Member findPasswordEmailAuth(Map<String, String> member) {
 		return userDao.findPasswordEmailAuth(member);
 	}
+
+	@Override
+	public Company compIdCheck(String compId) {
+		return userDao.compIdCheck(compId);
+	}
+
+	@Override
+	public int compEmailAuth(String email) {
+		return userDao.compEmailAuth(email);
+	}
+
+	@Override
+	public int createCompany(Company company) {
+		return userDao.createCompany(company);
+	}
 }

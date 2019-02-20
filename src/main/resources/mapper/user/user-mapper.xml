@@ -38,4 +38,16 @@
 	<select id="findPasswordEmailAuth" parameterType="map" resultType="member">
 		select * from member where member_id = #{memberId} and email = #{memberEmail}
 	</select>
+	<!-- 기업회원 회원가입시 아이디 중복 -->
+	<select id="compIdCheck" parameterType="string" resultType="company">
+		select count(*) from company where comp_id = #{compId}
+	</select>
+	<!-- 기업회원 회원가입시 이메일 중복 -->
+	<select id="compEmailAuth" parameterType="string" resultType="_int">
+		select count(*) from company where comp_Email = #{email}
+	</select>
+	<!-- 기업회원 회원가입 -->
+	<insert id="createCompany" parameterType="company">
+		insert into member()
+	</insert>
 </mapper>
