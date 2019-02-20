@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
@@ -101,6 +102,21 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public Member selectApplicant(Map<String, Object> map) {
 		return sqlSession.selectOne("company.selectApplicant",map);
+	}
+
+	@Override
+	public int deleteFavorite(Map<String, Object> map) {
+		return sqlSession.delete("company.deleteFavorite",map);
+	}
+
+	@Override
+	public int insertFavorite(Map<String, Object> map) {
+		return sqlSession.insert("company.insertFavorite",map);
+	}
+
+	@Override
+	public List<Favorites> selectFavoriteAppList(String compId) {
+		return sqlSession.selectList("company.selectFavoriteAppList",compId);
 	}
 
 }

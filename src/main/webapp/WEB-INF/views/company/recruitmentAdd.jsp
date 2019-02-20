@@ -6,6 +6,19 @@
 <fmt:requestEncoding value="UTF-8" />
 <!-- 폰트추가 -->
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700" rel="stylesheet">
+
+<!-- include libraries(jQuery, bootstrap) -->
+<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet"> -->
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>  -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>  -->
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+<!-- include summernote css/js -->
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
+<!-- include summernote-ko-KR -->
+<link href="${pageContext.request.contextPath }/WEB-INF/views/summernote/lang/summernote-ko-KR.js" />
 <style>
 html
 {
@@ -238,7 +251,7 @@ html
 </div>
 
 <!-- 헤더 -->
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header-noneBootstrap.jsp"/>
 
 <!-- 기본정보 컨테이너 -->
 <div id="default-info" class="info-container">
@@ -539,8 +552,8 @@ html
 		<tr class="td-line">
 			<th class="content-title"><span class="content-title-in none-essential">모집직급/직책</span></th>
 			<td colspan="5" class="input-content">
-				<div id="job-code-result-Div">
-					<ul id="job-select-result">
+				<div id="job-code-result-Div" class="code-result-Div">
+					<ul id="job-select-result" class="select-result">
 						
 					</ul>
 				</div>
@@ -589,25 +602,34 @@ html
 		</tr>
 		<!-- 전공계열 -->
 		<tr class="td-line">
-			<th class="content-title"><span class="content-title-in none-essential">전공계열</span></th>
+			<th class="content-title" style="padding-top: 12px;">
+				<span class="content-title-in none-essential">전공계열</span>
+				<p class="subText-Th">최대 3개</p>
+			</th>
 			<td colspan="5" class="input-content">
+				<!-- 입력한 전공 출력영역 -->
+				<div id="major-code-result-Div" class="code-result-Div">
+					<ul id="major-select-result" class="select-result">
+						
+					</ul>
+				</div>
 				<select class="form-control formStyleChange" id="major-select">
-					<option value="전공계열" selected>전공계열</option>
-					<option value="어문학계열">어문학계열</option>
-					<option value="사회과학계열">사회과학계열</option>
-					<option value="자연과학계열">자연과학계열</option>
-					<option value="공학계열">공학계열</option>
-					<option value="의/약학계열">의/약학계열</option>
-					<option value="사범계열">사범계열</option>
-					<option value="농/수산/해양계열">농/수산/해양계열</option>
-					<option value="가정학계열">가정학계열</option>
-					<option value="예/체능계열">예/체능계열</option>
-					<option value="신학계열">신학계열</option>
-					<option value="법학계열">법학계열</option>
-					<option value="상경계열">상경계열</option>
-					<option value="해당무">해당무</option>
+					<option value="" selected>전공계열</option>
+					<option value="major-0">어문학계열</option>
+					<option value="major-1">사회과학계열</option>
+					<option value="major-2">자연과학계열</option>
+					<option value="major-3">공학계열</option>
+					<option value="major-4">의/약학계열</option>
+					<option value="major-5">사범계열</option>
+					<option value="major-6">농/수산/해양계열</option>
+					<option value="major-7">가정학계열</option>
+					<option value="major-8">예/체능계열</option>
+					<option value="major-9">신학계열</option>
+					<option value="major-10">법학계열</option>
+					<option value="major-11">상경계열</option>
+					<option value="major-12">해당무</option>
 				</select>
-				<button type="button" id="major-Btn" class="btn btn-default">입력</button>
+				<button type="button" id="major-Btn" class="btn btn-default" onclick="input_major();">입력</button>
 			</td>
 		</tr>
 		<!-- 외국어-->
@@ -1032,32 +1054,103 @@ html
 		</tr>
 		<!-- 전형단계 -->
 		<tr class="td-line">
-			<th class="content-title"> <div class="essential">* </div><span class="content-title-in">접수양식</span></th>
-			<td colspan="5" class="input-content">
-				<!-- 자사시스템 이용 -->
-				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox' id="frm-contact-0" value="1" checked><label for='frm-contact-1'>ITHRER 이력서</label> 
-				</div>
-				<!-- 일반 이용 -->
-				<div class="frm-contact">
-					<input type='checkbox' class='ipt-chkBox' id="frm-contact-1" value="1" ><label for='frm-contact-1'>자사양식</label>
-					<input type='checkbox' class='ipt-chkBox' id="frm-contact-2" value="1" ><label for='frm-contact-2'>자유양식</label>
-				</div>
+			<th class="content-title"> 
+				<div class="essential">* </div>
+				<span class="content-title-in">전형단계</span>
+				<p class="subText-Th">최대 4개</p>
+			</th>
+			<td colspan="5" class="input-content" id="process-td">
+				<span>서류전형 ></span>
+				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-1">
+					<option value="기능구분" selected>면접전형</option>
+					<option value="기능구분" >2차면접전형</option>
+					<option value="기능구분" >3차면접전형</option>
+					<option value="기능구분" >시험전형</option>
+					<option value="기능구분" >검사전형</option>
+					<option value="기능구분" >최종심사</option>
+				</select>
+				<span> > </span>
+				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-2">
+					<option value="기능구분" >면접전형</option>
+					<option value="기능구분" >2차면접전형</option>
+					<option value="기능구분" >3차면접전형</option>
+					<option value="기능구분" selected>시험전형</option>
+					<option value="기능구분" >검사전형</option>
+					<option value="기능구분" >최종심사</option>
+				</select>
+				<span> > 최종합격</span>
+				<button type="button" id="processAdd-Btn" class="btn btn-default" onclick="processAdd();">전형추가</button>
 			</td>
 		</tr>
 	</table>
 </div>
-<br /><br /><br /><br /><br /><br /><br /><br />
+
+<!-- summernote -->
+<div id="summernote-content" class="info-container">
+	<!-- 입력 전 안내 -->
+	<div class="explanation">
+		<div class="explanation-header">
+			<h3>공고등록 전에 입력하신 내용을 최종 확인해주세요</h3>
+		</div>
+		<div class="explanation-footer">
+			<p class="explanation-footer-text">지금까지 입력하신 내용을 입력한 내용 적용하기 버튼을 클릭하여 상세요강을 채워주세요.</p>
+		</div>
+	</div>
+	<div id="summernoteDiv">
+		<textarea id="summernote-area" style="width: 700px; height: 300px;"></textarea>
+		<div id="addBtn" style="text-align: center; margin-top: 22px; margin-bottom: 22px;">
+			<button type="button" class="btn btn-primary btn-lg">등록완료</button>
+		</div>
+	</div>
+</div>
+
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 <!-- 스크립트 영역 -->
 <script>
-/* 체크된게 있는지 확인하여 div를 숨기고 보이는 함수 */
-function isChecked()
+/* 전형을 추가하는 함수 */
+function processAdd()
 {
-	if($("ul#job-select-result li").length) $("#job-code-result-Div").show();
-	else $("#job-code-result-Div").hide();
+	var id_index = ($("#process-td select").length)+1;
+	var html = "<span> > </span><select class='form-control formStyleChange inlineblock-select fore-select join-process' id='processBox-"+id_index+"'><option value='기능구분' >면접전형</option><option value='기능구분'>2차면접전형</option>	<option value='기능구분'>3차면접전형</option><option value='기능구분' selected>시험전형</option><option value='기능구분'>검사전형</option><option value='기능구분'>최종심사</option></select>";
+	if(id_index > 4) return;
+	else ($("#process-td select").last()).after(html);
+}
+/* 전공계열 입력 시 결과폼에 출력하는 함수 */
+function input_major()
+{
+	/* 결과폼에 출력할 결과값 */
+	var major_selected = $("#major-select option:selected").text();
+	/* 아이디로 지정할 Option의 Val값 */
+	var major_val = $("#major-select option:selected").val();
+	
+	//전공을 선택하지 않고 입력했을 경우
+	if(major_selected == "전공계열")
+	{
+		alert("전공을 선택해주세요.");
+		return;
+	}
+	
+	//첫요소인지 확인하기 위한 변수, 있다면 구분자를 추가
+	var divChar = $("ul#major-select-result li").length==0?"":"/&nbsp;";
+	//이미 추가된 요소인지 확인
+	var check_deplicate = $("li.result-major:contains('"+major_selected+"')").text();
+	var check_deplicateBool = (check_deplicate.match(major_selected))==null?false:true;
+	
+	//체크가 될 경우 태그를 생성하고, 해제될 경우 제거한다. 최대 3개까지 등록 가능하다.
+	if($("#major-select-result>li.result-Frm").length >= 3) alert("최대 3개까지 등록 가능합니다.");
+	else if(!check_deplicateBool) $("#major-select-result").append("<li class='result-major result-Frm' id='"+major_val+"'>"+divChar+major_selected+"&nbsp;&nbsp;</li>");
+	else alert("이미 등록된 전공입니다.");
+	//입력된 것이 하나도 있는지 확인한다. 결과에 따라 div를 보여주거나 숨긴다.
+	isChecked("major");
+	
+}
+/* 체크된게 있는지 확인하여 div를 숨기고 보이는 함수 */
+function isChecked(checkType)
+{
+	if($("ul#"+checkType+"-select-result li").length) $("#"+checkType+"-code-result-Div").show();
+	else $("#"+checkType+"-code-result-Div").hide();
 }
 /* 모집직급/직책 선택 시 input태그에 추가하기 */
 $(".job-chkBox").on("click", function(){
@@ -1068,10 +1161,10 @@ $(".job-chkBox").on("click", function(){
 	//실제값을 가져온다.
 	var resultText = $(this).next().text();
 	//체크가 될 경우 태그를 생성하고, 해제될 경우 제거한다.
-	if($(this).prop("checked"))	$("#job-select-result").append("<li class='resultJob' id='"+selectChkboxId+"'>"+divChar+resultText+"&nbsp;&nbsp;</li>");	
+	if($(this).prop("checked"))	$("#job-select-result").append("<li class='resultJob result-Frm' id='"+selectChkboxId+"'>"+divChar+resultText+"&nbsp;&nbsp;</li>");	
 	else $("li#"+selectChkboxId).remove();
 	//체크된 것이 하나도 있는지 확인한다. 결과에 따라 div를 보여주거나 숨긴다.
-	isChecked();
+	isChecked("job");
 });
 /* 모직직급/직책 팝업 취소 */
 $("#position-cancleBtn").on("click", function(){
@@ -1205,6 +1298,12 @@ $("#Employ_Ty_Cd_1").on("click", function(){
 /* 페이지 완전로딩 후 뷰 */
 $(document).ready(function(){
 	$("html").css("display", "block");
+	$("#summernote-area").summernote({
+		width: "100%",
+		height: 300,
+		lang: 'ko-KR',
+		fontNames: ['fontA',  'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New']
+	});
 });
 /* 경력 - 경력, 신입경력에서 연차무관을 선택할 경우 : 초기화 후 읽기전용 속성으로 변경 */
 var checked_irrelevant_crr = false;
@@ -1268,6 +1367,7 @@ $(".jobList li").on("click", function(){
 /* 구분 하위텍스트 */
 .subText-Th
 {
+	margin-left: 14px;
 	font-size: 13px;
 	color: #9d9ea0;
 }
@@ -1308,7 +1408,7 @@ $(".jobList li").on("click", function(){
 /* 사용자 입력사항 */
 .input-content{position: relative; padding: 14px 0 14px 23px; font-size: 15px;}
 /* 사용자 입력 - 텍스트 */
-.input-textBox{padding: 8px 0 8px 7px; width: 100%; min-height: 48px; border: 1px solid #dadada; border-radius: 3px;}
+.input-textBox{padding: 8px 0 8px 7px; width: 100%; min-height: 48px; border: 1px solid #dadada; border-radius: 3px; resize: none;}
 /* 테이블 하단라인 */
 .td-line{border-bottom: 1px solid #ebeced;}
 /* 체크박스 간격조정 */
@@ -1615,17 +1715,17 @@ ul.inlineblock-select li
 	margin-bottom:2px;
 	margin-left: 10px;
 }
-.resultJob
+.result-Frm
 {
 	list-style: none;
 	float: left;
 }
-#job-code-result-Div ul
+.code-result-Div ul
 {
 	padding-left: 10px;
 	padding-top: 13px;
 }
-#job-code-result-Div
+.code-result-Div
 {
 	min-height: 48px;
 	width: 100%;
@@ -1633,5 +1733,10 @@ ul.inlineblock-select li
 	border: 1px solid #dcdcdc;
 	border-radius: 3px;
 	margin-bottom: 10px;
+}
+.join-process
+{
+	width: 0%;
+	min-width: 15%;
 }
 </style>

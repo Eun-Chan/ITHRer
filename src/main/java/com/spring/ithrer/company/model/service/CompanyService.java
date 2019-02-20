@@ -1,7 +1,9 @@
 package com.spring.ithrer.company.model.service;
 
+import java.util.List;
 import java.util.Map;
 
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
@@ -37,5 +39,11 @@ public interface CompanyService {
 	Company selectCompanyOne(String compId);
 
 	Member selectApplicant(Map<String, Object> map);
+
+	int deleteFavorite(Map<String, Object> map);
+
+	int insertFavorite(Map<String, Object> map);
+
+	List<Favorites> selectFavoriteAppList(String compId);
 
 }
