@@ -9,6 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
 <style>
 #noticeSearch-container{
@@ -153,18 +154,288 @@ span.add_keyword{
 	padding-right: 5px;
 }
 </style>
+
 <script>
+/* 상세조건 펼치기 */
+
+$(function(){
+	$("#detail-area").hide();
+	
+	$("#btn-detail-search").on("click", function(){
+		$("#detail-area").toggle();
+	});
+});
+
+var salary = "";
+var age = "";
+var gender = "";
+var subway = "";
+var licence = "";
+var major = [];
+var position = [];
+var preference = [];
+var emp_type = [];
+var work_day = [];
+
+$(function(){
+	
+/* 상세조건 클릭시 #keyword에 담기 */
+var searchKeyword = $("#searchKeyWord").val();
+
+$("#add_searchKeyword").html("검색어 > "+searchKeyword);
+
+$("#detail_salary").on("change",function(){
+	salary = $("#detail_salary").val();
+	$("#add_salary").html(salary+"만 이상");
+});
+
+$("input:checkbox[name=sal_nego]").click(function(){
+	if($(this).prop('checked')){
+		salary="회사내규에따름";
+		$("#detail_salary").prop("disabled", true);
+		$("#add_salary").html(salary);		
+	}else{
+		salary="";
+		$("#detail_salary").prop("disabled", false);
+		$("#add_salary").html("");
+	}
+});
+
+
+$("#detail_age").on("focusout", function(){
+	age = $(this).val();
+	$("#add_age").html(age+"세");
+});
+
+$('input:radio[name=gender]').on("click", function(){
+	gender = $('input:radio[name=gender]:checked').val();
+	var genderShow = "";
+	if(gender == "M"){
+		genderShow = "남자";
+	}else if(gender == "F"){
+		genderShow = "여자";
+	}else{
+		genderShow = "무관";
+	}
+	
+	$("#add_gender").html(genderShow);
+})
+
+$("#detail_subway").on("focusout", function(){
+	subway = $(this).val();
+	$("#add_subway").html(subway);
+});
+
+$("#detail_licence").on("focusout", function(){
+	licence = $(this).val();
+	$("#add_licence").html(licence);
+});
+
+//$("input[name=major]").on("focusout", function(){
+$(document).on("focusout","input[name=major]",function(){
+	//동적으로 생성되는 부분에도 이벤트핸들러를 등록하기 위해서는 document에 이벤트를 담는다.	
+
+	if(major.indexOf($(this).val()) == -1 && $(this).val()!=""){
+		major.push($(this).val());
+	}
+	
+	$("#add_major").html("");
+
+	for(var i = 0; i < major.length; i++){
+		
+		$("#add_major").append("<span class='add_keyword'>"+major[i]+"</span>");
+		
+	}
+	
+});
+
+//$("#detail_position").on("change",function(){
+$(document).on("change","select[name=position]",function(){	
+	
+	if(position.indexOf($(this).val()) == -1 && $(this).val()!=""){
+		position.push($(this).val());
+	}
+	console.log("position:",position);
+	$("#add_position").html("");
+	for(var i = 0; i < position.length; i++){		
+		$("#add_position").append("<span class='add_keyword'>"+position[i]+"</span>");		
+	}
+	
+});
+
+$("#preference-area input:checkbox").click(function() {
+	if(preference.length>4 && preference.indexOf($(this).val()) == -1){
+		alert("5개까지 체크가능해요:D");
+		$(this).prop("checked", false);
+		return;
+	}
+	if(preference.indexOf($(this).val()) == -1){
+		preference.push($(this).val());		
+	}else{
+		preference.splice(preference.indexOf($(this).val()),1);
+	}
+	
+	$("#add_preference").html("");
+	for(var i = 0; i < preference.length; i++){
+		
+		$("#add_preference").append("<span class='add_keyword'>"+preference[i]+"</span>");
+		
+	}
+
+});
+
+$("#emp_type-area input:checkbox").click(function() {
+	if(emp_type.length>2 && emp_type.indexOf($(this).val()) == -1){
+		alert("3개까지 체크가능해요:D");
+		$(this).prop("checked", false);
+		return;
+	}
+	if(emp_type.indexOf($(this).val()) == -1){
+		emp_type.push($(this).val());		
+	}else{
+		emp_type.splice(emp_type.indexOf($(this).val()),1);
+	}
+	
+	$("#add_emp_type").html("");
+	for(var i = 0; i < emp_type.length; i++){
+		
+		$("#add_emp_type").append("<span class='add_keyword'>"+emp_type[i]+"</span>");
+		
+	}
+
+});
+
+$("#work_day-area input:checkbox").click(function() {
+	if(work_day.length>2 && work_day.indexOf($(this).val()) == -1){
+		alert("3개까지 체크가능해요:D");
+		$(this).prop("checked", false);
+		return;
+	}
+	if(work_day.indexOf($(this).val()) == -1){
+		work_day.push($(this).val());		
+	}else{
+		work_day.splice(work_day.indexOf($(this).val()),1);
+	}
+	
+	$("#add_work_day").html("");
+	for(var i = 0; i < work_day.length; i++){
+		
+		$("#add_work_day").append("<span class='add_keyword'>"+work_day[i]+"</span>");
+		
+	}
+
+});
+
+/* 검색을 위한 함수 */
+$("#btn-search-notice").on("click", function(){
+	var searchKeyWord = $("#searchKeyWord").val();
+	var locationCode = $(".hiddenLocationCode").val();
+	
+	console.log("searchKeyWord = ", searchKeyWord);
+	console.log("locationCode = ", locationCode);
+	
+	console.log("salary = ",salary);
+	console.log("age = ",age);
+	console.log("gender = ",gender);
+	console.log("subway = ",subway);
+	console.log("licence = ",licence);
+	console.log("major = ",major);
+	console.log("position = ",position);
+	console.log("preference = ",preference);
+	console.log("emp_type = ",emp_type);
+	console.log("work_day = ",work_day);
+	
+	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode;
+	
+});
+
+
+
+	
+
+})//onload끝
+
+/* 리스트에 마감시간을 표시하기 위한 함수 */
+function timestamp(time){
+	var timeStamp = time*1000;
+		
+	var dt = new Date(timeStamp);
+    
+    document.writeln(" ~"+dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate());
+			
+}
+
+
+/* 추가버튼과 삭제 버튼을 눌렀을 때 실행되는 함수 */
+function add_line(event, check){
+	//클릭시 발생하는 이벤트를 가져와 타겟과 parent를 찾아 영역으 변수에 담기
+	var ect = event.currentTarget.parentElement;
+	
+	//어디에서 넘어온 이벤트인지 check를 통해 검사하고  3개이상 추가하지 못하게 제어
+	if(check == 1 && $(".major_add_del").length > 2){
+		alert("3개까지 추가 가능합니다!");
+		return;
+	}else if(check == 2 && $(".position_add_del").length > 2){
+		alert("3개까지 추가 가능합니다!");
+		return;
+	}else{
+		//console.log("ect부모", ect);
+		//console.log(ect.innerHTML);
+		//console.log(ect.outerHTML)
+		
+		//ect가 가진 영역을 outerHTML을 통해 string으로 만들어 추가
+		$(ect).parent().append(ect.outerHTML);
+	
+	}
+}
+function del_line(event, check){
+	var ect = event.currentTarget.parentElement;
+	
+	//console.log($(".major_add_del").length);
+	
+	if($(".major_add_del").length < 2 && check==1){
+		$("#detail_major").val([]);
+		major.splice(major.indexOf($(ect).children("input").val()),1);
+		$("#add_major").text("");
+	}else if($(".position_add_del").length < 2 && check==2){		
+		$("#detail_position").val([]);
+		$("#detail_position option:eq(0)").prop('selected', true);
+		position.splice(position.indexOf($(ect).children("input").val()),1);
+		$("#add_position").text("");
+	}else if(check==1){		
+		//console.log("ect부모", ect);
+		major.splice(major.indexOf($(ect).children("input").val()),1);
+		
+		//표시부분 지우게 구현
+		$("#add_major").html("");
+		for(var i = 0; i < major.length; i++){			
+			$("#add_major").append("<span class='add_keyword'>"+major[i]+"</span>");			
+		}
+		
+		$(ect).remove();		
+	}else if(check==2){
+		position.splice(position.indexOf($(ect).children("select").val()),1);
+		//표시부분 지우게 구현해야함
+		$("#add_position").html("");
+		for(var i = 0; i < position.length; i++){		
+			$("#add_position").append("<span class='add_keyword'>"+position[i]+"</span>");		
+		}
+		
+		$(ect).remove();
+	}
+};
 
 
 
 
 </script>
+
 <!-- 검색바 부분 -->
 <div class="main-search">
       <div class="search-bar">
          <div class="bar-main">
             <div class="bar-option">
-               <input type="text" id="searchKeyWord" maxlength="30" placeholder="검색어 입력" />
+               <input type="text" id="searchKeyWord" maxlength="30" placeholder="검색어 입력" value="${searchKeyWord}"/>
                <img src="${pageContext.request.contextPath }/resources/images/search.svg" alt=""/>
             </div>
             <div class="bar-option area">
@@ -1278,7 +1549,7 @@ span.add_keyword{
 				  <option value=9000>9000만원 이상</option>
 				  <option value=10000>1억원 이상</option>
 				</select>
-				<input type="checkbox" name="sal_nego" id="sal_nego" value="0" /><span style="color:#888; font-size:12px; vertical-align: text-top;">회사내규에 따름</span>
+				<input type="checkbox" name="sal_nego" id="sal_nego" value="0" /><label for="sal_nego"><span style="color:#888; font-size:12px; vertical-align: text-top;">회사내규에 따름</span></label> 
 			</div>
 			<div id="age-area" >
 				<h2>나이</h2>
@@ -1307,66 +1578,78 @@ span.add_keyword{
 			<hr />
 			<div id="licence-area">
 				<h2>자격증ㆍ어학</h2>
-				<input type="text" id="detail_licence" class="form-control form-control-sm col-md-4" placeholder="자격증 또는 외국어 시험 이름을 입력하세요" />
+				<input type="text" id="detail_licence" class="form-control form-control-sm col-md-4" placeholder="자격증 또는 외국어 시험 이름을 입력하세요" />				
 			</div>
 			<div id="major-area">
 				<h2>전공</h2>
-				<input type="text" id="detail_major" class="form-control form-control-sm col-md-4" placeholder="전공명을 입력하세요"/>
+				<div class="major_add_del">
+					<input type="text" id="detail_major" name="major" class="form-control form-control-sm col-md-4" placeholder="전공명을 입력하세요"/>
+					<button id="btn_add_major" class="btn_add_minus btn btn-outline-dark" onclick="add_line(event,1);"><i class="far fa-plus-square"></i></button>
+					<button id="btn_minus_major" class="btn_add_minus btn btn-outline-dark" onclick="del_line(event,1);"><i class="far fa-minus-square"></i></button>
+				</div>
 			</div>
 			<div id="position-area">
 				<h2>직급ㆍ직책</h2>
-				<select id="detail_position" class="form-control form-control-sm col-md-4">
-				  <option value="직급.인턴/수습">[직급]인턴/수습</option>
-				  <option value="직급.사원">[직급]사원</option>
-				  <option value="직급.주임">[직급]주임</option>
-				  <option value="직급.계장">[직급]계장</option>
-				  <option value="직급.대리">[직급]대리</option>
-				  <option value="직급.과장">[직급]과장</option>
-				  <option value="직급.차장">[직급]차장</option>
-				  <option value="직급.부장">[직급]부장</option>
-				  <option value="직급.감사">[직급]감사</option>
-				  <option value="직급.이사">[직급]이사</option>
-				  <option value="직급.상무">[직급]상무</option>
-				  <option value="직급.전무">[직급]전무</option>
-				  <option value="직급.부사장">[직급]부사장</option>
-				  <option value="직급.사장">[직급]사장</option>
-				  <option value="직급.회장">[직급]회장</option>
-				  <option value="직급.전문직">[직급]전문직</option>
-				  <option value="직급.IR 책임자">[직급]IR 책임자</option>
-				  <option value="직급.연구원">[직급]연구원</option>
-				  <option value="직급.주임연구원">[직급]주임연구원</option>
-				  <option value="직급.선임연구원">[직급]선임연구원</option>
-				  <option value="직급.책임연구원">[직급]책임연구원</option>
-				  <option value="직급.수석연구원">[직급]수석연구원</option>
-				  <option value="직급.연구소장">[직급]연구소장</option>
-				  <option value="직급.프리랜서">[직급]프리랜서</option>
-				  <option value="직급.CTO">[직급]CTO</option>
-				  <option value="직급.CEO">[직급]CEO</option>
-				  <option value="직급.COO">[직급]COO</option>
-				  <option value="직책.팀원">[직책]팀원</option>
-				  <option value="직책.총무">[직책]총무</option>
-				  <option value="직책.부팀장">[직책]부팀장</option>
-				  <option value="직책.실장">[직책]실장</option>
-				  <option value="직책.팀장">[직책]팀장</option>
-				  <option value="직책.파트장">[직책]파트장</option>
-				  <option value="직책.지점장">[직책]지점장</option>
-				  <option value="직책.공장장">[직책]공장장</option>
-				  <option value="직책.지사장">[직책]지사장</option>
-				  <option value="직책.그룹장">[직책]그룹장</option>
-				  <option value="직책.센터장">[직책]센터장</option>
-				  <option value="직책.본부장">[직책]본부장</option>
-				  <option value="직책.사업부장">[직책]사업부장</option>
-				  <option value="직책.국장">[직책]국장</option>
-				  <option value="직책.원장">[직책]원장</option>
-				  <option value="직책.매니저">[직책]매니저</option>
-				  <option value="직책.지배인">[직책]지배인</option>
-				  <option value="직책.총지배인">[직책]총지배인</option>
-				  <option value="직책.고문">[직책]고문</option>
-				  <option value="직책.소장">[직책]소장</option>
-				  <option value="직책.관장">[직책]관장</option>
-				  <option value="직책.이사장">[직책]이사장</option>
-				</select>
+				<div class="position_add_del">
+					<select id="detail_position" name="position" class="form-control form-control-sm col-md-4">
+					  <option value="" selected disabled hidden>선택</option>
+					  <option value="직급.인턴/수습">[직급]인턴/수습</option>
+					  <option value="직급.사원">[직급]사원</option>
+					  <option value="직급.주임">[직급]주임</option>
+					  <option value="직급.계장">[직급]계장</option>
+					  <option value="직급.대리">[직급]대리</option>
+					  <option value="직급.과장">[직급]과장</option>
+					  <option value="직급.차장">[직급]차장</option>
+					  <option value="직급.부장">[직급]부장</option>
+					  <option value="직급.감사">[직급]감사</option>
+					  <option value="직급.이사">[직급]이사</option>
+					  <option value="직급.상무">[직급]상무</option>
+					  <option value="직급.전무">[직급]전무</option>
+					  <option value="직급.부사장">[직급]부사장</option>
+					  <option value="직급.사장">[직급]사장</option>
+					  <option value="직급.회장">[직급]회장</option>
+					  <option value="직급.전문직">[직급]전문직</option>
+					  <option value="직급.IR 책임자">[직급]IR 책임자</option>
+					  <option value="직급.연구원">[직급]연구원</option>
+					  <option value="직급.주임연구원">[직급]주임연구원</option>
+					  <option value="직급.선임연구원">[직급]선임연구원</option>
+					  <option value="직급.책임연구원">[직급]책임연구원</option>
+					  <option value="직급.수석연구원">[직급]수석연구원</option>
+					  <option value="직급.연구소장">[직급]연구소장</option>
+					  <option value="직급.프리랜서">[직급]프리랜서</option>
+					  <option value="직급.CTO">[직급]CTO</option>
+					  <option value="직급.CEO">[직급]CEO</option>
+					  <option value="직급.COO">[직급]COO</option>
+					  <option value="직책.팀원">[직책]팀원</option>
+					  <option value="직책.총무">[직책]총무</option>
+					  <option value="직책.부팀장">[직책]부팀장</option>
+					  <option value="직책.실장">[직책]실장</option>
+					  <option value="직책.팀장">[직책]팀장</option>
+					  <option value="직책.파트장">[직책]파트장</option>
+					  <option value="직책.지점장">[직책]지점장</option>
+					  <option value="직책.공장장">[직책]공장장</option>
+					  <option value="직책.지사장">[직책]지사장</option>
+					  <option value="직책.그룹장">[직책]그룹장</option>
+					  <option value="직책.센터장">[직책]센터장</option>
+					  <option value="직책.본부장">[직책]본부장</option>
+					  <option value="직책.사업부장">[직책]사업부장</option>
+					  <option value="직책.국장">[직책]국장</option>
+					  <option value="직책.원장">[직책]원장</option>
+					  <option value="직책.매니저">[직책]매니저</option>
+					  <option value="직책.지배인">[직책]지배인</option>
+					  <option value="직책.총지배인">[직책]총지배인</option>
+					  <option value="직책.고문">[직책]고문</option>
+					  <option value="직책.소장">[직책]소장</option>
+					  <option value="직책.관장">[직책]관장</option>
+					  <option value="직책.이사장">[직책]이사장</option>
+					</select>
+					<button id="btn_add_position" class="btn btn-outline-dark btn_add_minus" onclick="add_line(event,2);"><i class="far fa-plus-square"></i></button>
+					<button id="btn_minus_position" class="btn_add_minus btn btn-outline-dark" onclick="del_line(event,2);"><i class="far fa-minus-square"></i></button>
+				</div>
 			</div>
+			
+	
+		
 			<div id="preference-area">
 				<h2>우대조건</h2>
 				<div class="checkbox-area">
@@ -1571,143 +1854,319 @@ span.add_keyword{
 </div>
 
 <script>
-/* 상세조건 펼치기 */
-$("#detail-area").hide();
 
-$("#btn-detail-search").on("click", function(){
-	$("#detail-area").toggle();
+/* 지역검색 부분 */
+
+
+$("#locationKeyWord").on("click",function(){
+   if(!$(".location-hide").hasClass("on")){
+      $(".location-hide").addClass("on");
+   }
+   else{
+      $(".location-hide").removeClass("on");
+   }
 });
+$("html").click(function(e){
+    if(!$(e.target).hasClass("locationKeyWord")){
+      if($(e.target).hasClass("loc")){
+         $(".location-hide").addClass("on");
+         return;
+      }
+      if($(e.target).hasClass("locationKeyWordSelected")){
+         $(".location-hide").addClass("on");
+         return;
+      }
+      if($(e.target).hasClass("location-view-detail")){
+    	  $(".location-hide").addClass("on");
+          return;
+      }
+      if($(e.target).hasClass("loc-detail")){
+    	  $(".location-hide").addClass("on");
+          return;
+      }
+      if($(e.target).hasClass("deleteLocation")){
+    	  $(".location-hide").addClass("on");
+          return;
+      }
+      if($(e.target).hasClass("reset")){
+    	  $(".location-hide").addClass("on");
+          return;
+      }
+	
+      $(".location-hide").removeClass("on");
+   } 
 
-/* 상세조건 클릭시 #keyword에 담기 */
-var searchKeyword = $("#searchKeyWord").val();
-var salary = "";
-var age = "";
-var gender = "";
-var subway = "";
-var licence = "";
-var major = "";
-var position = "";
-var preference = [];
-var emp_type = [];
-var work_day = [];
-
-$("#add_searchKeyword").html("검색어 > "+searchKeyword);
-
-$("#detail_salary").on("change",function(){
-	salary = $("#detail_salary").val();
-	$("#add_salary").html(salary+"만 이상");
 });
+$(".location-hide button").on("click",function(){
+	var location_name =  new Array();
+/*   if($(".locationKeyWordSelected").text()==""){
+      $(".locationKeyWordSelected").text($(this).val());
+      $(".placeholder").hide();
+   }else{
+      $(".locationKeyWordSelected").text($(".locationKeyWordSelected").html()+", "+$(this).val());
+   } */
+   $(".deleteLocation").css("display","block");
+   if($(this).val()=="101000"){
+	   $(".detail").css("display","none");
+	   $(".seoul").css("display","block");
+	   if($(".seoul li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=101000]").prop("checked",true);
+		   }
+	   }
+	   
+   }
+   if($(this).val()=="102000"){
+	   $(".detail").css("display","none");
+	   $(".gyeonggi").css("display","block");
+	   if($(".gyeonggi li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=102000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="108000"){
+	   $(".detail").css("display","none");
+	   $(".incheon").css("display","block");
+	   if($(".incheon li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=108000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="106000"){
+	   $(".detail").css("display","none");
+	   $(".busan").css("display","block");
+	   if($(".busan li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=106000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="104000"){
+	   $(".detail").css("display","none");
+	   $(".daegu").css("display","block");
+	   if($(".daegu li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=104000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="103000"){
+	   $(".detail").css("display","none");
+	   $(".gwangju").css("display","block");
+	   if($(".gwangju li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=103000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   
+   if($(this).val()=="105000"){
+	   $(".detail").css("display","none");
+	   $(".daejeon").css("display","block");
+	   if($(".daejeon li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=105000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="107000"){
+	   $(".detail").css("display","none");
+	   $(".ulsan").css("display","block");
+	   if($(".ulsan li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=107000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="118000"){
+	   $(".detail").css("display","none");
+	   $(".sejong").css("display","block");
+	   if($(".sejong li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=118000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="109000"){
+	   $(".detail").css("display","none");
+	   $(".kangwon").css("display","block");
+	   if($(".kangwon li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=109000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="110000"){
+	   $(".detail").css("display","none");
+	   $(".gyeongnam").css("display","block");
+	   if($(".gyeongnam li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=110000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="111000"){
+	   $(".detail").css("display","none");
+	   $(".gyeongbuk").css("display","block");
+	   if($(".gyeongbuk li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=111000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="112000"){
+	   $(".detail").css("display","none");
+	   $(".chonnam").css("display","block");
+	   if($(".chonnam li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($("	.loc-detail:checked").length<5){
+			   $("input[name=112000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="113000"){
+	   $(".detail").css("display","none");
+	   $(".chonbuk").css("display","block");
+	   if($(".chonbuk li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=113000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="115000"){
+	   $(".detail").css("display","none");
+	   $(".chungnam").css("display","block");
+	   if($(".chungnam li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=115000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="114000"){
+	   $(".detail").css("display","none");
+	   $(".chungbuk").css("display","block");
+	   if($(".chungbuk li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=114000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="116000"){
+	   $(".detail").css("display","none");
+	   $(".jeju").css("display","block");
+	   if($(".jeju li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=116000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   if($(this).val()=="117000"){
+	   $(".detail").css("display","none");
+	   $(".jongok").css("display","block");
+	   if($(".jongok li").find(".loc-detail:checked").siblings("label").text()==""){
+		   if($(".loc-detail:checked").length<5){
+			   $("input[name=117000]").prop("checked",true);
+		   }		   
+	   }
+   }
+   var location_code =  new Array();
+   var locationCode = "";
+   var text = "";
+   
+	$('.loc-detail:checked').each(function() { 
+		location_code.push($(this).attr("name"));
+	 });
+   $('.loc-detail:checked').each(function() { 
+	   location_name.push($(this).siblings("label").text());
+     });
+	for(var i = 0 ; i<location_name.length ; i++){
+		if(i==location_name.length-1){
+			text+=location_name[i];
+		}else{			
+			text+=location_name[i]+",";
+		}
+	}
+	for(var i = 0 ; i<location_code.length ; i++){
+		locationCode += location_code[i]+",";
+	}
 
-$("#detail_age").on("focusout", function(){
-	age = $(this).val();
-	$("#add_age").html(age+"세");
+
+	 $(".hiddenLocationCode").val(locationCode);
+	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
+	 $(".placeholder").hide();
+
+
 });
+$(".open").hover(function(){
+   $(this).css("border","2px solid #ffb6c1");
+	},function(){
+   		$(this).css("border","2px solid #d6d6d6");
+	}
+);
 
-$('input:radio[name=gender]').on("click", function(){
-	gender = $('input:radio[name=gender]:checked').val();
-	var genderShow = "";
-	if(gender == "M"){
-		genderShow = "남자";
-	}else if(gender == "F"){
-		genderShow = "여자";
-	}else{
-		genderShow = "무관";
+$(".loc-detail").on("click",function(){
+	console.log($(".loc-detail:checked").attr("name"));
+	var location_name =  new Array();
+	var location_code =  new Array();
+	var text = "";
+	var locationCode = "";
+	if(!$(this).hasClass("all")){
+		$(this).parent("li").siblings("li").find(".all").prop("checked",false);
+	}
+	else if($(this).hasClass("all")){
+		console.log("체크 트루");
+		$(this).parent("li").siblings("li").find(".loc-detail").prop("checked",false);
+		$(this).prop("checked");
 	}
 	
-	$("#add_gender").html(genderShow);
-})
-
-$("#detail_subway").on("focusout", function(){
-	subway = $(this).val();
-	$("#add_subway").html(subway);
-});
-
-$("#detail_licence").on("focusout", function(){
-	licence = $(this).val();
-	$("#add_licence").html(licence);
-});
-
-$("#detail_major").on("focusout", function(){
-	major = $(this).val();
-	$("#add_major").html(major);
-});
-
-$("#detail_position").on("change",function(){
-	position = $("#detail_position").val();
-	$("#add_position").html(position);
-});
-
-$("#preference-area input:checkbox").click(function() {
-	
-	if(preference.indexOf($(this).val()) == -1){
-		preference.push($(this).val());		
-	}else{
-		preference.splice(preference.indexOf($(this).val()),1);
+	$('.loc-detail:checked').each(function() { 
+		location_name.push($(this).siblings("label").text());
+	 });
+	$('.loc-detail:checked').each(function() { 
+		location_code.push($(this).attr("name"));
+	 });
+	for(var i = 0 ; i<location_name.length ; i++){
+		if(location_name.length>5){
+			alert("지역은 5개 까지만 선택 가능합니다.");
+			$(this).prop("checked",false);
+			return;
+		}
+		if(i==location_name.length-1){
+			text+=location_name[i];
+		}
+		else{
+			text+=location_name[i]+",";
+		}
 	}
-	
-	$("#add_preference").html("");
-	for(var i = 0; i < preference.length; i++){
-		
-		$("#add_preference").append("<span class='add_keyword'>"+preference[i]+"</span>");
-		
+	for(var i = 0 ; i<location_code.length ; i++){
+		locationCode += location_code[i]+",";
 	}
 
-});
 
-$("#emp_type-area input:checkbox").click(function() {
+	 $(".hiddenLocationCode").val(locationCode);
+ 	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
+	 $(".placeholder").hide();
 	
-	if(emp_type.indexOf($(this).val()) == -1){
-		emp_type.push($(this).val());		
-	}else{
-		emp_type.splice(emp_type.indexOf($(this).val()),1);
-	}
-	
-	$("#add_emp_type").html("");
-	for(var i = 0; i < emp_type.length; i++){
-		
-		$("#add_emp_type").append("<span class='add_keyword'>"+emp_type[i]+"</span>");
-		
-	}
+});	 
+$(".reset").on("click",function(){
+	console.log("왓지?");
+	var location_name =  new Array();
+	var text="";
+	$(this).parents().siblings("li").find(".loc-detail").prop("checked",false);
 
+  	$('.loc-detail:checked').each(function() { 
+	   location_name.push($(this).siblings("label").text());
+    });
+	for(var i = 0 ; i<location_name.length ; i++){
+		if(i==location_name.length-1){
+				text+=location_name[i];
+		}else{			
+			text+=location_name[i]+",";
+		}
+	}
+	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
 });
-
-$("#work_day-area input:checkbox").click(function() {
-	
-	if(work_day.indexOf($(this).val()) == -1){
-		work_day.push($(this).val());		
-	}else{
-		work_day.splice(work_day.indexOf($(this).val()),1);
-	}
-	
-	$("#add_work_day").html("");
-	for(var i = 0; i < work_day.length; i++){
-		
-		$("#add_work_day").append("<span class='add_keyword'>"+work_day[i]+"</span>");
-		
-	}
-
-});
-
-/* 검색을 위한 함수 */
-$(function(){
-	$("#btn-search-notice").on("click", function(){
-		var searchKeyWord = $("#searchKeyWord").val();
-		var locationCode = $(".hiddenLocationCode").val();
-		
-		location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode;
-		
-	});
-	/* 리스트에 마감시간을 표시하기 위한 함수 */
-});
-
-function timestamp(time){
-	var timeStamp = time*1000;
-		
-	var dt = new Date(timeStamp);
-    
-    document.writeln(" ~"+dt.getFullYear()+"/"+(dt.getMonth()+1)+"/"+dt.getDate());
-			
-}
 
 
 
@@ -1734,7 +2193,7 @@ function timestamp(time){
 	<br /><br />
 		${pageBar}
 	</div>
-	
+	<input type="hidden" class="hiddenLocationCode" />
 </div>
 	
 
