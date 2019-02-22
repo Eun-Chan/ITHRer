@@ -22,6 +22,7 @@
 		<typeAlias type="com.spring.ithrer.company.model.vo.Location" alias="location"/>
 		<typeAlias type="com.spring.ithrer.board.model.vo.AnonyBoard" alias="anonyboard"/>
 		<typeAlias type="com.spring.ithrer.common.model.vo.Favorites" alias="favorites"/>
+		<typeAlias type="com.spring.ithrer.common.typehandler.StringArrayTypeHandler" alias="strArrTypeHandler"/>
 	</typeAliases>
 
 </configuration>
