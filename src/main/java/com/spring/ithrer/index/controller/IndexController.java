@@ -193,7 +193,7 @@ public class IndexController {
 	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
 	    }
 	    else {
-	       pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&cPage=" + (pageNo-1)
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage=" + (pageNo-1)
 	                + "'>이전</a></li>";
 	    }
 	    
@@ -203,7 +203,7 @@ public class IndexController {
 	          pageBar += "<li class='page-item active'><a class='page-link' href='#'>" + pageNo + "</a></li>";
 	       }
 	       else {
-	          pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&cPage=" + pageNo
+	          pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage=" + pageNo
 	                + "'>" + pageNo + "</a></li>";
 	       }
 	       pageNo++;
@@ -213,7 +213,7 @@ public class IndexController {
 	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
 	    }
 	    else {
-	       pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&cPage=" 
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage=" 
 	                   + pageNo + "'>다음</a>";
 	    }
 	    pageBar += "</ul>";
