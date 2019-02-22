@@ -52,7 +52,7 @@ public class IndexController {
 		  Member member = (Member) req.getSession().getAttribute("member");
 		  memberId = member.getMemberId();
 	  }
-      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=40&ind_cd=3&job_type=4&fields=expiration-date");
+      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=8&ind_cd=3&job_type=4&fields=expiration-date");
       Date sysdate = new Date();
       
       List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();

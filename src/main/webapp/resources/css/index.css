@@ -129,6 +129,7 @@
 .location-hide{
    display:none;
    width: 860px;
+   right:-17px;
    position: absolute;
    margin-top:5px;
    border: 1px solid black;
