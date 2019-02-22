@@ -1208,78 +1208,43 @@
   		</ul>
   		<div class="tab-content">
 	         <ul style="list-style: none; padding-left: 20px;" id="lately" class="container tab-pane active">
-	            <li class="recommend-open" onclick="moveDetail('${rc.recruitmentNo}');">
-	               <div class="recommend-content">
-	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
-	                  <span class="recruitTitle">${rc.recruitmentTitle }</span>
-	                  <div class="endDate">D-${endTime }</div>
-	      <%--             ${rc.employmentType }
-	                  <br>
-	                  ${rc.typeOfOccupation} --%>
+	         <c:forEach items="${rc }" var="list">
+	            <li class="recommend-open" >
+	               <div class="recommend-content" onclick="moveDetail('${list.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
+	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
+	                  <div class="endDate">D-${list.endTime }</div>
 	               </div>
+	               <c:if test="${empty member }">
+	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               </c:if>
+	               <c:if test="${not empty member }">
+	               		<c:if test="${list.favoritesCount == 1 }">
+	               			<button class="star"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               		<c:if test="${list.favoritesCount ==0 }">
+	               			<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               </c:if>
+	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
+	            	<input type="hidden" value="${list.compId }" id="hiddenCompId" />
 	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	            
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               
-	               </div>
-	            </li>
+	         </c:forEach>   
 	         </ul>
+	         
 	         <ul style="list-style: none; padding-left: 20px;" id="popularity" class="container tab-pane fade">
-	            <li class="recommend-open" onclick="moveDetail('${rc.recruitmentNo}');">
-	               <div class="recommend-content">
-	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${cp.compName }</strong>
-	                  <span class="recruitTitle">${rc.recruitmentTitle }</span>
-	                  <div class="endDate">D-${endTime }</div>
-	      <%--             ${rc.employmentType }
-	                  <br>
-	                  ${rc.typeOfOccupation} --%>
-	               </div>
-	            </li>
+	         <c:forEach items="${rc }" var="list">
 	            <li class="recommend-open">
-	               <div class="recommend-content">
-	            		2
+	               <div class="recommend-content" onclick="moveDetail('${list.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
+	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
+	                 <div class="endDate">D-${list.endTime }</div>
+	                 <button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	                 <input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
+	                 <input type="hidden" value="${list.compId }" id="hiddenCompId" />
 	               </div>
 	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               		3
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               		
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               
-	               </div>
-	            </li>
-	            <li class="recommend-open">
-	               <div class="recommend-content">
-	               
-	               </div>
-	            </li>
+			</c:forEach>
 	         </ul>
          </div>
       </div>
@@ -1327,6 +1292,7 @@ function moveCrwaling(id){
 };
 function moveDetail(no){
    var no = no;
+	
    window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no);
 }
 
@@ -1663,6 +1629,28 @@ $(".reset").on("click",function(){
 	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
 });
 
+$(".star").on("click",function(){
+	var recNo = $(this).siblings("#hiddenRecruitNo").val();
+	var compId = $(this).siblings("#hiddenCompId").val();
+	var img = $(this).children("img");
+	 if(${empty member}){
+		alert("로그인 후 이용 해 주세용");
+		return;
+ 	}
+	 else{		 
+		$.ajax({
+				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,
+				success:function(data){
+					if(data == 1){
+						img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+					}
+					else {
+						img.attr("src","${pageContext.request.contextPath}/resources/images/star.svg");
+					}
+				}
+		});		 
+	 }
+});
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
@@ -45,34 +46,41 @@ public class IndexController {
    Logger logger = Logger.getLogger(getClass());
    
    @RequestMapping(value="/")
-   public ModelAndView index(ModelAndView mav) throws ParseException {
+   public ModelAndView index(ModelAndView mav ,HttpServletRequest req) throws ParseException {
+	  String memberId = "";
+	   if(req.getSession().getAttribute("member")!=null) {
+		  Member member = (Member) req.getSession().getAttribute("member");
+		  memberId = member.getMemberId();
+	  }
       List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=40&ind_cd=3&job_type=4&fields=expiration-date");
+      Date sysdate = new Date();
       
       List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
       for(int i = 1; i < tempList.size(); i++) {
 		   jobList.add(tempList.get(i));
 	   }
-
-      //임시 셀렉트 원 
-      Recruitment rc = indexService.selectOneRecruitment(2);
       
-      Company cp = indexService.selectOneCompany(rc.getCompId()); //기업 아이디를 바탕으로 회사정보를 가져옴
-     
+      //임시 셀렉트 원
+	/* Recruitment rc = indexService.selectOneRecruitment(2); */
+      //top6 셀렉트 리스트
+      List<Recruitment> rc = indexService.selectListRecruitment(memberId);
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-      //공고 끝나는 날짜 가져오기
-      Date date = format.parse(rc.getClosingDate());
-      
-      //오늘날짜 가져오기
-      Date sysdate = new Date();
       String sysdate1 = format.format(sysdate);
       Date sysdate2 = format.parse(sysdate1);
-
-      System.out.println((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+      int endTime = 0;
+      Date date = null;
+      for(int i = 0 ; i<rc.size() ; i++) {
+    	  /*cp = indexService.selectOneCompany(rc.get(i).getCompId());*/ //기업 아이디를 바탕으로 회사정보를 가져옴
+    	  date = format.parse(rc.get(i).getClosingDate());    	  
+    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+    	  System.out.println("endTime = "+endTime);
+    	  rc.get(i).setEndTime(endTime);
+    	  System.out.println(rc.get(i).getEndTime());
+      }
+     
+      //공고 끝나는 날짜 가져오기
       
-      int endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
-
-      mav.addObject("endTime", endTime);
-      mav.addObject("cp", cp);
+      //오늘날짜 가져오기
       mav.addObject("rc", rc);
       mav.addObject("jobList", jobList);
       mav.setViewName("index");
@@ -225,13 +233,25 @@ public class IndexController {
 	   return mav;
    }
    
+   //우리 채용정보 
    @GetMapping("/index/ithrerNotice.ithrer")
-   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav) {
-	   Recruitment rc = indexService.selectOneRecruitment(recruitmentNo);
+   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav , HttpServletRequest req) {
+		  String memberId = "";
+		   if(req.getSession().getAttribute("member")!=null) {
+			  Member member = (Member) req.getSession().getAttribute("member");
+			  memberId = member.getMemberId();
+		   }
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("memberId", memberId);
+	   map.put("recNo", recruitmentNo);
+	   
+	   Recruitment rc = indexService.selectOneRecruitment(map);
+	   System.out.println(rc);
+	   
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	 
+	   
 	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
-
 	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
 	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
 	   
@@ -278,6 +298,43 @@ public class IndexController {
 	   
    }
    
-
+   @RequestMapping("/index/favorites.ithrer")
+   public void ithrerFavorites(@RequestParam("memberId") String memberId,@RequestParam("recruitment_no") int recNo,HttpServletResponse res,@RequestParam("compId") String compId) {
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("memberId", memberId);
+	   map.put("recNo", recNo);
+	   map.put("compId", compId);
+	   Favorites fa = indexService.selectOneFavorites(map);
+	   int insertNo = 0;
+	   int deleteNo = 0;
+	   Gson gson = new Gson();
+	   if(fa == null) {
+		   insertNo = indexService.insertFavorites(map);
+		   try {
+			gson.toJson(insertNo,res.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }else {
+		   deleteNo = indexService.deleteFavorites(map);
+		   if(deleteNo == 1) {
+			   deleteNo = 2;
+		   }
+		   try {
+			gson.toJson(deleteNo,res.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }
+	   
+   }
 
 }
