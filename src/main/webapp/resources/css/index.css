@@ -1,0 +1,247 @@
+@charset "UTF-8";
+.main{
+   width:1000px;
+   margin:0 auto;
+}
+/* Make the image fully responsive */
+.carousel-inner img {
+  width: 100%;
+  height: 250px;
+}
+#banner-container{
+   width:1000px;
+}
+#cal{
+   text-align: center;
+}
+.main-search{
+   position: relative;
+   z-index: 1;
+   height: 200px;
+   background: #e4ebfe;
+}
+.search-bar{
+   position: absolute;
+   top: 59px;
+   left: 56.8%;
+   z-index: 5;
+   margin-left: -600px;
+   padding: 10px;
+   width: 1000px;
+   height: 80px;
+   box-sizing: border-box;
+   background: pink;
+}
+.bar-main{
+   position: relative;
+   z-index: 2;
+   margin: 0 auto;
+   width: 980px;
+   height: 60px;
+   background: #ddd;
+}
+.container{
+   margin-top: 20px;
+   padding: 0;
+}
+.bar-option{
+   position: absolute;
+    z-index: 1;
+   width: 420px;
+    height: 60px;;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 15px;
+    letter-spacing: -1px;
+    text-align: left;
+    background: #fff;
+}
+.bar-option.area{
+   left: 423px;
+}
+.bar-option span{
+   z-index: 4;
+}
+.bar-button{
+   position: absolute;
+    left: 841px;
+    z-index: 1;
+    padding: 12px 0 15px;
+    width: 139px;
+    height: 59px;
+    background: cyan;
+    border: 0;
+    cursor: pointer;
+}
+.bar-button span{
+   color: #fff;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+#searchKeyWord{
+/*    position: relative; */
+    z-index: 1;
+    padding: 12px 40px 15px 49px;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 17px;
+    letter-spacing: -1px;
+    line-height: 23px;
+    background: #fff;
+}
+#locationKeyWord{
+    z-index: 1;
+    padding: 12px 40px 15px 49px;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 17px;
+    letter-spacing: -1px;
+    line-height: 23px;
+    background: #fff;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.locationKeyWordSelected{
+   display: block;
+   overflow: hidden;
+   width: 100%;
+   height: 100%;
+   letter-spacing: -1px;
+   text-align: left;
+   text-overflow: ellipsis;
+   white-space: nowrap; 
+}
+.bar-option img{
+   position:absolute;
+   width: 32px;
+    height: 32px;
+    top: 13px;
+    left: 10px;
+}
+.location-hide{
+   display:none;
+   width: 860px;
+   position: absolute;
+   margin-top:5px;
+   border: 1px solid black;
+   box-sizing: border-box;
+   background: #fff;
+}
+.location-category{
+   height: 230px;
+}
+.location-view{
+   overflow: scroll;
+   position: relative;
+   z-index: 1;
+   width: 100%;
+   height:100%;
+   overflow-x:hidden;
+}
+.location-view ul li{
+   float: left;
+    width: 50%;
+    padding-right: 1px;
+}
+ul {
+   list-style: none;
+}
+.location-view ul li button{
+   padding: 8px 0 10px 20px;
+    width: 100%;
+    height: 35px;
+    color: #888;
+    font-size: 13px;
+    letter-spacing: -1px;
+    line-height: 17px;
+    text-align: left;
+    background: transparent;
+    border: 0;
+}
+.location-view::-webkit-scrollbar {
+/*     background: rgba(248,247,216,0.7); */
+}
+.location-hide.on{
+   display:block;
+
+}
+.placeholder{
+   overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    padding: 16px 40px 15px 49px;
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    color: #9e9e9e;
+    font-size: 17px;
+    letter-spacing: -1px;
+    line-height: 23px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.carousel-inner{
+   width:1000px;
+}
+.location-view-detail{
+	overflow: scroll;
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+}
+.location-view-detail li{
+    float: left;
+/*     width: 33%; */
+    padding-right: 1px;
+    margin-top:20px;
+}
+/* 세션 몸통 */
+
+.section-content{
+   position: relative;
+    width: 750px;
+    height: 450px;
+    margin-top: 20px;
+    padding: 0;
+    display: inline-block;
+}
+.detail{
+	display: none;
+}
+.reset{
+	border: 0;
+    background: transparent;
+    font-size: 0.8em;
+    color: #949494;
+    position: relative;
+    top: 10px;
+    left: 270px;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+.detail label{
+	width:100px;
+	margin:0;
+}
+.deleteLocation{
+	display: none;
+}
+.star{
+	position: absolute;
+	bottom: 13px;
+	left: 20px;
+	border: 0;
+    background: white;
+}
