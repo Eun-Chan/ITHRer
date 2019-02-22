@@ -67,7 +67,7 @@
 						</select>
 					</li>
 					<li>
-						<input type="text" id="schoolName0" class="form-control" placeholder="학교명"/>
+						<input type="text" name="schoolName" id="schoolName0" class="form-control" placeholder="학교명"/>
 					</li>
 				</ul>
 			</div>
@@ -542,7 +542,6 @@ $("#nonHigh").change(function(){
 	}
 });
 $(document).on("change","select[name=edu-school]",function() {
-	console.log("왔니?")
 	var state = $(this).val();
 	if(state =='high') {
 		$(this).parent().parent().parent().parent().children("#formEducation2").show();
@@ -550,6 +549,17 @@ $(document).on("change","select[name=edu-school]",function() {
 		$(this).parent().parent().parent().parent().children("#formEducation4").hide();
 		$(this).parent().parent().parent().parent().find("select[name=degree]").hide();
 		$(this).parent().parent().parent().parent().children("#formEducation5").hide();
+		$(this).parent().parent().find("input").on("click",function() {
+			$.ajax({
+				url : "www.career.go.kr/cnet/openapi/getOpenApi?apiKey=1511a833705c3185adf10f04ecfff3e3&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list",
+				success : function(data) {
+					console.log(data);
+				},
+				error : function() {
+					console.log("실패");
+				}
+			});
+		});
 	}
 	else if(state == 'shortUniver' || state == 'longUniver') {
 		$(this).parent().parent().parent().parent().children("#formEducation2").hide();
@@ -585,7 +595,7 @@ $("#addEducation").on("click",function() {
 	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="school'+eduFrmcount+'" name = "edu-school" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="high">고등학교</option><option value="shortUniver">대학(2,3년)</option><option value="longUniver">대학교(4년)</option><option value="graduate">대학원</option></select></li>';
-	html += '<li><input type="text" id="schoolName'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li></ul></div>';
+	html += '<li><input type="text" name="schoolName" id="schoolName'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li></ul></div>';
 	html += '<div id="formEducation3" class="input-group-prepend"><ul><li><input type="text" id="uniadmissionDate'+eduFrmcount+'" class="form-control" placeholder="입학년월"/></li>';
 	html += '<li><input type="text" id="unigraduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년월"/></li>';
 	html += '<li><select id="uniState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option>	<option value="graduated">졸업</option>';
@@ -620,6 +630,7 @@ $(document).on("click", "textarea[name=otherDepartText]", function() {
 $(document).on("mouseout", "textarea[name=otherDepartText]", function() {
 	$(this).css("height","75px");
 });
+
 /* 희망근무조건 */
 $("#hopeDuty").on("click",function() {
 	$(this).css("height","100px");
