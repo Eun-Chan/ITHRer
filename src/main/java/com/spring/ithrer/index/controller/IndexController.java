@@ -160,7 +160,7 @@ public class IndexController {
    
    @GetMapping("/searchNotice.ithrer")
    public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,@RequestParam("location") String location,
-		   							@RequestParam(value="cPage", defaultValue="1") int cPage,
+		   							@RequestParam(value="cPage", defaultValue="0") int cPage,
 		   							ModelAndView mav, HttpServletRequest request) {
 	   System.out.println("location="+location);
 	   String [] locations = location.split(",");
@@ -168,7 +168,7 @@ public class IndexController {
 	   for(int i = 0 ; i<locations.length ; i++) {
 		   loc_cd += locations[i]+"&";
 	   }
-	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&loc_cd="+loc_cd+"count=10&start="+cPage;
+	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&loc_cd="+loc_cd+"&count=10&start="+cPage;
 	   logger.debug("url="+url);
 	   List<Map<String, String>> tempList = Utils.apiList(url);
 	   
@@ -177,7 +177,7 @@ public class IndexController {
 	   for(int i = 1; i < tempList.size(); i++) {
 		   jobList.add(tempList.get(i));
 	   }
-	   
+	   logger.debug(jobList);
 	   mav.addObject("totlaContents",totalContents);
 	   mav.addObject("jobList", jobList);
 	   mav.addObject("searchKeyWord", searchKeyWord);
@@ -188,7 +188,7 @@ public class IndexController {
 	    int totalPages = (int)Math.ceil(((double)totalContents/numPerPage));
 	    int pageBarSize = 5;
 	    
-	    int startPage = ((cPage - 1) / pageBarSize) * pageBarSize + 1;
+	    int startPage = ((cPage+1 - 1) / pageBarSize) * pageBarSize + 1;
 	    int endPage = startPage + pageBarSize - 1;
 	       
 	    int pageNo = startPage;
