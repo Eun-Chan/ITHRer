@@ -111,10 +111,10 @@
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#today-inqury-tab">오늘 본 인재(명수)</a>
+				<a class="nav-link active" data-toggle="tab" href="#today-inqury-tab">오늘 본 인재(${readApplicantList.size() }명)</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#person-bookmark-tab">관심인재(명수)</a>
+				<a class="nav-link" data-toggle="tab" href="#person-bookmark-tab">관심인재(${favoriteAppList.size() }명)</a>
 			</li>
 		</ul>
 
@@ -143,6 +143,22 @@
 			</div>
 			<div id="person-bookmark-tab" class="container tab-pane fade"><br>
 				<h3>관심 인재 리스트</h3>
+				<table id="favoriteApplicant-table" class="table table-hover">
+					<thead>
+						<tr>
+							<th>임시임다</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:forEach var="favorite" items="${favoriteAppList }">
+							<tr>
+								<td>
+									${favorite}
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	

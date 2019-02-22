@@ -47,5 +47,15 @@ public class Recruitment implements Serializable {
 	private String payCondition; //급여조건
 	private String nearbyStation; //인근전철역
 	private String welfare; //복리후생
+	
+	
+	//서브쿼리용 copmName
+	private String compName;
+	
+	//즐겨찾기 저장용 카운트
+	private int favoritesCount;
+	
+	//데이터 저장용 D-day 타임
+	private int endTime;
 
 }

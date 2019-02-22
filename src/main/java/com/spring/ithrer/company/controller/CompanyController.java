@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.service.CompanyService;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
@@ -161,8 +162,14 @@ public class CompanyController {
 		
 		logger.debug(""+readApplicantList);
 		
+		// 관심인재 리스트 가져오기
+		List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
+		
+		
+		
 		mav.addObject("map",map);
 		mav.addObject("readApplicantList",readApplicantList);
+		mav.addObject("favoriteAppList",favoriteAppList);
 		
 		mav.setViewName("company/companyIndex");
 		
@@ -202,9 +209,11 @@ public class CompanyController {
 	public ModelAndView viewApplicant(ModelAndView mav, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("memberId") String memberId
 									, HttpServletRequest req, HttpServletResponse res) {
 		
-		// 회사 아이디 임시로 주기
+		// 회사 아이디 임시로 주기 (세션에서 가져와야함)
 		String compId = "audgnsdlsp";
 		mav.addObject("compId",compId);
+		// recruitmentNo 임시로 넘겨주기
+		mav.addObject("recruitmentNo",recruitmentNo);
 		
 		
 		// 쿠키 관련
@@ -257,11 +266,13 @@ public class CompanyController {
 			applicantCookie.setPath("/"); // -> 생략하면 자동으로 현재 디렉토리 기준(/company)으로 설정됨
 			res.addCookie(applicantCookie);
 		}
-		// 임시
+		
+		// 임시 회원 가져오기
 		Map<String, Object> map = new HashMap<>();
 		
 		map.put("recruitmentNo", recruitmentNo);
 		map.put("memberId", memberId);
+		map.put("compId", compId);
 
 		Member member = companyService.selectApplicant(map); 
 		
@@ -277,6 +288,58 @@ public class CompanyController {
 		mav.setViewName("company/recruitmentAdd");
 		
 		return mav;
+	}
+	
+	@DeleteMapping("/favorite")
+	public Map<String, Object> deleteFavorite(@RequestParam("compId") String compId, @RequestParam("memberId") String memberId, @RequestParam("recruitmentNo") int recruitmentNo) {
+		
+		logger.debug("audgns"+compId);
+		logger.debug(memberId);
+		logger.debug(""+recruitmentNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("compId", compId);
+		map.put("memberId", memberId);
+		map.put("recruitmentNo", recruitmentNo);
+		
+		int result = companyService.deleteFavorite(map);
+		
+		Map<String, Object> map2 = new HashMap<>();
+		
+		if(result > 0) {
+			map2.put("newCount",0);
+		}
+		else {
+			map2.put("newCount",1);
+		}
+		
+		return map2;
+	}
+	
+	@PostMapping("/favorite")
+	public Map<String, Object> insertFavorite(@RequestParam("compId") String compId, @RequestParam("memberId") String memberId, @RequestParam("recruitmentNo") int recruitmentNo) {
+		
+		logger.debug("audgns"+compId);
+		logger.debug(memberId);
+		logger.debug(""+recruitmentNo);
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("compId", compId);
+		map.put("memberId", memberId);
+		map.put("recruitmentNo", recruitmentNo);
+		
+		int result = companyService.insertFavorite(map);
+		
+		Map<String, Object> map2 = new HashMap<>();
+		
+		if(result > 0) {
+			map2.put("newCount",1);
+		}
+		else {
+			map2.put("newCount",0);
+		}
+		
+		return map2;
 	}
 	
 }

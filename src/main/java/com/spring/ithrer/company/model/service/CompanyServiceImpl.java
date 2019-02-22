@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.dao.CompanyDao;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
@@ -306,6 +307,21 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public Member selectApplicant(Map<String, Object> map) {
 		return companyDao.selectApplicant(map);
+	}
+
+	@Override
+	public int deleteFavorite(Map<String, Object> map) {
+		return companyDao.deleteFavorite(map);
+	}
+
+	@Override
+	public int insertFavorite(Map<String, Object> map) {
+		return companyDao.insertFavorite(map);
+	}
+
+	@Override
+	public List<Favorites> selectFavoriteAppList(String compId) {
+		return companyDao.selectFavoriteAppList(compId);
 	}
 
 }
