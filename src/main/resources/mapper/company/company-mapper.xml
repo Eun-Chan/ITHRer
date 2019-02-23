@@ -81,9 +81,28 @@
 		select * from companyapplication where comp_id=#{compId}
 	</select>
 	
+	<!-- 지원자 정보 가져오기 -->
 	<select id="selectApplicant" parameterType="map" resultType="member">
-		select * from member where member_id=#{memberId}
+		select 
+		m.*,
+		(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
+		(select count(*) from favorites where comp_id=#{compId} and member_id=#{memberId} and select_no=1) count
+		from member m where member_id=#{memberId}
 	</select>
 	
+	<!-- 관심인재 삭제 -->
+	<delete id="deleteFavorite" parameterType="map">
+		delete from favorites where comp_id=#{compId} and member_id=#{memberId} and recruitment_no=#{recruitmentNo}
+	</delete>
+	
+	<!-- 관심인재 추가 -->
+	<insert id="insertFavorite" parameterType="map">
+		insert into favorites values (seq_favorites_no.nextval,#{memberId},#{recruitmentNo},#{compId},1)
+	</insert>
+	
+	<!-- 관심인재 리스트 가져오기 -->
+	<select id="selectFavoriteAppList" parameterType="string" resultType="favorites">
+		select * from favorites where comp_id=#{compId}
+	</select>
 	
 </mapper>
