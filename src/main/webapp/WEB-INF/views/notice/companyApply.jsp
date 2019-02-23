@@ -13,7 +13,7 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <!-- jquery -->
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
 <style>
@@ -80,12 +80,40 @@
 	.two{
 		margin-top:20px;
 	}
+	.uploadFile label 
+	{
+		display: inline-block; 
+		padding: .5em .75em;
+		 color: #999; font-size: 
+		 inherit; 
+		 line-height: normal; 
+		 vertical-align: middle; 
+		 background-color: #fdfdfd; 
+		 cursor: pointer; 
+		 border: 1px solid #ebebeb; 
+		 border-bottom-color: #e2e2e2; 
+		 border-radius: .25em;
+		 float: right;
+	 } 
+	 .uploadFile input[type="file"] { 
+		  position: absolute; 
+		  width: 1px; 
+		  height: 1px; 
+		  padding: 0; 
+		  margin: -1px;
+		   overflow: hidden;
+		   clip:rect(0,0,0,0); 
+		   border: 0; 
+	}
+
+
+
+
 </style>
 <body>
 	<div class="applyHeader">
 		<span class="headerContent">입사지원</span>
 	</div>
-	<form action="">
 		<div class="applyCompanytitle">
 			<span class="applyCompanyName"><img src="${pageContext.request.contextPath }/resources/images/company.svg" alt="" style="width: 30px"/></span>
 			<span class="applyRctitle"></span>
@@ -106,22 +134,72 @@
 			</div>
 			<div class="row content two">
 				<div class="col-sm-12 row1">
-					<strong>포트폴리오</strong>
+					<div class="uploadFile">
+					<strong style="padding: 10px 0px 0px 5px; float: left;">포트폴리오</strong>
+						<form enctype="multipart/form-data" id="uploadForm" method="post">
+							<label for="Addportfolio">파일 추가</label>
+							<input type="file" name="portfolio" id="Addportfolio" accept=".ppt, .pdf"/>
+						</form>
+					</div>
 				</div>
 				<div class="col-sm-12 row2">
 					<span style="font-size: 0.9em; letter-spacing: 1px;" >포트폴리오 제목(이력서가 없다면 추가버튼 만들어야함.)</span>
 				</div>
 			</div>
-			<button type="submit" class="btn btn-success applybutton">지원 하기</button>			
+			<button type="submit" class="btn btn-success applybutton" onclick="">지원 하기</button>	
+<!-- 			<form id="FILE_FORM" method="post" enctype="multipart/form-data" action="">
+	            <input type="file" id="FILE_TAG" name="FILE_TAG">
+	            <input type="file" id="FILE_TAG2" name="FILE_TAG2">
+	            <a class="ui-shadow ui-btn ui-corner-all" href="javascript:uploadFile();">전송</a>
+       		 </form> -->
 		</div>
-	</form>
 <script>
 $(function(){
 	var compName = $(".noticeCompanyName", opener.document).html();
 	$(".applyCompanyName").append(compName);
 	var rcContent = $(".rcContent",opener.document).html();
 	$(".applyRctitle").html(rcContent);
+	
 });
+
+$("#Addportfolio").on("change",function(){
+
+	var formData = new FormData($("uploadForm"));
+	formData.append("file",$(this)[0].files[0]);
+	$.ajax({
+		url:"${pageContext.request.contextPath}/index/uploadPortfolio.ithrer",
+		contentType: false,
+		cache: false,
+		processData: false,
+		data:formData,
+		type:"POST",
+		success:function(data){
+			console.log("업로드 성공");
+		}
+		
+	});
+});
+/* function uploadFile(){
+    var form = $('#FILE_FORM')[0];
+    var formData = new FormData(form);
+    formData.append("fileObj", $("#FILE_TAG")[0].files[0]);
+    formData.append("fileObj2", $("#FILE_TAG2")[0].files[0]);
+
+    $.ajax({
+        url: 
+        	'${pageContext.request.contextPath}/index/uploadPortfolio.ithrer',
+                processData: false,
+                contentType: false,
+                data: formData,
+                type: 'POST',
+                success: function(data){
+                    alert("업로드 성공!!");
+               }
+        });
+}
+ */
+
+
 </script>
 </body>
 </html>

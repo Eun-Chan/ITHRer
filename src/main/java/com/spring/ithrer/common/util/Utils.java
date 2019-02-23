@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -239,4 +241,14 @@ public class Utils {
 		return pageBar; 
 	}
 	
+	
+	//파일 리네임용
+	public static String getRenamedFileName(String fname) {
+		//확장자 분리
+		String ext = fname.substring(fname.lastIndexOf(".")+1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+		int rndNum = (int)(Math.random()*1000);
+		return sdf.format(new Date())+"_"+rndNum+"."+ext;
+		
+	}
 }
