@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="passboard">
+
+	<select resultMap="boardMap" id="selectPassBoardList">select * from passBoard order by passBoardNo desc</select>
+	<resultMap id="boardMap" type="map"> </resultMap>
+	
+	<select id="selectPassBoardTotalContents" resultType="_int">select count(*) from passboard </select>
+	
+	<select resultType="passboard" id="selectPassBoardOne">select * from passBoard where passBoardNo = #{passBoardNo} </select>
+
+	<insert id="insertPassBoard" parameterType="passboard" >
+	insert into passBoard(passBoardno, passBoardTitle, passBoardWriter, passBoardContent)values(seq_passboardno.nextval,#{passBoardTitle},#{passBoardWriter},#{passBoardContent}) 
+	</insert>
+	
+	
+	<select id="passSearchList" resultMap="boardSearchMap">
+	select * from passBoard 
+	<include refid="search"/>
+	order by passBoardNo desc
+	</select>
+	<resultMap id="boardSearchMap" type="map"></resultMap>
+
+	<select id="countPassList" resultType="_int">
+	select count(*) from passBoard
+	<include refid="search"/>
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				where passBoardWriter like '%'||#{keyword}||'%'
+				or passBoardTitle like '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+			where ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+
+</mapper>
