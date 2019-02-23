@@ -39,6 +39,6 @@
 	</delete>
 	
 	<insert id="insertPortFolio" parameterType="portfolio">
-		insert into potfolio values(null,#{pOriginalFileName},#{pRenamedFileName},'ikso2000',#{pfNo})
+		insert into potfolio values(null,#{pOriginalFileName},#{pRenamedFileName},'ikso2000',seq_potfolio_no.nextval)
 	</insert>
 </mapper>

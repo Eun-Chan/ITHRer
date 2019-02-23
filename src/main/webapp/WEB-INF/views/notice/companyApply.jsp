@@ -143,7 +143,7 @@
 					</div>
 				</div>
 				<div class="col-sm-12 row2">
-					<span style="font-size: 0.9em; letter-spacing: 1px;" >포트폴리오 제목(이력서가 없다면 추가버튼 만들어야함.)</span>
+					<!-- <span style="font-size: 0.9em; letter-spacing: 1px;" >포트폴리오 제목(이력서가 없다면 추가버튼 만들어야함.)</span> -->
 				</div>
 			</div>
 			<button type="submit" class="btn btn-success applybutton" onclick="">지원 하기</button>	
@@ -166,6 +166,8 @@ $("#Addportfolio").on("change",function(){
 
 	var formData = new FormData($("uploadForm"));
 	formData.append("file",$(this)[0].files[0]);
+	var div = $(".row2"); 
+	var html = "<span style='font-size: 0.9em; letter-spacing: 1px; display: block;' >"
 	$.ajax({
 		url:"${pageContext.request.contextPath}/index/uploadPortfolio.ithrer",
 		contentType: false,
@@ -174,7 +176,9 @@ $("#Addportfolio").on("change",function(){
 		data:formData,
 		type:"POST",
 		success:function(data){
-			console.log("업로드 성공");
+			console.log(JSON.parse(data).pOriginalFileName);
+			html+=JSON.parse(data).pOriginalFileName+"</span>";
+			div.append(html);
 		}
 		
 	});

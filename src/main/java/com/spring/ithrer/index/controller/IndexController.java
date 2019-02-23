@@ -349,14 +349,14 @@ public class IndexController {
    @RequestMapping(value= "/index/uploadPortfolio.ithrer", method=RequestMethod.POST)
    @ResponseBody
    public void uploadPortfolio(MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
+	   res.setCharacterEncoding("utf-8");
 	   //1.파일업로드 (업로드할 경로 찾기)
-	   
 	   Iterator<String> itr = req.getFileNames();
 	   if(itr.hasNext()) {
 		   file = req.getFile(itr.next());
 	   }
 	   System.out.println("컨트롤러");
-	   String saveDirectory = req.getSession().getServletContext().getRealPath("src/main/webapp/resources/upload/portfolio");
+	   String saveDirectory = req.getSession().getServletContext().getRealPath("/resources/upload/portfolio");
 	   System.out.println(file.getOriginalFilename());
 	   System.out.println("saveDirectory="+saveDirectory);
 	   if(!file.isEmpty()) {
@@ -381,19 +381,20 @@ public class IndexController {
 		PortFolio pf = new PortFolio();
 		pf.setPOriginalFileName(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
-		pf.setPfNo(0);
 		
 		//2. 포트폴리오 테이블에 인서트
 		int result = indexService.insertPortFolio(pf);
 		Gson gson = new Gson();
-		try {
-			gson.toJson(result,res.getWriter());
-		} catch (JsonIOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(result == 1) {			
+			try {
+				gson.toJson(pf,res.getWriter());
+			} catch (JsonIOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	   }
 	   
