@@ -56,7 +56,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}" style="color:#ffb6c1">
-				ITHRer
+				<img src="${pageContext.request.contextPath }/resources/images/ITHRerLogo.png" alt="" width="50px" height="50px"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -67,6 +67,7 @@
 				<ul class="navbar-nav mr-auto">	     
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume">이력서</a></li>		
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
+			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판(임시)</a></li>    
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
 			    </ul>
 			    

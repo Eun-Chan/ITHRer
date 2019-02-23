@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="익명게시판" name="pageTitle"/>
+	<jsp:param value="합소서 게시판" name="pageTitle"/>
 </jsp:include>
 <style>
 /*글쓰기버튼*/
@@ -18,23 +18,14 @@ table tr.table-info:hover{cursor:pointer; color: #a8bdff;}
 </style>
 <script>
 function fn_goBoardInsert(){
-	location.href = "${pageContext.request.contextPath}/board/anonyBoardInsert";
+	location.href = "${pageContext.request.contextPath}/board/passBoardInsert";
 }
 $(function(){
 	$("tr[no]").on("click",function(){
-		var anonyBoardNo = $(this).attr("no");
-		/* console.log("anonyBoardNo="+anonyBoardNo); */
-		location.href = "${pageContext.request.contextPath}/board/anonyBoardView.do?no="+anonyBoardNo;
+		var passBoardNo = $(this).attr("no");
+		location.href = "${pageContext.request.contextPath}/board/passBoardView.do?no="+passBoardNo;
 	});
 });
-
-$(function(){
-	$("#btn-search").on("click", function(){
-		$("#myFrm").submit();
-		
-	});
-});
-
 </script>
 
 </head>
@@ -54,34 +45,31 @@ $(function(){
 		</thead>
 		<tbody>
 			<c:forEach items="${list}" var="b"> 
-			<tr no="${b.ANONYBOARDNO}" class="table-info">
-				<td>${b.ANONYBOARDNO}</td>
-				<td id="title">${b.ANONYBOARDTITLE}</td>
-				<td>${b.ANONYBOARDWRITER}</td>
-				<td><fmt:formatDate value="${b.ANONYBOARDDATE}" type="date"/></td>
-				<td>${b.ANONYBOARDREADCOUNT }</td>
+			<tr no="${b.PASSBOARDNO}" class="table-info">
+				<td>${b.PASSBOARDNO}</td>
+				<td id="title">${b.PASSBOARDTITLE}</td>
+				<td>${b.PASSBOARDWRITER}</td>
+				<td><fmt:formatDate value="${b.PASSBOARDDATE}" type="date"/></td>
+				<td>${b.PASSBOARDREADCOUNT }</td>
 			</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 	
-	<div id="finder" class="text-center">
-		<form id="myFrm" action="${pageContext.request.contextPath}/board/anonyBoardSearch.ithrer">
-		<div id="search-container">
-			<label for="searchType">검색타입 :</label>
-			<select name="searchOption" class="">
-				<option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}" /> >전체</option>
-				<option value="anonyBoardTitle" <c:out value="${map.searchOption == 'anonyBoardTitle'?'selected':''}" /> >글제목</option>
-				<option value="anonyBoardWriter" <c:out value="${map.searchOption == 'anonyBoardWriter'?'selected':''}" /> >작성자</option>
-			</select>
-		<!-- </div> -->
- 		<!--<div class="form-group myformgroup"> -->
-		<input type="text" name="keyword" value="${map.keyword}" id="search" placeholder = " 내용을 입력하세요." class=""/>
-<!-- 		<input type="submit" value="검색" id="btn-search" class=""/> -->		
-		<button id="btn-search">검색</button>
+		<div id="finder" class="text-center">
+			<form id="myFrm" action="${pageContext.request.contextPath}/board/passBoardSearch.ithrer">
+			<div id="search-container">
+				<label for="searchType">검색타입 :</label>
+				<select name="searchOption" class="">
+					<option value="all" <c:out value="${map.searchOption == 'all'?'selected':''}" /> >전체</option>
+					<option value="passBoardTitle" <c:out value="${map.searchOption == 'passBoardTitle'?'selected':''}" /> >글제목</option>
+					<option value="passBoardWriter" <c:out value="${map.searchOption == 'passBoardWriter'?'selected':''}" /> >작성자</option>
+				</select>
+			<input type="text" name="keyword" value="${map.keyword}" id="search" placeholder = " 내용을 입력하세요." class=""/>
+			<button id="btn-search">검색</button>
+			</div>
+			</form><br />
 		</div>
-		</form><br />
-	</div>
 	
 </section>
 	
@@ -97,5 +85,5 @@ $(function(){
 			
 		}
 	%>
-  	<%= com.spring.ithrer.common.util.Utils.getPageBar(totalContents, cPage, numPerPage, "anonyBoardList") %></section> 
+  	<%= com.spring.ithrer.common.util.Utils.getPageBar(totalContents, cPage, numPerPage, "passBoardList") %></section> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
