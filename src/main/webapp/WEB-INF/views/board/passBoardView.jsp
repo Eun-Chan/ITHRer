@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ page import="com.spring.ithrer.board.model.vo.AnonyBoard" %>
+<%@ page import="com.spring.ithrer.board.model.vo.PassBoard" %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="익명게시판" name="pageTitle"/>
 </jsp:include>
@@ -20,55 +20,41 @@
 
 <!-- jquery -->
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
-<title>익명게시판 - 상세보기</title>
+<title>합소서게시판 - 상세보기</title>
 </head>
 <section id="board-container" class="container">
 	
 	 <div id="board-container" class="table table-responsive">
 	<table id="" class="table table-bordered">
-		<%-- <tr>
-			<th class="success">번호</th>
-			<th class="success">제목</th>
-			<th class="success">작성자</th>
-			<th class="success">작성내용</th>
-			<th class="success">조회수</th>
-		</tr>
-		<tr>
-			<td>${anonyBoard.anonyBoardNo}</td>
-			<td>${anonyBoard.anonyBoardTitle}</td>
-			<td>${anonyBoard.anonyBoardWriter}</td>
-			<td>${anonyBoard.anonyBoardContent}</td>
-			<td>${anonyBoard.readCount}</td>
-		</tr> --%>
 		<tr class="table-primary">
 			<th>번호</th>
-			<td>${anonyBoard.anonyBoardNo}</td>
+			<td>${passBoard.passBoardNo}</td>
 			<th>작성자</th>
-			<td>${anonyBoard.anonyBoardWriter}</td>
+			<td>${memberLoggedIn.memberId}</td>
 			<th>조회수</th>
-			<td>${anonyBoard.readCount}</td>
+			<td>${passBoard.readCount}</td>
 		</tr>
 		<tr class="table-primary">	
 			<th>제목</th>
-			<td colspan="6">${anonyBoard.anonyBoardTitle}</td>
+			<td colspan="6">${passBoard.passBoardTitle}</td>
 		</tr>	
 		<tr>	
 			<th class="table-primary">작성내용</th>
-			<td colspan="6" >${anonyBoard.anonyBoardContent}</td>
+			<td colspan="6" >${passBoard.passBoardContent}</td>
 		</tr>
 	</table>
 		<tr>
             <td colspan="6" class="text-center">
 			  <input type="button" class="btn btn-warning" value="수정하기" onclick="">          
 			  <input type="button" class="btn btn-danger" value="삭제하기" onclick="">
-			  <input type="button" class="btn btn-primary" value="목록보기" onclick="location.href='anonyBoardList'">
+			  <input type="button" class="btn btn-primary" value="목록보기" onclick="location.href='passBoardList'">
             </td>
         </tr>
 		</div>
+		
 <%
-	AnonyBoard anonyBoard = (AnonyBoard)request.getAttribute("anonyBoard");
+	PassBoard passBoard = (PassBoard)request.getAttribute("passBoard");
 
 %>	
-
  	 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

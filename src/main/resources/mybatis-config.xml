@@ -23,6 +23,7 @@
 		<typeAlias type="com.spring.ithrer.board.model.vo.AnonyBoard" alias="anonyboard"/>
 		<typeAlias type="com.spring.ithrer.common.model.vo.Favorites" alias="favorites"/>
 		<typeAlias type="com.spring.ithrer.common.typehandler.StringArrayTypeHandler" alias="strArrTypeHandler"/>
+		<typeAlias type="com.spring.ithrer.board.model.vo.PassBoard" alias="passboard"/>
 	</typeAliases>
 
 </configuration>
