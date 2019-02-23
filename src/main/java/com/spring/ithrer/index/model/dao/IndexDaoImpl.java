@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
+import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
 
 
@@ -61,5 +62,10 @@ public class IndexDaoImpl implements IndexDao{
 	@Override
 	public int deleteFavorites(Map<String, Object> map) {
 		return sqlSession.delete("index.deleteFavorites", map);
+	}
+
+	@Override
+	public int insertPortFolio(PortFolio pf) {
+		return sqlSession.insert("index.insertPortFolio", pf);
 	}
 }

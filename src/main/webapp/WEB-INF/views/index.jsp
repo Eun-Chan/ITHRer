@@ -1611,7 +1611,6 @@ $(".loc-detail").on("click",function(){
 	
 });	 
 $(".reset").on("click",function(){
-	console.log("왓지?");
 	var location_name =  new Array();
 	var text="";
 	$(this).parents().siblings("li").find(".loc-detail").prop("checked",false);
