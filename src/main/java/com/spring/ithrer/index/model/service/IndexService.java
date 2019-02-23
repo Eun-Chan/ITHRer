@@ -6,6 +6,7 @@ import java.util.Map;
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
+import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
 
 
@@ -30,5 +31,8 @@ public interface IndexService {
 	int deleteFavorites(Map<String, Object> map);
 
 	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
+	
+	int insertPortFolio(PortFolio pf);
+
 
 }

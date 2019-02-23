@@ -26,6 +26,7 @@
         <property name="password" value="12345678"/>
     </bean>
     
+    
     <bean id="dataSource" 
     	  class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
     	  <constructor-arg ref="realDataSource"/>

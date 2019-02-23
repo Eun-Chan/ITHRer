@@ -1,11 +1,13 @@
 package com.spring.ithrer.index.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +26,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -35,6 +42,7 @@ import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
+import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
@@ -52,7 +60,7 @@ public class IndexController {
 		  Member member = (Member) req.getSession().getAttribute("member");
 		  memberId = member.getMemberId();
 	  }
-      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=40&ind_cd=3&job_type=4&fields=expiration-date");
+      List<Map<String, String>> tempList = Utils.apiList("http://api.saramin.co.kr/job-search?job_category=4&count=8&ind_cd=3&job_type=4&fields=expiration-date");
       Date sysdate = new Date();
       
       List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
@@ -381,4 +389,58 @@ public class IndexController {
 	   
    }
 
-}
+   //임시 포트폴리오 파일 추가
+   @RequestMapping(value= "/index/uploadPortfolio.ithrer", method=RequestMethod.POST)
+   @ResponseBody
+   public void uploadPortfolio(MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
+	   res.setCharacterEncoding("utf-8");
+	   //1.파일업로드 (업로드할 경로 찾기)
+	   Iterator<String> itr = req.getFileNames();
+	   if(itr.hasNext()) {
+		   file = req.getFile(itr.next());
+	   }
+	   System.out.println("컨트롤러");
+	   String saveDirectory = req.getSession().getServletContext().getRealPath("/resources/upload/portfolio");
+	   System.out.println(file.getOriginalFilename());
+	   System.out.println("saveDirectory="+saveDirectory);
+	   if(!file.isEmpty()) {
+		   //오리지널 파일네임
+		   String o_fileName = file.getOriginalFilename();
+		   
+		   //리네임해서 서버 저장용
+		   String r_fileName = Utils.getRenamedFileName(o_fileName);
+		   
+		   //실제 서버에 파일저장
+		   try {
+			  file.transferTo(new File(saveDirectory+"/"+r_fileName));
+
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		PortFolio pf = new PortFolio();
+		pf.setPOriginalFileName(o_fileName);
+		pf.setPRenamedFileName(r_fileName);
+		
+		//2. 포트폴리오 테이블에 인서트
+		int result = indexService.insertPortFolio(pf);
+		Gson gson = new Gson();
+		if(result == 1) {			
+			try {
+				gson.toJson(pf,res.getWriter());
+			} catch (JsonIOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	   }
+	   
+   }
+} 
