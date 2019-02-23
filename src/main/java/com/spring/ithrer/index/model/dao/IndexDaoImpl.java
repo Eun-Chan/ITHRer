@@ -62,4 +62,10 @@ public class IndexDaoImpl implements IndexDao{
 	public int deleteFavorites(Map<String, Object> map) {
 		return sqlSession.delete("index.deleteFavorites", map);
 	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		
+		return sqlSession.selectList("index.selectListSearchIthrer", map);
+	}
 }

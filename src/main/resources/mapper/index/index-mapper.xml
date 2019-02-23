@@ -37,4 +37,80 @@
 	<delete id="deleteFavorites" parameterType="map">
 		delete from favorites where member_Id = #{memberId} and recruitment_no = #{recNo}
 	</delete>
+	
+	<!-- 상세조건으로 하는 검색 -->
+	<select id="selectListSearchIthrer" parameterType="map" resultType="map">
+		select * from recruitment join area using(location_code) where recruitment_title like '%'||#{searchKeyword}||'%'
+		
+		<if test="locationCode != null and locationCode != ''">
+			and (location_code in
+			<foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
+				#{item}		
+			</foreach>
+			or location_total_code in
+			<foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
+				#{item}		
+			</foreach>
+			)
+		</if>
+		
+		<if test="salary != null and salary !=''">
+			and(pay_condition = '회사내규를따름' or pay_condition > #{salary})
+		</if>
+		
+		<if test="age != 0 and age !=''">
+			and applicant_age_start <![CDATA[<=]]> #{age}
+			and applicant_age_end #{age}
+		</if>
+		
+		<if test="gender != null and gender !=''">
+			and gender_cut = #{gender}
+		</if>
+		
+		<if test="subway != null and subway != ''">
+			and nearby_station LIKE '%'||#{subway}||'%'
+		</if>
+		
+		<if test="licence != null and licence != ''">
+			and CERTIFICATE LIKE '%'||#{licence}||'%'
+		</if>
+		
+		<if test="major != null and major[0] != 'undefined'">		
+			and 
+			<foreach collection="major" item="item" open="(" close=")" separator=" or ">
+				major like '%'||#{item}||'%'			
+			</foreach>
+		</if>
+		
+		<if test="position != null and position[0] != 'undefined'">
+			and 
+			<foreach collection="position" item="item" open="(" close=")" separator=" or ">
+			 	position like '%'||#{item}||'%'	
+			</foreach>
+		</if>
+		
+		<if test="preference != null and preference[0] != 'undefined'">
+			and 
+			<foreach collection="preference" item="item" open="(" close=")" separator=" or ">			
+				EMPLOYMENT_PREFERENCE like '%'||#{item}||'%'		
+			</foreach>
+		</if>
+		
+		<if test="emp_type != null and emp_type[0] != 'undefined'">
+			and 
+			<foreach collection="emp_type" item="item" open="(" close=")" separator=" or ">			 
+				EMPLOYMENT_TYPE like '%'||#{item}||'%'
+			</foreach>
+		</if>
+		
+		<if test="work_day != null and work_day[0] != 'undefined'">
+			and 
+			<foreach collection="work_day" item="item" open="(" close=")" separator=" or ">
+				work_day like '%'||#{item}||'%'	
+			</foreach>
+		</if>
+		
+	</select>
+	
+	
 </mapper>

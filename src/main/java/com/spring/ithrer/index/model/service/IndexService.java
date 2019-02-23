@@ -29,4 +29,6 @@ public interface IndexService {
 
 	int deleteFavorites(Map<String, Object> map);
 
+	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
+
 }

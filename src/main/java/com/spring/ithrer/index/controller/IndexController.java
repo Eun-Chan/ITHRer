@@ -162,10 +162,14 @@ public class IndexController {
    public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,@RequestParam("location") String location,
 		   							@RequestParam(value="cPage", defaultValue="0") int cPage,
 		   							ModelAndView mav, HttpServletRequest request) {
+	   
+	   //사람인 api에서  리스트를 불러오는 부분
+	   
 	   System.out.println("location="+location);
 	   String [] locations = location.split(",");
 	   String loc_cd ="";
 	   for(int i = 0 ; i<locations.length ; i++) {
+		   System.out.println(locations[i]);
 		   loc_cd += locations[i]+"&";
 	   }
 	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&loc_cd="+loc_cd+"&count=10&start="+cPage;
@@ -226,8 +230,48 @@ public class IndexController {
 	    }
 	    pageBar += "</ul>";
 	   
-	   mav.addObject("pageBar", pageBar);
-	    
+	   mav.addObject("pageBar", pageBar);	    
+	   
+	   
+	   //ITHRer에 등록된 공고 DB에서 찾아와 불러오기
+	   
+	   String salary = request.getParameter("salary");
+	   int age = 0;
+	   try {
+		   age = Integer.parseInt(request.getParameter("age"));		   
+	   } catch(NumberFormatException e) {
+		   age = 0;
+	   }
+	   String gender = request.getParameter("gender");
+	   String subway = request.getParameter("subway");
+	   String licence = request.getParameter("licence");
+	   String[] major = request.getParameterValues("major");
+	   String[] position = request.getParameterValues("position");
+	   String[] preference = request.getParameterValues("preference");
+	   String[] emp_type = request.getParameterValues("emp_type");
+	   String[] work_day = request.getParameterValues("work_day");
+	      
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("searchKeyword", searchKeyWord);
+	   map.put("locationCode", locations);
+	   map.put("salary", salary);
+	   map.put("age", age);
+	   map.put("gender", gender);
+	   map.put("subway", subway);
+	   map.put("licence", licence);
+	   map.put("major", major);
+	   map.put("position", position);
+	   map.put("preference", preference);
+	   map.put("emp_type", emp_type);
+	   map.put("work_day", work_day);
+	   
+	   logger.debug("map: "+map);
+	   
+	   List<Map<String, String>> ithrerList =indexService.selectListSearchIthrer(map);
+	   
+	   logger.debug(ithrerList);
+	   
+	   mav.addObject("ithrerList", ithrerList);
 	   mav.setViewName("/notice/noticeSearch");
 	   
 	   return mav;

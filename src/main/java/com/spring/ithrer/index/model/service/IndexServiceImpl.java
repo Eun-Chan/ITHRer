@@ -59,4 +59,10 @@ public class IndexServiceImpl implements IndexService{
 		return indexDao.deleteFavorites(map);
 	}
 
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		
+		return indexDao.selectListSearchIthrer(map);
+	}
+
 }

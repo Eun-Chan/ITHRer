@@ -27,4 +27,6 @@ public interface IndexDao {
 	int insertFavorites(Map<String, Object> map);
 
 	int deleteFavorites(Map<String, Object> map);
+
+	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
 }
