@@ -15,12 +15,17 @@ public class Education implements Serializable{
 	private String grade;
 	private String transfer;
 	private String major;
+	private int score;
+	private int totalscore;
+	private String senierproject;
+	private String degree;
 	private String secmajor;
 	
 	public Education() {}
 
 	public Education(String graduaction, String schoolName, String admissionDate, String graduationDate,
-			String graduationState, String grade, String transfer, String major, String secmajor) {
+			String graduationState, String grade, String transfer, String major, int score, int totalscore,
+			String senierproject, String degree, String secmajor) {
 		super();
 		this.graduaction = graduaction;
 		this.schoolName = schoolName;
@@ -30,9 +35,13 @@ public class Education implements Serializable{
 		this.grade = grade;
 		this.transfer = transfer;
 		this.major = major;
+		this.score = score;
+		this.totalscore = totalscore;
+		this.senierproject = senierproject;
+		this.degree = degree;
 		this.secmajor = secmajor;
 	}
-
+	
 	public String getGraduaction() {
 		return graduaction;
 	}
@@ -97,6 +106,38 @@ public class Education implements Serializable{
 		this.major = major;
 	}
 
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
+	}
+
+	public int getTotalscore() {
+		return totalscore;
+	}
+
+	public void setTotalscore(int totalscore) {
+		this.totalscore = totalscore;
+	}
+
+	public String getSenierproject() {
+		return senierproject;
+	}
+
+	public void setSenierproject(String senierproject) {
+		this.senierproject = senierproject;
+	}
+
+	public String getDegree() {
+		return degree;
+	}
+
+	public void setDegree(String degree) {
+		this.degree = degree;
+	}
+
 	public String getSecmajor() {
 		return secmajor;
 	}
@@ -113,8 +154,10 @@ public class Education implements Serializable{
 	public String toString() {
 		return "Education [graduaction=" + graduaction + ", schoolName=" + schoolName + ", admissionDate="
 				+ admissionDate + ", graduationDate=" + graduationDate + ", graduationState=" + graduationState
-				+ ", grade=" + grade + ", transfer=" + transfer + ", major=" + major + ", secmajor=" + secmajor + "]";
+				+ ", grade=" + grade + ", transfer=" + transfer + ", major=" + major + ", score=" + score
+				+ ", totalscore=" + totalscore + ", senierproject=" + senierproject + ", degree=" + degree
+				+ ", secmajor=" + secmajor + "]";
 	}
-	
+
 	
 }

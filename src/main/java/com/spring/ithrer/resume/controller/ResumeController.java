@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.resume.model.service.ResumeService;
+import com.spring.ithrer.resume.model.vo.Education;
 import com.spring.ithrer.resume.model.vo.Profile;
 
 
@@ -28,7 +29,6 @@ public class ResumeController {
 	public ModelAndView saveResume(ModelAndView mav,Profile profile) {
 		logger.info("profile="+profile);
 		mav.setViewName("redirect:/");
-		return mav;
-		
+		return mav;	
 	}
 }
