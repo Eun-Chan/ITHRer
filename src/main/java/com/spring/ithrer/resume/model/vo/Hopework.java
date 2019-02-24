@@ -7,20 +7,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Profile implements Serializable{
+public class Hopework implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String name;
-	private String birth;
-	private String gender;
-	private String email;
-	private String tel;
-	private String address;
-}
+	private String jobType;
+	private String wantPay;
+	private boolean visitDetermine;
+	private String hopePlace;
+	private String hopeDuty;
+}	
