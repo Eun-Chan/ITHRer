@@ -57,5 +57,8 @@ public class Recruitment implements Serializable {
 	
 	//데이터 저장용 D-day 타임
 	private int endTime;
+	
+	//지원자 수 저장용
+	private int count;
 
 }

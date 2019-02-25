@@ -22,4 +22,5 @@ public class CompanyApplication implements Serializable{
 	private String compId;
 	private int recruitmentNo;
 	private String cuResdate;
+	private int resumeNo;
 }
