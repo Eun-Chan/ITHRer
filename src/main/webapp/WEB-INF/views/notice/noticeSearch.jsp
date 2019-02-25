@@ -379,9 +379,9 @@ $("#btn-search-notice").on("click", function(){
 	console.log("work_day = ",work_day);
 	console.log("welfare = ", welfare);
 	
-	//location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode
-	//			  + "&salary="+salary+ "&age="+age + "&gender="+gender + "&subway="+subway + "&licence="+licence + "&major="+major
-	//			  + "&position="+position+ "&preference="+preference+ "&emp_type="+emp_type+ "&work_day="+work_day+"&welfare="+welfare;
+	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode
+				  + "&salary="+salary+ "&age="+age + "&gender="+gender + "&subway="+subway + "&licence="+licence + "&major="+major
+				  + "&position="+position+ "&preference="+preference+ "&emp_type="+emp_type+ "&work_day="+work_day+"&welfare="+welfare;
 	
 });
 
@@ -482,7 +482,6 @@ function del_line(event, check){
                <button id="locationKeyWord" class="locationKeyWord">
                   <span class="locationKeyWordSelected"></span>
                </button>
-   <!--             <input type="button" value="지역 선택" id="locationKeyWord"> -->
                <div class="location-hide">
                   <div class="row location-category">
                      <div class="col-sm-6 location-view">
@@ -510,6 +509,9 @@ function del_line(event, check){
                      <div class="col-sm-6 location-view-detail">
                      	<!-- 서울 -->
                      	<ul class="detail seoul">
+                     	<div class="deleteLocation">
+                     		<button class="reset">지역 초기화</button>
+                     	</div>
                      		<li>
                      			<input type="checkbox" name="101000" id="101000_1" class="loc-detail all"/>
                      			<label for="101000_1">서울전체</label>
@@ -617,6 +619,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 경기도 -->
                      	<ul class="detail gyeonggi">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>
                      		<li>
                      			<input type="checkbox" name="102000" id="102000_1" class="loc-detail all"/>
                      			<label for="102000_1">경기전체</label>
@@ -748,6 +753,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 인천 -->
                      	<ul class="detail incheon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="108000" id="108000_1" class="loc-detail all"/>
                      			<label for="108000_1">인천전체</label>
@@ -794,6 +802,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 부산 -->
                      	<ul class="detail busan">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                    	
                      		<li>
                      			<input type="checkbox" name="106000" id="106000_1" class="loc-detail all"/>
                      			<label for="106000_1">부산전체</label>
@@ -865,6 +876,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 대구 -->
                      	<ul class="detail daegu">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="104000" id="104000_1" class="loc-detail all"/>
                      			<label for="104000_1">대구전체</label>
@@ -904,6 +918,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 광주 -->
                      	<ul class="detail gwangju">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="103000" id="103000_1" class="loc-detail all"/>
                      			<label for="103000_1">광주전체</label>
@@ -931,6 +948,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 대전 -->
                      	<ul class="detail daejeon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="105000" id="105000_1" class="loc-detail all"/>
                      			<label for="105000_1">대전전체</label>
@@ -958,6 +978,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 울산 -->
                      	<ul class="detail ulsan">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="107000" id="107000_1" class="loc-detail all"/>
                      			<label for="107000_1">울산전체</label>
@@ -985,6 +1008,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 세종 -->
                      	<ul class="detail sejong">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="118000" id="118000_1" class="loc-detail all"/>
                      			<label for="118000_1">세종특별자치시</label>
@@ -992,6 +1018,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 강원도 -->
                      	<ul class="detail kangwon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="109000" id="109000_1" class="loc-detail all"/>
                      			<label for="109000_1">강원전체</label>
@@ -1071,6 +1100,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 경남 -->
                      	<ul class="detail gyeongnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="110000" id="110000_1" class="loc-detail all"/>
                      			<label for="110000_1">경남전체</label>
@@ -1150,6 +1182,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 경북 -->
                      	<ul class="detail gyeongbuk">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="111000" id="111000_1" class="loc-detail all"/>
                      			<label for="111000_1">경북전체</label>
@@ -1249,6 +1284,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 전남 -->
                      	<ul class="detail chonnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="112000" id="112000_1" class="loc-detail all"/>
                      			<label for="112000_1">전남전체</label>
@@ -1344,6 +1382,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 전북 -->
                      	<ul class="detail chonbuk">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="113000" id="113000_1" class="loc-detail all"/>
                      			<label for="113000_1">전북전체</label>
@@ -1407,6 +1448,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 충남 -->
                      	<ul class="detail chungnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="115000" id="115000_1" class="loc-detail all"/>
                      			<label for="115000_1">충남전체</label>
@@ -1533,6 +1577,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 제주 -->
                      	<ul class="detail jeju">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="116000" id="116000_1" class="loc-detail all"/>
                      			<label for="116000_1">제주전체</label>
@@ -1544,6 +1591,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 전국 -->
                      	<ul class="detail jongok">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="117000" id="117000_1" class="loc-detail all"/>
                      			<label for="117000_1">전국</label>
@@ -2281,7 +2331,23 @@ $(".reset").on("click",function(){
 	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
 });
 
+$(".reset").on("click",function(){
+	var location_name =  new Array();
+	var text="";
+	$(this).parents().siblings("li").find(".loc-detail").prop("checked",false);
 
+  	$('.loc-detail:checked').each(function() { 
+	   location_name.push($(this).siblings("label").text());
+    });
+	for(var i = 0 ; i<location_name.length ; i++){
+		if(i==location_name.length-1){
+				text+=location_name[i];
+		}else{			
+			text+=location_name[i]+",";
+		}
+	}
+	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
+});
 
 </script>
 
