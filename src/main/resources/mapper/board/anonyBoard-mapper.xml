@@ -9,11 +9,32 @@
 	
 	<select resultType="anonyboard" id="selectAnonyBoardOne">select * from anonyBoard where anonyBoardNo = #{anonyBoardNo} </select>
 
-	<insert id="insertAnonyBoard" parameterType="anonyboard">
+	<insert id="insertAnonyBoard" parameterType="anonyboard" >
 	insert into anonyBoard(anonyBoardno, anonyBoardTitle, anonyBoardWriter, anonyBoardContent)values(seq_anonyboardno.nextval,#{anonyBoardTitle},#{anonyBoardWriter},#{anonyBoardContent}) 
-	<!-- <selectKey resultType="_int" order="AFTER" keyProperty="anonyBoardNo">select seq_boardno.currvalfrom dual </selectKey> -->
 	</insert>
 	
-<!-- <insert id="insertAttachment">insert into attachment(attachmentno,boardno,originalfilename,renamedfilename)values (seq_attachmentno.nextval,#{boardNo},#{originalFileName},#{renamedFileName}) </insert> -->
+	<select id="anonySearchList" resultMap="boardSearchMap">
+	select * from anonyBoard 
+	<include refid="search"/>
+	order by anonyBoardNo desc
+	</select>
+	<resultMap id="boardSearchMap" type="map"></resultMap>
+
+	<select id="countAnonyList" resultType="_int">
+	select count(*) from anonyBoard
+	<include refid="search"/>
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				where anonyBoardWriter like '%'||#{keyword}||'%'
+				or anonyBoardTitle like '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+			where ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
 
 </mapper>

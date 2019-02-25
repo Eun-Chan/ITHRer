@@ -49,5 +49,14 @@ public class Recruitment implements Serializable {
 	private String welfare; //복리후생
 	
 	private int noOfApplicant; // 해당 채용공고에 지원한 지원자수
+	
+	//서브쿼리용 copmName
+	private String compName;
+	
+	//즐겨찾기 저장용 카운트
+	private int favoritesCount;
+	
+	//데이터 저장용 D-day 타임
+	private int endTime;
 
 }

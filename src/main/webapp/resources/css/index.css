@@ -129,6 +129,7 @@
 .location-hide{
    display:none;
    width: 860px;
+   right:-17px;
    position: absolute;
    margin-top:5px;
    border: 1px solid black;
@@ -212,7 +213,7 @@ ul {
 .section-content{
    position: relative;
     width: 750px;
-    height: 400px;
+    height: 450px;
     margin-top: 20px;
     padding: 0;
     display: inline-block;
@@ -237,4 +238,11 @@ ul {
 }
 .deleteLocation{
 	display: none;
+}
+.star{
+	position: absolute;
+	bottom: 13px;
+	left: 20px;
+	border: 0;
+    background: white;
 }

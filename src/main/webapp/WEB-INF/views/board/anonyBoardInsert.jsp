@@ -7,33 +7,55 @@
 	<jsp:param value="익명게시판" name="pageTitle"/>
 </jsp:include>
 	<style>
-		div#board-container{width:1000px; margin:0 auto; text-align:center;}
+		div#board-container{width:70%; margin:0 auto; text-align:center; padding-top: 3%; margin-top:40px;}
 		div#board-container input{margin-bottom:15px;}
-		div#board-container{margin-top:40px;}
-		
 	</style>
-		<script>
-		function validate(){
-			var content = $("[name=anonyBoardContent]").val();
-			if(content.trim().length==0){
-				alert("내용을 입력하세요");
+<script>
+function validate(){
+	var title = $("[name=anonyBoardTitle]").val();
+	var content = $("[name=anonyBoardContent]").val();
+		if(title.trim().length==0){
+			alert("제목을 입력하세요");
 				return false;
-			} 
-			return true;
+		}	
+		else if(content.trim().length==0){
+			alert("내용을 입력하세요");
+				return false;
 		}
-		</script>
-		
+		else{
+/* 			console.log("여기 오긴 오냐 시부럴");
+			location.href = "anonyBoardList"; */
+				return true;
+		}
+}
+/* $(function(){
+	$("#boardFrm").on("click", function(){
+		var title = $("#anonyBoardTitle").val();
+		var content = $("#anonyBoardContent").val();
+		console.log("여기오냐시발");
+		$.ajax({
+			url : "${pageContext.request.contextPath}/board/anonyBoardList"
+			
+		});
+	});
+}); */
+</script>
 <div id="board-container">
-	<form name="boardFrm" 
-		  action="${pageContext.request.contextPath}/board/anonyBoardList.do" 
-		  method="post" onsubmit="return validate();">
-		<input type="text" class="form-control" placeholder="제목" name="anonyBoardTitle" id="anonyBoardTitle" required>
-		<input type="text" class="form-control" name="anonyBoardWriter" value="anonyBoardWriter" readonly required>
-<%-- 		<input type="text" class="form-control" name="anonyBoardWriter" value="${memberLoggedIn.memberId}" readonly required> --%>
+	<form name="boardFrm"
+		  action="${pageContext.request.contextPath}/board/anonyBoardInsertContent.ithrer"
+		  method="post" accept-charset="UTF-8" >
 		
+		<input type="text" class="form-control" name="anonyBoardTitle" id="anonyBoardTitle"  placeholder="제목" required>
+		
+<!-- 		<label for="anonyBoardWriter">작성자</label> -->
+		<input type="text" class="form-control" name="anonyBoardWriter" value="anonyBoardWriter" readonly required>
+<!-- 		<label for="password">비밀번호</label> -->
+		<input type="password" class="form-control" name="anonyBoardPassword"/>
+	    
 	    <textarea class="form-control" rows="10"  name="anonyBoardContent" placeholder="내용" required></textarea>
 		<br />
-		<input type="submit" class="btn btn-outline-success" value="저장" >
+		<input type="submit" class="btn btn-outline-success" value="저장" onclick="return validate();">
+		<input type="button" class="btn btn-primary" value="돌아가기" onclick="location.href='anonyBoardList'">
 	</form>
 </div>
 

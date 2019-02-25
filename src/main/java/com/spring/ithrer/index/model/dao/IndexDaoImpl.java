@@ -7,8 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
+import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
 
 
@@ -20,8 +22,8 @@ public class IndexDaoImpl implements IndexDao{
 	SqlSessionTemplate sqlSession;
 
 	@Override
-	public Recruitment selectOneRecruitment(int recruitmentNo) {
-		return sqlSession.selectOne("index.selectOneRecruitment",recruitmentNo);
+	public Recruitment selectOneRecruitment(Map<String, Object> map) {
+		return sqlSession.selectOne("index.selectOneRecruitment",map);
 	}
 
 	@Override
@@ -40,5 +42,35 @@ public class IndexDaoImpl implements IndexDao{
 	@Override
 	public int insertLocation(Map<String, Object> map) {
 		return sqlSession.insert("index.insertLocation", map);
+	}
+
+	@Override
+	public List<Recruitment> selectListRecruitment(String memberId) {
+		return sqlSession.selectList("index.selectListRecruitment",memberId);
+	}
+
+	@Override
+	public Favorites selectOneFavorites(Map<String, Object> map) {
+		return sqlSession.selectOne("index.selectOneFavorites", map);
+	}
+
+	@Override
+	public int insertFavorites(Map<String, Object> map) {
+		return sqlSession.insert("index.insertFavorites", map);
+	}
+
+	@Override
+	public int deleteFavorites(Map<String, Object> map) {
+		return sqlSession.delete("index.deleteFavorites", map);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		
+		return sqlSession.selectList("index.selectListSearchIthrer", map);
+	}
+	@Override
+	public int insertPortFolio(PortFolio pf) {
+		return sqlSession.insert("index.insertPortFolio", pf);
 	}
 }

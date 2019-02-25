@@ -9,6 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.resume.model.service.ResumeService;
+import com.spring.ithrer.resume.model.vo.Award;
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Certificate;
+import com.spring.ithrer.resume.model.vo.Education;
+import com.spring.ithrer.resume.model.vo.Hopework;
+import com.spring.ithrer.resume.model.vo.Intern;
+import com.spring.ithrer.resume.model.vo.Language;
+import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Overseas;
+import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
 
 
@@ -24,11 +35,95 @@ public class ResumeController {
 		mav.setViewName("resume/resume");
 		return mav;
 	}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Profile profile) {
+	//	logger.info("profile="+profile);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Education education) {
+	//	logger.info("education="+education);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Hopework hopework) {
+	//	logger.info("hopework="+hopework);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Intern intern) {
+	//	logger.info("intern="+intern);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Learn learn) {
+	//	logger.info("learn="+learn);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Certificate certificate) {
+	//	logger.info("certificate="+certificate);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Award award) {
+	//	logger.info("award="+award);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Overseas overseas) {
+	//	logger.info("overseas="+overseas);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Language language) {
+	//	logger.info("language="+language);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
+	//@RequestMapping(value="/resume/saveResume.do")
+	//public ModelAndView saveResume(ModelAndView mav,Preference preference) {
+	//	logger.info("preference="+preference);
+	//	mav.setViewName("redirect:/");
+	//	return mav;	
+	//}
 	@RequestMapping(value="/resume/saveResume.do")
-	public ModelAndView saveResume(ModelAndView mav,Profile profile) {
-		logger.info("profile="+profile);
-		mav.setViewName("redirect:/");
-		return mav;
+	public ModelAndView saveResume(ModelAndView mav,
+								   Award award,
+								   Career career,
+								   Certificate certificate,
+								   Education education,
+								   Hopework hopework,
+								   Intern intern,
+								   Language language,
+								   Learn learn,
+								   Overseas overseas,
+								   PortFolio portFolio,
+								   Preference preference,
+								   Profile profile) {
+		logger.info("award="+award);
+		logger.info("career="+career);
+		logger.info("certificate="+certificate);
+		logger.info("education="+education);
+		logger.info("hopework="+hopework);
+		logger.info("intern="+intern);
+		logger.info("language="+language);
+		logger.info("award="+award);
+		logger.info("award="+award);
+		logger.info("award="+award);
+		logger.info("award="+award);
+		logger.info("award="+award);
 		
+		
+		mav.setViewName("redirect:/");
+		return mav;	
 	}
 }

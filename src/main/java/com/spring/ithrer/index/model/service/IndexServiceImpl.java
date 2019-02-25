@@ -6,9 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.dao.IndexDao;
+import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Service
@@ -18,8 +20,8 @@ public class IndexServiceImpl implements IndexService{
 	IndexDao indexDao;
 
 	@Override
-	public Recruitment selectOneRecruitment(int recruitmentNo) {
-		return indexDao.selectOneRecruitment(recruitmentNo);
+	public Recruitment selectOneRecruitment(Map<String, Object> map) {
+		return indexDao.selectOneRecruitment(map);
 	}
 
 	@Override
@@ -37,4 +39,36 @@ public class IndexServiceImpl implements IndexService{
 	public int insertLocation(Map<String, Object> map) {
 		return indexDao.insertLocation(map);
 	}
+
+	@Override
+	public List<Recruitment> selectListRecruitment(String memberId) {
+		return indexDao.selectListRecruitment(memberId);
+	}
+
+	@Override
+	public Favorites selectOneFavorites(Map<String, Object> map) {
+		return indexDao.selectOneFavorites(map);
+	}
+
+	@Override
+	public int insertFavorites(Map<String, Object> map) {
+		return indexDao.insertFavorites(map);
+	}
+
+	@Override
+	public int deleteFavorites(Map<String, Object> map) {
+		return indexDao.deleteFavorites(map);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		
+		return indexDao.selectListSearchIthrer(map);
+	}
+	
+	@Override
+	public int insertPortFolio(PortFolio pf) {
+		return indexDao.insertPortFolio(pf);
+	}
+
 }

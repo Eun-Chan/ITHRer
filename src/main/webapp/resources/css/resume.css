@@ -49,6 +49,101 @@ h3{
 	width : 250px;
 	background : #b89dff;
 }
+/* 경력 */
+#buttonCareer {
+	background : white;
+	margin : 0 auto;
+	width : 900px; 
+}
+#formCareer1 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formCareer1 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+	width : 170px;
+	margin-right : 8px;
+}
+#formCareer1 {
+	background : white;
+	border : 0;
+}
+#formCareer1 input:text {
+	width : 150px;
+}
+#formCareer1 ul li:last-child{
+	width : 140px;
+}
+#formCareer2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formCareer2 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+	width : 170px;
+	margin-right : 8px;
+}
+#formCareer2 {
+	background : white;
+	border : 0;
+}
+#formCareer3 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#formCareer3 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+	float : left
+}
+#formCareer3 ul li:first-child{
+	font-size : 20px;
+	margin-left : 20px;
+	width : 90px;
+	margin-top : 20px;
+	margin-right : 8px;
+}
+#formCareer3 li textarea {
+	width : 740px;
+	margin-bottom : 5px;
+	min-height : 75px;
+	resize : vertical;	
+}
+/*포트폴리오*/
+#potfolioList {
+	display : inline-block;	
+}
+#potfolioList ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#potfolioList li {
+	margin-top : 5px;
+	margin-bottom : 5px;
+	float : left;
+}
+#potfolioList li:first-child{	
+	padding : 0;
+	border : 0;
+	margin-left : 30px;
+	margin-right : 5px;
+}
+#potfolioList ul>li>input {
+	display : inline-block;
+	width : 500px;
+}
+#potfolioList li:last-chlid {
+	float : right;
+}
 /* 인적사항 */
 #name {
 	width : 200px;
@@ -63,16 +158,72 @@ h3{
 	width : 200px;
 }
 /* 희망근무조건 */
-#hopeworkWrap input {
-	margin : 5px;
+#formHopework1 {
+	background : white;
+	border : 0;
 }
-#hopeworkList span{
-	margin-top : 5px;
-	margin-left : 20px;
+#formHopework1 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
 }
-#dutyList span{
+#formHopework1 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+}
+#formHopework1 ul li:first-child {
+	margin-right : 10px;
+	width : 500px;
+}
+#formHopework1 ul li:last-child {
+	margin-left : 10px;
+}
+#formHopework2 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+	margin-bottom : 8px;
+}
+#formHopework2 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+	float : left
+}
+#formHopework2 ul li:first-child{
+	font-size : 20px;
+	margin-left : 45px;
+	width : 120px;
+	margin-top : 20px;
+	margin-right : 33px;
+}
+#formHopework2 ul li:last-child{
+	width : 670px;
+	min-height : 75px;
+}
+#formHopework3 ul {
+	list-style : none;
+	margin : 0;
+	padding : 0;
+	margin-bottom : 8px;
+}
+#formHopework3 li {
+	display : inline-block;
+	padding : 0;
+	border : 0;
+	float : left
+}
+#formHopework3 ul li:first-child{
+	font-size : 20px;
 	margin-left : 20px;
-	margin-bottom : 5px;
+	width : 170px;
+	margin-top : 20px;
+	margin-right : 8px;
+}
+#formHopework3 ul li:last-child{
+	width : 670px;
+	min-height : 75px;
 }
 /* 자기소개서 */
 #formLetter input {
@@ -272,6 +423,20 @@ h3{
 	padding : 0;
 	border : 0;
 }
+div[name=searchHidden] {
+	width :200px;
+	margin-left : 150px;
+}
+div[name=searchHidden] ul {
+	overflow : scroll;
+	max-width :200px;
+	max-height : 100px;
+	position : relative;
+	z-index : 1;
+}
+div[name=searchHidden] ul a {
+	cursor : pointer;
+}
 #formEducation2 {
 	float : right;
 	margin-right : 65px;
@@ -295,7 +460,7 @@ h3{
 #formEducation3 input{
 	width : 150px;
 }
-#formEducation3 input[name=transferuni]{
+#formEducation3 input[name=transfer]{
 	width : 20px;
 }
 #formEducation3 ul {
@@ -343,7 +508,9 @@ h3{
 	width : 875px;
 	height : 75px;
 } 
-*/
+#formEducation5 ul {
+	display : none;
+}
 #buttonEducation {
 	margin : 0 auto;
 	width : 900px; 

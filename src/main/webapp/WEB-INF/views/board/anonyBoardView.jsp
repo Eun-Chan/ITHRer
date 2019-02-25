@@ -20,7 +20,6 @@
 
 <!-- jquery -->
 <script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
-
 <title>익명게시판 - 상세보기</title>
 </head>
 <section id="board-container" class="container">
