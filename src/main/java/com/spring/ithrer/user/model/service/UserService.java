@@ -30,4 +30,6 @@ public interface UserService {
 	int compEmailAuth(String email);
 
 	int createCompany(Company company);
+
+	int createKakaoUser(Map<String, String> user);
 }

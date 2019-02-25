@@ -125,7 +125,7 @@
                             		<div class="form-group row mb-4">
                             			<label class="col-md-4 col-form-label form-control-label" style="padding-left:12px">기업형태</label>
                             			<div class="col-md-8">
-	                            			<select id="classification" class="form-control" required="required">
+	                            			<select class="form-control" required="required" name="bussinessScale">
 	                            				<option selected placeholder="기업형태"></option>
 	                            				<option>대기업</option>
 	                            				<option>대기업 계열사&자회사</option>
@@ -143,7 +143,7 @@
                             		<div class="form-group row mb-4">
                             			<label class="col-md-4 col-form-label form-control-label">사업자등록번호</label>
                             			<div class="col-md-8">
-                            				<input class="form-control" type="text" placeholder="사업자등록번호" name="licenseNo" required="required" maxlength="10"/>
+                            				<input class="form-control" type="text" placeholder="사업자등록번호" name="licenseNo" required="required" maxlength="10" id="licenseNo"/>
                             			</div>
                             		</div>
                             		<div class="form-group row mb-4">
@@ -225,7 +225,7 @@
 	                                    <label class="col-md-2 col-form-label form-control-label"></label>
 	                                    <div class="col-md-9">
 	                                        <input type="submit" class="btn btn-primary" value="회원가입">
-	                                        <input type="button" class="btn btn-secondary" value="홈" onclick="location.href='/ithrer'">
+	                                        <input type="button" class="btn btn-secondary" value="홈으로" onclick="location.href='/ithrer'">
 	                                    </div>
 	                                </div>
                             	</form>
@@ -238,6 +238,8 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery.ajax-cross-origin.min.js"></script>
 <script>
 	/* 유효성 통과 확인 변수 */
 	var memberName_OK = 0;
@@ -594,14 +596,14 @@
 		var input_Auth_Num = $("#CompanyAuthNum").val().trim();
 		if(input_Auth_Num == authNum){
 			console.log("인증 완료!");
-			var comp_Email_Auth_OK = 1;
+			comp_Email_Auth_OK = 1;
 			$("#emailAuth-help2").text("인증 완료!");
 			$("#emailAuth-help2").removeClass("text-danger");
 			$("#emailAuth-help2").addClass("text-success");
 		}
 		else{
 			console.log("인증 실패!");
-			var comp_Email_Auth_OK = 1;
+			comp_Email_Auth_OK = 1;
 			$("#emailAuth-help2").text("인증 실패!");
 			$("#emailAuth-help2").removeClass("text-success");
 			$("#emailAuth-help2").addClass("text-danger");
@@ -618,9 +620,26 @@
 			return true;
 		}
 		alert("모든 입력사항을 제대로 입력 하십시오.");
+		console.log(comp_Id_OK,comp_Password_OK,comp_Email_OK,comp_Email_Auth_OK);
 		return false;
 	}
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업 회원가입 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+	
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 사업자 번호 조회 시작ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+	$("#licenseNo").keyup(function(e){
+		var licenseNo = $("#licenseNo").val().trim();
+		$.ajax({
+			crossOrigin: true,
+			url: "https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=", 
+			data: "<map id='ATTABZAA001R08'><pubcUserNo/><mobYn>N</mobYn><inqrTrgtClCd>1</inqrTrgtClCd><txprDscmNo>1248639732</txprDscmNo><dongCode>05</dongCode><psbSearch>Y</psbSearch><map id='userReqInfoVO'/></map>", 
+			type: "POST",
+			contentType: "text/xml",
+			success : function(data){
+				alert(data);
+			}
+		});
+	});
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 사업자 번호 조회 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 </script>
 </body>
 </html>

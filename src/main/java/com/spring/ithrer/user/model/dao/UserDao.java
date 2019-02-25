@@ -30,4 +30,6 @@ public interface UserDao {
 	int compEmailAuth(String email);
 
 	int createCompany(Company company);
+
+	int createKakaoUser(Map<String, String> user);
 }

@@ -78,4 +78,9 @@ public class UserServiceImpl implements UserService {
 	public int createCompany(Company company) {
 		return userDao.createCompany(company);
 	}
+
+	@Override
+	public int createKakaoUser(Map<String, String> user) {
+		return userDao.createKakaoUser(user);
+	}
 }
