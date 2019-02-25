@@ -270,7 +270,26 @@ public class IndexController {
 	   String[] preference = request.getParameterValues("preference");
 	   String[] emp_type = request.getParameterValues("emp_type");
 	   String[] work_day = request.getParameterValues("work_day");
-	      
+	   String[] welfare = request.getParameterValues("welfare");
+	   if(major != null) {
+		   major = major[0].split(",");
+	   }
+	   if(position != null) {
+		   position = position[0].split(",");
+	   }
+	   if(preference != null) {
+		   preference = preference[0].split(",");
+	   }
+	   if(emp_type != null) {
+		   emp_type = emp_type[0].split(",");
+	   }
+	   if(work_day != null) {
+		   work_day = work_day[0].split(",");
+	   }
+	   if(welfare != null) {
+		   welfare = welfare[0].split(",");
+	   }
+	   
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("searchKeyword", searchKeyWord);
 	   map.put("locationCode", locations);
@@ -284,6 +303,7 @@ public class IndexController {
 	   map.put("preference", preference);
 	   map.put("emp_type", emp_type);
 	   map.put("work_day", work_day);
+	   map.put("welfare", welfare);
 	   
 	   logger.debug("map: "+map);
 	   
