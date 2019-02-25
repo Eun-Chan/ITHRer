@@ -4,12 +4,16 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="com.spring.ithrer.user.model.vo.*" %>
+<%@ page import="com.spring.ithrer.company.model.vo.*" %>
 <%
 	// 개인 회원 세션에 있는 정보 가져오기
 	Member member = (Member)session.getAttribute("member");
-
+	// 기업 회원 세션에 있는 정보 가져오기\
+	Company company = (Company)session.getAttribute("company");
+	
 	// 전송된 쿠키확인
 	boolean memberSaveId = false;
+	
 	boolean companySaveId = false;
 	String memberId = "";
 	String companyId = "";
@@ -31,7 +35,8 @@
 		}
 	}
 	
-	System.out.println("여기서 나오면 세션 끝 = "+member);
+	System.out.println("여기서 나오면 세션 끝(개인회원) = "+member);
+	System.out.println("여기서 나오면 세션 끝(기업회원) = "+company);
 %>
 
 <!DOCTYPE html>
@@ -155,7 +160,7 @@
 						</form>	
 					</div>
                     <div class="tab-pane container fade" id="company">
-						<form name="loginForm">
+						<form name="loginForm2">
 				  			<div class="form-group">
 				    			<label for="text">아이디</label>
 				    			<input type="text" class="form-control" id="companyId" value="<%=companyId%>">
@@ -285,7 +290,9 @@
 	function companyLoginCheck(){
 		var companyId = $("#companyId").val().trim();
 		var companyPassword = $("#companyPassword").val().trim();
+		var companySaveId = $("#companySaveId").is(":checked");
 		
+		alert(companyPassword);
 		if(companyId == 0 || companyPassword == 0){
 			$("#login-help2").text("아이디 혹은 비밀번호를 입력해 주시길 바랍니다.");
 			$("#login-help2").addClass("text-danger");
@@ -297,6 +304,7 @@
 			data : {companyId : companyId , companyPassword : companyPassword , companySaveId : companySaveId},
 			success : function(data){
 				if(data.result == "true"){
+					console.log("기업회원 로그인 성공!");
 					location.reload();
 				}
 				else if(data.result == "false"){
@@ -306,6 +314,7 @@
 			}
 		});
 	}
+	
 	$(".nav-link").hover(function(){
 		$(this).css("color","#ffb6c1");
 	},function(){

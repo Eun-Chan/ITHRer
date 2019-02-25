@@ -31,7 +31,7 @@ import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Controller
-@SessionAttributes(value= {"member" , "company"})
+//@SessionAttributes(value= {"member" , "company"})
 public class UserController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -139,9 +139,14 @@ public class UserController {
 		// 0. 회원가입하러 가즈아 ! 서비스로
 		System.out.println("암호화전: "+member.getPassword());
 		String temp = member.getPassword();
+		
 		//BCrypt 방식 암호화
 		member.setPassword(bcryptPasswordEncoder.encode(temp));
 		System.out.println("암호화후: "+member.getPassword());
+		
+		//전화번호 구분자 (-) 넣기
+		String phone = member.getPhone();
+		member.setPhone(phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7));
 		
 		System.out.println("member = "+member);
 		int result = userService.createMember(member);
@@ -229,6 +234,7 @@ public class UserController {
 			@RequestParam(name="companySaveId") String companySaveId,
 			HttpServletResponse res,
 			HttpServletRequest req){
+		logger.debug("companyLogin ! 여긴 들어오시나요");
 		
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("companyId" , companyId);
@@ -237,7 +243,11 @@ public class UserController {
 		
 		Map<String,String> test = new HashMap<String, String>();
 		if(company != null) {
-			System.out.println("로긴 성공");
+			if(!bcryptPasswordEncoder.matches(companyPassword, company.getPassword())) {
+				logger.debug("비밀번호 틀림!");
+				test.put("result" , "false");
+				return test;
+			}
 			
 			// (아이디 저장 체크시) 쿠키 생성
 			if(companySaveId.equals("true")) {
@@ -277,18 +287,53 @@ public class UserController {
 	@ResponseBody
 	public Map<String,String> kakaoLogin(@RequestParam(name="kakaoId") String kakaoId,
 										 @RequestParam(name="kakaoName") String kakaoName,
-										 @RequestParam(name="kakaoEmail" ,required=false) String kakaoEmail){
+										 @RequestParam(name="kakaoEmail" ,required=false) String kakaoEmail,
+										 HttpServletRequest req){
 		Map<String,String> map = new HashMap<>();
 		System.out.println("여긴 옵니까");
 		// 0. 로그인한 카카오 회원 아이디 일단 조회!
 		Member member = userService.kakaoLogin(kakaoId);
+		
 		if(member != null) {
 			System.out.println("이미 가입된 카카오 회원");
 			System.out.println("member = "+member);
 		}
 		else {
 			System.out.println("카카오로 처음 접속한 회원");
+			logger.debug("kakaoId = "+kakaoId);
+			logger.debug("kakaoName = "+kakaoName);
+			logger.debug("kakaoEmail = "+kakaoEmail);
+			// 카카오톡으로 처음 접속한 회원 DB에 저장하기
+			Map<String,String> user = new HashMap<>();
+			user.put("kakaoId",kakaoId);
+			user.put("kakaoName",kakaoName);
+			user.put("kakaoEmail", kakaoEmail);
+			int result = userService.createKakaoUser(user);
+			
+			if(result > 0) {
+				logger.debug("카카오 유저 등록 성공");
+			}
+			else {
+				logger.debug("카카오 유저 등록 실패");
+			}
+			
+			// 세션에 넣을 객체 저장
+			member = new Member();
+			member.setMemberId(kakaoId);
+			member.setMemberName(kakaoName);
+			if(kakaoEmail != null) {
+				member.setEmail(kakaoEmail);
+			}
 		}
+		
+		// 카카오톡 유저 정보 세션에 담기
+		// 로그인 한 유저 세션에 넣기
+		HttpSession session = req.getSession();
+			
+		session.setMaxInactiveInterval(60*10);
+		
+		session.setAttribute("member", member);
+		
 		return map;
 	}
 	
@@ -354,16 +399,10 @@ public class UserController {
 		// 보낼 이메일 주소		
 		String to = memberEmail;
 		
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-		messageHelper.setTo(new InternetAddress(to));
-		messageHelper.setText("회원 아이디 = "+mem.getMemberId());
-		messageHelper.setFrom(new InternetAddress(from));
-		messageHelper.setSubject("ITHRer 회원 아이디 조회");
+		// 아이디 이메일로 보내주기
+		emailSend(to, "회원 아이디 = "+mem.getMemberId(), "ITHRer 아이디 조회 결과 입니다.");
 		
-		mailSender.send(message);
-		
-		mav.setViewName("/user/findIdEnd");
+		mav.setViewName("redirect:/");
 		
 		return mav;
 	}
@@ -410,6 +449,101 @@ public class UserController {
 		
 		
 		return mav;
+	}
+	
+	/**
+	 * 기업회원 회원가입 - 아이디 중복 검사
+	 */
+	@RequestMapping(value="/user/compIdCheck")
+	@ResponseBody
+	public Map<String,String> compIdCheck(@RequestParam(name="compId") String compId){
+		Map<String,String> test = new HashMap<>();
+		
+		Company company = userService.compIdCheck(compId);
+		
+		// 중복된 아이디가 있을 때
+		if(company != null) {
+			test.put("result" , "false");
+		}
+		else {
+			test.put("result" , "true");
+		}
+		
+		return test;
+	}
+	
+	/**
+	 * 기업회원 회원가입 - 이메일 인증 (메일 보내기)
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/compEmailAuth")
+	@ResponseBody
+	public Map<String,String> compEmailAuth(@RequestParam(name="email") String email) throws Exception{
+		Map<String,String> test = new HashMap<>();
+		
+		int result = userService.compEmailAuth(email);
+		authNum = getAuthNum();
+		
+		// 이메일 중복
+		if(result > 0) {
+			test.put("result" , "false");
+		}
+		// 이메일 회원가입 가능
+		else {
+			test.put("result" , String.valueOf(authNum));
+			emailSend(email , "인증번호 = "+String.valueOf(authNum) , "기업회원 회원가입 인증번호");
+		}
+		return test;
+	}
+	
+	/**
+	 * 기업회원 회원가입
+	 */
+	@RequestMapping(value="/user/createCompany" ,method=RequestMethod.POST)
+	public ModelAndView createCompany(Company company , ModelAndView mav) {
+		// 0. 비밀번호 암호화
+		logger.debug("기업 비밀번호 암호화전 : "+company.getPassword());
+		String temp = company.getPassword();
+		
+		// BCrypt 방식 암호화
+		company.setPassword(bcryptPasswordEncoder.encode(temp));
+		logger.debug("기업 비밀번호 암호화후 : "+company.getPassword());
+		
+		// 전화번호 구분자 (-) 넣기
+		String phone = company.getPhone();
+		company.setPhone(phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7));
+		
+		logger.debug("company = "+company);
+		
+		// 1. DB로 출바알!
+		int result = userService.createCompany(company);
+		
+		if(result > 0) {
+			logger.debug("기업 회원가입 성공!");
+		}
+		else {
+			logger.debug("기업 회원가입 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
+	}
+	
+	/**
+	 * 기업회원 아이디 찾기
+	 */
+	@RequestMapping(value="/user/findCompanyId" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> findCompanyId(Company company){
+		Map<String,String> result = new HashMap<>();
+		result.put("result", "true");
+		
+		// 0. 입력 값 확인
+		logger.debug("compName = "+company.getCompName());
+		logger.debug("licenseNo = "+company.getLicenseNo());
+		
+		return result;
 	}
 	
 	/**

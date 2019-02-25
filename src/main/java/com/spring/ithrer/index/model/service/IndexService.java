@@ -34,5 +34,13 @@ public interface IndexService {
 	
 	int insertPortFolio(PortFolio pf);
 
+	int updateMember(Map<String, Object> param);
+
+	int insertCompanyApplication(Map<String, Object> map);
+
+	int selectCountCompanyApplication(Map<String, Object> map);
+
+	List<Recruitment> selectTopListRecruitment(String memberId);
+
 
 }

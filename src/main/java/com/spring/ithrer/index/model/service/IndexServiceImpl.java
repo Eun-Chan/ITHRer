@@ -71,4 +71,24 @@ public class IndexServiceImpl implements IndexService{
 		return indexDao.insertPortFolio(pf);
 	}
 
+	@Override
+	public int updateMember(Map<String, Object> param) {
+		return indexDao.updateMember(param);
+	}
+
+	@Override
+	public int insertCompanyApplication(Map<String, Object> map) {
+		return indexDao.insertCompanyApplication(map);
+	}
+
+	@Override
+	public int selectCountCompanyApplication(Map<String, Object> map) {
+		return indexDao.selectCountCompanyApplication(map);
+	}
+
+	@Override
+	public List<Recruitment> selectTopListRecruitment(String memberId) {
+		return indexDao.selectTopListRecruitment(memberId);
+	}
+
 }

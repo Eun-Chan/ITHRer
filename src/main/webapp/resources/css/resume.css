@@ -117,6 +117,33 @@ h3{
 	min-height : 75px;
 	resize : vertical;	
 }
+/*포트폴리오*/
+#potfolioList {
+	display : inline-block;	
+}
+#potfolioList ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+}
+#potfolioList li {
+	margin-top : 5px;
+	margin-bottom : 5px;
+	float : left;
+}
+#potfolioList li:first-child{	
+	padding : 0;
+	border : 0;
+	margin-left : 30px;
+	margin-right : 5px;
+}
+#potfolioList ul>li>input {
+	display : inline-block;
+	width : 500px;
+}
+#potfolioList li:last-chlid {
+	float : right;
+}
 /* 인적사항 */
 #name {
 	width : 200px;
@@ -396,6 +423,20 @@ h3{
 	padding : 0;
 	border : 0;
 }
+div[name=searchHidden] {
+	width :200px;
+	margin-left : 150px;
+}
+div[name=searchHidden] ul {
+	overflow : scroll;
+	max-width :200px;
+	max-height : 100px;
+	position : relative;
+	z-index : 1;
+}
+div[name=searchHidden] ul a {
+	cursor : pointer;
+}
 #formEducation2 {
 	float : right;
 	margin-right : 65px;
@@ -419,7 +460,7 @@ h3{
 #formEducation3 input{
 	width : 150px;
 }
-#formEducation3 input[name=transferuni]{
+#formEducation3 input[name=transfer]{
 	width : 20px;
 }
 #formEducation3 ul {

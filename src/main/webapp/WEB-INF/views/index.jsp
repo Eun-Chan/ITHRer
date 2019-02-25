@@ -1233,18 +1233,26 @@
 	         </ul>
 	         
 	         <ul style="list-style: none; padding-left: 20px;" id="popularity" class="container tab-pane fade">
-	         <c:forEach items="${rc }" var="list">
-	            <li class="recommend-open">
-	               <div class="recommend-content" onclick="moveDetail('${list.recruitmentNo}');">
-	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
-	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
-	                 <div class="endDate">D-${list.endTime }</div>
-	                 <button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
-	                 <input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
-	                 <input type="hidden" value="${list.compId }" id="hiddenCompId" />
+	          <c:forEach items="${topRc }" var="toplist">
+	            <li class="recommend-open" >
+	               <div class="recommend-content" onclick="moveDetail('${toplist.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${toplist.compName }</strong>
+	                  <span class="recruitTitle">${toplist.recruitmentTitle }</span>
+	                  <div class="endDate">D-${toplist.endTime }</div>
 	               </div>
+	               <c:if test="${empty member }">
+	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               </c:if>
+	               <c:if test="${not empty member }">
+	               		<c:if test="${toplist.favoritesCount == 1 }">
+	               			<button class="star"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               		<c:if test="${toplist.favoritesCount ==0 }">
+	               			<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               </c:if>
 	            </li>
-			</c:forEach>
+	            </c:forEach>
 	         </ul>
          </div>
       </div>
