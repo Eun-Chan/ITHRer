@@ -7,20 +7,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Profile implements Serializable{
+public class Award implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String name;
-	private String birth;
-	private String gender;
-	private String email;
-	private String tel;
-	private String address;
+	private String awardName;
+	private String awardAgency;
+	private String awardDate;
+	private String awardTextarea;
 }

@@ -10,6 +10,7 @@ import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.dao.IndexDao;
+import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Service
@@ -57,6 +58,17 @@ public class IndexServiceImpl implements IndexService{
 	@Override
 	public int deleteFavorites(Map<String, Object> map) {
 		return indexDao.deleteFavorites(map);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		
+		return indexDao.selectListSearchIthrer(map);
+	}
+	
+	@Override
+	public int insertPortFolio(PortFolio pf) {
+		return indexDao.insertPortFolio(pf);
 	}
 
 }

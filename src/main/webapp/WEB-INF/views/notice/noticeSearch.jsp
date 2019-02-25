@@ -171,11 +171,11 @@ var age = "";
 var gender = "";
 var subway = "";
 var licence = "";
-var major = [];
-var position = [];
-var preference = [];
-var emp_type = [];
-var work_day = [];
+var major;
+var position;
+var preference;
+var emp_type;
+var work_day;
 
 $(function(){
 	
@@ -236,6 +236,8 @@ $(document).on("focusout","input[name=major]",function(){
 	//동적으로 생성되는 부분에도 이벤트핸들러를 등록하기 위해서는 document에 이벤트를 담는다.	
 
 	if(major.indexOf($(this).val()) == -1 && $(this).val()!=""){
+		
+		major = new Array();
 		major.push($(this).val());
 	}
 	
@@ -253,6 +255,7 @@ $(document).on("focusout","input[name=major]",function(){
 $(document).on("change","select[name=position]",function(){	
 	
 	if(position.indexOf($(this).val()) == -1 && $(this).val()!=""){
+		position = new Array();
 		position.push($(this).val());
 	}
 	console.log("position:",position);
@@ -264,6 +267,7 @@ $(document).on("change","select[name=position]",function(){
 });
 
 $("#preference-area input:checkbox").click(function() {
+	preference = new Array();
 	if(preference.length>4 && preference.indexOf($(this).val()) == -1){
 		alert("5개까지 체크가능해요:D");
 		$(this).prop("checked", false);
@@ -285,6 +289,7 @@ $("#preference-area input:checkbox").click(function() {
 });
 
 $("#emp_type-area input:checkbox").click(function() {
+	emp_type = new Array();
 	if(emp_type.length>2 && emp_type.indexOf($(this).val()) == -1){
 		alert("3개까지 체크가능해요:D");
 		$(this).prop("checked", false);
@@ -306,6 +311,7 @@ $("#emp_type-area input:checkbox").click(function() {
 });
 
 $("#work_day-area input:checkbox").click(function() {
+	work_day = new Array();
 	if(work_day.length>2 && work_day.indexOf($(this).val()) == -1){
 		alert("3개까지 체크가능해요:D");
 		$(this).prop("checked", false);
@@ -340,12 +346,15 @@ $("#btn-search-notice").on("click", function(){
 	console.log("subway = ",subway);
 	console.log("licence = ",licence);
 	console.log("major = ",major);
+	console.log(major);
 	console.log("position = ",position);
 	console.log("preference = ",preference);
 	console.log("emp_type = ",emp_type);
 	console.log("work_day = ",work_day);
 	
-	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode;
+	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode
+				  + "&salary="+salary+ "&age="+age + "&gender="+gender + "&subway="+subway + "&licence="+licence + "&major="+major
+				  + "&position="+position+ "&preference="+preference+ "&emp_type="+emp_type+ "&work_day="+work_day;
 	
 });
 
@@ -2176,8 +2185,23 @@ $(".reset").on("click",function(){
 <div id="noticeSearch-container">
 	<br /><br />
 	<div><h3><span id="resultKeyWord">#${searchKeyWord}</span>의 검색결과</h3></div><br />
-	<div>${totlaContents}건의 검색 결과</div>
 	<br />
+	<!-- ithrer 검색 부분 -->
+	<h3><span style="color:blue;">ITHRer</span> 검색결과</h3><br />
+	<ui class="list-group">
+		<c:forEach items="${ithrerList}" var="job">
+		<li class="list-group-item list-group-item-action">
+			<div><a href="${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no=${job.RECRUITMENT_NO}">${job.COMP_ID}</a></div>
+			<p class="detail1"><span>${job.RECRUITMENT_TITLE}</span><span class="badge badge-danger" style="width:82px">~${job.CLOSING_DATE}</span></p>
+			<p class="detail2"><span>${job.CAREER}</span><span>${job.EDUCATION}</span><span>${job.EMPLOYMENT_TYPE}span><span>${job.LOCATION}</span></p>
+		</li>
+		</c:forEach>
+	</ui>
+	
+	<hr /><br />
+	<!-- 사람인 api 부분 -->
+	<h3><span style="color:skyblue;">사람인api</span> 검색결과</h3><br />
+	<div>${totlaContents}건의 검색 결과</div><br />
 	<ui class="list-group">
 		<c:forEach items="${jobList}" var="job">
 		<li class="list-group-item list-group-item-action">
