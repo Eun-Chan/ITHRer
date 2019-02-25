@@ -47,5 +47,7 @@ public class Recruitment implements Serializable {
 	private String payCondition; //급여조건
 	private String nearbyStation; //인근전철역
 	private String welfare; //복리후생
+	
+	private int noOfApplicant; // 해당 채용공고에 지원한 지원자수
 
 }
