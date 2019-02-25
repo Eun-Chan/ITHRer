@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.resume.model.service.ResumeService;
+import com.spring.ithrer.resume.model.vo.Award;
 import com.spring.ithrer.resume.model.vo.Career;
 
 
@@ -85,8 +86,9 @@ public class ResumeController {
 	//	return mav;	
 	//}
 	@RequestMapping(value="/resume/saveResume.do")
-	public ModelAndView saveResume(ModelAndView mav,Career career) {
-		logger.info("career="+career);
+	public ModelAndView saveResume(ModelAndView mav,Career career,Award award) {
+		logger.debug("career="+career);
+		logger.debug("award="+award);
 		mav.setViewName("redirect:/");
 		return mav;	
 	}
