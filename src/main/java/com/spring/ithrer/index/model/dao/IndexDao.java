@@ -29,6 +29,8 @@ public interface IndexDao {
 
 	int deleteFavorites(Map<String, Object> map);
 
+	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
+	
 	int insertPortFolio(PortFolio pf);
 
 	int updateMember(Map<String, Object> param);

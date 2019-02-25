@@ -11,53 +11,61 @@
 <style>
 #company-index-container{
 	width: 1000px;
+	font-size: 0.9em;
 }
 </style>
 
-<div id="company-index-container" class="container">
-	
-	<br />
+<div id="company-index-container" class="container my-5">
+
+	<div class="clearfix">
+		<button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/company/info.ithrer?compId=${companyMap.company.compId }'">기업정보관리</button>
+	</div>
 	
 	<!-- 회사기본정보 보여주는 영역 -->
-	<div id="company-info-container" class="container">
-		<div class="row">
-			<div class="col-sm-4 bg-primary text-center align-middle">
+	<div id="company-info-container" class="container my-3 shadow rounded border border-primary text-center">
+		<div class="row d-flex flex-wrap align-items-center">
+			<div class="col">
 				<img src="${pageContext.request.contextPath }/resources/images/tempLogo.png" alt="기업로고"/>
 			</div>
-			<div class="col bg-warning">
-				<div class="row">
-					<div class="col text-center">
-						<span> ${map.company.compName} </span>
-					</div>
-				</div>				
-				<div class="row">
-					<div class="col text-center">
-						<span> 대표: ${map.company.representive} </span>
-					</div>
-				</div>				
-				<div class="row">
-					<div class="col text-center">
-						<span> ${map.company.bussinessScale} </span>
-					</div>
-				</div>
-				<div class="row ">
-					<div class="col text-center">
-						<span> ${map.company.category} </span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col text-center">
-						<span> ${map.company.homepage} </span>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col text-center">
-						<span> ${map.company.phone} </span>
-					</div>
-				</div>
+		</div>
+		<div class="row my-1">
+			<div class="col-sm-2 text-right">기업이름</div>
+			<div class="col-sm-4 text-left">
+				<span> ${companyMap.company.compName} </span>
 			</div>
-			<div class="col-sm-1">
-				<button class="btn btn-sm btn-primary" onclick="location.href='${pageContext.request.contextPath}/company/info.ithrer?compId=${map.company.compId }'">기업정보관리</button>
+			<div class="col-sm-2 text-right">대표</div>
+			<div class="col-sm-4 text-left">
+				<span>${companyMap.company.representive} </span>
+			</div>
+		</div>				
+		<div class="row my-1">
+			<div class="col-sm-2 text-right">기업규모</div>
+			<div class="col-sm-4 text-left">
+				<span> ${companyMap.company.bussinessScale} </span>
+			</div>
+			<div class="col-sm-2 text-right">업종</div>
+			<div class="col-sm-4 text-left">
+				<span> ${companyMap.company.category} </span>
+			</div>
+		</div>
+		<div class="row my-1">
+			<div class="col-sm-2 text-right">홈페이지</div>
+			<div class="col-sm-4 text-left">
+				<span> ${companyMap.company.homepage} </span>
+			</div>
+			<div class="col-sm-2 text-right">전화번호</div>
+			<div class="col-sm-4 text-left">
+				<span> ${companyMap.company.phone} </span>
+			</div>
+		</div>
+		<div class="row my-1">
+			<div class="col-sm-2 text-right">대표 주소</div>
+			<div class="col-sm-4 text-left">
+				<span> ${companyMap.company.location} </span>
+			</div>
+			<div class="col-sm-2 text-right"></div>
+			<div class="col-sm-4 text-left">
+				<span> </span>
 			</div>
 		</div>
 	</div>
@@ -65,14 +73,14 @@
 	<br />
 	
 	<!-- 채용정보 보여주는 영역 -->
-	<div id="recuritment-info-container" class="container">
+	<div id="recuritment-info-container" class="container my-3">
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#recruitment-ing-tab">진행중(개수)</a>
+				<a class="nav-link active" data-toggle="tab" href="#recruitment-ing-tab">진행중(${rcrtList.size() }건)</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#recruitment-end-tab">마감(개수)</a>
+				<a class="nav-link" data-toggle="tab" href="#recruitment-end-tab">마감(*건)</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#recruitment-all-tab">전체(개수)</a>
@@ -84,14 +92,39 @@
 			<div id="recruitment-ing-tab" class="container tab-pane active"><br />
 				<h3>진행 중인 채용정보 보여주면 댐</h3>
 				<table class="table table-hover">
-					<c:forEach var="companyApplication" items="${map.companyAppList }">
-					<tr>
-						<td>
-							<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?recruitmentNo=${companyApplication.recruitmentNo}&memberId=${companyApplication.memberId}">
-							${companyApplication.memberId }
-							</a>
-						</td>
-					</tr>
+					<thead>
+						<tr>
+							<th>공고 제목</th>
+							<th>공고 관리</th>
+							<th>지원자 관리</th>
+							<th>지원자 통계</th>
+							<th>이용상품</th>
+						</tr>
+					</thead>
+					<c:forEach var="rcrt" items="${rcrtList}">
+						<tbody>
+							<tr>
+								<td>
+									<a href="${pageContext.request.contextPath }/index/ithrerNotice.ithrer?no=${rcrt.recruitmentNo}">
+									${rcrt.recruitmentTitle }
+									</a>
+								</td>
+								<td>수정/마감 버튼</td>
+								<td>
+									<a href="${pageContext.request.contextPath }/company/viewApplicantList.ithrer?recruitmentNo=${rcrt.recruitmentNo}&compId=${company.compId}">
+										${rcrt.noOfApplicant }명
+									</a>
+									 (미열람 *명)
+								</td>
+								<td>
+									통계보기 버튼
+								</td>
+								<td>
+									없음
+									유료서비스신청 버튼
+								</td>
+							</tr>
+						</tbody>
 					</c:forEach>
 				</table>
 			</div>
@@ -132,7 +165,7 @@
 						<c:forEach var="applicant" items="${readApplicantList }">
 							<tr>
 								<td>
-									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?recruitmentNo=${map.companyAppList[0].recruitmentNo}&memberId=${applicant.memberId}">
+									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${applicant.recruitmentNo}&memberId=${applicant.memberId}">
 									${applicant }
 									</a>
 								</td>
@@ -153,7 +186,9 @@
 						<c:forEach var="favorite" items="${favoriteAppList }">
 							<tr>
 								<td>
+									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">
 									${favorite}
+									</a>
 								</td>
 							</tr>
 						</c:forEach>

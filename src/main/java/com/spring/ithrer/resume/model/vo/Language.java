@@ -12,15 +12,15 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Profile implements Serializable{
+public class Language implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String name;
-	private String birth;
-	private String gender;
-	private String email;
-	private String tel;
-	private String address;
+	private String languageDivision;
+	private String languageName;
+	private String selfText;
+	private String speakingDivision;
+
 }

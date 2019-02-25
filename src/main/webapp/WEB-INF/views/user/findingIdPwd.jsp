@@ -33,17 +33,11 @@
 						<div class="tab-content">
 							<div class="tab-pane container active" id="ID">
 								<!-- 개인회원 / 기업회원 으로 나누기 -->
-								<ul class="nav nav-pills nav-justified mb-5">
-									<li class="nav-item">
-										<a class="nav-link active" href="#member">개인회원</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#company">기업회원</a>
-									</li>									
-								</ul>
+								
 								<div class="tab-content">
 										<!-- 개인회원 -->
-										<div class="tap-pane active" id="member">
+										<div class="tap-pane container active" id="member">
+											<h3>개인회원</h3>
 											<form action="${pageContext.request.contextPath }/user/memberIdView.ithrer" method="POST" id="memberIdView">
 												<div class="form-group row mb-2">
 													<div class="col">
@@ -67,12 +61,28 @@
 											</form>
 										</div>
 										
+										<div class="tb-1" style="border-bottom: 1px solid; margin-top: 30px; margin-bottom: 30px"></div>
+										
 										<!-- 기업회원 -->
-										<div class="tap-pane" id="company">
-											<form action="" method="POST" class="form">
+										<div class="tap-pane container mt-3" id="company">
+											<h3>기업회원</h3>
+											<form class="form">
 												<div class="form-group row mb-2">
 													<div class="col">
-														
+														<input class="form-control" placeholder="가입자명" id="compName" name="compName"/>
+														<span><p id="name-help2"></p></span>
+													</div>	
+												</div>
+												<div class="form-group row mb-2">
+													<div class="col">
+														<input class="form-control" placeholder="사업자번호(10자리)" type="text" id="licenseNo" name="licenseNo" maxlength="10"/>
+													</div>
+												</div>
+												<div class="form group row mb-2">
+													<div class="col">
+														<span><p id="companyIdCheck-help"></p></span>														
+														<input type="button" class="btn btn-secondary submitBtn" value="확인" onclick="companyIdFind();"/>
+														<br />
 													</div>
 												</div>
 											</form>
@@ -195,7 +205,7 @@
 				type : "POST",
 				success : function(data){
 					if(data.result == "true"){
-						alert(data.result);
+						alert("메일에서 아이디를 확인하시기 바랍니다.");
 						memberIdViewForm();
 					}
 					else if(data.result == "false"){
@@ -258,6 +268,22 @@
 	}
 	
 	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 개인회원 비밀번호 찾기  끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업회원 아이디 찾기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	
+	function companyIdFind(){
+		var compName = $("#compName").val().trim();
+		var licenseNo = $("#licenseNo").val().trim();
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/user/findCompanyId.ithrer",
+			type : "POST",
+			data : {compName : compName, licenseNo : licenseNo},
+			success : function(data){
+				
+			}
+		});
+	}
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

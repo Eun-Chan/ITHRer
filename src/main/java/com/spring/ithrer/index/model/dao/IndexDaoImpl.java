@@ -65,6 +65,11 @@ public class IndexDaoImpl implements IndexDao{
 	}
 
 	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		
+		return sqlSession.selectList("index.selectListSearchIthrer", map);
+	}
+	@Override
 	public int insertPortFolio(PortFolio pf) {
 		return sqlSession.insert("index.insertPortFolio", pf);
 	}

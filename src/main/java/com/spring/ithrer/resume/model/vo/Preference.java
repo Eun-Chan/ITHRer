@@ -12,15 +12,17 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Profile implements Serializable{
+public class Preference implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String name;
-	private String birth;
-	private String gender;
-	private String email;
-	private String tel;
-	private String address;
+	private boolean veteran;
+	private boolean protect;
+	private boolean subsidy;
+	private boolean disorder;
+	private boolean military;
+	private String disoderselect;
+	private String militaryselect;
 }
