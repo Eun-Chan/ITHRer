@@ -158,7 +158,10 @@
 				<table id="readApplicant-table" class="table table-hover">
 					<thead>
 						<tr>
-							<th>임시임다</th>
+							<th>이름/나이/성별</th>
+							<th>이력서 제목</th>
+							<th>경력</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -166,8 +169,13 @@
 							<tr>
 								<td>
 									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${applicant.recruitmentNo}&memberId=${applicant.memberId}">
-									${applicant }
+									${applicant.memberId }
 									</a>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<button class="btn btn-primary btn-sm">관심인재 등록</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -179,7 +187,10 @@
 				<table id="favoriteApplicant-table" class="table table-hover">
 					<thead>
 						<tr>
-							<th>임시임다</th>
+							<th>이름/나이/성별</th>
+							<th>이력서 제목</th>
+							<th>경력</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -187,8 +198,13 @@
 							<tr>
 								<td>
 									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">
-									${favorite}
+									${favorite.memberId}
 									</a>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<button class="btn btn-danger btn-sm">관심인재 해제</button>
 								</td>
 							</tr>
 						</c:forEach>
