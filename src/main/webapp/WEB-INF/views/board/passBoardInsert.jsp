@@ -3,6 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="com.spring.ithrer.user.model.vo.*" %>
+<%
+	// 개인 회원 세션에 있는 정보 가져오기
+	Member member = (Member)session.getAttribute("member");
+
+	
+%>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="익명게시판" name="pageTitle"/>
 </jsp:include>
@@ -23,8 +30,6 @@ function validate(){
 				return false;
 		}
 		else{
-			console.log("여기 오긴 오냐 시부럴");
-			location.href = "passBoardList";
 				return true;
 		}
 }
@@ -36,7 +41,7 @@ function validate(){
 		  method="post" accept-charset="UTF-8" >
 
 		<input type="text" class="form-control" placeholder="제목" name="passBoardTitle" id="passBoardTitle" required>
- 		<input type="text" class="form-control" name="passBoardWriter" value="${memberLoggedIn.memberId}" readonly required>
+ 		<input type="text" class="form-control" name="passBoardWriter" value="${member.memberId}" readonly required>
 		
 	    <textarea class="form-control" rows="10"  name="passBoardContent" placeholder="내용" required></textarea>
 		<br />

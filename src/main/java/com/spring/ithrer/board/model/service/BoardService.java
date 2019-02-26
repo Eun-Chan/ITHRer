@@ -35,4 +35,9 @@ public interface BoardService {
 
 	int countPassList(String searchOption, String keyword);
 
+	
+	int anonyBoardDelete(int no);
+
+	int passBoardDelete(int passBoardNo);
+
 }
