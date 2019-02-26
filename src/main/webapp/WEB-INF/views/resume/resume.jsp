@@ -10,10 +10,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/resume.css" />
 <br /><br />
 <div class="container">
-<form id="resumeResultFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
+<form class="resumeResultFrm" id="resumeProfileFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
-	<input type="text" id="userResumeTitle" 
+	<input type="text" name="userResumeTitle" id="userResumeTitle" 
 		   class="form-control" aria-label="Sizing example input" 
 		   aria-describedby="inputGroup-sizing-lg" placeholder="기업에게 나에 대해 알려줍시다.강점,목표,관심분야도 좋아요."/>
 </div>
@@ -38,6 +38,8 @@
 		</div>		
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeEduFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="educationTotal" class="wrap-container">
 	<div id="educationHeader">
 		<div id="headerText">
@@ -157,6 +159,8 @@
 		<button type="button" id="addEducation" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeHopeFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="hopeworkTotal" class="wrap-container">
 	<h3>희망근무조건</h3>
 	<div id="hopeworkWrap">
@@ -191,6 +195,8 @@
 		</div>
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeInternFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="internTotal" class="wrap-container" style="display:none;">
 	<h3>인턴,대외활동</h3>
 	<div id="internWrap">
@@ -226,6 +232,8 @@
 		<button type="button" id="addIntern" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeLearnFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="learnTotal" class="wrap-container" style="display:none;">
 	<h3>교육</h3>
 	<div id="learnWrap">
@@ -254,6 +262,8 @@
 		<button type="button" id="addLearn" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeCertifiFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="certificateTotal" class="wrap-container" style="display:none;">
 <h3>자격증</h3>
 	<div id="certificateWrap">
@@ -274,6 +284,8 @@
 		<button type="button" id="addCert" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeAwardFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="awardTotal" class="wrap-container" style="display:none;">
 	<h3>수상</h3>
 	<div id="awardWrap">
@@ -300,6 +312,8 @@
 		<button type="button" id="addAward" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeOverseasFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="overseasTotal" class="wrap-container" style="display:none;">
 	<h3>해외경험</h3>
 	<div id="overseasWrap">
@@ -326,6 +340,8 @@
 		<button type="button" id="addOverseas" class="btn btn-outline-info">해외경험 추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeLanguageFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="languageTotal" class="wrap-container" style="display:none;">
 	<h3>어학</h3>
 	<div id="languageWrap">
@@ -360,6 +376,8 @@
 		<button type="button" id="addLanguage" class="btn btn-outline-info">어학 추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumepotFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="potfolioTotal" class="wrap-container" style="display:none;">
 	<h3>포트폴리오</h3>
 	<div id="potfolioWrap">
@@ -379,6 +397,8 @@
 		<div id="potfolioList" class="input-group-prepend"></div>
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumePreferFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="preferenceTotal" class="wrap-container" style="display:none;">
 	<h3>취업우대</h3>
 	<div id="preferenceWrap">
@@ -391,19 +411,19 @@
 			<div id="divCheckbox">
 				<ul>
 					<li>
-						<input type="checkbox" name="veteran" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>보훈대상	
+						<input type="checkbox" name="preferCheck" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>보훈대상	
 					</li>
 					<li>
-						<input type="checkbox" name="protect" id="protected" aria-label="Checkbox for following text input" value="protected"/>취업보호 대상
+						<input type="checkbox" name="preferCheck" id="protected" aria-label="Checkbox for following text input" value="protected"/>취업보호 대상
 					</li>
 					<li>
-						<input type="checkbox" name="subsidy" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>고용지원금 대상
+						<input type="checkbox" name="preferCheck" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>고용지원금 대상
 					</li>
 					<li>
-						<input type="checkbox" name="disorder" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>장애
+						<input type="checkbox" name="preferCheck" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>장애
 					</li>
 					<li>
-						<input type="checkbox" name="military" id="military" aria-label="Checkbox for following text input" value="military"/>병역
+						<input type="checkbox" name="preferCheck" id="military" aria-label="Checkbox for following text input" value="military"/>병역
 					</li>
 				</ul>
 			</div>
@@ -434,6 +454,8 @@
 		</div>
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeLetterFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="letterTotal" class="wrap-container" style="display:none;">
 	<h3>자기소개서</h3>
 	<div id="letterWrap">
@@ -444,6 +466,8 @@
 		</div>
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" id="resumeCareerFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="careerTotal" class="wrap-container" style="display:none;">
 	<h3>경력</h3>
 	<div id="careerWrap">
@@ -497,6 +521,8 @@
 			<button type="button" id="addCareer" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
+</form>
+<form class="resumeResultFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="finishButtonWrap" class="input-group-prepend">
 	<button type="submit" id="emsisaveButton" class="btn btn-light">임시저장</button>&nbsp;&nbsp;&nbsp;&nbsp;
 	<button type="submit" id="saveButton" class="btn btn-primary">작성완료</button>
@@ -746,11 +772,12 @@ $("#addCert").on("click",function() {
 	$('#certificateWrap').append(html);
 	certFrmcount++;
 });
-/* $(document).on("click","input[name=certName]",function() {
+$(document).on("click","input[name=certName]",function() {
+	var certName = $(this); 
 	$.ajax({
-		url : "http://openapi.q-net.or.kr/api/service/rest/InquiryListNationalQualifcationSVC/getList?ServiceKey=Pl8p8zqIh1GyP%2FQDLT1RAz08KwhYCvywISdm2VPIlhCiSMm6gE%2BZIGjDFFrVOHDoAbWhedPnAwMvaPipIOPfNw%3D%3D",
-		dataType : "jsonp",
-		jsonp : "callback",
+		url : "${pageContext.request.contextPath}/resume/certificateList.do",
+		data : "certName="+cerName,
+		dataType : 'json',
 		success : function(data) {
 			console.log(data);
 		},
@@ -758,7 +785,7 @@ $("#addCert").on("click",function() {
 			console.log("실패닷");
 		}
 	});
-}); */
+});
 /* 수상 */
 $("#addAward").on("click",function() {
 	var html = '<div id="formAward"><div id="deleteBox"><button type="button" id="deleteAward" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
@@ -866,6 +893,12 @@ $("#addLetter").on("click",function() {
 	html += '<textarea name="letterArea" id="letterArea'+count+'" placeholder="해당내용을 입력하세요."></textarea></div></div>';
 	$('#formLetter').append(html);
 	count++;
+});
+/* 한꺼번에 submit */
+$("#saveButton").on("click",function() {
+	$.post("${pageContext.request.contextPath}/resume/saveResume.do"),$(".resumeResultFrm").serialize(),function(data) {
+		console.log(data);
+	}
 });
 /* 항목삭제버튼바로 윗단계 */
 function deleteone(event) {

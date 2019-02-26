@@ -1316,7 +1316,7 @@ $("#btn-search-notice").on("click", function(){
    console.log("아아");	
    var searchKeyWord = $("#searchKeyWord").val();
    var locationCode = $(".hiddenLocationCode").val();
-   //지역검색 추가 해야함
+   
    
    location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode;
    $(".loc-detail").prop("checked",false);

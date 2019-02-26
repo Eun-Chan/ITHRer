@@ -29,7 +29,7 @@ public interface IndexDao {
 
 	int deleteFavorites(Map<String, Object> map);
 
-	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
+	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage, int ithrerCPage);
 	
 	int insertPortFolio(PortFolio pf);
 
@@ -40,4 +40,7 @@ public interface IndexDao {
 	int selectCountCompanyApplication(Map<String, Object> map);
 
 	List<Recruitment> selectTopListRecruitment(String memberId);
+
+	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
+
 }

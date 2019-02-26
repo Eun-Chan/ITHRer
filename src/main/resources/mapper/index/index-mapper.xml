@@ -46,7 +46,7 @@
 	<select id="selectListSearchIthrer" parameterType="map" resultType="map">
 		select * from recruitment join area using(location_code) join company c using(comp_id) where recruitment_title like '%'||#{searchKeyword}||'%'
 		
-		<if test="locationCode != null and locationCode[0] != ''" >
+		<if test="locationCode != null and locationCode[0] != '' and locationCode[0] != 'null'" >
 			and (location_code in
 			<foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
 				#{item}		
@@ -58,63 +58,63 @@
 			)
 		</if>
 		
-		<if test="salary != null and salary !=''">
+		<if test="salary != null and salary !='' and salary !='null'">
 			and(pay_condition = '회사내규에따름' or pay_condition > #{salary})
 		</if>
 		
-		<if test="age != 0 and age !=''">
+		<if test="age != 0 and age !='' and age != 'null'">
 			and applicant_age_start <![CDATA[<=]]> #{age}
 			and applicant_age_end #{age}
 		</if>
 		
-		<if test="gender != null and gender !=0">
+		<if test="gender != null and gender !=0 and gender !='null'">
 			and gender_cut = #{gender}
 		</if>
 		
-		<if test="subway != null and subway != ''">
+		<if test="subway != null and subway != '' and subway != 'null'">
 			and nearby_station LIKE '%'||#{subway}||'%'
 		</if>
 		
-		<if test="licence != null and licence != ''">
+		<if test="licence != null and licence != '' and licence != 'null'">
 			and CERTIFICATE LIKE '%'||#{licence}||'%'
 		</if>
 		
-		<if test="major != null and major[0] != ''">		
+		<if test="major != null and major[0] != '' and major[0] != 'null'">		
 			and 
 			<foreach collection="major" item="item" open="(" close=")" separator="or">
 				major like '%'||#{item}||'%'			
 			</foreach>
 		</if>
 		
-		<if test="position != null and position[0] != ''">
+		<if test="position != null and position[0] != '' and position[0] != 'null'">
 			and 
 			<foreach collection="position" item="item" open="(" close=")" separator=" or ">
 			 	position like '%'||#{item}||'%'	
 			</foreach>
 		</if>
 		
-		<if test="preference != null and preference[0] != ''">
+		<if test="preference != null and preference[0] != '' and preference[0] != 'null'">
 			 AND
 			<foreach collection="preference" item="item" open="(" close=")" separator="OR">			
 				EMPLOYMENT_PREFERENCE = #{item}
 			</foreach>
 		</if>
 		
-		<if test="emp_type != null and emp_type[0] != ''">
+		<if test="emp_type != null and emp_type[0] != '' and emp_type[0] != 'null'">
 			and 
 			<foreach collection="emp_type" item="item" open="(" close=")" separator="or">			 
 				EMPLOYMENT_TYPE like '%'||#{item}||'%'
 			</foreach>
 		</if>
 		
-		<if test="work_day != null and work_day[0] != ''">
+		<if test="work_day != null and work_day[0] != '' and work_day[0] != 'null'">
 			and 
 			<foreach collection="work_day" item="item" open="(" close=")" separator="or">
 				work_day like '%'||#{item}||'%'	
 			</foreach>
 		</if>
 		
-		<if test="welfare != null and welfare[0] != ''">
+		<if test="welfare != null and welfare[0] != '' and welfare[0] != 'null'">
 			and 
 			<foreach collection="welfare" item="item" open="(" close=")" separator="or">
 				welfare like '%'||#{item}||'%'	

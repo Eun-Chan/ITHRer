@@ -22,7 +22,7 @@ public class Career implements Serializable{
 	private String department;
 	private String hiredDate;
 	private String retiredDate;
-	private boolean buttonWorking;
+	private String[] buttonWorking;
 	private String jobposition;
 	private String job;
 	private String income0;
