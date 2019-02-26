@@ -29,6 +29,5 @@ public class Education implements Serializable{
 	private double totalscore;
 	private String senierproject;
 	private String degree;
-	private String secmajor;
-	
+	private String secmajor;	
 }
