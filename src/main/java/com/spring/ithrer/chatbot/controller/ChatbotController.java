@@ -52,8 +52,6 @@ public class ChatbotController {
 			msg.setText(req.getContent());
 		}
 		
-		else if(req.getContent().equals(""))
-		
 		// 사용자가 최근 공고를 클릭했을 때
 		else if(req.getContent().equals("최근 공고")) {
 						
@@ -78,7 +76,7 @@ public class ChatbotController {
 					    + "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n";
 			}
 			
-			res.setKeyboard(new Keyboard(btn_init(0)));
+			res.setKeyboard(new Keyboard(btn_init(1)));
 			msg.setText(result);
 		}
 		
@@ -87,7 +85,27 @@ public class ChatbotController {
 			
 			String result = "";
 			// 인기 공고 6개 가져오기
+			List<Recruitment> recruitment = indexService.selectTopListRecruitment("");
 			
+			for(int i = 0 ; i < recruitment.size(); i++) {
+				Recruitment rec = recruitment.get(i);
+				result += String.valueOf(i+1)+". " + rec.getCompName() + "\n"
+					    + "모집분야 : " + rec.getRecruitmentTitle() + "\n\n"
+					    + "지원자격" + "\n"
+					    + "(하트뿅)(외계인녀)(윙크)\n"
+					    + "경력 : " + rec.getCareer() + "\n"
+					    + "고용형태 : " + rec.getEmploymentType() + "\n"
+					    + "학력 : " + rec.getEducation() + "\n"
+					    + "급여 : " + rec.getPayCondition() + "\n"
+					    + "우대 : " + rec.getEmploymentPreference() + "\n"
+					    + "지역 : " + rec.getLocation() + "\n"
+					    + "접수 시작일 : " + rec.getOpeningDate() + "\n"
+					    + "접수 마감일 : " + rec.getClosingDate() + "\n"
+					    + "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n";
+			}
+			
+			res.setKeyboard(new Keyboard(btn_init(1)));
+			msg.setText(result);
 		}
 		
 		// 채용 캘린더
