@@ -1,15 +1,18 @@
 package com.spring.ithrer.resume.controller;
 
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.resume.model.service.ResumeService;
-import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Preference;
 
 
 @Controller
@@ -78,16 +81,21 @@ public class ResumeController {
 	//	mav.setViewName("redirect:/");
 	//	return mav;	
 	//}
+	@RequestMapping(value="/resume/saveResume.do")
+	public ModelAndView saveResume(ModelAndView mav, Preference preference) {
+		logger.info("preference="+preference);
+		mav.setViewName("resume/resume");
+		return mav;	
+	}
+	@RequestMapping(value="/resume/certificateList.do")
+	public Map<String,String> certificateList(@RequestParam("certName") String certName) {
+		
+		return null;
+	};
 	//@RequestMapping(value="/resume/saveResume.do")
-	//public ModelAndView saveResume(ModelAndView mav,Preference preference) {
-	//	logger.info("preference="+preference);
+	//public ModelAndView saveResume(ModelAndView mav,Career career) {
+	//	logger.info("career="+career);
 	//	mav.setViewName("redirect:/");
 	//	return mav;	
 	//}
-	@RequestMapping(value="/resume/saveResume.do")
-	public ModelAndView saveResume(ModelAndView mav,Career career) {
-		logger.info("career="+career);
-		mav.setViewName("redirect:/");
-		return mav;	
-	}
 }
