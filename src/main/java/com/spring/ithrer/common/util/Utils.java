@@ -65,6 +65,7 @@ public class Utils {
 					map.put("salary", getTagValue("salary",eElement));
 					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
 					map.put("expiration", getTagValue("expiration-timestamp", eElement));
+					map.put("location", getTagValue("location", eElement)); //근무지역 
 					
 					String endTime = getTagValue("expiration-timestamp", eElement);
 					int endTimes = Integer.parseInt(endTime)/(24*60*60*1000);

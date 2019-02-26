@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +46,8 @@ import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
+
+import net.sf.json.JSONArray;
 
 @RestController
 public class IndexController {
@@ -70,8 +74,12 @@ public class IndexController {
       
       //임시 셀렉트 원
 	/* Recruitment rc = indexService.selectOneRecruitment(2); */
-      //top6 셀렉트 리스트
+      // 공고 빠른 순서 6 셀렉트 리스트
       List<Recruitment> rc = indexService.selectListRecruitment(memberId);
+      
+      // 지원자 많은 공곡 6 리스트
+      List<Recruitment> topRc = indexService.selectTopListRecruitment(memberId);
+      
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String sysdate1 = format.format(sysdate);
       Date sysdate2 = format.parse(sysdate1);
@@ -81,15 +89,19 @@ public class IndexController {
     	  /*cp = indexService.selectOneCompany(rc.get(i).getCompId());*/ //기업 아이디를 바탕으로 회사정보를 가져옴
     	  date = format.parse(rc.get(i).getClosingDate());    	  
     	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
-    	  System.out.println("endTime = "+endTime);
     	  rc.get(i).setEndTime(endTime);
-    	  System.out.println(rc.get(i).getEndTime());
+
+
+    	  date = format.parse(topRc.get(i).getClosingDate());    	  
+    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+    	  topRc.get(i).setEndTime(endTime);
       }
      
       //공고 끝나는 날짜 가져오기
       
       //오늘날짜 가져오기
       mav.addObject("rc", rc);
+      mav.addObject("topRc", topRc);
       mav.addObject("jobList", jobList);
       mav.setViewName("index");
       return mav;
@@ -258,7 +270,26 @@ public class IndexController {
 	   String[] preference = request.getParameterValues("preference");
 	   String[] emp_type = request.getParameterValues("emp_type");
 	   String[] work_day = request.getParameterValues("work_day");
-	      
+	   String[] welfare = request.getParameterValues("welfare");
+	   if(major != null) {
+		   major = major[0].split(",");
+	   }
+	   if(position != null) {
+		   position = position[0].split(",");
+	   }
+	   if(preference != null) {
+		   preference = preference[0].split(",");
+	   }
+	   if(emp_type != null) {
+		   emp_type = emp_type[0].split(",");
+	   }
+	   if(work_day != null) {
+		   work_day = work_day[0].split(",");
+	   }
+	   if(welfare != null) {
+		   welfare = welfare[0].split(",");
+	   }
+	   
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("searchKeyword", searchKeyWord);
 	   map.put("locationCode", locations);
@@ -272,6 +303,7 @@ public class IndexController {
 	   map.put("preference", preference);
 	   map.put("emp_type", emp_type);
 	   map.put("work_day", work_day);
+	   map.put("welfare", welfare);
 	   
 	   logger.debug("map: "+map);
 	   
@@ -301,6 +333,9 @@ public class IndexController {
 	   System.out.println(rc);
 	   
 	   Company com = indexService.selectOneCompany(rc.getCompId());
+	   
+	   //해당 회사에 아이디로 지원한 적이 있는지 검사하는 쿼리
+	   int count = indexService.selectCountCompanyApplication(map);
 	 
 	   
 	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
@@ -314,6 +349,7 @@ public class IndexController {
 	   }
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
+	   mav.addObject("count", count);
 	   mav.setViewName("/notice/ithrerNoticeDetail");
 	   return mav;
    }
@@ -442,5 +478,59 @@ public class IndexController {
 		}
 	   }
 	   
+   }
+   
+   //맴버 전화번호 , 이메일 수정
+   @RequestMapping("/index/memberUpdate.ithrer")
+   @ResponseBody
+   public void updateMember(HttpServletResponse res,@RequestBody Map<String, Object> param ,HttpServletRequest req) {
+	   int result = indexService.updateMember(param);
+	   Gson gson = new Gson();
+	   if(result==1) {
+		   HttpSession session = req.getSession(true);
+		   Member member = (Member)session.getAttribute("member");
+		   member.setEmail((String)param.get("email"));
+		   member.setPhone((String)param.get("phone"));
+		   session.setAttribute("member", member);
+		   param.putIfAbsent("result", result);
+		   try {
+			gson.toJson(param,res.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }
+	   
+
+   }
+   
+   //이력서 제출
+   @RequestMapping("/index/resumeSubmit.ithrer")
+   public void resumeSubmit(@RequestParam("memberId")String memberId,
+		   @RequestParam("compName") String compName,
+		   @RequestParam("recruitmentNo") int recruitmentNo,
+		   HttpServletResponse res) {
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("memberId", memberId);
+	   map.put("compName", compName);
+	   map.put("recruitmentNo", recruitmentNo);
+	   map.put("resumeNo", 1);
+	   int result = indexService.insertCompanyApplication(map);
+	   Gson gson = new Gson();
+	   if(result==1) {
+		   try {
+			   gson.toJson(result,res.getWriter());
+		   } catch (JsonIOException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		   } catch (IOException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		   }		   
+	   }
+
    }
 } 

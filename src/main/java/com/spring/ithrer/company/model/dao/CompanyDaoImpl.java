@@ -12,6 +12,7 @@ import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
+import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
 import com.spring.ithrer.user.model.vo.Member;
@@ -117,6 +118,21 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<Favorites> selectFavoriteAppList(String compId) {
 		return sqlSession.selectList("company.selectFavoriteAppList",compId);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtList(String compId) {
+		return sqlSession.selectList("company.selectRcrtList",compId);
+	}
+
+	@Override
+	public List<String> selectApplicantIdList(int recruitmentNo) {
+		return sqlSession.selectList("company.selectApplicantIdList",recruitmentNo);
+	}
+
+	@Override
+	public Member selectApplicantWithAllInfo(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("company.selectApplicantWithAllInfo",paramMap);
 	}
 
 }

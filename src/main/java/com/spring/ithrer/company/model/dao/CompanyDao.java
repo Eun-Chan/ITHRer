@@ -7,6 +7,7 @@ import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Location;
+import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
 import com.spring.ithrer.user.model.vo.Member;
@@ -50,5 +51,11 @@ public interface CompanyDao {
 	int insertFavorite(Map<String, Object> map);
 
 	List<Favorites> selectFavoriteAppList(String compId);
+
+	List<Recruitment> selectRcrtList(String compId);
+
+	List<String> selectApplicantIdList(int recruitmentNo);
+
+	Member selectApplicantWithAllInfo(Map<String, Object> paramMap);
 
 }

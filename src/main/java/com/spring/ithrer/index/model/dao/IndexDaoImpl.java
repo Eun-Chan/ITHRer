@@ -73,4 +73,24 @@ public class IndexDaoImpl implements IndexDao{
 	public int insertPortFolio(PortFolio pf) {
 		return sqlSession.insert("index.insertPortFolio", pf);
 	}
+
+	@Override
+	public int updateMember(Map<String, Object> param) {
+		return sqlSession.update("index.updateMember",param);
+	}
+
+	@Override
+	public int insertCompanyApplication(Map<String, Object> map) {
+		return sqlSession.insert("index.insertCompanyApplication", map);
+	}
+
+	@Override
+	public int selectCountCompanyApplication(Map<String, Object> map) {
+		return sqlSession.selectOne("index.selectCountCompanyApplication", map);
+	}
+
+	@Override
+	public List<Recruitment> selectTopListRecruitment(String memberId) {
+		return sqlSession.selectList("index.selectTopListRecruitment",memberId);
+	}
 }
