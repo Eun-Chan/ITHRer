@@ -1221,14 +1221,14 @@
 	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
 	               <c:if test="${empty member }">
-	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		<button class="star"><img src="${pageContext.request.contextPath}/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               </c:if>
 	               <c:if test="${not empty member }">
 	               		<c:if test="${list.favoritesCount == 1 }">
-	               			<button class="star"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath}/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               		<c:if test="${list.favoritesCount ==0 }">
-	               			<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath}/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
 	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
@@ -1248,14 +1248,14 @@
 	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
 	               <c:if test="${empty member }">
-	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               </c:if>
 	               <c:if test="${not empty member }">
 	               		<c:if test="${toplist.favoritesCount == 1 }">
-	               			<button class="star"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               		<c:if test="${toplist.favoritesCount ==0 }">
-	               			<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
 	               <input type="hidden" value="${toplist.recruitmentNo }" id="hiddenRecruitNo" />
