@@ -34,4 +34,11 @@ public interface BoardDao {
 
 	int countPassList(String searchOption, String keyword);
 
+	//int anonyBoardDelete(int no);
+
+	
+	int anonyBoardDelete(int no);
+
+	int passBoardDelete(int passBoardNo);
+
 }

@@ -145,15 +145,15 @@
 		<div class="col-sm-2">
 		<c:if test="${empty member }">
 			<button class="detailStar">
-				<img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;">
+				<img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;">
 			</button>
 		</c:if>
 		<c:if test="${not empty member }">
        		<c:if test="${rc.favoritesCount == 1 }">
-       			<button class="detailStar"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+       			<button class="detailStar"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
        		</c:if>
        		<c:if test="${rc.favoritesCount ==0 }">
-       			<button class="detailStar"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+       			<button class="detailStar"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
        		</c:if>
 	   </c:if>
 		</div>
@@ -204,7 +204,7 @@
 				<dt>산업(업종)</dt>
 				<dd>${com.category }</dd>
 				<dt>설립년도</dt>
-				<dd>${com.enrollDate }</dd>
+				<dd>${com.dateOfEstablishment }</dd>
 				<dt>기업형태</dt>
 				<dd>${com.bussinessScale }</dd>
 			</dl>
@@ -502,7 +502,7 @@ $("#apply").on("click",function(){
 		 alert("해당회사에 지원한 이력이 존재합니다.");
 		 return;
 	 }
-	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer","apply","width=570, height=600, resizable = no, scrollbars = no");
+	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer?recruitmentNo=${rc.recruitmentNo}","apply","width=570, height=600, resizable = no, scrollbars = no");
 });
 $(".detailStar").on("click",function(){
 	var recNo = "${rc.recruitmentNo}";

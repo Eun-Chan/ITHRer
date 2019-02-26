@@ -227,7 +227,7 @@ $(function(){
 			locationCode += location_code[i]+",";
 		}
 
-
+		 $(".locationKeyWordSelected").show();
 		 $(".hiddenLocationCode").val(locationCode);
 		 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
 		 $(".placeholder").hide();
@@ -280,11 +280,16 @@ $(function(){
 		for(var i = 0 ; i<location_code.length ; i++){
 			locationCode += location_code[i]+",";
 		}
-
-
-		 $(".hiddenLocationCode").val(locationCode);
-	 	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
-		 $(".placeholder").hide();
+		console.log(location_code.length);
+		if(location_code.length!=0){
+			$(".locationKeyWordSelected").show();
+			$(".hiddenLocationCode").val(locationCode);
+			$(".locationKeyWordSelected").text((location_name.length)+" "+text);
+			$(".placeholder").hide();			
+		}else if(location_code.length==0){
+			$(".locationKeyWordSelected").hide();
+			$(".placeholder").show();
+		}
 		
 	});
 	//지역 초기화 버튼
@@ -303,7 +308,13 @@ $(function(){
 				text+=location_name[i]+",";
 			}
 		}
-		$(".locationKeyWordSelected").text((location_name.length)+" "+text);
+		if(location_name.length!=0){
+			$(".locationKeyWordSelected").show();
+			$(".locationKeyWordSelected").text((location_name.length)+" "+text);			
+		}else if(location_name.length==0){
+			$(".locationKeyWordSelected").hide();
+			$(".placeholder").show();
+		}
 	});
 
 })
