@@ -268,7 +268,7 @@ public class UserController {
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*10);
-			session.setAttribute("company", company);
+			session.setAttribute("companyLoggedIn", company);
 			
 			test.put("result" , "true");
 		}
