@@ -27,14 +27,6 @@ $(function(){
 		location.href = "${pageContext.request.contextPath}/board/anonyBoardView.do?no="+anonyBoardNo;
 	});
 });
-
-$(function(){
-	$("#btn-search").on("click", function(){
-		$("#myFrm").submit();
-		
-	});
-});
-
 </script>
 
 </head>

@@ -134,5 +134,22 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectOne("passboard.countPassList", map);
 	}
 	
+	@Override
+	public int anonyBoardDelete(int no) {
+		int result = sqlSession.delete("anonyboard.anonyBoardDelete", no);
+		
+		return result;
+	}
+
+	@Override
+	public int passBoardDelete(int passBoardNo) {
+		int result = sqlSession.delete("passboard.passBoardDelete", passBoardNo);
+		
+		return result;
+	}
+
+	
+
+	
 	
 }

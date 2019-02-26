@@ -4,13 +4,52 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="com.spring.ithrer.board.model.vo.PassBoard" %>
+<%@ page import="com.spring.ithrer.user.model.vo.*" %>
+<%
+	// 개인 회원 세션에 있는 정보 가져오기
+	Member member = (Member)session.getAttribute("member");
+	PassBoard passBoard = (PassBoard)request.getAttribute("passBoard");
+%>	
 <jsp:include page="/WEB-INF/views/common/header.jsp">
-	<jsp:param value="익명게시판" name="pageTitle"/>
+	<jsp:param value="합소서 게시판" name="pageTitle"/>
 </jsp:include>
 	<style>
 		div#board-container{width:1000px; margin:0 auto; text-align:center;}
 		div#board-container{margin-top:40px;}		
 	</style>
+<script>
+
+function fn_goBoardDelete(){
+	var memberId = $("#userId").text();
+	var passBoardWriter = $("#writer").val();
+	
+/* 	console.log(memberId);
+	console.log(passBoardWriter); */
+	
+	if(memberId==passBoardWriter){
+		$.ajax({
+			url: "${pageContext.request.contextPath}/board/passBoardDelete?passBoardNo=${passBoard.passBoardNo}",
+		  	success : function(data){
+		  		console.log(data);
+			if(data==0){
+				alert("게시글 삭제 실패.");
+				location.href = "${pageContext.request.contextPath}/board/passBoardList";
+			}
+			else if(data==1){
+				alert("게시글 삭제에 성공하였습니다.");
+				location.href = "${pageContext.request.contextPath}/board/passBoardList";
+			}
+			},
+			error: function(){
+				console.log("ajax에러 발생");
+			}
+		});
+  	}
+	else if(memberId==null){
+		alert("게시글 삭제 실패. 로그인후 이용해주세요.");
+	}
+}
+</script>
 
 <!-- 부트스트랩관련 라이브러리 -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -30,7 +69,7 @@
 			<th>번호</th>
 			<td>${passBoard.passBoardNo}</td>
 			<th>작성자</th>
-			<td>${memberLoggedIn.memberId}</td>
+			<td id="userId">${member.memberId}</td>
 			<th>조회수</th>
 			<td>${passBoard.readCount}</td>
 		</tr>
@@ -46,15 +85,12 @@
 		<tr>
             <td colspan="6" class="text-center">
 			  <input type="button" class="btn btn-warning" value="수정하기" onclick="">          
-			  <input type="button" class="btn btn-danger" value="삭제하기" onclick="">
+			  <input type="button" class="btn btn-danger" value="삭제하기" onclick="fn_goBoardDelete();">
 			  <input type="button" class="btn btn-primary" value="목록보기" onclick="location.href='passBoardList'">
             </td>
         </tr>
 		</div>
-		
-<%
-	PassBoard passBoard = (PassBoard)request.getAttribute("passBoard");
+		<input type="hidden" id="writer" value="${passBoard.passBoardWriter}" />
 
-%>	
  	 </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
