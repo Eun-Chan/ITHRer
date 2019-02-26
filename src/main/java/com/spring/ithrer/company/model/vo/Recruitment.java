@@ -61,5 +61,8 @@ public class Recruitment implements Serializable {
 	
 	//지원자 수 저장용
 	private int count;
+	
+	//회사에 지원한적있는지 없는지 카운트 해당회원이 지원햇으면1 안햇으면0
+	private int applyCount;
 
 }

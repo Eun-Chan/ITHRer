@@ -204,7 +204,7 @@
 				<dt>산업(업종)</dt>
 				<dd>${com.category }</dd>
 				<dt>설립년도</dt>
-				<dd>${com.enrollDate }</dd>
+				<dd>${com.dateOfEstablishment }</dd>
 				<dt>기업형태</dt>
 				<dd>${com.bussinessScale }</dd>
 			</dl>
@@ -502,7 +502,7 @@ $("#apply").on("click",function(){
 		 alert("해당회사에 지원한 이력이 존재합니다.");
 		 return;
 	 }
-	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer","apply","width=570, height=600, resizable = no, scrollbars = no");
+	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer?recruitmentNo=${rc.recruitmentNo}","apply","width=570, height=600, resizable = no, scrollbars = no");
 });
 $(".detailStar").on("click",function(){
 	var recNo = "${rc.recruitmentNo}";

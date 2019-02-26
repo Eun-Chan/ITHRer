@@ -139,8 +139,8 @@
 		<span class="headerContent">입사지원</span>
 	</div>
 		<div class="applyCompanytitle">
-			<span class="applyCompanyName"><img src="${pageContext.request.contextPath }/resources/images/company.svg" alt="" style="width: 30px"/></span>
-			<span class="applyRctitle"></span>
+			<span class="applyCompanyName"><img src="${pageContext.request.contextPath }/resources/images/company.svg" alt="" style="width: 30px"/>${com.compName }</span>
+			<span class="applyRctitle">${rc.recruitmentTitle }</span>
 		</div>
 		<div class="row main">
 			<div class="row content">
@@ -172,8 +172,8 @@
 			</div>
 			<button type="button" class="btn btn-success applybutton">지원 하기</button>	
 			 <input type="hidden" name="memberId" value="${member.memberId }"/>
-		     <input type="hidden" name="recruitmentNo" />
-		     <input type="hidden" name="compName" />
+		     <input type="hidden" name="recruitmentNo" value="${rc.recruitmentNo }" />
+		     <input type="hidden" name="compName" value="${com.compName }" />
 		</div>
 		<div id="myModal" class="modal">
 	     <div class="modal-dialog">
@@ -228,18 +228,14 @@ $(function(){
 	var phone3 = "${member.phone}".substr(9);
 	var phone = phone1+"-"+phone2+"-"+phone3;
 	var email = "${member.email}".split("@");
-	var compName = $(".noticeCompanyName", opener.document).html();
-	$(".applyCompanyName").append(compName);
-	var rcContent = $(".rcContent",opener.document).html();
+
 	
-	$(".applyRctitle").html(rcContent);
 	$(".memberPhone").append(phone);
 	$("input[name=phone2]").val(phone2);
 	$("input[name=phone3]").val(phone3);
 	$("input[name=email1]").val(email[0]);
 	$("input[name=email2]").val(email[1]);
-	$("input[name=recruitmentNo]").val($("#hiddenRNo",opener.document).val());
-	$("input[name=compName]").val($("#hiddenCName",opener.document).val());
+
 });
 
 

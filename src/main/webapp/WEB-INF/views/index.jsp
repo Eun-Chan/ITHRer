@@ -1218,6 +1218,7 @@
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
 	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
 	                  <div class="endDate">D-${list.endTime }</div>
+	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
 	               <c:if test="${empty member }">
 	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
@@ -1232,6 +1233,7 @@
 	               </c:if>
 	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
 	            	<input type="hidden" value="${list.compId }" id="hiddenCompId" />
+	            	<input type="hidden" value="${list.applyCount }" />
 	            </li>
 	         </c:forEach>   
 	         </ul>
@@ -1243,6 +1245,7 @@
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${toplist.compName }</strong>
 	                  <span class="recruitTitle">${toplist.recruitmentTitle }</span>
 	                  <div class="endDate">D-${toplist.endTime }</div>
+	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
 	               <c:if test="${empty member }">
 	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
@@ -1255,6 +1258,9 @@
 	               			<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
+	               <input type="hidden" value="${toplist.recruitmentNo }" id="hiddenRecruitNo" />
+	            	<input type="hidden" value="${toplist.compId }" id="hiddenCompId" />
+	            	<input type="hidden" value="${toplist.applyCount }" id="hiddenApplyCount"/>
 	            </li>
 	            </c:forEach>
 	         </ul>
@@ -1339,6 +1345,23 @@ $(".star").on("click",function(){
 				}
 		});		 
 	 }
+});
+$(".applyButton").on("click",function(e){
+	var recNo = $(this).parent().siblings("#hiddenRecruitNo").val();
+	var hiddenApplyCount = $("#hiddenApplyCount").val();
+	e.stopPropagation();
+	 if(${empty member}){
+			alert("로그인 후 이용 해 주세용");
+			return;
+	 } if(hiddenApplyCount==1){
+		 alert("해당회사에 지원한 이력이 존재합니다.");
+		 return;
+	 }
+/* 	 if("${count}"==1){
+		 alert("해당회사에 지원한 이력이 존재합니다.");
+		 return;
+	 } */
+	 window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer?recruitmentNo="+recNo,"apply","width=570, height=600, resizable = no, scrollbars = no");
 });
 </script>
 
