@@ -204,7 +204,7 @@
 				<dt>산업(업종)</dt>
 				<dd>${com.category }</dd>
 				<dt>설립년도</dt>
-				<dd>${com.enrollDate }</dd>
+				<dd>${com.dateOfEstablishment }</dd>
 				<dt>기업형태</dt>
 				<dd>${com.bussinessScale }</dd>
 			</dl>
@@ -289,6 +289,8 @@
 	<div class="row main" id="map" style="height: 400px;">
 
 	</div>
+	<input type="hidden" value="${rc.recruitmentNo }" id="hiddenRNo"/>
+	<input type="hidden" value="${com.compName }" id="hiddenCName"/>
 </div>
 <script>
 /* 	var time = '${rc.closingDate}';
@@ -492,7 +494,15 @@ function genderChart() {
 	chart.draw(data, options);
 }
 $("#apply").on("click",function(){
-	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer","apply","width=570, height=600, resizable = no, scrollbars = no");
+	 if(${empty member}){
+			alert("로그인 후 이용 해 주세용");
+			return;
+	 }
+	 if("${count}"==1){
+		 alert("해당회사에 지원한 이력이 존재합니다.");
+		 return;
+	 }
+	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer?recruitmentNo=${rc.recruitmentNo}","apply","width=570, height=600, resizable = no, scrollbars = no");
 });
 $(".detailStar").on("click",function(){
 	var recNo = "${rc.recruitmentNo}";
@@ -501,7 +511,7 @@ $(".detailStar").on("click",function(){
 	 if(${empty member}){
 		alert("로그인 후 이용 해 주세용");
 		return;
- 	}
+ 		}
 	 else{		 
 		$.ajax({
 				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,

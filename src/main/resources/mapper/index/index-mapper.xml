@@ -26,7 +26,10 @@
 		insert into area values(#{code},#{name})
 	</insert>
 	<select id="selectListRecruitment" resultType="recruitment">
-		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount from recruitment s order by recruitment_no desc )t where rownum between 1 and 6
+		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
+		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount ,
+		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
+		from recruitment s order by recruitment_no desc )t where rownum between 1 and 6
 	</select>
 	<select id="selectOneFavorites" parameterType="map" resultType="favorites">
 		select * from favorites where member_id = #{memberId} and recruitment_no = #{recNo} and select_no = 0
@@ -39,10 +42,11 @@
 	</delete>
 	
 	<!-- 상세조건으로 하는 검색 -->
+	
 	<select id="selectListSearchIthrer" parameterType="map" resultType="map">
-		select * from recruitment join area using(location_code) where recruitment_title like '%'||#{searchKeyword}||'%'
+		select * from recruitment join area using(location_code) join company c using(comp_id) where recruitment_title like '%'||#{searchKeyword}||'%'
 		
-		<if test="locationCode != null and locationCode != ''">
+		<if test="locationCode != null and locationCode[0] != '' and locationCode[0] != 'null'" >
 			and (location_code in
 			<foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
 				#{item}		
@@ -54,59 +58,66 @@
 			)
 		</if>
 		
-		<if test="salary != null and salary !=''">
-			and(pay_condition = '회사내규를따름' or pay_condition > #{salary})
+		<if test="salary != null and salary !='' and salary !='null'">
+			and(pay_condition = '회사내규에따름' or pay_condition > #{salary})
 		</if>
 		
-		<if test="age != 0 and age !=''">
+		<if test="age != 0 and age !='' and age != 'null'">
 			and applicant_age_start <![CDATA[<=]]> #{age}
 			and applicant_age_end #{age}
 		</if>
 		
-		<if test="gender != null and gender !=''">
+		<if test="gender != null and gender !=0 and gender !='null'">
 			and gender_cut = #{gender}
 		</if>
 		
-		<if test="subway != null and subway != ''">
+		<if test="subway != null and subway != '' and subway != 'null'">
 			and nearby_station LIKE '%'||#{subway}||'%'
 		</if>
 		
-		<if test="licence != null and licence != ''">
+		<if test="licence != null and licence != '' and licence != 'null'">
 			and CERTIFICATE LIKE '%'||#{licence}||'%'
 		</if>
 		
-		<if test="major != null and major[0] != 'undefined'">		
+		<if test="major != null and major[0] != '' and major[0] != 'null'">		
 			and 
-			<foreach collection="major" item="item" open="(" close=")" separator=" or ">
+			<foreach collection="major" item="item" open="(" close=")" separator="or">
 				major like '%'||#{item}||'%'			
 			</foreach>
 		</if>
 		
-		<if test="position != null and position[0] != 'undefined'">
+		<if test="position != null and position[0] != '' and position[0] != 'null'">
 			and 
 			<foreach collection="position" item="item" open="(" close=")" separator=" or ">
 			 	position like '%'||#{item}||'%'	
 			</foreach>
 		</if>
 		
-		<if test="preference != null and preference[0] != 'undefined'">
-			and 
-			<foreach collection="preference" item="item" open="(" close=")" separator=" or ">			
-				EMPLOYMENT_PREFERENCE like '%'||#{item}||'%'		
+		<if test="preference != null and preference[0] != '' and preference[0] != 'null'">
+			 AND
+			<foreach collection="preference" item="item" open="(" close=")" separator="OR">			
+				EMPLOYMENT_PREFERENCE = #{item}
 			</foreach>
 		</if>
 		
-		<if test="emp_type != null and emp_type[0] != 'undefined'">
+		<if test="emp_type != null and emp_type[0] != '' and emp_type[0] != 'null'">
 			and 
-			<foreach collection="emp_type" item="item" open="(" close=")" separator=" or ">			 
+			<foreach collection="emp_type" item="item" open="(" close=")" separator="or">			 
 				EMPLOYMENT_TYPE like '%'||#{item}||'%'
 			</foreach>
 		</if>
 		
-		<if test="work_day != null and work_day[0] != 'undefined'">
+		<if test="work_day != null and work_day[0] != '' and work_day[0] != 'null'">
 			and 
-			<foreach collection="work_day" item="item" open="(" close=")" separator=" or ">
+			<foreach collection="work_day" item="item" open="(" close=")" separator="or">
 				work_day like '%'||#{item}||'%'	
+			</foreach>
+		</if>
+		
+		<if test="welfare != null and welfare[0] != '' and welfare[0] != 'null'">
+			and 
+			<foreach collection="welfare" item="item" open="(" close=")" separator="or">
+				welfare like '%'||#{item}||'%'	
 			</foreach>
 		</if>
 		
@@ -115,4 +126,20 @@
 	<insert id="insertPortFolio" parameterType="portfolio">
 		insert into potfolio values(null,#{pOriginalFileName},#{pRenamedFileName},'ikso2000',seq_potfolio_no.nextval)
 	</insert>
+	<update id="updateMember" parameterType="map">
+		update member set email = #{email}, phone =#{phone} where member_id=#{memberId}
+	</update>
+	<insert id="insertCompanyApplication" parameterType="map">
+		insert into companyapplication values(#{memberId},#{recruitmentNo},default,#{compId},seq_companyapplication_no.nextval,default,#{resumeNo})
+	</insert>
+	<select id="selectCountCompanyApplication" parameterType="map" resultType="_int">
+		select count(*) count from companyapplication where recruitment_no=#{recNo} and member_id = #{memberId}
+	</select>
+	<select id="selectTopListRecruitment" parameterType="map" resultType="recruitment">
+		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
+		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount,
+		(select count(*) from companyapplication where recruitment_no = s.recruitment_no ) count ,
+		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
+		from recruitment s order by count desc )t where rownum between 1 and 6
+	</select>
 </mapper>

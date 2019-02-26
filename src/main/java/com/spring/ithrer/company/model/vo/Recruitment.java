@@ -48,6 +48,7 @@ public class Recruitment implements Serializable {
 	private String nearbyStation; //인근전철역
 	private String welfare; //복리후생
 	
+	private int noOfApplicant; // 해당 채용공고에 지원한 지원자수
 	
 	//서브쿼리용 copmName
 	private String compName;
@@ -57,5 +58,11 @@ public class Recruitment implements Serializable {
 	
 	//데이터 저장용 D-day 타임
 	private int endTime;
+	
+	//지원자 수 저장용
+	private int count;
+	
+	//회사에 지원한적있는지 없는지 카운트 해당회원이 지원햇으면1 안햇으면0
+	private int applyCount;
 
 }

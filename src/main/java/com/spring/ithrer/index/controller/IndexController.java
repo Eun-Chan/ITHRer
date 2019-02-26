@@ -14,6 +14,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.log4j.Logger;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,6 +46,8 @@ import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.user.model.vo.Member;
+
+import net.sf.json.JSONArray;
 
 @RestController
 public class IndexController {
@@ -70,8 +74,12 @@ public class IndexController {
       
       //임시 셀렉트 원
 	/* Recruitment rc = indexService.selectOneRecruitment(2); */
-      //top6 셀렉트 리스트
+      // 공고 빠른 순서 6 셀렉트 리스트
       List<Recruitment> rc = indexService.selectListRecruitment(memberId);
+      
+      // 지원자 많은 공곡 6 리스트
+      List<Recruitment> topRc = indexService.selectTopListRecruitment(memberId);
+      
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String sysdate1 = format.format(sysdate);
       Date sysdate2 = format.parse(sysdate1);
@@ -81,15 +89,19 @@ public class IndexController {
     	  /*cp = indexService.selectOneCompany(rc.get(i).getCompId());*/ //기업 아이디를 바탕으로 회사정보를 가져옴
     	  date = format.parse(rc.get(i).getClosingDate());    	  
     	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
-    	  System.out.println("endTime = "+endTime);
     	  rc.get(i).setEndTime(endTime);
-    	  System.out.println(rc.get(i).getEndTime());
+
+
+    	  date = format.parse(topRc.get(i).getClosingDate());    	  
+    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+    	  topRc.get(i).setEndTime(endTime);
       }
      
       //공고 끝나는 날짜 가져오기
       
       //오늘날짜 가져오기
       mav.addObject("rc", rc);
+      mav.addObject("topRc", topRc);
       mav.addObject("jobList", jobList);
       mav.setViewName("index");
       return mav;
@@ -168,20 +180,23 @@ public class IndexController {
    
    @GetMapping("/searchNotice.ithrer")
    public ModelAndView searchNotice(@RequestParam("searchKeyWord") String searchKeyWord,@RequestParam("location") String location,
-		   							@RequestParam(value="cPage", defaultValue="0") int cPage,
 		   							ModelAndView mav, HttpServletRequest request) {
 	   
 	   //사람인 api에서  리스트를 불러오는 부분
-	   
-	   System.out.println("location="+location);
+	   int cPage;
+	   try {
+		   cPage = Integer.parseInt(request.getParameter("cPage"));
+	   }catch(NumberFormatException e) {
+		   cPage = 1;
+	   }
 	   String [] locations = location.split(",");
 	   String loc_cd ="";
 	   for(int i = 0 ; i<locations.length ; i++) {
 		   System.out.println(locations[i]);
 		   loc_cd += locations[i]+"&";
 	   }
-	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&loc_cd="+loc_cd+"&count=10&start="+cPage;
-	   logger.debug("url="+url);
+	   String url = "http://api.saramin.co.kr/job-search?job_category=4&keywords="+searchKeyWord+"&loc_cd="+loc_cd+"&count=10&start="+(cPage-1);
+	   //logger.debug("url="+url);
 	   List<Map<String, String>> tempList = Utils.apiList(url);
 	   
 	   List<Map<String, String>> jobList = new ArrayList<Map<String,String>>();
@@ -189,56 +204,10 @@ public class IndexController {
 	   for(int i = 1; i < tempList.size(); i++) {
 		   jobList.add(tempList.get(i));
 	   }
-	   logger.debug(jobList);
+	   //logger.debug(jobList);
 	   mav.addObject("totlaContents",totalContents);
 	   mav.addObject("jobList", jobList);
 	   mav.addObject("searchKeyWord", searchKeyWord);
-	   
-	   //페이징
-	   
-	   	int numPerPage = 10;
-	    int totalPages = (int)Math.ceil(((double)totalContents/numPerPage));
-	    int pageBarSize = 5;
-	    
-	    int startPage = ((cPage+1 - 1) / pageBarSize) * pageBarSize + 1;
-	    int endPage = startPage + pageBarSize - 1;
-	       
-	    int pageNo = startPage;
-	    
-	    // bootstrap 처리위해 리스트로 처리
-	    String pageBar = "<ul class='pagination'>";
-	       
-	    // [이전] 이전
-	    if(pageNo == 1) {
-	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
-	    }
-	    else {
-	       pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage=" + (pageNo-1)
-	                + "'>이전</a></li>";
-	    }
-	    
-	    // 페이지 숫자 영역
-	    while(!(pageNo > endPage || pageNo > totalPages)) {
-	       if(pageNo == cPage) {
-	          pageBar += "<li class='page-item active'><a class='page-link' href='#'>" + pageNo + "</a></li>";
-	       }
-	       else {
-	          pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage=" + pageNo
-	                + "'>" + pageNo + "</a></li>";
-	       }
-	       pageNo++;
-	    }
-	    // [다음] 영역
-	    if(pageNo > totalPages) {
-	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
-	    }
-	    else {
-	       pageBar += "<li class='page-item'><a class='page-link' href='" + request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage=" 
-	                   + pageNo + "'>다음</a>";
-	    }
-	    pageBar += "</ul>";
-	   
-	   mav.addObject("pageBar", pageBar);	    
 	   
 	   
 	   //ITHRer에 등록된 공고 DB에서 찾아와 불러오기
@@ -258,7 +227,35 @@ public class IndexController {
 	   String[] preference = request.getParameterValues("preference");
 	   String[] emp_type = request.getParameterValues("emp_type");
 	   String[] work_day = request.getParameterValues("work_day");
-	      
+	   String[] welfare = request.getParameterValues("welfare");
+	   
+	   //,로 파싱한 값을 배열로 담을 변수
+	   String[] major2 = null;
+	   String[] position2 = null;
+	   String[] preference2 = null;
+	   String[] emp_type2 = null;
+	   String[] work_day2 = null;
+	   String[] welfare2 = null;
+	   
+	   if(major != null && major[0] != "") {
+		   major2 = major[0].split(",");
+	   }
+	   if(position != null && position[0] != "") {
+		   position2 = position[0].split(",");
+	   }
+	   if(preference != null && preference[0] != "") {
+		   preference2 = preference[0].split(",");
+	   }
+	   if(emp_type != null && emp_type[0] != "") {
+		   emp_type2 = emp_type[0].split(",");
+	   }
+	   if(work_day != null && work_day[0] != "") {
+		   work_day2 = work_day[0].split(",");
+	   }
+	   if(welfare != null && welfare[0] != "") {
+		   welfare2 = welfare[0].split(",");
+	   }
+	   
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("searchKeyword", searchKeyWord);
 	   map.put("locationCode", locations);
@@ -267,28 +264,195 @@ public class IndexController {
 	   map.put("gender", gender);
 	   map.put("subway", subway);
 	   map.put("licence", licence);
-	   map.put("major", major);
-	   map.put("position", position);
-	   map.put("preference", preference);
-	   map.put("emp_type", emp_type);
-	   map.put("work_day", work_day);
+	   map.put("major", major2);
+	   map.put("position", position2);
+	   map.put("preference", preference2);
+	   map.put("emp_type", emp_type2);
+	   map.put("work_day", work_day2);
+	   map.put("welfare", welfare2);
 	   
-	   logger.debug("map: "+map);
+	   //logger.debug("map: "+map);
 	   
-	   List<Map<String, String>> ithrerList =indexService.selectListSearchIthrer(map);
+	   int ithrerNumPerPage = 5;
+	   int ithrerCPage;
 	   
-	   logger.debug(ithrerList);
+	   try {
+		   ithrerCPage = Integer.parseInt(request.getParameter("ithrerCPage"));
+		}catch(NumberFormatException e){
+			ithrerCPage = 1;
+		}
+	   
+	   List<Map<String, String>> ithrerList =indexService.selectListSearchIthrer(map, ithrerNumPerPage, ithrerCPage);
+	   List<Map<String, String>> ithrerList2 =indexService.selectListSearchIthrer(map);
+	   
+	   //logger.debug(ithrerList);
 	   
 	   mav.addObject("ithrerList", ithrerList);
-	   mav.setViewName("/notice/noticeSearch");
+
 	   
+	   //사람인 api 페이징
+	   
+	   	int numPerPage = 10;
+	    int totalPages = (int)Math.ceil(((double)totalContents/numPerPage));
+	    int pageBarSize = 5;
+	    
+	    int startPage = ((cPage - 1) / pageBarSize) * pageBarSize + 1;
+	    int endPage = startPage + pageBarSize - 1;
+	       
+	    int pageNo = startPage;
+	    String ithrerParam ="";
+	    
+	    if(salary == null) {salary = "";}
+	    if(age == 0) {age = 0;}
+	    if(gender == null) {gender = "";}
+	    if(subway == null) {subway = "";}
+	    if(licence == null) {licence = "";}
+	    
+	    ithrerParam = "&salary="+salary+"&age="+age+"&gender="+gender+"&subway="+subway+"&licence="+licence;
+	    
+	    if(major == null) {major = new String[] {""};}
+	    if(preference == null) {preference  = new String[] {""};}
+	    if(position == null) {position  = new String[] {""};}
+	    if(emp_type == null) {emp_type  = new String[] {""};}
+	    if(work_day == null) {work_day  = new String[] {""};}
+	    if(welfare == null) {welfare  = new String[] {""};}
+	    
+	    ithrerParam += "&major=";
+	    for(int i = 0; i < major.length; i++) {
+	    	if(i == (major.length-1))
+	    		ithrerParam += major[i];
+	    	else
+	    		ithrerParam += major[i]+",";
+	    }
+	    ithrerParam += "&preference=";
+	    for(int i = 0; i < preference.length; i++) {
+	    	if(i == (preference.length-1))
+	    		ithrerParam += preference[i];
+	    	else
+	    		ithrerParam += preference[i]+",";
+	    }
+	    ithrerParam += "&position=";
+	    for(int i = 0; i < position.length; i++) {
+	    	if(i == (position.length-1))
+	    		ithrerParam += position[i];
+	    	else
+	    		ithrerParam += position[i]+",";
+	    }
+	    ithrerParam += "&emp_type=";
+	    for(int i = 0; i < emp_type.length; i++) {
+	    	if(i == (emp_type.length-1))
+	    		ithrerParam += emp_type[i];
+	    	else
+	    		ithrerParam += emp_type[i]+",";
+	    }
+	    ithrerParam += "&work_day=";
+	    for(int i = 0; i < work_day.length; i++) {
+	    	if(i == (work_day.length-1))
+	    		ithrerParam += work_day[i];
+	    	else
+	    		ithrerParam += work_day[i]+",";
+	    }
+	    ithrerParam += "&welfare=";
+	    for(int i = 0; i < welfare.length; i++) {
+	    	if(i == (welfare.length-1))
+	    		ithrerParam += welfare[i];
+	    	else
+	    		ithrerParam += welfare[i]+",";
+	    }
+	    
+	    
+	    String beforeApiUrl = request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+ "&ithrerCPage="+ithrerCPage;
+	    String numApiUrl = request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+ "&ithrerCPage="+ithrerCPage;
+	    //String afterApiUrl = request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location+"&cPage="+ pageNo;
+	    
+	    // bootstrap 처리위해 리스트로 처리
+	    String pageBar = "<ul class='pagination'>";
+	       
+	    // [이전] 이전
+	    if(pageNo == 1) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + beforeApiUrl+"&cPage=" + (pageNo-1) + ithrerParam + "'>이전</a></li>";
+	    }
+	    
+	    // 페이지 숫자 영역
+	    while(!(pageNo > endPage || pageNo > totalPages)) {
+	       if(pageNo == cPage) {
+	          pageBar += "<li class='page-item active'><a class='page-link' href='#'>" + pageNo + "</a></li>";
+	       }
+	       else {
+	          pageBar += "<li class='page-item'><a class='page-link' href='" + numApiUrl+"&cPage=" + pageNo+ ithrerParam + "'>" + pageNo + "</a></li>";
+	       }
+	       pageNo++;
+	    }
+	    // [다음] 영역
+	    if(pageNo > totalPages) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + numApiUrl+"&cPage=" + pageNo + ithrerParam + "'>다음</a>";
+	    }
+	    pageBar += "</ul>";
+	   
+	   mav.addObject("pageBar", pageBar);	    
+	   
+	   
+	   //ithrer 페이징
+	   
+	   int ithrerStartPage = ((ithrerCPage - 1) / pageBarSize) * pageBarSize + 1;
+	   int ithrerEndPage = ithrerStartPage + pageBarSize - 1;
+	   
+	   int ithrerTotalContents = ithrerList2.size();
+	   mav.addObject("ithrerTotalContents", ithrerTotalContents);
+	   int ithrerTotalPages = (int)Math.ceil(((double)ithrerTotalContents/ithrerNumPerPage));
+	   
+	   int ithrerPageNo = ithrerStartPage;
+	   
+	   String ithrerBeforeApiUrl = request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location + "&cPage="+cPage;
+	   String ithrerNumApiUrl = request.getContextPath() + "/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+location + "&cPage="+cPage;
+	   
+	   // bootstrap 처리위해 리스트로 처리
+		String ithrerPageBar = "<ul class='pagination'>";
+		   
+		// [이전] 이전
+		if(ithrerPageNo == 1) {
+			ithrerPageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
+		}
+		else {
+			ithrerPageBar += "<li class='page-item'><a class='page-link' href='" + ithrerBeforeApiUrl+"&ithrerCPage=" + (ithrerPageNo-1) + ithrerParam + "'>이전</a></li>";
+		}
+		
+		// 페이지 숫자 영역
+		while(!(ithrerPageNo > ithrerEndPage || ithrerPageNo > ithrerTotalPages)) {
+		   if(ithrerPageNo == ithrerCPage) {
+			   ithrerPageBar += "<li class='page-item active'><a class='page-link' href='#'>" + ithrerPageNo + "</a></li>";
+		   }
+		   else {
+			   ithrerPageBar += "<li class='page-item'><a class='page-link' href='" + ithrerNumApiUrl+"&ithrerCPage=" + ithrerPageNo+ ithrerParam + "'>" + ithrerPageNo + "</a></li>";
+		   }
+		   ithrerPageNo++;
+		}
+		// [다음] 영역
+		if(ithrerPageNo > ithrerTotalPages) {
+			ithrerPageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
+		}
+		else {
+			ithrerPageBar += "<li class='page-item'><a class='page-link' href='" + ithrerNumApiUrl+"&ithrerCPage=" + ithrerPageNo + ithrerParam + "'>다음</a>";
+		}
+		ithrerPageBar += "</ul>";
+		   
+		mav.addObject("ithrerPageBar", ithrerPageBar);
+	   	   
+		mav.setViewName("/notice/noticeSearch");
+		   
 	   return mav;
    }
    
    //우리 채용정보 
    @GetMapping("/index/ithrerNotice.ithrer")
    public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav , HttpServletRequest req) {
-		  String memberId = "";
+	   String memberId = "";
 		   if(req.getSession().getAttribute("member")!=null) {
 			  Member member = (Member) req.getSession().getAttribute("member");
 			  memberId = member.getMemberId();
@@ -301,6 +465,12 @@ public class IndexController {
 	   System.out.println(rc);
 	   
 	   Company com = indexService.selectOneCompany(rc.getCompId());
+	   String date = com.getDateOfEstablishment();
+	   System.out.println("substring전 : "+date);
+	   String date2 = date.substring(0,10);
+	   com.setDateOfEstablishment(date2);
+	   //해당 회사에 아이디로 지원한 적이 있는지 검사하는 쿼리
+	   int count = indexService.selectCountCompanyApplication(map);
 	 
 	   
 	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
@@ -314,6 +484,7 @@ public class IndexController {
 	   }
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
+	   mav.addObject("count", count);
 	   mav.setViewName("/notice/ithrerNoticeDetail");
 	   return mav;
    }
@@ -321,8 +492,17 @@ public class IndexController {
    
    //지원하기 창
    @RequestMapping("/notice/companyApply.ithrer")
-   public ModelAndView ithrerCompanyApply(ModelAndView mav) {
+   public ModelAndView ithrerCompanyApply(ModelAndView mav,@RequestParam("recruitmentNo")int rbcNo) {
+	   String memberId = "";
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("memberId", memberId);
+	   map.put("recNo", rbcNo);
 	   
+	   Recruitment rc = indexService.selectOneRecruitment(map);
+   
+	   Company com = indexService.selectOneCompany(rc.getCompId());
+	   mav.addObject("rc", rc);
+	   mav.addObject("com", com);
 	   mav.setViewName("/notice/companyApply");
 	   
 	   return mav;
@@ -442,5 +622,59 @@ public class IndexController {
 		}
 	   }
 	   
+   }
+   
+   //맴버 전화번호 , 이메일 수정
+   @RequestMapping("/index/memberUpdate.ithrer")
+   @ResponseBody
+   public void updateMember(HttpServletResponse res,@RequestBody Map<String, Object> param ,HttpServletRequest req) {
+	   int result = indexService.updateMember(param);
+	   Gson gson = new Gson();
+	   if(result==1) {
+		   HttpSession session = req.getSession(true);
+		   Member member = (Member)session.getAttribute("member");
+		   member.setEmail((String)param.get("email"));
+		   member.setPhone((String)param.get("phone"));
+		   session.setAttribute("member", member);
+		   param.putIfAbsent("result", result);
+		   try {
+			gson.toJson(param,res.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   }
+	   
+
+   }
+   
+   //이력서 제출
+   @RequestMapping("/index/resumeSubmit.ithrer")
+   public void resumeSubmit(@RequestParam("memberId")String memberId,
+		   @RequestParam("compName") String compName,
+		   @RequestParam("recruitmentNo") int recruitmentNo,
+		   HttpServletResponse res) {
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("memberId", memberId);
+	   map.put("compName", compName);
+	   map.put("recruitmentNo", recruitmentNo);
+	   map.put("resumeNo", 1);
+	   int result = indexService.insertCompanyApplication(map);
+	   Gson gson = new Gson();
+	   if(result==1) {
+		   try {
+			   gson.toJson(result,res.getWriter());
+		   } catch (JsonIOException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		   } catch (IOException e) {
+			   // TODO Auto-generated catch block
+			   e.printStackTrace();
+		   }		   
+	   }
+
    }
 } 

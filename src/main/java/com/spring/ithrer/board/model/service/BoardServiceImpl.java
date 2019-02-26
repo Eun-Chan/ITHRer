@@ -77,6 +77,16 @@ public class BoardServiceImpl implements BoardService{
 	public int countPassList(String searchOption, String keyword) {
 		return BoardDao.countPassList(searchOption, keyword);
 	}
+
+	@Override
+	public int anonyBoardDelete(int no) {
+		return BoardDao.anonyBoardDelete(no);
+	}
+
+	@Override
+	public int passBoardDelete(int passBoardNo) {
+		return BoardDao.passBoardDelete(passBoardNo);
+	}
 	
 	
 }

@@ -3,6 +3,7 @@ package com.spring.ithrer.index.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -64,13 +65,47 @@ public class IndexDaoImpl implements IndexDao{
 		return sqlSession.delete("index.deleteFavorites", map);
 	}
 
-	@Override
-	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
-		
-		return sqlSession.selectList("index.selectListSearchIthrer", map);
-	}
+//	@Override
+//	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+//		
+//		return sqlSession.selectList("index.selectListSearchIthrer", map);
+//	}
 	@Override
 	public int insertPortFolio(PortFolio pf) {
 		return sqlSession.insert("index.insertPortFolio", pf);
 	}
+
+	@Override
+	public int updateMember(Map<String, Object> param) {
+		return sqlSession.update("index.updateMember",param);
+	}
+
+	@Override
+	public int insertCompanyApplication(Map<String, Object> map) {
+		return sqlSession.insert("index.insertCompanyApplication", map);
+	}
+
+	@Override
+	public int selectCountCompanyApplication(Map<String, Object> map) {
+		return sqlSession.selectOne("index.selectCountCompanyApplication", map);
+	}
+
+	@Override
+	public List<Recruitment> selectTopListRecruitment(String memberId) {
+		return sqlSession.selectList("index.selectTopListRecruitment",memberId);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage,
+			int ithrerCPage) {
+		RowBounds rowBounds = new RowBounds((ithrerCPage-1)*ithrerNumPerPage, ithrerNumPerPage);
+		return sqlSession.selectList("index.selectListSearchIthrer", map, rowBounds);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("index.selectListSearchIthrer", map);
+	}
+
 }

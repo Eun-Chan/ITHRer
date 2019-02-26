@@ -10,150 +10,9 @@
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/index.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/noticeSearch.css" />
+<script src="${pageContext.request.contextPath }/resources/js/location.js"></script>
 
-<style>
-#noticeSearch-container{
-	width: 1000px;
-	margin: 0 auto;
-}
-.main-search{
-	position: relative;
-	z-index: 1;
-	height: 250px;
-	background: #e4ebfe;
-}
-.search-bar{
-	position: absolute;
-	top: 80px;
-	left: 56.8%;
-	z-index: 5;
-	margin-left: -600px;
-	padding: 10px;
-	width: 1000px;
-	height: 80px;
-	box-sizing: border-box;
-	background: pink;
-}
-.bar-main{
-	position: relative;
-	z-index: 2;
-	margin: 0 auto;
-	width: 980px;
-	height: 60px;
-	background: #ddd;
-}
-.container{
-	margin-top: 20px;
-}
-.bar-option{
-	position: absolute;
-    z-index: 1;
-	width: 420px;
-    height: 60px;;
-    box-sizing: border-box;
-    color: #666;
-    font-size: 15px;
-    letter-spacing: -1px;
-    text-align: left;
-    background: #fff;
-}
-.bar-option.area{
-	left: 423px;
-}
-.bar-option span{
-	z-index: 4;
-}
-.bar-button{
-	position: absolute;
-    left: 841px;
-    z-index: 1;
-    padding: 12px 0 15px;
-    width: 71px;
-    height: 59px;
-    background: cyan;
-    border: 0;
-    cursor: pointer;
-}
-.bar-button span{
-	color: #fff;
-    font-size: 17px;
-    font-weight: bold;
-    letter-spacing: -1px;
-}
-#searchKeyWord{
-/* 	position: relative; */
-    z-index: 1;
-    padding: 12px 40px 15px 49px;
-    width: 100%;
-    height: 60px;
-    border: 0;
-    box-sizing: border-box;
-    color: #666;
-    font-size: 17px;
-    letter-spacing: -1px;
-    line-height: 23px;
-    background: #fff;
-}
-.bar-option img{
-	position:absolute;
-	width: 32px;
-    height: 32px;
-    top: 13px;
-    left: 10px;
-}
-.detail2 span{
-	padding-right: 10px;
-	padding-left: 10px;
-	border-right: solid 1px gray;
-}
-.detail2 span:last-of-type{
-	border-right: none;
-}
-span#resultKeyWord{
-	color: red;
-	font-weight: bold;
-}
-#detail-area{
-	background: #fcfcfc;
-	border: 1px solid black;
-}
-#detail-area h2{
-	display: inline-block;
-    width: 142px;
-    color: #222;
-    font-size: 15px;
-    vertical-align: top;
-    font-weight: bold;
-	
-}
-#detail-area select, #detail-area input{
-	display: inline-block;
-}
-#detail-area div{
-	padding: 5px;
-}
-#detail-area hr{
-	margin-top: 0;
-	margin-bottom: 5px;
-}
-.checkbox-area{
-	display:inline-block;
-	font-size: 12px;
-}
-.checkbox-area div{
-	width: 130px;
-    white-space: nowrap;
-}
-#emp_type-area div.checkbox-area div{
-	width: 100px;
-}
-span.add_keyword{
-	width:120px;
-	color:#888;
-	font-size:15px;
-	padding-right: 5px;
-}
-</style>
 
 <script>
 /* 상세조건 펼치기 */
@@ -171,11 +30,12 @@ var age = "";
 var gender = "";
 var subway = "";
 var licence = "";
-var major;
-var position;
-var preference;
-var emp_type;
-var work_day;
+var major = new Array();
+var position = new Array();
+var preference = new Array();
+var emp_type = new Array();
+var work_day = new Array();
+var welfare = new Array();
 
 $(function(){
 	
@@ -234,7 +94,7 @@ $("#detail_licence").on("focusout", function(){
 //$("input[name=major]").on("focusout", function(){
 $(document).on("focusout","input[name=major]",function(){
 	//동적으로 생성되는 부분에도 이벤트핸들러를 등록하기 위해서는 document에 이벤트를 담는다.	
-
+	
 	if(major.indexOf($(this).val()) == -1 && $(this).val()!=""){
 		
 		major = new Array();
@@ -248,7 +108,10 @@ $(document).on("focusout","input[name=major]",function(){
 		$("#add_major").append("<span class='add_keyword'>"+major[i]+"</span>");
 		
 	}
-	
+	//아무것도 선택 안할 시에 배열 제거
+	if(major.length == 0){
+		major='';
+	}
 });
 
 //$("#detail_position").on("change",function(){
@@ -267,7 +130,7 @@ $(document).on("change","select[name=position]",function(){
 });
 
 $("#preference-area input:checkbox").click(function() {
-	preference = new Array();
+	
 	if(preference.length>4 && preference.indexOf($(this).val()) == -1){
 		alert("5개까지 체크가능해요:D");
 		$(this).prop("checked", false);
@@ -289,7 +152,7 @@ $("#preference-area input:checkbox").click(function() {
 });
 
 $("#emp_type-area input:checkbox").click(function() {
-	emp_type = new Array();
+	
 	if(emp_type.length>2 && emp_type.indexOf($(this).val()) == -1){
 		alert("3개까지 체크가능해요:D");
 		$(this).prop("checked", false);
@@ -311,7 +174,7 @@ $("#emp_type-area input:checkbox").click(function() {
 });
 
 $("#work_day-area input:checkbox").click(function() {
-	work_day = new Array();
+	
 	if(work_day.length>2 && work_day.indexOf($(this).val()) == -1){
 		alert("3개까지 체크가능해요:D");
 		$(this).prop("checked", false);
@@ -327,6 +190,28 @@ $("#work_day-area input:checkbox").click(function() {
 	for(var i = 0; i < work_day.length; i++){
 		
 		$("#add_work_day").append("<span class='add_keyword'>"+work_day[i]+"</span>");
+		
+	}
+
+});
+
+$("#welfare-area input:checkbox").click(function() {
+	
+	if(welfare.length>2 && welfare.indexOf($(this).val()) == -1){
+		alert("3개까지 체크가능해요:D");
+		$(this).prop("checked", false);
+		return;
+	}
+	if(welfare.indexOf($(this).val()) == -1){
+		welfare.push($(this).val());		
+	}else{
+		welfare.splice(welfare.indexOf($(this).val()),1);
+	}
+	
+	$("#add_welfare").html("");
+	for(var i = 0; i < welfare.length; i++){
+		
+		$("#add_welfare").append("<span class='add_keyword'>"+welfare[i]+"</span>");
 		
 	}
 
@@ -351,10 +236,11 @@ $("#btn-search-notice").on("click", function(){
 	console.log("preference = ",preference);
 	console.log("emp_type = ",emp_type);
 	console.log("work_day = ",work_day);
+	console.log("welfare = ", welfare);
 	
 	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode
 				  + "&salary="+salary+ "&age="+age + "&gender="+gender + "&subway="+subway + "&licence="+licence + "&major="+major
-				  + "&position="+position+ "&preference="+preference+ "&emp_type="+emp_type+ "&work_day="+work_day;
+				  + "&position="+position+ "&preference="+preference+ "&emp_type="+emp_type+ "&work_day="+work_day+"&welfare="+welfare;
 	
 });
 
@@ -455,7 +341,6 @@ function del_line(event, check){
                <button id="locationKeyWord" class="locationKeyWord">
                   <span class="locationKeyWordSelected"></span>
                </button>
-   <!--             <input type="button" value="지역 선택" id="locationKeyWord"> -->
                <div class="location-hide">
                   <div class="row location-category">
                      <div class="col-sm-6 location-view">
@@ -483,6 +368,9 @@ function del_line(event, check){
                      <div class="col-sm-6 location-view-detail">
                      	<!-- 서울 -->
                      	<ul class="detail seoul">
+                     	<div class="deleteLocation">
+                     		<button class="reset">지역 초기화</button>
+                     	</div>
                      		<li>
                      			<input type="checkbox" name="101000" id="101000_1" class="loc-detail all"/>
                      			<label for="101000_1">서울전체</label>
@@ -590,6 +478,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 경기도 -->
                      	<ul class="detail gyeonggi">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>
                      		<li>
                      			<input type="checkbox" name="102000" id="102000_1" class="loc-detail all"/>
                      			<label for="102000_1">경기전체</label>
@@ -721,6 +612,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 인천 -->
                      	<ul class="detail incheon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="108000" id="108000_1" class="loc-detail all"/>
                      			<label for="108000_1">인천전체</label>
@@ -767,6 +661,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 부산 -->
                      	<ul class="detail busan">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                    	
                      		<li>
                      			<input type="checkbox" name="106000" id="106000_1" class="loc-detail all"/>
                      			<label for="106000_1">부산전체</label>
@@ -838,6 +735,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 대구 -->
                      	<ul class="detail daegu">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="104000" id="104000_1" class="loc-detail all"/>
                      			<label for="104000_1">대구전체</label>
@@ -877,6 +777,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 광주 -->
                      	<ul class="detail gwangju">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="103000" id="103000_1" class="loc-detail all"/>
                      			<label for="103000_1">광주전체</label>
@@ -904,6 +807,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 대전 -->
                      	<ul class="detail daejeon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="105000" id="105000_1" class="loc-detail all"/>
                      			<label for="105000_1">대전전체</label>
@@ -931,6 +837,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 울산 -->
                      	<ul class="detail ulsan">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="107000" id="107000_1" class="loc-detail all"/>
                      			<label for="107000_1">울산전체</label>
@@ -958,6 +867,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 세종 -->
                      	<ul class="detail sejong">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="118000" id="118000_1" class="loc-detail all"/>
                      			<label for="118000_1">세종특별자치시</label>
@@ -965,6 +877,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 강원도 -->
                      	<ul class="detail kangwon">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="109000" id="109000_1" class="loc-detail all"/>
                      			<label for="109000_1">강원전체</label>
@@ -1044,6 +959,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 경남 -->
                      	<ul class="detail gyeongnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="110000" id="110000_1" class="loc-detail all"/>
                      			<label for="110000_1">경남전체</label>
@@ -1123,6 +1041,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 경북 -->
                      	<ul class="detail gyeongbuk">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="111000" id="111000_1" class="loc-detail all"/>
                      			<label for="111000_1">경북전체</label>
@@ -1222,6 +1143,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 전남 -->
                      	<ul class="detail chonnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="112000" id="112000_1" class="loc-detail all"/>
                      			<label for="112000_1">전남전체</label>
@@ -1317,6 +1241,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 전북 -->
                      	<ul class="detail chonbuk">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="113000" id="113000_1" class="loc-detail all"/>
                      			<label for="113000_1">전북전체</label>
@@ -1380,6 +1307,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 충남 -->
                      	<ul class="detail chungnam">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="115000" id="115000_1" class="loc-detail all"/>
                      			<label for="115000_1">충남전체</label>
@@ -1506,6 +1436,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 제주 -->
                      	<ul class="detail jeju">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="116000" id="116000_1" class="loc-detail all"/>
                      			<label for="116000_1">제주전체</label>
@@ -1517,6 +1450,9 @@ function del_line(event, check){
                      	</ul>
                      	<!-- 전국 -->
                      	<ul class="detail jongok">
+                     	    <div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div>                     	
                      		<li>
                      			<input type="checkbox" name="117000" id="117000_1" class="loc-detail all"/>
                      			<label for="117000_1">전국</label>
@@ -1840,8 +1776,85 @@ function del_line(event, check){
 				</div>
 			</div>
 			<hr />
-			<div id="welfare">
+			<div id="welfare-area">
 				<h2>복리후생</h2>
+				<div class="checkbox-area">
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox1" value="4대 보험">
+					  <label class="form-check-label" for="welfare_checkbox1">4대 보험</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox2" value="식대지원">
+					  <label class="form-check-label" for="welfare_checkbox2">식대지원</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox3" value="구내식당">
+					  <label class="form-check-label" for="welfare_checkbox3">구내식당</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox4" value="통근버스">
+					  <label class="form-check-label" for="welfare_checkbox4">통근버스</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox5" value="기숙사">
+					  <label class="form-check-label" for="welfare_checkbox5">기숙사</label>
+					</div>
+					<br />
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox6" value="주차장제공">
+					  <label class="form-check-label" for="welfare_checkbox6">주차장제공</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox7" value="장애인 복지">
+					  <label class="form-check-label" for="welfare_checkbox7">장애인 복지</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox8" value="자기계발지원">
+					  <label class="form-check-label" for="welfare_checkbox8">자기계발지원</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox9" value="워크샵">
+					  <label class="form-check-label" for="welfare_checkbox9">워크샵</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox10" value="문화생활비">
+					  <label class="form-check-label" for="welfare_checkbox10">문화생활비</label>
+					</div>
+					<br />
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox11" value="직무능력향상교육 ">
+					  <label class="form-check-label" for="welfare_checkbox11">직무능력향상교육 </label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox12" value="도서구입비지원 ">
+					  <label class="form-check-label" for="welfare_checkbox12">도서구입비지원 </label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox13" value="인센티브">
+					  <label class="form-check-label" for="welfare_checkbox13">인센티브</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox14" value="우수사원포상">
+					  <label class="form-check-label" for="welfare_checkbox14">우수사원포상</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox15" value="장기근속포상">
+					  <label class="form-check-label" for="welfare_checkbox15">장기근속포상</label>
+					</div>
+					<br />
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox16" value="명절선물">
+					  <label class="form-check-label" for="welfare_checkbox16">명절선물</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox17" value="장기보너스">
+					  <label class="form-check-label" for="welfare_checkbox17">장기보너스</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="checkbox" id="welfare_checkbox18" value="상해보험">
+					  <label class="form-check-label" for="welfare_checkbox18">상해보험</label>
+					</div>
+				</div>
 			</div>
 			<hr />
 			<div id="keyword">
@@ -1862,345 +1875,34 @@ function del_line(event, check){
 	</div>
 </div>
 
-<script>
 
-/* 지역검색 부분 */
-
-
-$("#locationKeyWord").on("click",function(){
-   if(!$(".location-hide").hasClass("on")){
-      $(".location-hide").addClass("on");
-   }
-   else{
-      $(".location-hide").removeClass("on");
-   }
-});
-$("html").click(function(e){
-    if(!$(e.target).hasClass("locationKeyWord")){
-      if($(e.target).hasClass("loc")){
-         $(".location-hide").addClass("on");
-         return;
-      }
-      if($(e.target).hasClass("locationKeyWordSelected")){
-         $(".location-hide").addClass("on");
-         return;
-      }
-      if($(e.target).hasClass("location-view-detail")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-      if($(e.target).hasClass("loc-detail")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-      if($(e.target).hasClass("deleteLocation")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-      if($(e.target).hasClass("reset")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-	
-      $(".location-hide").removeClass("on");
-   } 
-
-});
-$(".location-hide button").on("click",function(){
-	var location_name =  new Array();
-/*   if($(".locationKeyWordSelected").text()==""){
-      $(".locationKeyWordSelected").text($(this).val());
-      $(".placeholder").hide();
-   }else{
-      $(".locationKeyWordSelected").text($(".locationKeyWordSelected").html()+", "+$(this).val());
-   } */
-   $(".deleteLocation").css("display","block");
-   if($(this).val()=="101000"){
-	   $(".detail").css("display","none");
-	   $(".seoul").css("display","block");
-	   if($(".seoul li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=101000]").prop("checked",true);
-		   }
-	   }
-	   
-   }
-   if($(this).val()=="102000"){
-	   $(".detail").css("display","none");
-	   $(".gyeonggi").css("display","block");
-	   if($(".gyeonggi li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=102000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="108000"){
-	   $(".detail").css("display","none");
-	   $(".incheon").css("display","block");
-	   if($(".incheon li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=108000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="106000"){
-	   $(".detail").css("display","none");
-	   $(".busan").css("display","block");
-	   if($(".busan li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=106000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="104000"){
-	   $(".detail").css("display","none");
-	   $(".daegu").css("display","block");
-	   if($(".daegu li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=104000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="103000"){
-	   $(".detail").css("display","none");
-	   $(".gwangju").css("display","block");
-	   if($(".gwangju li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=103000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   
-   if($(this).val()=="105000"){
-	   $(".detail").css("display","none");
-	   $(".daejeon").css("display","block");
-	   if($(".daejeon li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=105000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="107000"){
-	   $(".detail").css("display","none");
-	   $(".ulsan").css("display","block");
-	   if($(".ulsan li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=107000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="118000"){
-	   $(".detail").css("display","none");
-	   $(".sejong").css("display","block");
-	   if($(".sejong li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=118000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="109000"){
-	   $(".detail").css("display","none");
-	   $(".kangwon").css("display","block");
-	   if($(".kangwon li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=109000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="110000"){
-	   $(".detail").css("display","none");
-	   $(".gyeongnam").css("display","block");
-	   if($(".gyeongnam li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=110000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="111000"){
-	   $(".detail").css("display","none");
-	   $(".gyeongbuk").css("display","block");
-	   if($(".gyeongbuk li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=111000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="112000"){
-	   $(".detail").css("display","none");
-	   $(".chonnam").css("display","block");
-	   if($(".chonnam li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($("	.loc-detail:checked").length<5){
-			   $("input[name=112000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="113000"){
-	   $(".detail").css("display","none");
-	   $(".chonbuk").css("display","block");
-	   if($(".chonbuk li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=113000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="115000"){
-	   $(".detail").css("display","none");
-	   $(".chungnam").css("display","block");
-	   if($(".chungnam li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=115000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="114000"){
-	   $(".detail").css("display","none");
-	   $(".chungbuk").css("display","block");
-	   if($(".chungbuk li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=114000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="116000"){
-	   $(".detail").css("display","none");
-	   $(".jeju").css("display","block");
-	   if($(".jeju li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=116000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="117000"){
-	   $(".detail").css("display","none");
-	   $(".jongok").css("display","block");
-	   if($(".jongok li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=117000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   var location_code =  new Array();
-   var locationCode = "";
-   var text = "";
-   
-	$('.loc-detail:checked').each(function() { 
-		location_code.push($(this).attr("name"));
-	 });
-   $('.loc-detail:checked').each(function() { 
-	   location_name.push($(this).siblings("label").text());
-     });
-	for(var i = 0 ; i<location_name.length ; i++){
-		if(i==location_name.length-1){
-			text+=location_name[i];
-		}else{			
-			text+=location_name[i]+",";
-		}
-	}
-	for(var i = 0 ; i<location_code.length ; i++){
-		locationCode += location_code[i]+",";
-	}
-
-
-	 $(".hiddenLocationCode").val(locationCode);
-	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
-	 $(".placeholder").hide();
-
-
-});
-$(".open").hover(function(){
-   $(this).css("border","2px solid #ffb6c1");
-	},function(){
-   		$(this).css("border","2px solid #d6d6d6");
-	}
-);
-
-$(".loc-detail").on("click",function(){
-	console.log($(".loc-detail:checked").attr("name"));
-	var location_name =  new Array();
-	var location_code =  new Array();
-	var text = "";
-	var locationCode = "";
-	if(!$(this).hasClass("all")){
-		$(this).parent("li").siblings("li").find(".all").prop("checked",false);
-	}
-	else if($(this).hasClass("all")){
-		console.log("체크 트루");
-		$(this).parent("li").siblings("li").find(".loc-detail").prop("checked",false);
-		$(this).prop("checked");
-	}
-	
-	$('.loc-detail:checked').each(function() { 
-		location_name.push($(this).siblings("label").text());
-	 });
-	$('.loc-detail:checked').each(function() { 
-		location_code.push($(this).attr("name"));
-	 });
-	for(var i = 0 ; i<location_name.length ; i++){
-		if(location_name.length>5){
-			alert("지역은 5개 까지만 선택 가능합니다.");
-			$(this).prop("checked",false);
-			return;
-		}
-		if(i==location_name.length-1){
-			text+=location_name[i];
-		}
-		else{
-			text+=location_name[i]+",";
-		}
-	}
-	for(var i = 0 ; i<location_code.length ; i++){
-		locationCode += location_code[i]+",";
-	}
-
-
-	 $(".hiddenLocationCode").val(locationCode);
- 	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
-	 $(".placeholder").hide();
-	
-});	 
-$(".reset").on("click",function(){
-	console.log("왓지?");
-	var location_name =  new Array();
-	var text="";
-	$(this).parents().siblings("li").find(".loc-detail").prop("checked",false);
-
-  	$('.loc-detail:checked').each(function() { 
-	   location_name.push($(this).siblings("label").text());
-    });
-	for(var i = 0 ; i<location_name.length ; i++){
-		if(i==location_name.length-1){
-				text+=location_name[i];
-		}else{			
-			text+=location_name[i]+",";
-		}
-	}
-	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
-});
-
-
-
-</script>
 
 <!-- 검색 부분 -->
 <div id="noticeSearch-container">
 	<br /><br />
 	<div><h3><span id="resultKeyWord">#${searchKeyWord}</span>의 검색결과</h3></div><br />
-	<br />
 	<!-- ithrer 검색 부분 -->
-	<h3><span style="color:blue;">ITHRer</span> 검색결과</h3><br />
+	<h3><span style="color:blue;"><img src="${pageContext.request.contextPath}/resources/images/ITHRerLogo.png" style="width: 190px;height: 100px;"></span> 검색결과</h3><br />
+	<div>${ithrerTotalContents}건의 검색 결과</div><br />
 	<ui class="list-group">
 		<c:forEach items="${ithrerList}" var="job">
 		<li class="list-group-item list-group-item-action">
-			<div><a href="${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no=${job.RECRUITMENT_NO}">${job.COMP_ID}</a></div>
-			<p class="detail1"><span>${job.RECRUITMENT_TITLE}</span><span class="badge badge-danger" style="width:82px">~${job.CLOSING_DATE}</span></p>
-			<p class="detail2"><span>${job.CAREER}</span><span>${job.EDUCATION}</span><span>${job.EMPLOYMENT_TYPE}span><span>${job.LOCATION}</span></p>
+			<div><a href="${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no=${job.RECRUITMENT_NO}">${job.COMP_NAME}</a></div>
+			<p class="detail1"><span>${job.RECRUITMENT_TITLE}</span><span class="badge badge-danger" style="width:82px; overflow: hidden;">~${job.CLOSING_DATE}</span></p>
+			<p class="detail2"><span>${job.CAREER}</span><span>${job.EDUCATION}</span><span>${job.EMPLOYMENT_TYPE}</span><span>${job.LOCATION}</span></p>
 		</li>
 		</c:forEach>
 	</ui>
+	<!-- 페이징 바 부분 -->
+	<div class="page-bar">
+	<br /><br />
+		${ithrerPageBar}
+	</div>
 	
-	<hr /><br />
+	
+	<hr style='background-color:black;'/><br />
 	<!-- 사람인 api 부분 -->
-	<h3><span style="color:skyblue;">사람인api</span> 검색결과</h3><br />
+	<h3><span style="color:skyblue;"><img src="${pageContext.request.contextPath}/resources/images/saramin_logo.png" style="width: 200px;vertical-align: baseline;"> api</span> 검색결과</h3><br />
 	<div>${totlaContents}건의 검색 결과</div><br />
 	<ui class="list-group">
 		<c:forEach items="${jobList}" var="job">
@@ -2213,14 +1915,12 @@ $(".reset").on("click",function(){
 	</ui>
 	
 	<!-- 페이징 바 부분 -->
-	<div id="page-bar">
+	<div class="page-bar">
 	<br /><br />
 		${pageBar}
 	</div>
 	<input type="hidden" class="hiddenLocationCode" />
 </div>
 	
-
-
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

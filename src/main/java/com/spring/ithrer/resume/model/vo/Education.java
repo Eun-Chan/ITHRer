@@ -23,7 +23,7 @@ public class Education implements Serializable{
 	private String graduationDate;
 	private String graduationState;
 	private String grade;
-	private String transfer;
+	private String[] transfer;
 	private String major;
 	private int score;
 	private double totalscore;

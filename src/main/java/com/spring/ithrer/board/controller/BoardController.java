@@ -1,16 +1,23 @@
 package com.spring.ithrer.board.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.spring.ithrer.board.model.service.BoardService;
 import com.spring.ithrer.board.model.vo.AnonyBoard;
 import com.spring.ithrer.board.model.vo.PassBoard;
@@ -21,6 +28,9 @@ public class BoardController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	/**
 	 * 익명게시판 리스트 페이지
@@ -57,9 +67,7 @@ public class BoardController {
 	public ModelAndView anonyBoardView(@RequestParam("no") int anonyBoardNo, ModelAndView mav) {
 //		logger.info("Controller : anonyBoardNo 전 ="+anonyBoardNo);
 		
-		AnonyBoard anonyBoard = new AnonyBoard();
-		
-		anonyBoard = boardService.anonyBoardSelectOne(anonyBoardNo);
+	    AnonyBoard anonyBoard = boardService.anonyBoardSelectOne(anonyBoardNo);
 		
 //		String oneInfo = BoardService.anonyBoardSelectOne(anonyBoardNo);
 //		mav.addObject("anonyBoardNo", anonyBoardNo);
@@ -89,6 +97,13 @@ public class BoardController {
 	@RequestMapping("/board/anonyBoardInsertContent")
 	public ModelAndView anonyBoardInsert(AnonyBoard anonyBoard, ModelAndView mav) {
 		
+		System.out.println("암호화전: "+anonyBoard.getAnonyBoardPassword());
+		String temp = anonyBoard.getAnonyBoardPassword();
+		//BCrypt 방식 암호화
+		anonyBoard.setAnonyBoardPassword(bcryptPasswordEncoder.encode(temp));
+		System.out.println("암호화후: "+anonyBoard.getAnonyBoardPassword());
+		
+		System.out.println("anonyBoard = "+anonyBoard);
 		int result  = boardService.anonyBoardInsert(anonyBoard);
 		
 //		logger.info("Controller : insertInfo = "+result);
@@ -131,14 +146,14 @@ public class BoardController {
 	 */
 	@RequestMapping("/board/passBoardView")
 	public ModelAndView passBoardView(@RequestParam("no") int passBoardNo, ModelAndView mav) {
-		logger.info("Controller : passBoardNo 전 ="+passBoardNo);
+//		logger.info("Controller : passBoardNo 전 ="+passBoardNo);
 		
 		PassBoard passBoard = new PassBoard();
 		
 		passBoard = boardService.passBoardSelectOne(passBoardNo);
 		
 		mav.addObject("passBoard", passBoard);
-		mav.setViewName("board/anonyBoardView");
+		mav.setViewName("board/passBoardView");
 		
 //		logger.info("Controller -pass : oneInfo 후 ="+passBoard);
 		
@@ -222,5 +237,44 @@ public class BoardController {
 		return mav;
 	}
 	
+	@RequestMapping("board/anonyBoardDelete")
+	public void anonyBoardDeleteMove(HttpServletResponse response, @RequestParam("anonyBoardNo") int no, @RequestParam("password")String password) {
+
+		
+		Gson gson = new Gson();
+		AnonyBoard anonyBoard = boardService.anonyBoardSelectOne(no);
+
+		int result =0;
+		if(bcryptPasswordEncoder.matches(password, anonyBoard.getAnonyBoardPassword())) {
+			result = boardService.anonyBoardDelete(no);
+		}
+		try {
+			gson.toJson(result,response.getWriter());
+		} catch (JsonIOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	@RequestMapping("board/passBoardDelete")
+	public void passBoardDeleteMove(HttpServletResponse response, @RequestParam("passBoardNo") int passBoardNo) {
+		
+		Gson gson = new Gson();
+		PassBoard passBoard = boardService.passBoardSelectOne(passBoardNo);
+
+		int result = 0;
+			result = boardService.passBoardDelete(passBoardNo);
+		
+		try {
+			gson.toJson(result, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

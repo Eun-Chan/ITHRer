@@ -17,6 +17,7 @@ public class Profile implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String userResumeTitle;
 	private String name;
 	private String birth;
 	private String gender;

@@ -105,4 +105,20 @@
 		select * from favorites where comp_id=#{compId}
 	</select>
 	
+	<!-- 채용정보 리스트 가져오기 -->
+	<select id="selectRcrtList" parameterType="string" resultType="recruitment">
+		select 
+		r.*,
+		(select count(*) from companyapplication where recruitment_no=r.recruitment_no) no_of_applicant
+		from recruitment r where comp_id=#{compId}
+	</select>
+	
+	<!-- 지원자 아이디 가져오기 -->
+	<select id="selectApplicantIdList" parameterType="_int" resultType="string">
+		select member_id from companyapplication where recruitment_no=#{recruitment_no}
+	</select>
+	
+	<!-- 이력서, 내가지원한회사, 관심인재, 멤버 정보 모두 다 담기 -->
+	<select id="selectApplicantWithAllInfo"></select>
+	
 </mapper>

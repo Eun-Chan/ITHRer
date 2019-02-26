@@ -9,9 +9,9 @@ public class AnonyBoard {
 	private String anonyBoardContent;
 	private Date anonyBoardDate;
 	private int readCount;
+	private String anonyBoardPassword;
 //	private char del_flag;
 //	private int fileCount;
-//	private List<Attachment> files;
 	
 	public AnonyBoard() {
 		super();
@@ -64,12 +64,19 @@ public class AnonyBoard {
 //	public void setFiles(List<Attachment> files) {
 //		this.files = files;
 //	}
-	
+	public String getAnonyBoardPassword() {
+		return anonyBoardPassword;
+	}
+	public void setAnonyBoardPassword(String anonyBoardPassword) {
+		this.anonyBoardPassword = anonyBoardPassword;
+	}
 	@Override
 	public String toString() {
 		return "AnonyBoard [anonyBoardNo=" + anonyBoardNo + ", anonyBoardTitle=" + anonyBoardTitle
 				+ ", anonyBoardWriter=" + anonyBoardWriter + ", anonyBoardContent=" + anonyBoardContent
-				+ ", anonyBoardDate=" + anonyBoardDate + ", readCount=" + readCount + "]";
-	} 
+				+ ", anonyBoardDate=" + anonyBoardDate + ", readCount=" + readCount + ", anonyBoardPassword="
+				+ anonyBoardPassword + "]";
+	}
+	
 	
 }
