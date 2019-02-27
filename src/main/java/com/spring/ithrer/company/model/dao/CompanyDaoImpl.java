@@ -135,4 +135,19 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.selectOne("company.selectApplicantWithAllInfo",paramMap);
 	}
 
+	@Override
+	public Recruitment selectRecruitmentOne(int recruitmentNo) {
+		return sqlSession.selectOne("company.selectRecruitmentOne",recruitmentNo);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap) {
+		return sqlSession.selectList("company.selectRcrtListNotThis",paramMap);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtEndList(String compId) {
+		return sqlSession.selectList("company.selectRcrtEndList",compId);
+	}
+
 }

@@ -110,7 +110,7 @@
 		select 
 		r.*,
 		(select count(*) from companyapplication where recruitment_no=r.recruitment_no) no_of_applicant
-		from recruitment r where comp_id=#{compId}
+		from recruitment r where comp_id=#{compId} and end='N'
 	</select>
 	
 	<!-- 지원자 아이디 가져오기 -->
@@ -119,6 +119,23 @@
 	</select>
 	
 	<!-- 이력서, 내가지원한회사, 관심인재, 멤버 정보 모두 다 담기 -->
-	<select id="selectApplicantWithAllInfo"></select>
+	<select id="selectApplicantWithAllInfo">
+		select * from member where 
+	</select>
+	
+	<!-- 해당 채용공고 가져오기 -->
+	<select id="selectRecruitmentOne" parameterType="_int" resultType="recruitment">
+		select * from recruitment where recruitment_no=#{recruitmentNo} and end='N'
+	</select>
+	
+	<!-- 해당 채용공고를 제외한 채용공고리스트 가져오기 -->
+	<select id="selectRcrtListNotThis" parameterType="map" resultType="recruitment">
+		select * from recruitment where comp_id=#{compId} and not recruitment_no=#{recruitmentNo} and end='N'
+	</select>
+	
+	<!-- 마감된 채용공고 리스트 가져오기 -->
+	<select id="selectRcrtEndList" parameterType="string" resultType="recruitment">
+		select * from recruitment where comp_id=#{compId} and end='Y'
+	</select>
 	
 </mapper>

@@ -353,6 +353,25 @@ h3{
 	margin : 0 auto;
 	width : 900px; 
 }
+div[name=showCertificate] ul{
+	list-style : none;
+	margin : 0;
+	padding : 0;
+	overflow : scroll;
+	max-width :280px;
+	max-height : 100px;
+	position : relative;
+	z-index : 1;
+}
+div[name=showCertificate] li {
+	text-align : center;
+}
+div[name=showCertificate] {
+	width : 280px;
+}
+div[name=showCertificate] ul a {
+	cursor : pointer;
+}
 /*교육*/
 #formLearn2 ul {
 	list-style : none;

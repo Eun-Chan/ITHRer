@@ -145,15 +145,15 @@
 		<div class="col-sm-2">
 		<c:if test="${empty member }">
 			<button class="detailStar">
-				<img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;">
+				<img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;">
 			</button>
 		</c:if>
 		<c:if test="${not empty member }">
        		<c:if test="${rc.favoritesCount == 1 }">
-       			<button class="detailStar"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+       			<button class="detailStar"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
        		</c:if>
        		<c:if test="${rc.favoritesCount ==0 }">
-       			<button class="detailStar"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+       			<button class="detailStar"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
        		</c:if>
 	   </c:if>
 		</div>

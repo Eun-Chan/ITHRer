@@ -278,6 +278,7 @@
 				<input type="text" name="certPublisher" id="certPublisher0" class="form-control" placeholder="발행처"/>
 				<input type="text" name="certDate" id="certDate0" class="form-control"placeholder="취득년월(예.2019.01)"/>
 			</div>
+			<div name="showCertificate"></div>
 		</div>
 	</div>
 	<div id="buttonCert" class="input-group-prepend">
@@ -768,23 +769,36 @@ $("#addCert").on("click",function() {
 	var html = '<div id="formCertificate"><div id="deleteBox"><button type="button" id="deleteCertificate" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formCertificate" class="input-group-prepend"><input type="text" name="certName" id="certName'+certFrmcount+'" class="form-control" placeholder="자격증 명"/>';
 	html += '<input type="text" name="certPublisher" id="certPublisher'+certFrmcount+'" class="form-control" placeholder="발행처"/>';
-	html += '<input type="text" name= "certDate" id="certDate'+certFrmcount+'" class="form-control"placeholder="취득년월(예.2019.01)"/></div></div>';
+	html += '<input type="text" name= "certDate" id="certDate'+certFrmcount+'" class="form-control"placeholder="취득년월(예.2019.01)"/></div><div name="showCertificate"></div></div>';
 	$('#certificateWrap').append(html);
 	certFrmcount++;
 });
-$(document).on("click","input[name=certName]",function() {
-	var certName = $(this); 
+$(document).on("keypress","input[name=certName]",function() {
+	var divsearch = $(this).parent().parent().find("div[name=showCertificate]");
+	var certName = $(this).val();
+	divsearch.show();
 	$.ajax({
-		url : "${pageContext.request.contextPath}/resume/certificateList.do",
-		data : "certName="+cerName,
-		dataType : 'json',
+		url : "${pageContext.request.contextPath }/resume/certificateList.do",
+		data : {"certName" : certName},
 		success : function(data) {
-			console.log(data);
+			var showul = $("<ul></ul>");
+			for(var i in data) {
+				var html = "<a><li>"+data[i].CERT_NAME+"</li></a>";
+				showul.append(html);
+			}
+			
+			divsearch.html(showul);
 		},
 		error : function() {
 			console.log("실패닷");
 		}
 	});
+});
+$(document).on("click","div[name=showCertificate] a",function() {
+	var output = $(this).children().text();
+	var input = $(this).parent().parent().parent().find("input[name=certName]");
+	input.val(output);
+	$(this).parent().parent().hide();
 });
 /* 수상 */
 $("#addAward").on("click",function() {

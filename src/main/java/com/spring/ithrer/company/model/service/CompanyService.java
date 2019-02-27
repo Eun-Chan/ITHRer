@@ -51,4 +51,10 @@ public interface CompanyService {
 
 	List<Member> selectAppList(Map<String, Object> paramMap);
 
+	Recruitment selectRecruitmentOne(int recruitmentNo);
+
+	List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap);
+
+	List<Recruitment> selectRcrtEndList(String compId);
+
 }
