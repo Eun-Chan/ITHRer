@@ -1,6 +1,7 @@
 package com.spring.ithrer.resume.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -9,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.google.gson.JsonObject;
 import com.spring.ithrer.resume.model.service.ResumeService;
-import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Award;
 import com.spring.ithrer.resume.model.vo.Career;
 import com.spring.ithrer.resume.model.vo.Certificate;
@@ -22,6 +25,7 @@ import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
 
 
@@ -39,10 +43,11 @@ public class ResumeController {
 		return mav;
 	}
 	@RequestMapping(value="/resume/certificateList.do")
-	public Map<String,String> certificateList(@RequestParam("certName") String certName) {
-		
-		return null;
-	};
+	@ResponseBody
+	public List<Map<String,String>> certificateList(@RequestParam("certName") String certName) {
+		List<Map<String,String>> list = resumeService.certificateList(certName);
+		return list;
+	}
 	@RequestMapping(value="/resume/saveResume.do")
 	public ModelAndView saveResume(ModelAndView mav,
 								   Award award,
