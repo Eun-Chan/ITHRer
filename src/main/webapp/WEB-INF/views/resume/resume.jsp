@@ -72,7 +72,7 @@
 						<input type="text" name="schoolName" id="schoolName0" class="form-control" placeholder="학교명"/>
 					</li>
 				</ul>
-				<div name="searchHidden" id="searchHidden0"></div>
+				<div id="searchHidden0"></div>
 			</div>
 			<div id="formEducation3" class="input-group-prepend">
 				<ul>

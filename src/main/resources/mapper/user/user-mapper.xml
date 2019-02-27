@@ -51,13 +51,9 @@
 		insert into company(bussiness_scale,license_No,comp_name,representive,location,comp_Id,password,phone,comp_email,category, main_Bussiness, classification)
 		values(#{bussinessScale},#{licenseNo},#{compName},#{representive},#{location},#{compId},#{password},#{phone},#{compEmail},'업종 변경(필수)','사업내용 변경 필수','기업부분 변경 필수' )
 	</insert>
-	<!-- 카카오 유저 처음 로그인한 사람 회원가입(이메일 있는 버전) -->
+	<!-- 카카오 유저 처음 로그인한 사람 회원가입 -->
 	<insert id="createKakaoUser" parameterType="member">
 		insert into member(member_id , member_Name , email) values(#{kakaoId} , #{kakaoName} , #{kakaoEmail})
-	</insert>
-	<!-- 카카오 유저 처음 로그인한 사람 회원가입(이메일 없는 버전) -->
-	<insert id="createKakaoUser2" parameterType="member">
-		insert into member(member_id , member_Name) values(#{kakaoId} , #{kakaoName})
 	</insert>
 	<!--  -->
 </mapper>

@@ -29,41 +29,41 @@
 			</div>
 		</div>
 		<div class="row my-1">
-			<div class="col-sm-2 text-right">기업이름</div>
+			<div class="col-sm-2 text-right font-weight-bold">기업이름</div>
 			<div class="col-sm-4 text-left">
 				<span> ${companyMap.company.compName} </span>
 			</div>
-			<div class="col-sm-2 text-right">대표</div>
+			<div class="col-sm-2 text-right font-weight-bold">대표</div>
 			<div class="col-sm-4 text-left">
 				<span>${companyMap.company.representive} </span>
 			</div>
 		</div>				
 		<div class="row my-1">
-			<div class="col-sm-2 text-right">기업규모</div>
+			<div class="col-sm-2 text-right font-weight-bold">기업규모</div>
 			<div class="col-sm-4 text-left">
 				<span> ${companyMap.company.bussinessScale} </span>
 			</div>
-			<div class="col-sm-2 text-right">업종</div>
+			<div class="col-sm-2 text-right font-weight-bold">업종</div>
 			<div class="col-sm-4 text-left">
 				<span> ${companyMap.company.category} </span>
 			</div>
 		</div>
 		<div class="row my-1">
-			<div class="col-sm-2 text-right">홈페이지</div>
+			<div class="col-sm-2 text-right font-weight-bold">홈페이지</div>
 			<div class="col-sm-4 text-left">
 				<span> ${companyMap.company.homepage} </span>
 			</div>
-			<div class="col-sm-2 text-right">전화번호</div>
+			<div class="col-sm-2 text-right font-weight-bold">전화번호</div>
 			<div class="col-sm-4 text-left">
 				<span> ${companyMap.company.phone} </span>
 			</div>
 		</div>
 		<div class="row my-1">
-			<div class="col-sm-2 text-right">대표 주소</div>
+			<div class="col-sm-2 text-right font-weight-bold">대표 주소</div>
 			<div class="col-sm-4 text-left">
 				<span> ${companyMap.company.location} </span>
 			</div>
-			<div class="col-sm-2 text-right"></div>
+			<div class="col-sm-2 text-right font-weight-bold"></div>
 			<div class="col-sm-4 text-left">
 				<span> </span>
 			</div>
@@ -80,17 +80,16 @@
 				<a class="nav-link active" data-toggle="tab" href="#recruitment-ing-tab">진행중(${rcrtList.size() }건)</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#recruitment-end-tab">마감(*건)</a>
+				<a class="nav-link" data-toggle="tab" href="#recruitment-end-tab">마감(${rcrtEndList.size() }건)</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#recruitment-all-tab">전체(개수)</a>
+				<a class="nav-link" data-toggle="tab" href="#recruitment-all-tab">전체(${rcrtList.size()+rcrtEndList.size() }개수)</a>
 			</li>
 		</ul>
 
 		<!-- Tab panes -->
 		<div class="tab-content">
 			<div id="recruitment-ing-tab" class="container tab-pane active"><br />
-				<h3>진행 중인 채용정보 보여주면 댐</h3>
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -111,7 +110,7 @@
 								</td>
 								<td>수정/마감 버튼</td>
 								<td>
-									<a href="${pageContext.request.contextPath }/company/viewApplicantList.ithrer?recruitmentNo=${rcrt.recruitmentNo}&compId=${company.compId}">
+									<a href="${pageContext.request.contextPath }/company/viewApplicantList.ithrer?recruitmentNo=${rcrt.recruitmentNo}&compId=${companyLoggedIn.compId}">
 										${rcrt.noOfApplicant }명
 									</a>
 									 (미열람 *명)
@@ -120,8 +119,8 @@
 									통계보기 버튼
 								</td>
 								<td>
-									없음
-									유료서비스신청 버튼
+									없음<br />
+									<button class="btn btn-success btn-sm">유료서비스 신청</button>
 								</td>
 							</tr>
 						</tbody>
@@ -129,7 +128,42 @@
 				</table>
 			</div>
 			<div id="recruitment-end-tab" class="container tab-pane fade"><br>
-				<h3>마감된 채용정보 보여주면 댐</h3>
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>공고 제목</th>
+							<th>공고 관리</th>
+							<th>지원자 관리</th>
+							<th>지원자 통계</th>
+							<th>이용상품</th>
+						</tr>
+					</thead>
+					<c:forEach var="rcrtEnd" items="${rcrtEndList}">
+						<tbody>
+							<tr>
+								<td>
+									<a href="${pageContext.request.contextPath }/index/ithrerNotice.ithrer?no=${rcrtEnd.recruitmentNo}">
+									${rcrtEnd.recruitmentTitle }
+									</a>
+								</td>
+								<td>수정/마감 버튼</td>
+								<td>
+									<a href="${pageContext.request.contextPath }/company/viewApplicantList.ithrer?recruitmentNo=${rcrtEnd.recruitmentNo}&compId=${companyLoggedIn.compId}">
+										${rcrtEnd.noOfApplicant }명
+									</a>
+									 (미열람 *명)
+								</td>
+								<td>
+									통계보기 버튼
+								</td>
+								<td>
+									없음<br />
+									<button class="btn btn-success btn-sm">유료서비스 신청</button>
+								</td>
+							</tr>
+						</tbody>
+					</c:forEach>
+				</table>
 			</div>
 			<div id="recruitment-all-tab" class="container tab-pane fade"><br>
 				<h3>진행 중/마감된 채용정보 모두 보여주면 댐</h3>
@@ -144,7 +178,7 @@
 		<!-- Nav tabs -->
 		<ul class="nav nav-tabs" role="tablist">
 			<li class="nav-item">
-				<a class="nav-link active" data-toggle="tab" href="#today-inqury-tab">오늘 본 인재(${readApplicantList.size() }명)</a>
+				<a class="nav-link active" data-toggle="tab" href="#today-inqury-tab">오늘 본 인재(${readAppList.size() }명)</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#person-bookmark-tab">관심인재(${favoriteAppList.size() }명)</a>
@@ -158,16 +192,24 @@
 				<table id="readApplicant-table" class="table table-hover">
 					<thead>
 						<tr>
-							<th>임시임다</th>
+							<th>이름/나이/성별</th>
+							<th>이력서 제목</th>
+							<th>경력</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="applicant" items="${readApplicantList }">
+						<c:forEach var="applicant" items="${readAppList }">
 							<tr>
 								<td>
-									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${applicant.recruitmentNo}&memberId=${applicant.memberId}">
-									${applicant }
+									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=2&memberId=${applicant.memberId}">
+									${applicant.memberId }
 									</a>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<button class="btn btn-primary btn-sm">관심인재 등록</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -179,7 +221,10 @@
 				<table id="favoriteApplicant-table" class="table table-hover">
 					<thead>
 						<tr>
-							<th>임시임다</th>
+							<th>이름/나이/성별</th>
+							<th>이력서 제목</th>
+							<th>경력</th>
+							<th>관리</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -187,8 +232,13 @@
 							<tr>
 								<td>
 									<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">
-									${favorite}
+									${favorite.memberId}
 									</a>
+								</td>
+								<td></td>
+								<td></td>
+								<td>
+									<button class="btn btn-danger btn-sm">관심인재 해제</button>
 								</td>
 							</tr>
 						</c:forEach>

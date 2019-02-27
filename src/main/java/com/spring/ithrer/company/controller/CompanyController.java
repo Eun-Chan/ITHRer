@@ -36,7 +36,7 @@ import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
 @RequestMapping("/company")
-@SessionAttributes("company")
+@SessionAttributes("companyLoggedIn")
 public class CompanyController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -160,6 +160,7 @@ public class CompanyController {
 			
 			Map<String,Object> map2 = new HashMap<>();
 			map2.put("memberId", splitStr[i]);
+			map2.put("compId", compId);
 			Member member = companyService.selectApplicant(map2);
 			readAppList.add(member);
 		}
@@ -167,26 +168,17 @@ public class CompanyController {
 		// 관심인재 리스트 가져오기
 		List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
 		
+		// 마감된 채용공고 리스트 가져오기
+		List<Recruitment> rcrtEndList = companyService.selectRcrtEndList(compId);
+		
 		
 		mav.addObject("companyMap",companyMap);
 		mav.addObject("rcrtList",rcrtList);
+		mav.addObject("rcrtEndList",rcrtEndList);
 		mav.addObject("readAppList",readAppList);
 		mav.addObject("favoriteAppList",favoriteAppList);
 		
 		mav.setViewName("company/companyIndex");
-		
-		return mav;
-	}
-	
-	@RequestMapping("/login.ithrer")
-	public ModelAndView login(ModelAndView mav) {
-		
-		// 회사 아이디 임시로 주기
-		String compId = "audgnsdlsp";
-		
-		mav.addObject("company",companyService.selectCompanyOne(compId));
-		
-		mav.setViewName("redirect:/");
 		
 		return mav;
 	}
@@ -345,10 +337,20 @@ public class CompanyController {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("recruitmentNo", recruitmentNo);
 		paramMap.put("compId", compId);
-		
 		List<Member> applicantList = companyService.selectAppList(paramMap);
 		
+		// 해당 채용공고 가져오기
+		Recruitment recruitment = companyService.selectRecruitmentOne(recruitmentNo);
+		
+		// 해당 채용공고를 제외한 마감되지 않은 채용공고리스트 가져오기
+		List<Recruitment> rcrtList = companyService.selectRcrtListNotThis(paramMap);
+		
+		logger.debug("recruitment | "+recruitment);
+		logger.debug("rcrtList | "+rcrtList);
+		
 		mav.addObject("applicantList",applicantList);
+		mav.addObject("recruitment",recruitment);
+		mav.addObject("rcrtList",rcrtList);
 		
 		mav.setViewName("company/viewApplicantList");
 		return mav;

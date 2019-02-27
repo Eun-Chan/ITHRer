@@ -48,9 +48,9 @@ function validate(){
 		<input type="text" class="form-control" name="anonyBoardTitle" id="anonyBoardTitle"  placeholder="제목" required>
 		
 <!-- 		<label for="anonyBoardWriter">작성자</label> -->
-		<input type="text" class="form-control" name="anonyBoardWriter" value="anonyBoardWriter" readonly required>
+		<input type="text" class="form-control" name="anonyBoardWriter" value="익 명" required>
 <!-- 		<label for="password">비밀번호</label> -->
-		<input type="password" class="form-control" name="anonyBoardPassword"/>
+		<input type="password" class="form-control" name="anonyBoardPassword" placeholder="비밀번호"/>
 	    
 	    <textarea class="form-control" rows="10"  name="anonyBoardContent" placeholder="내용" required></textarea>
 		<br />

@@ -60,11 +60,12 @@ public class IndexServiceImpl implements IndexService{
 		return indexDao.deleteFavorites(map);
 	}
 
-	@Override
-	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
-		
-		return indexDao.selectListSearchIthrer(map);
-	}
+	/*
+	 * @Override public List<Map<String, String>> selectListSearchIthrer(Map<String,
+	 * Object> map) {
+	 * 
+	 * return indexDao.selectListSearchIthrer(map); }
+	 */
 	
 	@Override
 	public int insertPortFolio(PortFolio pf) {
@@ -90,5 +91,20 @@ public class IndexServiceImpl implements IndexService{
 	public List<Recruitment> selectTopListRecruitment(String memberId) {
 		return indexDao.selectTopListRecruitment(memberId);
 	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage,
+			int ithrerCPage) {
+		// TODO Auto-generated method stub
+		return indexDao.selectListSearchIthrer(map, ithrerNumPerPage, ithrerCPage);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return indexDao.selectListSearchIthrer(map);
+	}
+
+
 
 }
