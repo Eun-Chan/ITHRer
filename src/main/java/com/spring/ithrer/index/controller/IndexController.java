@@ -80,6 +80,7 @@ public class IndexController {
       // 지원자 많은 공곡 6 리스트
       List<Recruitment> topRc = indexService.selectTopListRecruitment(memberId);
       
+      
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String sysdate1 = format.format(sysdate);
       Date sysdate2 = format.parse(sysdate1);
@@ -90,11 +91,18 @@ public class IndexController {
     	  date = format.parse(rc.get(i).getClosingDate());    	  
     	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
     	  rc.get(i).setEndTime(endTime);
+    	  if(endTime<0) {
+    		  rc.get(i).setEnd("Y");
+    	  }
 
 
     	  date = format.parse(topRc.get(i).getClosingDate());    	  
     	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
     	  topRc.get(i).setEndTime(endTime);
+    	  if(endTime<0) {
+    		  topRc.get(i).setEnd("Y");
+    	  }
+    	  
       }
      
       //공고 끝나는 날짜 가져오기

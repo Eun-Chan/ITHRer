@@ -251,11 +251,11 @@ ul {
 	
 }
 
-input[type=checkbox] {  
+.loc-detail {  
     display: none;  
 }
 
-input[type=checkbox] + label{
+.loc-detail + label{
     display: inline-block;  
     cursor: pointer;  
     position: relative;  
@@ -264,7 +264,7 @@ input[type=checkbox] + label{
     font-size: 13px;
 }
 
-input[type=checkbox]+ label:before {     
+.loc-detail+ label:before {     
 
     content: "";  
     display: inline-block;  
@@ -280,7 +280,7 @@ input[type=checkbox]+ label:before {
     border-radius: 2px; 
     box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);  
 }
-input[type=checkbox]:checked + label:before { 
+.loc-detail:checked + label:before { 
 
     content: "\2713";  /* 체크모양 */
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);  

@@ -29,7 +29,7 @@
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount ,
 		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
-		from recruitment s order by recruitment_no desc )t where rownum between 1 and 6
+		from recruitment s where end = 'N' order by recruitment_no desc )t where rownum between 1 and 6
 	</select>
 	<select id="selectOneFavorites" parameterType="map" resultType="favorites">
 		select * from favorites where member_id = #{memberId} and recruitment_no = #{recNo} and select_no = 0
@@ -140,6 +140,6 @@
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount,
 		(select count(*) from companyapplication where recruitment_no = s.recruitment_no ) count ,
 		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
-		from recruitment s order by count desc )t where rownum between 1 and 6
+		from recruitment s where end = 'N' order by count desc )t where rownum between 1 and 6
 	</select>
 </mapper>
