@@ -95,14 +95,22 @@ public class IndexServiceImpl implements IndexService{
 	@Override
 	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage,
 			int ithrerCPage) {
-		// TODO Auto-generated method stub
 		return indexDao.selectListSearchIthrer(map, ithrerNumPerPage, ithrerCPage);
 	}
 
 	@Override
 	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return indexDao.selectListSearchIthrer(map);
+	}
+
+	@Override
+	public List<PortFolio> selectListPortFolio(String memberId) {
+		return indexDao.selectListPortFolio(memberId);
+	}
+
+	@Override
+	public int deletePortFolio(int pfNo) {
+		return indexDao.deletePortFolio(pfNo);
 	}
 
 

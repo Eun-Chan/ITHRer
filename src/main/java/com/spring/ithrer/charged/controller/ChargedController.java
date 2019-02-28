@@ -35,11 +35,12 @@ public class ChargedController {
 	} 
 	
 	@RequestMapping("/fileUpload.ithrer")
-	public ModelAndView fileUpload(ModelAndView mav, @RequestParam(name="upFile", required=false) MultipartFile upFiles)  {
-		
+	public ModelAndView fileUpload(ModelAndView mav, @RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
+			@RequestParam(value="compId",required=false)String compId)  {
 		
 		logger.debug("originalName: " + upFiles.getOriginalFilename());
-		String uploadpath = "images/banner";
+		//uploadpath 예시 : "images/banner"
+		String uploadpath = directory;
 
 		ResponseEntity<String> img_path = null;
 		try {
@@ -51,8 +52,14 @@ public class ChargedController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		String bannerPath = (String) img_path.getBody();
-		logger.debug("bannerPath : "+bannerPath);
+		String path = (String) img_path.getBody();
+		//경로별로 분기해야됨.
+		
+		
+		if(path!=null) {
+
+		}
+		logger.debug("path : "+path);
 		
 		mav.setViewName("redirect:/fileUpload.ithrer");
 		

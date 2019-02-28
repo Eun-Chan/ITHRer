@@ -58,7 +58,6 @@
 		border-bottom: 1px solid #d1d4d7;
 	}
 	.btn{
-		float: right;
 		padding: 2px;
 	}
 	.row3{
@@ -132,7 +131,12 @@
 	.selectDiv{
 		display: inline-block;
 	}
-
+	.portfolioDiv{
+		margin-top: 5px;
+	}
+	.update{
+		float: right;
+	}
 </style>
 <body>
 	<div class="applyHeader">
@@ -153,13 +157,13 @@
 				<div class="col-sm-12 row3">
 					<span class="memberEmail">이메일 : ${member.email }</span>
 					<span class="memberPhone">전화번호 : </span>	
-					<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">수정</button>		
+					<button type="button" class="btn btn-info update" data-toggle="modal" data-target="#myModal">수정</button>		
 				</div>
 			</div>
 			<div class="row content two">
 				<div class="col-sm-12 row1">
 					<div class="uploadFile">
-					<strong style="padding: 10px 0px 0px 5px; float: left;">포트폴리오</strong>
+					<strong style="padding: 10px 0px 0px 5px; float: left;">포트폴리오(최대 3개까지 추가 가능)</strong>
 				 	<form enctype="multipart/form-data" id="uploadForm" method="post">
 							<label for="Addportfolio">파일 추가</label>
 							<input type="file" name="portfolio" id="Addportfolio" accept=".ppt, .pdf"/>
@@ -167,7 +171,14 @@
 					</div>
 				</div>
 				<div class="col-sm-12 row2 port">
-					<!-- <span style="font-size: 0.9em; letter-spacing: 1px;" >포트폴리오 제목(이력서가 없다면 추가버튼 만들어야함.)</span> -->
+						<c:forEach items="${portFolio }" var="port">
+							<div class="portfolioDiv">
+								<span style="font-size: 0.9em; letter-spacing: 1px;" >${port.POriginalFileName }</span>
+								<button class="btn btn-outline-danger deletePortFolio">삭제</button>
+								<input type="hidden" value="${port.pfNo }" id="hiddenPfNo"/>
+								<input type="hidden" value="${port.url }" id="hiddenUrl" />
+							</div>
+						</c:forEach>	
 				</div>
 			</div>
 			<button type="button" class="btn btn-success applybutton">지원 하기</button>	
@@ -249,10 +260,14 @@ $("#emailSelect").on("change",function(){
 });
 
 $("#Addportfolio").on("change",function(){
+	if($(".portfolioDiv").length == 3){
+		alert("포트폴리오 추가는 3개 까지만 가능합니다.");
+		return;
+	}
 	var formData = new FormData();
 	formData.append("file",$(this)[0].files[0]);
 	var div = $(".port"); 
-	var html = "<span style='font-size: 0.9em; letter-spacing: 1px; display: block;' >"
+	var html = "<div class='portfolioDiv'><span class ='portFolioName' style='font-size: 0.9em; letter-spacing: 1px; margin-right: 4px;' >"
 	$.ajax({
 		url:"${pageContext.request.contextPath}/index/uploadPortfolio.ithrer",
 		contentType: false,
@@ -263,9 +278,9 @@ $("#Addportfolio").on("change",function(){
 		success:function(data){
 			console.log(JSON.parse(data).pOriginalFileName);
 			html+=JSON.parse(data).pOriginalFileName+"</span>";
+			html+="<button class='btn btn-outline-danger'>삭제</button></div>";
 			div.append(html);
-		}
-		
+		}	
 	});
 });
 
@@ -316,7 +331,25 @@ $(".applybutton").on("click",function(){
 	}
 	
 });
-
+$(document).on("click",".deletePortFolio",function(){
+	var button = $(this);
+	var pfNo = $("#hiddenPfNo").val();
+	var url = $("#hiddenUrl").val();
+	var data = {
+			pfNo:pfNo,
+			url:url
+	}
+	$.ajax({
+		url:"${pageContext.request.contextPath}/index/deletePortFolio.ithrer",
+		data:data,
+		success:function(data){
+			if(data==1){
+				button.parent().remove();
+			}
+			
+		}
+	})
+});
 </script>
 </body>
 </html>

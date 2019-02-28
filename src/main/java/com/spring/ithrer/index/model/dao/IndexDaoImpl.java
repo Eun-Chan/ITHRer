@@ -108,4 +108,14 @@ public class IndexDaoImpl implements IndexDao{
 		return sqlSession.selectList("index.selectListSearchIthrer", map);
 	}
 
+	@Override
+	public List<PortFolio> selectListPortFolio(String memberId) {
+		return sqlSession.selectList("index.selectListPortFolio",memberId);
+	}
+
+	@Override
+	public int deletePortFolio(int pfNo) {
+		return sqlSession.delete("index.deletePortFolio", pfNo);
+	}
+
 }

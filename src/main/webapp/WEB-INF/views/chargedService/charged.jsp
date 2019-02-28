@@ -18,7 +18,7 @@ $(function(){
 	});
 });
 </script>
-<form action="${pageContext.request.contextPath}/fileUpload.ithrer" method="post" enctype="multipart/form-data">
+<form action="${pageContext.request.contextPath}/fileUpload.ithrer?directory='asdasd/meiasdk'" method="post" enctype="multipart/form-data">
 	<div class="input-group mb-3" style="padding:0px;">
 	  <div class="input-group-prepend" style="padding:0px;">
 	    <span class="input-group-text">첨부파일1</span>
