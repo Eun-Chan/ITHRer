@@ -25,6 +25,11 @@ img.visible-off{
 div#applicant-info-container{
 	margin-bottom: 60px;
 }
+
+/* border 두께 설정 */
+div.border-top.border-bottom{
+	border-width: 3px !important;
+}
 </style>
 
 <div id="all-container" class="container">
@@ -90,7 +95,7 @@ div#applicant-info-container{
 		<div id="education-info-container" class="container my-5">
 			<h3>학력</h3>
 			<span>최종학력 | (예시) 대학교 4년 졸업예정</span>
-			<div class="row py-3 mt-3 border-top border-bottom">
+			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					재학기간
 				</div>
@@ -112,7 +117,7 @@ div#applicant-info-container{
 		<div id="career-info-container" class="container my-5">
 			<h3>경력</h3>
 			<span>총 *년 *개월</span>
-			<div class="row py-3 mt-3 border-top border-bottom">
+			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					근무기간
 				</div>
@@ -133,7 +138,7 @@ div#applicant-info-container{
 		
 		<div id="activity-info-container" class="container my-5">
 			<h3>대외활동</h3>
-			<div class="row py-3 mt-3 border-top border-bottom">
+			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					기간
 				</div>
@@ -151,7 +156,7 @@ div#applicant-info-container{
 		
 		<div id="etc-info-container" class="container my-5">
 			<h3>자격증/어학/수상내역</h3>
-			<div class="row py-3 mt-3 border-top border-bottom">
+			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					취득일
 				</div>
@@ -172,7 +177,7 @@ div#applicant-info-container{
 	
 		<div id="preference-info-container" class="container my-5">
 			<h3>취업우대사항</h3>
-			<div class="row py-3 mt-3 border-top border-bottom">
+			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					결혼여부
 				</div>
@@ -219,7 +224,7 @@ div#applicant-info-container{
 		
 		if(count == 1){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/company/favorite?compId=${compId}&memberId=${member.memberId}&recruitmentNo=${recruitmentNo}",
+				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${member.memberId}&recruitmentNo=${recruitmentNo}",
 				type: "delete",
 				success: function(data){
 					var newCount = data.newCount;
@@ -241,7 +246,7 @@ div#applicant-info-container{
 		}
 		else if(count == 0){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/company/favorite?compId=${compId}&memberId=${member.memberId}&recruitmentNo=${recruitmentNo}",
+				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${member.memberId}&recruitmentNo=${recruitmentNo}",
 				type: "post",
 				success: function(data){
 					var newCount = data.newCount;
