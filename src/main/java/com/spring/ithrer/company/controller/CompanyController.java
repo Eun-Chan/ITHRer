@@ -171,7 +171,6 @@ public class CompanyController {
 		// 마감된 채용공고 리스트 가져오기
 		List<Recruitment> rcrtEndList = companyService.selectRcrtEndList(compId);
 		
-		
 		mav.addObject("companyMap",companyMap);
 		mav.addObject("rcrtList",rcrtList);
 		mav.addObject("rcrtEndList",rcrtEndList);
@@ -263,7 +262,6 @@ public class CompanyController {
 		Member member = companyService.selectApplicant(map); 
 		
 		
-		mav.addObject("compId",compId);
 		mav.addObject("member",member);
 		mav.setViewName("company/viewApplicant");
 		
@@ -279,7 +277,9 @@ public class CompanyController {
 	}
 	
 	@DeleteMapping("/favorite")
-	public Map<String, Object> deleteFavorite(@RequestParam("compId") String compId, @RequestParam("memberId") String memberId, @RequestParam("recruitmentNo") int recruitmentNo) {
+	public Map<String, Object> deleteFavorite(@RequestParam("compId") String compId
+			, @RequestParam("memberId") String memberId
+			, @RequestParam(value="recruitmentNo",required=false,defaultValue="0") int recruitmentNo) {
 		
 		logger.debug("audgns"+compId);
 		logger.debug(memberId);
@@ -296,6 +296,9 @@ public class CompanyController {
 		
 		if(result > 0) {
 			map2.put("newCount",0);
+			// 관심인재 리스트 가져오기
+			List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
+			map2.put("favoriteAppList",favoriteAppList);
 		}
 		else {
 			map2.put("newCount",1);
@@ -305,7 +308,9 @@ public class CompanyController {
 	}
 	
 	@PostMapping("/favorite")
-	public Map<String, Object> insertFavorite(@RequestParam("compId") String compId, @RequestParam("memberId") String memberId, @RequestParam("recruitmentNo") int recruitmentNo) {
+	public Map<String, Object> insertFavorite(@RequestParam(value="compId") String compId
+			, @RequestParam("memberId") String memberId
+			, @RequestParam(value="recruitmentNo",required=false,defaultValue="0") int recruitmentNo) {
 		
 		logger.debug("audgns"+compId);
 		logger.debug(memberId);
@@ -322,6 +327,9 @@ public class CompanyController {
 		
 		if(result > 0) {
 			map2.put("newCount",1);
+			// 관심인재 리스트 가져오기
+			List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
+			map2.put("favoriteAppList",favoriteAppList);
 		}
 		else {
 			map2.put("newCount",0);
@@ -354,6 +362,34 @@ public class CompanyController {
 		
 		mav.setViewName("company/viewApplicantList");
 		return mav;
+	}
+	
+	@PutMapping("/rcrtEnd")
+	public Map<String,Object> updateRcrtEnd(@RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("compId") String compId) {
+		Map<String,Object> map = new HashMap<>();
+		
+		int result = companyService.updateRcrtEnd(recruitmentNo);
+		
+		String resultStr = "";
+		
+		if(result > 0) {
+			resultStr = "마감 성공!";
+			// 채용정보 가져오기
+			List<Recruitment> rcrtList = companyService.selectRcrtList(compId);
+			// 마감된 채용공고 리스트 가져오기
+			List<Recruitment> rcrtEndList = companyService.selectRcrtEndList(compId);
+			
+			map.put("rcrtList",rcrtList);
+			map.put("rcrtEndList",rcrtEndList);
+			map.put("recruitmentNo",recruitmentNo);
+		}
+		else {
+			resultStr = "마감 실패!";
+		}
+		
+		map.put("result", resultStr);
+		
+		return map;
 	}
 	
 }

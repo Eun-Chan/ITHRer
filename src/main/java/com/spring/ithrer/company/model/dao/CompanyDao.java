@@ -64,4 +64,6 @@ public interface CompanyDao {
 
 	List<Recruitment> selectRcrtEndList(String compId);
 
+	int updateRcrtEnd(int recruitmentNo);
+
 }
