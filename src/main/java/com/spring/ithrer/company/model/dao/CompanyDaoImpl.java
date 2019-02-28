@@ -150,4 +150,9 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.selectList("company.selectRcrtEndList",compId);
 	}
 
+	@Override
+	public int updateRcrtEnd(int recruitmentNo) {
+		return sqlSession.update("company.updateRcrtEnd",recruitmentNo);
+	}
+
 }
