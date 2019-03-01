@@ -4,8 +4,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.amazonaws.util.IOUtils;
+import com.spring.ithrer.charged.model.service.ChargedService;
 import com.spring.ithrer.common.util.S3Util;
 import com.spring.ithrer.common.util.UploadFileUtils;
 
@@ -28,14 +34,23 @@ public class ChargedController {
 	String bucketName = "eunchan-origin";
 	S3Util s3 = new S3Util();
 	
+	@Autowired
+	ChargedService chargedService;
+	
 	@RequestMapping(value="/charedService.ithrer")
 	public ModelAndView chargedService(ModelAndView mav) {
-		 mav.setViewName("/chargedService/charged");
-		 return mav;
+		
+		//현재 결제 기간이 남아있는 리스트 찾기
+		List<Map<String, String>> list = chargedService.selectListCharged();
+		
+		mav.addObject("chargedList", list);
+		mav.setViewName("/chargedService/charged");
+		return mav;
 	} 
 	
 	@RequestMapping("/fileUpload.ithrer")
-	public ModelAndView fileUpload(ModelAndView mav, @RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
+	public ModelAndView fileUpload(ModelAndView mav, HttpServletRequest request,
+			@RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
 			@RequestParam(value="compId",required=false)String compId)  {
 		
 		logger.debug("originalName: " + upFiles.getOriginalFilename());
@@ -53,13 +68,21 @@ public class ChargedController {
 			e.printStackTrace();
 		}
 		String path = (String) img_path.getBody();
+		logger.debug("path : "+path);
 		//경로별로 분기해야됨.
 		
+		//db에 path 저장
+		//directory로 분기하여 각자 기능 구현 할 수 있게 주의 할 것!
+		if(directory == "images/banner") {
+			String no = request.getParameter("charged");
+			logger.debug("민우no"+no);
+			int result = chargedService.updateFileName(no, path);
+			
+		}
 		
 		if(path!=null) {
 
 		}
-		logger.debug("path : "+path);
 		
 		mav.setViewName("redirect:/fileUpload.ithrer");
 		
