@@ -1,5 +1,9 @@
 package com.spring.ithrer.user.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -595,6 +598,53 @@ public class UserController {
 		return mav;
 	}
 	
+//	네이버 로그인, 가입되어있지않다면 가입까지 진행
+	@RequestMapping("/user/naverLogin.ithrer")
+	public ModelAndView naverLogin(ModelAndView mav) {
+		System.out.println("명훈123123");
+		String token = "AAAANykcroO1j3TRrEmNRQimm6BooAux-NwIZQrsuWT4S-FcDRyD_EOD6y9f4VuxCcsOuxEnFgNg45HSZrskGWIsuEM";// 네이버 로그인 접근 토큰; 여기에 복사한 토큰값을 넣어줍니다.
+        String header = "Bearer " + token; // Bearer 다음에 공백 추가
+        try {
+            String apiURL = "https://openapi.naver.com/v1/nid/me";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", header);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                response.append(inputLine);
+            }
+            br.close();
+            System.out.println("명훈0000"+response.toString());
+            System.out.println("명훈0000"+response.indexOf("id"));
+            System.out.println("네이버="+response.substring(52));
+            System.out.println("네이버 id="+response.substring(response.indexOf("\"id\":\"")+6,response.indexOf("\",\"email\"")));
+            System.out.println("네이버 email="+response.substring(response.indexOf("\"email\":\"")+9,response.indexOf("\",\"name\"")));
+            System.out.println("네이버 name="+response.substring(response.indexOf("\"name\":\"")+8,response.indexOf("\"}}")));
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+		
+		mav.setViewName("redirect:/calendar.ithrer");
+		return mav;
+	}
 	
-	
+//	네이버로그인 callback
+	@RequestMapping("/user/naverLoginCallback.ithrer")
+	public ModelAndView naverLoginCallback(ModelAndView mav) {
+		
+		logger.debug("naverLogin callback");
+		
+		mav.setViewName("naver/naverCallback");
+		
+		return mav;
+	}
 }

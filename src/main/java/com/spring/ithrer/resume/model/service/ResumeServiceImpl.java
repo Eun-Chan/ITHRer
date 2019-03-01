@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.ithrer.resume.model.dao.ResumeDao;
+import com.spring.ithrer.resume.model.vo.Award;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {
@@ -20,4 +21,11 @@ public class ResumeServiceImpl implements ResumeService {
 		List<Map<String,String>> list = resumeDao.certificateList(certName);
 		return list;
 	}
+
+	@Override
+	public int insertAward(Map<String, Object> awardMap) {
+		int result = resumeDao.insertAward(awardMap);
+		return result;
+	}
+
 }

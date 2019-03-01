@@ -61,11 +61,11 @@
 	<table id="" class="table table-bordered">
 		<tr class="table-primary">
 			<th>번호</th>
-			<td>${anonyBoardRealNo}</td>
+			<td>${anonyBoard.anonyBoardNo}</td>
 			<th>작성자</th>
 			<td>${anonyBoard.anonyBoardWriter}</td>
 			<th>조회수</th>
-			<td>${anonyBoard.readCount}</td>
+			<td>${anonyBoard.anonyBoardReadCount}</td>
 		</tr>
 		<tr class="table-primary">
 			<th>제목</th>

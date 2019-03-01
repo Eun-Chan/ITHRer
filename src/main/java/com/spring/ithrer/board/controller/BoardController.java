@@ -64,7 +64,7 @@ public class BoardController {
 	 * 익명게시판 글 하나 상세보기 페이지
 	 */
 	@RequestMapping("/board/anonyBoardView")
-	public ModelAndView anonyBoardView(@RequestParam("no") int anonyBoardNo,@RequestParam("anonyBoardRealNo") int anonyBoardRealNo,ModelAndView mav) {
+	public ModelAndView anonyBoardView(@RequestParam("no") int anonyBoardNo, ModelAndView mav) {
 //		logger.info("Controller : anonyBoardNo 전 ="+anonyBoardNo);
 		
 	    AnonyBoard anonyBoard = boardService.anonyBoardSelectOne(anonyBoardNo);
@@ -73,7 +73,7 @@ public class BoardController {
 //		mav.addObject("anonyBoardNo", anonyBoardNo);
 //		mav.addObject("oneInfo", oneInfo);
 		mav.addObject("anonyBoard", anonyBoard);
-		mav.addObject("anonyBoardRealNo", anonyBoardRealNo);
+		//mav.addObject("anonyBoardRealNo", anonyBoardRealNo);
 		
 		mav.setViewName("board/anonyBoardView");
 		

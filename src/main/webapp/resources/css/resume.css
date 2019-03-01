@@ -283,7 +283,32 @@ h3{
 	display : none;
 }
 /*어학*/
-#formLanguage input {
+#formLanguage {
+	display : block;
+}
+#formLanguage1 select{
+	width : 200px;
+}
+#formLanguage1 input {
+	width : 200px;
+}
+#formLanguage2 input {
+	width : 200px;
+}
+#formLanguage input[name=selfText] {
+	display : none;
+}
+#formLanguage select[name=examName] {
+	width : 200px;
+	display : none;
+}
+#formLanguage input[name=selfExam] {
+	display : none;
+}
+#formLanguage input[name=examscore] {
+	display : none;
+}
+#formLanguage input[name=examDate] {
 	display : none;
 }
 #buttonLanguage {

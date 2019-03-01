@@ -26,7 +26,7 @@ $(function(){
 		var anonyBoardRealNo = $(this).children(":first").text();
 		console.log(anonyBoardRealNo);
 		/* console.log("anonyBoardNo="+anonyBoardNo); */
-		location.href = "${pageContext.request.contextPath}/board/anonyBoardView.do?no="+anonyBoardNo+"&anonyBoardRealNo="+anonyBoardRealNo;
+		location.href = "${pageContext.request.contextPath}/board/anonyBoardView.do?no="+anonyBoardNo;
 	});
 });
 </script>
