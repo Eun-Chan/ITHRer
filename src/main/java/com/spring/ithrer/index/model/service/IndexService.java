@@ -44,6 +44,10 @@ public interface IndexService {
 
 	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
 
+	List<PortFolio> selectListPortFolio(String memberId);
+
+	int deletePortFolio(int pfNo);
+
 
 
 }

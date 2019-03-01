@@ -22,6 +22,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +42,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
+import com.spring.ithrer.common.util.S3Util;
+import com.spring.ithrer.common.util.UploadFileUtils;
 import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
@@ -80,6 +84,7 @@ public class IndexController {
       // 지원자 많은 공곡 6 리스트
       List<Recruitment> topRc = indexService.selectTopListRecruitment(memberId);
       
+      
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String sysdate1 = format.format(sysdate);
       Date sysdate2 = format.parse(sysdate1);
@@ -90,11 +95,18 @@ public class IndexController {
     	  date = format.parse(rc.get(i).getClosingDate());    	  
     	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
     	  rc.get(i).setEndTime(endTime);
+    	  if(endTime<0) {
+    		  rc.get(i).setEnd("Y");
+    	  }
 
 
     	  date = format.parse(topRc.get(i).getClosingDate());    	  
     	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
     	  topRc.get(i).setEndTime(endTime);
+    	  if(endTime<0) {
+    		  topRc.get(i).setEnd("Y");
+    	  }
+    	  
       }
      
       //공고 끝나는 날짜 가져오기
@@ -492,8 +504,12 @@ public class IndexController {
    
    //지원하기 창
    @RequestMapping("/notice/companyApply.ithrer")
-   public ModelAndView ithrerCompanyApply(ModelAndView mav,@RequestParam("recruitmentNo")int rbcNo) {
+   public ModelAndView ithrerCompanyApply(ModelAndView mav,@RequestParam("recruitmentNo")int rbcNo,HttpServletRequest req) {
 	   String memberId = "";
+	   if(req.getSession().getAttribute("member")!=null) {
+			  Member member = (Member) req.getSession().getAttribute("member");
+			  memberId = member.getMemberId();
+		 }
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("memberId", memberId);
 	   map.put("recNo", rbcNo);
@@ -501,6 +517,10 @@ public class IndexController {
 	   Recruitment rc = indexService.selectOneRecruitment(map);
    
 	   Company com = indexService.selectOneCompany(rc.getCompId());
+	   
+	   List<PortFolio> portFolio = indexService.selectListPortFolio(memberId);
+	   
+	   mav.addObject("portFolio", portFolio);
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
 	   mav.setViewName("/notice/companyApply");
@@ -580,31 +600,39 @@ public class IndexController {
 		   file = req.getFile(itr.next());
 	   }
 	   System.out.println("컨트롤러");
-	   String saveDirectory = req.getSession().getServletContext().getRealPath("/resources/upload/portfolio");
+	   String saveDirectory = "resume/portfolio";
 	   System.out.println(file.getOriginalFilename());
 	   System.out.println("saveDirectory="+saveDirectory);
+	   String o_fileName = "";
+	   String r_fileName = "";
 	   if(!file.isEmpty()) {
 		   //오리지널 파일네임
-		   String o_fileName = file.getOriginalFilename();
+	   		o_fileName = file.getOriginalFilename();
 		   
 		   //리네임해서 서버 저장용
-		   String r_fileName = Utils.getRenamedFileName(o_fileName);
+	   		r_fileName = Utils.getRenamedFileName(o_fileName);
 		   
 		   //실제 서버에 파일저장
-		   try {
-			  file.transferTo(new File(saveDirectory+"/"+r_fileName));
-
-		} catch (IllegalStateException e) {
+	   }
+	   ResponseEntity<String> img_path = null;
+	   try {
+		img_path = new ResponseEntity<>(
+					UploadFileUtils.uploadFile(saveDirectory, o_fileName, file.getBytes()),
+					HttpStatus.CREATED);
+		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+			e1.printStackTrace();
+		} catch (Exception e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-			
+	   	String path = (String)img_path.getBody();
+	   	System.out.println(path);
+	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
 		pf.setPOriginalFileName(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
+		pf.setUrl(path);
 		
 		//2. 포트폴리오 테이블에 인서트
 		int result = indexService.insertPortFolio(pf);
@@ -620,7 +648,7 @@ public class IndexController {
 				e.printStackTrace();
 			}
 		}
-	   }
+	   
 	   
    }
    
@@ -636,8 +664,8 @@ public class IndexController {
 		   member.setEmail((String)param.get("email"));
 		   member.setPhone((String)param.get("phone"));
 		   session.setAttribute("member", member);
-		   param.putIfAbsent("result", result);
 		   try {
+			   param.putIfAbsent("result", result);
 			gson.toJson(param,res.getWriter());
 		} catch (JsonIOException e) {
 			// TODO Auto-generated catch block
@@ -675,6 +703,27 @@ public class IndexController {
 			   e.printStackTrace();
 		   }		   
 	   }
-
+   }
+   //포트폴리오 삭제
+   @RequestMapping("/index/deletePortFolio.ithrer")
+   public void deleteFolio(@RequestParam("pfNo") int pfNo,@RequestParam("url") String url,HttpServletResponse res) {
+	   int result = indexService.deletePortFolio(pfNo);
+	   if(result>0) {
+		   S3Util s3 = new S3Util();
+		   for(int i = 0 ; i<s3.getBucketList().size(); i++) {
+			   System.out.println(s3.getBucketList().get(i));		   
+		   }
+		   s3.fileDelete("eunchan-origin"+"/resume/portfolio/2019/02/28/", "542a8da2-8369-4bae-a38a-6e06768cf95d_취업특강자료_자바H오후 20190131.pdf");
+	   }
+	   Gson gson = new Gson();
+	   try {
+		gson.toJson(result,res.getWriter());
+	} catch (JsonIOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
 } 

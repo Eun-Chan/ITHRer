@@ -83,4 +83,9 @@ public class UserServiceImpl implements UserService {
 	public int createKakaoUser(Map<String, String> user) {
 		return userDao.createKakaoUser(user);
 	}
+
+	@Override
+	public int memberPasswordUpdate(Member member) {
+		return userDao.memberPasswordUpdate(member);
+	}
 }

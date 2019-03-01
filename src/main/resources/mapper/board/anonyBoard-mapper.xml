@@ -11,7 +11,8 @@
 	</select>
 	
 	<select resultType="anonyboard" id="selectAnonyBoardOne">
-		select * from anonyBoard where anonyBoardNo = #{anonyBoardNo} </select>
+		select * from anonyBoard where anonyBoardNo = #{anonyBoardNo} 
+	</select>
 
 	<insert id="insertAnonyBoard" parameterType="anonyboard" >
 		insert into anonyBoard(anonyBoardno, anonyBoardTitle, anonyBoardWriter, anonyBoardContent, anonyBoardPassword)values(seq_anonyboardno.nextval,#{anonyBoardTitle},#{anonyBoardWriter},#{anonyBoardContent},#{anonyBoardPassword}) 
@@ -44,5 +45,9 @@
 	<delete id="anonyBoardDelete" parameterType="_int">
 		delete from anonyBoard where anonyBoardNo = #{no}
 	</delete>
+
+	<update id="anonyBoardReadCount" parameterType="_int">
+		update anonyBoard set anonyBoardReadCount = anonyBoardReadCount+1 where anonyBoardNo = #{anonyBoardNo}
+	</update>
 
 </mapper>

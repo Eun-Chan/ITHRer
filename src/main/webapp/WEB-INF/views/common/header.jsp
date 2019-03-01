@@ -41,9 +41,17 @@
 
 <!DOCTYPE html>
 <html>
+<style>
+.memberNames{
+	color:black;
+	display: inline-block;
+	padding-right: 2px
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>Hello Spring</title>
+
 <!-- 부트스트랩관련 라이브러리 -->
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -55,13 +63,16 @@
 <!-- 카카오톡 로그인용 -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
+<!-- 페이스북 로그인용(로그인 버튼) -->
+<script async defer src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1894308784031760&autoLogAppEvents=1"></script>
+
 </head>
 <body>
 <div id="container">
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}" style="color:#ffb6c1">
-				<img src="${pageContext.request.contextPath }/resources/images/ITHRerLogo.png" alt="" width="50px" height="50px"/>
+				<img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="50px" height="50px"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -77,14 +88,13 @@
 			    </ul>
 			    
 			    
-			    <c:if test="${empty memberLoggedIn and empty companyLoggedIn }">
+			    <c:if test="${empty member and empty companyLoggedIn }">
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer">공고등록 테스트</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
-
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty companyLoggedIn }">
@@ -94,10 +104,13 @@
 		        	</ul>
 		        	<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/company/logout.ithrer'">로그아웃</button>
 			 	</c:if>
-			 	<c:if test="${memberLoggedIn != null }">
-			 		<a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${memberLoggedIn.memberId}">${memberLoggedIn.memberName }</a>님, 안녕하세요
-			 		&nbsp;
-			 		<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button>
+			 	<c:if test="${member != null }">
+			 		<ul class="navbar-nav">
+				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames">${member.memberName }</a>님</span></li>
+				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
+			 		</ul>
 			 	</c:if>
 			 </div>
 		</nav>
@@ -155,6 +168,7 @@
 				  			<br />
 				  				<p class="font-italic text-info">다른 계정으로 로그인</p>
 				  				<img src="${pageContext.request.contextPath }/resources/images/kakao_login.png" class="rounded-circle" onclick="kakaoLogin()" width="50px">
+				  				<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
 				  			</div>
 						</form>	
 					</div>
@@ -166,7 +180,7 @@
 				  			</div>
 				  			<div class="form-group">
 				    			<label for="userPassword">비밀번호</label>
-				    			<input type="password" class="form-control" id="companyPassword" onkeyup="enterkey();">
+				    			<input type="password" class="form-control" id="companyPassword" onkeyup="enterkey2();">
 				    			<span><p id="login-help2"></p></span>
 				  			</div>
 				  			<div class="form-group form-check">
@@ -193,6 +207,8 @@
 </div> <!-- modal fade 끝 -->
 
 <script>
+	
+
 	/* 카카오톡 api 로그인 */
 	//<![CDATA[
     // 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -255,7 +271,13 @@
 	/* Enter 로 바로 로그인 */
 	function enterkey(){
 		if(window.event.keyCode == 13)
-			console.log("하앙");
+			memberLoginCheck();
+	}
+	
+	function enterkey2(){
+		if(window.event.keyCode == 13){
+			companyLoginCheck();
+		}
 	}
 	
 	function memberLoginCheck(){
@@ -319,6 +341,45 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
+	
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 페이스북 로그인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1894308784031760',
+	      cookie     : true,
+	      xfbml      : true,
+	      version    : 'v3.2'
+	    });
+      
+    	FB.AppEvents.logPageView();   
+      
+ 	};
+ 	
+ 	(function(d, s, id){
+ 	     var js, fjs = d.getElementsByTagName(s)[0];
+ 	     if (d.getElementById(id)) {return;}
+ 	     js = d.createElement(s); js.id = id;
+ 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+ 	     fjs.parentNode.insertBefore(js, fjs);
+ 	   }(document, 'script', 'facebook-jssdk'));
+ 	
+ 	function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+    }
+  	
+ 	function statusChangeCallback(response) {
+    	if (response.status === 'connected') {
+         	FB.AppEvents.logPageView();
+         	testAPI();
+    	}
+    	else {
+    		FB.AppEvents.logPageView();
+    	}
+  	}
+ 	
+ 	
 </script>
 	
 	<section id="content">

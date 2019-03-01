@@ -32,4 +32,6 @@ public interface UserDao {
 	int createCompany(Company company);
 
 	int createKakaoUser(Map<String, String> user);
+
+	int memberPasswordUpdate(Member member);
 }

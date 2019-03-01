@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -445,7 +446,7 @@ public class UserController {
 	public ModelAndView memberPasswordUpdateGoing(Member member , ModelAndView mav) {
 		mav.addObject("member", member);
 		
-		
+		mav.setViewName("user/memberUpdatePwd");
 		
 		return mav;
 	}
@@ -546,6 +547,29 @@ public class UserController {
 	}
 	
 	/**
+	 * 개인회원 비밀번호 변경
+	 */
+	@RequestMapping(value="/user/memberPasswordUpdate" , method=RequestMethod.POST)
+	public ModelAndView memberPasswordUpdate(ModelAndView mav, Member member) {
+		logger.debug("암호화 하기 전 : " +member.getPassword());
+		String tmp = member.getPassword();
+		member.setPassword(bcryptPasswordEncoder.encode(tmp));
+		logger.debug("암호화 후 : "+member.getPassword());
+		
+		int result = userService.memberPasswordUpdate(member);
+		
+		if(result > 0) {
+			logger.debug("비밀번호 변경 성공!");
+		}
+		else {
+			logger.debug("비밀번호 변경 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
+		return mav;
+	}
+	
+	/**
 	 * 이메일 보내기
 	 */
 	public void emailSend(String to , String text, String subject) throws Exception {
@@ -557,5 +581,17 @@ public class UserController {
 		messageHelper.setSubject(subject);
 		
 		mailSender.send(message);
+	}
+	/*
+	 * 로그아웃 
+	 */
+	@RequestMapping("/member/memberLogout.do")
+	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
+		
+		req.getSession().removeAttribute("member");
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
 	}
 }

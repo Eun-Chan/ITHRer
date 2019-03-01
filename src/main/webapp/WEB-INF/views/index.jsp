@@ -1233,7 +1233,7 @@
 	               </c:if>
 	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
 	            	<input type="hidden" value="${list.compId }" id="hiddenCompId" />
-	            	<input type="hidden" value="${list.applyCount }" />
+	            	<input type="hidden" value="${list.applyCount }" id="hiddenApplyCount"/>
 	            </li>
 	         </c:forEach>   
 	         </ul>
@@ -1348,7 +1348,7 @@ $(".star").on("click",function(){
 });
 $(".applyButton").on("click",function(e){
 	var recNo = $(this).parent().siblings("#hiddenRecruitNo").val();
-	var hiddenApplyCount = $("#hiddenApplyCount").val();
+	var hiddenApplyCount = $(this).parent().siblings("#hiddenApplyCount").val();
 	e.stopPropagation();
 	 if(${empty member}){
 			alert("로그인 후 이용 해 주세용");

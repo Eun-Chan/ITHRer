@@ -73,6 +73,8 @@ public class BoardController {
 //		mav.addObject("anonyBoardNo", anonyBoardNo);
 //		mav.addObject("oneInfo", oneInfo);
 		mav.addObject("anonyBoard", anonyBoard);
+		//mav.addObject("anonyBoardRealNo", anonyBoardRealNo);
+		
 		mav.setViewName("board/anonyBoardView");
 		
 //		logger.info("Controller : anonyBoardNo 후 ="+anonyBoardNo);

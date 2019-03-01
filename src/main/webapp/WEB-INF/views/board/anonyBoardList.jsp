@@ -23,6 +23,8 @@ function fn_goBoardInsert(){
 $(function(){
 	$("tr[no]").on("click",function(){
 		var anonyBoardNo = $(this).attr("no");
+		var anonyBoardRealNo = $(this).children(":first").text();
+		console.log(anonyBoardRealNo);
 		/* console.log("anonyBoardNo="+anonyBoardNo); */
 		location.href = "${pageContext.request.contextPath}/board/anonyBoardView.do?no="+anonyBoardNo;
 	});
@@ -45,9 +47,9 @@ $(function(){
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list}" var="b"> 
+			<c:forEach items="${list}" var="b" varStatus="vs" > 
 			<tr no="${b.ANONYBOARDNO}" class="table-info">
-				<td>${b.ANONYBOARDNO}</td>
+				<td>${vs.count}</td>
 				<td id="title">${b.ANONYBOARDTITLE}</td>
 				<td>${b.ANONYBOARDWRITER}</td>
 				<td><fmt:formatDate value="${b.ANONYBOARDDATE}" type="date"/></td>
