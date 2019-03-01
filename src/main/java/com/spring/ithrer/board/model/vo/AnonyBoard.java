@@ -8,10 +8,8 @@ public class AnonyBoard {
 	private String anonyBoardWriter;
 	private String anonyBoardContent;
 	private Date anonyBoardDate;
-	private int readCount;
+	private int anonyBoardReadCount;
 	private String anonyBoardPassword;
-//	private char del_flag;
-//	private int fileCount;
 	
 	public AnonyBoard() {
 		super();
@@ -46,13 +44,14 @@ public class AnonyBoard {
 	public void setAnonyBoardDate(Date anonyBoardDate) {
 		this.anonyBoardDate = anonyBoardDate;
 	}
-	public int getReadCount() {
-		return readCount;
+
+	public int getAnonyBoardReadCount() {
+		return anonyBoardReadCount;
 	}
-	public void setReadCount(int readCount) {
-		this.readCount = readCount;
+	public void setAnonyBoardReadCount(int anonyBoardReadCount) {
+		this.anonyBoardReadCount = anonyBoardReadCount;
 	}
-//	public int getFileCount() {
+	//	public int getFileCount() {
 //		return fileCount;
 //	}
 //	public void setFileCount(int fileCount) {
@@ -74,7 +73,7 @@ public class AnonyBoard {
 	public String toString() {
 		return "AnonyBoard [anonyBoardNo=" + anonyBoardNo + ", anonyBoardTitle=" + anonyBoardTitle
 				+ ", anonyBoardWriter=" + anonyBoardWriter + ", anonyBoardContent=" + anonyBoardContent
-				+ ", anonyBoardDate=" + anonyBoardDate + ", readCount=" + readCount + ", anonyBoardPassword="
+				+ ", anonyBoardDate=" + anonyBoardDate + ", readCount=" + anonyBoardReadCount + ", anonyBoardPassword="
 				+ anonyBoardPassword + "]";
 	}
 	

@@ -8,7 +8,7 @@ public class PassBoard {
 	private String passBoardWriter;
 	private String passBoardContent;
 	private Date passBoardDate;
-	private int readCount;
+	private int passBoardReadCount;
 //	private char del_flag;
 //	private int fileCount;
 //	private List<Attachment> files;
@@ -25,8 +25,9 @@ public class PassBoard {
 		this.passBoardWriter = passBoardWriter;
 		this.passBoardContent = passBoardContent;
 		this.passBoardDate = passBoardDate;
-		this.readCount = readCount;
+		this.passBoardReadCount = passBoardReadCount;
 	}
+
 	public int getPassBoardNo() {
 		return passBoardNo;
 	}
@@ -57,17 +58,19 @@ public class PassBoard {
 	public void setPassBoardDate(Date passBoardDate) {
 		this.passBoardDate = passBoardDate;
 	}
-	public int getReadCount() {
-		return readCount;
+	public int getPassBoardReadCount() {
+		return passBoardReadCount;
 	}
-	public void setReadCount(int readCount) {
-		this.readCount = readCount;
+
+	public void setPassBoardReadCount(int passBoardReadCount) {
+		this.passBoardReadCount = passBoardReadCount;
 	}
 	@Override
 	public String toString() {
 		return "PassBoard [passBoardNo=" + passBoardNo + ", passBoardTitle=" + passBoardTitle + ", passBoardWriter="
 				+ passBoardWriter + ", passBoardContent=" + passBoardContent + ", passBoardDate=" + passBoardDate
-				+ ", readCount=" + readCount + "]";
+				+ ", passBoardReadCount=" + passBoardReadCount + "]";
 	}
+
 		
 }

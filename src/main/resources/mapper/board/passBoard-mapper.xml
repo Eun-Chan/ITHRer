@@ -15,18 +15,18 @@
 	</select>
 
 	<insert id="insertPassBoard" parameterType="passboard" >
-	insert into passBoard(passBoardno, passBoardTitle, passBoardWriter, passBoardContent)values(seq_passboardno.nextval,#{passBoardTitle},#{passBoardWriter},#{passBoardContent}) 
+		insert into passBoard(passBoardno, passBoardTitle, passBoardWriter, passBoardContent)values(seq_passboardno.nextval,#{passBoardTitle},#{passBoardWriter},#{passBoardContent}) 
 	</insert>
 	
 	<select id="passSearchList" resultMap="boardSearchMap">
-	select * from passBoard 
+		select * from passBoard 
 	<include refid="search"/>
-	order by passBoardNo desc
+		order by passBoardNo desc
 	</select>
 	<resultMap id="boardSearchMap" type="map"></resultMap>
 
 	<select id="countPassList" resultType="_int">
-	select count(*) from passBoard
+		select count(*) from passBoard
 	<include refid="search"/>
 	</select>
 	
@@ -45,5 +45,9 @@
 	<delete id="passBoardDelete" parameterType="_int">
 		delete from passBoard where passBoardNo = #{passBoardNo}
 	</delete>
+
+	<update id="passBoardReadCount" parameterType="_int">
+		update passBoard set passBoardReadCount = passBoardReadCount+1 where passBoardNo = #{passBoardNo}
+	</update>
 
 </mapper>

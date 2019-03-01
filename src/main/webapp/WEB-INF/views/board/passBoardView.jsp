@@ -20,7 +20,7 @@
 <script>
 
 function fn_goBoardDelete(){
-	var memberId = $("#userId").text();
+	var memberId = "<%=member.getMemberId()%>"
 	var passBoardWriter = $("#writer").val();
 	
 /* 	console.log(memberId);
@@ -45,8 +45,13 @@ function fn_goBoardDelete(){
 			}
 		});
   	}
-	else if(memberId==null){
+	else if(memberId!=passBoardWriter){
+		alert("게시글은 본인이 작성한 글만 삭제 가능합니다.");
+	}
+	else if(memberId.length==0){
+		console.log("여기오냐");
 		alert("게시글 삭제 실패. 로그인후 이용해주세요.");
+		location.href = "${pageContext.request.contextPath}/board/passBoardList";
 	}
 }
 </script>
@@ -69,9 +74,9 @@ function fn_goBoardDelete(){
 			<th>번호</th>
 			<td>${passBoard.passBoardNo}</td>
 			<th>작성자</th>
-			<td id="userId">${member.memberId}</td>
+			<td id="userId">${passBoard.passBoardWriter}</td>
 			<th>조회수</th>
-			<td>${passBoard.readCount}</td>
+			<td>${passBoard.passBoardReadCount}</td>
 		</tr>
 		<tr class="table-primary">	
 			<th>제목</th>

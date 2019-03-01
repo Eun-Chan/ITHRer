@@ -27,7 +27,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public AnonyBoard anonyBoardSelectOne(int anonyBoardNo) {
+	public AnonyBoard anonyBoardSelectOne(int anonyBoardNo)  {
+		//익명게시판 조회수 쿼리를 익명게시판 글 하나 보기에 끼워넣기
+		BoardDao.updateAnonyViewCount(anonyBoardNo);
 		return BoardDao.anonyBoardSelectOne(anonyBoardNo);
 	}
 
@@ -49,6 +51,8 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public PassBoard passBoardSelectOne(int passBoardNo) {
+		//합소서게시판 조회수 쿼리를 합소서게시판 글 하나 보기에 끼워넣기
+		BoardDao.updatePassViewCount(passBoardNo);
 		return BoardDao.passBoardSelectOne(passBoardNo);
 	}
 
@@ -87,6 +91,7 @@ public class BoardServiceImpl implements BoardService{
 	public int passBoardDelete(int passBoardNo) {
 		return BoardDao.passBoardDelete(passBoardNo);
 	}
+
 	
 	
 }
