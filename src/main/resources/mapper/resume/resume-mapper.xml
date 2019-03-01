@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="resume">
-	<select id="certificateList" resultMap="certificateMap">
-		select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
-	</select>
-	<resultMap type="map" id="certificateMap"></resultMap>
-	<insert id="insertAward" parameterType="hashmap">
-		insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
-			(#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})		
-	</insert>
+   <select id="certificateList" resultMap="certificateMap">
+      select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
+   </select>
+   <resultMap type="map" id="certificateMap"></resultMap>
+   <insert id="insertAward" parameterType="hashmap">
+      insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
+         (#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})      
+   </insert>
 </mapper>
