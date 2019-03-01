@@ -55,6 +55,9 @@
 <!-- 카카오톡 로그인용 -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
+<!-- 페이스북 로그인용(로그인 버튼) -->
+<script async defer src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1894308784031760&autoLogAppEvents=1"></script>
+
 </head>
 <body>
 <div id="container">
@@ -156,6 +159,7 @@
 				  			<br />
 				  				<p class="font-italic text-info">다른 계정으로 로그인</p>
 				  				<img src="${pageContext.request.contextPath }/resources/images/kakao_login.png" class="rounded-circle" onclick="kakaoLogin()" width="50px">
+				  				<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
 				  			</div>
 						</form>	
 					</div>
@@ -167,7 +171,7 @@
 				  			</div>
 				  			<div class="form-group">
 				    			<label for="userPassword">비밀번호</label>
-				    			<input type="password" class="form-control" id="companyPassword" onkeyup="enterkey();">
+				    			<input type="password" class="form-control" id="companyPassword" onkeyup="enterkey2();">
 				    			<span><p id="login-help2"></p></span>
 				  			</div>
 				  			<div class="form-group form-check">
@@ -194,6 +198,8 @@
 </div> <!-- modal fade 끝 -->
 
 <script>
+	
+
 	/* 카카오톡 api 로그인 */
 	//<![CDATA[
     // 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -256,7 +262,13 @@
 	/* Enter 로 바로 로그인 */
 	function enterkey(){
 		if(window.event.keyCode == 13)
-			console.log("하앙");
+			memberLoginCheck();
+	}
+	
+	function enterkey2(){
+		if(window.event.keyCode == 13){
+			companyLoginCheck();
+		}
 	}
 	
 	function memberLoginCheck(){
@@ -320,6 +332,45 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
+	
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 페이스북 로그인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1894308784031760',
+	      cookie     : true,
+	      xfbml      : true,
+	      version    : 'v3.2'
+	    });
+      
+    	FB.AppEvents.logPageView();   
+      
+ 	};
+ 	
+ 	(function(d, s, id){
+ 	     var js, fjs = d.getElementsByTagName(s)[0];
+ 	     if (d.getElementById(id)) {return;}
+ 	     js = d.createElement(s); js.id = id;
+ 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+ 	     fjs.parentNode.insertBefore(js, fjs);
+ 	   }(document, 'script', 'facebook-jssdk'));
+ 	
+ 	function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+    }
+  	
+ 	function statusChangeCallback(response) {
+    	if (response.status === 'connected') {
+         	FB.AppEvents.logPageView();
+         	testAPI();
+    	}
+    	else {
+    		FB.AppEvents.logPageView();
+    	}
+  	}
+ 	
+ 	
 </script>
 	
 	<section id="content">

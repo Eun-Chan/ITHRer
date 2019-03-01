@@ -83,4 +83,9 @@ public class UserDaoImpl implements UserDao {
 	public int createKakaoUser(Map<String, String> user) {
 		return sqlSession.insert("user.createKakaoUser" , user);
 	}
+
+	@Override
+	public int memberPasswordUpdate(Member member) {
+		return sqlSession.update("user.memberPasswordUpdate", member);
+	}
 }

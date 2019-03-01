@@ -61,7 +61,7 @@
 	<table id="" class="table table-bordered">
 		<tr class="table-primary">
 			<th>번호</th>
-			<td>${anonyBoard.anonyBoardNo}</td>
+			<td>${anonyBoardRealNo}</td>
 			<th>작성자</th>
 			<td>${anonyBoard.anonyBoardWriter}</td>
 			<th>조회수</th>

@@ -445,7 +445,7 @@ public class UserController {
 	public ModelAndView memberPasswordUpdateGoing(Member member , ModelAndView mav) {
 		mav.addObject("member", member);
 		
-		
+		mav.setViewName("user/memberUpdatePwd");
 		
 		return mav;
 	}
@@ -543,6 +543,29 @@ public class UserController {
 		logger.debug("licenseNo = "+company.getLicenseNo());
 		
 		return result;
+	}
+	
+	/**
+	 * 개인회원 비밀번호 변경
+	 */
+	@RequestMapping(value="/user/memberPasswordUpdate" , method=RequestMethod.POST)
+	public ModelAndView memberPasswordUpdate(ModelAndView mav, Member member) {
+		logger.debug("암호화 하기 전 : " +member.getPassword());
+		String tmp = member.getPassword();
+		member.setPassword(bcryptPasswordEncoder.encode(tmp));
+		logger.debug("암호화 후 : "+member.getPassword());
+		
+		int result = userService.memberPasswordUpdate(member);
+		
+		if(result > 0) {
+			logger.debug("비밀번호 변경 성공!");
+		}
+		else {
+			logger.debug("비밀번호 변경 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
+		return mav;
 	}
 	
 	/**

@@ -36,7 +36,7 @@
 								
 								<div class="tab-content">
 										<!-- 개인회원 -->
-										<div class="tap-pane container active" id="member">
+										<div class="container">
 											<h3>개인회원</h3>
 											<form action="${pageContext.request.contextPath }/user/memberIdView.ithrer" method="POST" id="memberIdView">
 												<div class="form-group row mb-2">
@@ -64,7 +64,7 @@
 										<div class="tb-1" style="border-bottom: 1px solid; margin-top: 30px; margin-bottom: 30px"></div>
 										
 										<!-- 기업회원 -->
-										<div class="tap-pane container mt-3" id="company">
+										<div class="container mt-3" id="company">
 											<h3>기업회원</h3>
 											<form class="form">
 												<div class="form-group row mb-2">
@@ -91,29 +91,23 @@
 							</div>
 							<!-- 비밀번호 찾기 -->
 							<div class="tab-pane container" id="Password">
+								
 								<!-- 개인회원 / 기업회원 으로 나누기 -->
-								<ul class="nav nav-pills nav-justified mb-5">
-									<li class="nav-item">
-										<a class="nav-link active" href="#member">개인회원</a>
-									</li>
-									<li class="nav-item">
-										<a class="nav-link" href="#company">기업회원</a>
-									</li>									
-								</ul>
 								
 								<div class="tab-content">
-									<!-- 개인회원 -->
-									<div class="tap-pane active" id="member">
+										<!-- 개인회원 -->
+									<div class="container">
+											<h3>개인회원</h3>
 										<form action="${pageContext.request.contextPath }/user/memberPasswordUpdateGoing.ithrer" method="POST" id="memberPasswordUpdateGoing">
 											<div class="form-group row mb-2">
 												<div class="col">
-													<input class="form-control" placeholder="아이디" id="memberId2" name="memberId2"/>
+													<input class="form-control" placeholder="아이디" id="memberId2" name="memberId"/>
 													<span><p id="id-help"></p></span>
 												</div>
 											</div>
 											<div class="form-group row mb-2">
 												<div class="col-8">
-													<input class="form-control" placeholder="이메일주소(ithrer@ithrer.com)" type="email" id="memberEmail2" name="memberEmail2"/>
+													<input class="form-control" placeholder="이메일주소(ithrer@ithrer.com)" type="email" id="memberEmail2" name="email"/>
 													<span><p id="email-help2""></p></span>
 												</div>
 												<div class="col-4">
@@ -122,8 +116,8 @@
 											</div>
 											<div class="form-group row mb-2">
 												<div class="col">
-													<input class="form-control" placeholder="이메일 인증번호" type="text" id="emailAuth" name="emailAuth"/>
-													<span><p id="emailAuth-help"></p></span>
+													<input class="form-control" placeholder="이메일 인증번호" type="text" id="emailAuth"/>
+													<span><p id="emailAuth-help2"></p></span>
 												</div>
 											</div>
 											<div class="form group row mb-2">
@@ -135,9 +129,40 @@
 											</div>
 										</form>
 									</div>
-									
+										
+									<div class="tb-1" style="border-bottom: 1px solid; margin-top: 30px; margin-bottom: 30px"></div>
+										
 									<!-- 기업회원 -->
-								</div>	
+									<div class="container mt-3" id="company">
+										<h3>기업회원</h3>
+										<form class="form">
+											<div class="form-group row mb-2">
+												<div class="col">
+													<input class="form-control" placeholder="아이디" id="compId" name="compId"/>
+													<span><p id="id-help2"></p></span>
+												</div>
+											</div>
+											<div class="form-group row mb-2">
+												<div class="col">
+													<input class="form-control" placeholder="가입자명" id="compName" name="compName"/>
+													<span><p id="name-help2"></p></span>
+												</div>	
+											</div>
+											<div class="form-group row mb-2">
+												<div class="col">
+													<input class="form-control" placeholder="사업자번호(10자리)" type="text" id="licenseNo" name="licenseNo" maxlength="10"/>
+												</div>
+											</div>
+											<div class="form group row mb-2">
+												<div class="col">
+													<span><p id="companyIdCheck-help"></p></span>														
+													<input type="button" class="btn btn-secondary submitBtn" value="확인" onclick="companyIdFind();"/>
+													<br />
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -261,9 +286,9 @@
 			$("#memberPasswordUpdateGoing").submit();
 		}
 		else{
-			$("#emailAuth-help").text("인증번호가 틀립니다.");
-			$("#name-help").removeClass("text-success");
-			$("#name-help").addClass("text-danger");
+			$("#emailAuth-help2").text("인증번호가 틀립니다.");
+			$("#emailAuth-help2").removeClass("text-success");
+			$("#emailAuth-help2").addClass("text-danger");
 		}
 	}
 	
