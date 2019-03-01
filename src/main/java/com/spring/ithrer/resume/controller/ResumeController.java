@@ -1,6 +1,7 @@
 package com.spring.ithrer.resume.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.JsonObject;
 import com.spring.ithrer.resume.model.service.ResumeService;
 import com.spring.ithrer.resume.model.vo.Award;
 import com.spring.ithrer.resume.model.vo.Career;
@@ -50,18 +50,12 @@ public class ResumeController {
 	}
 	@RequestMapping(value="/resume/saveResume.do")
 	public ModelAndView saveResume(ModelAndView mav,
-								   Award award,
-								   Career career,
-								   Certificate certificate,
-								   Education education,
-								   Hopework hopework,
-								   Intern intern,
-								   Language language,
-								   Learn learn,
-								   Overseas overseas,
-								   PortFolio portFolio,
-								   Preference preference,
-								   Profile profile) {
+								   Award award,Career career,Certificate certificate,
+								   Hopework hopework, Intern intern,
+								   Language language, Learn learn,
+								   Overseas overseas, PortFolio portFolio,
+								   Preference preference, Profile profile,
+								   Education education, @RequestParam("memberIdHide") String memberIdHide) {
 		logger.info("award="+award);
 		logger.info("career="+career);
 		logger.info("certificate="+certificate);
@@ -69,13 +63,15 @@ public class ResumeController {
 		logger.info("hopework="+hopework);
 		logger.info("intern="+intern);
 		logger.info("language="+language);
-		logger.info("award="+award);
-		logger.info("award="+award);
-		logger.info("award="+award);
-		logger.info("award="+award);
-		logger.info("award="+award);
-		
-		
+		logger.info("learn="+learn);
+		logger.info("overseas="+overseas);
+		logger.info("portFolio="+portFolio);
+		logger.info("preference="+preference);
+		logger.info("profile="+profile);
+		Map<String,Object> awardMap = new HashMap<>();
+		Map<String,Object> careerMap = new HashMap<>();
+		int awardresult = resumeService.insertAward(awardMap);
+		System.out.println(awardresult>0?"성공":"실패");
 		mav.setViewName("redirect:/");
 		return mav;	
 	}

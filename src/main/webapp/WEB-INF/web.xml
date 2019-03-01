@@ -59,14 +59,14 @@
   	</filter>
   	
   	<!-- cross domain 해결코드 -->
-	<filter>
+	<!-- <filter>
     	<filter-name>cors</filter-name>
     	<filter-class>com.spring.ithrer.common.filter.SimpleCORSFilter</filter-class>
 	</filter>
 	<filter-mapping>
 	    <filter-name>cors</filter-name>
 	    <url-pattern>/*</url-pattern>
-	</filter-mapping>
+	</filter-mapping> -->
 	
   	<filter-mapping>
     	<filter-name>encodingFilter</filter-name>
@@ -84,5 +84,14 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	
+	<!-- CORS -->
+	<filter>
+		<filter-name>cors</filter-name>
+		<filter-class>com.spring.ithrer.cors.SimpleCORSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>cors</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 	
 </web-app>

@@ -22,5 +22,9 @@ public class Language implements Serializable{
 	private String languageName;
 	private String selfText;
 	private String speakingDivision;
+	private String examName;
+	private String selfExam;
+	private String examscore;
+	private String examDate;
 
 }

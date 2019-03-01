@@ -16,6 +16,7 @@
 	<input type="text" name="userResumeTitle" id="userResumeTitle" 
 		   class="form-control" aria-label="Sizing example input" 
 		   aria-describedby="inputGroup-sizing-lg" placeholder="기업에게 나에 대해 알려줍시다.강점,목표,관심분야도 좋아요."/>
+	<input type="hidden" name="memberIdHide" value="${member.memberId}" />
 </div>
 <div id="profileTotal" class="wrap-container">
 	<h3>인적사항</h3>
@@ -38,15 +39,13 @@
 		</div>		
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeEduFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="educationTotal" class="wrap-container">
 	<div id="educationHeader">
 		<div id="headerText">
 			<h3>학력</h3>		
 		</div>
 		<div id="headerInput">
-			<input type="checkbox" id="nonHigh"/>
+			<input type="checkbox" name="nonHigh" id="nonHigh" value="nonHigh"/>
 			<label for="nonHigh">고등학교 미만 졸업</label>
 		</div>
 	</div>
@@ -142,7 +141,7 @@
 				<ul>
 					<li><input type="text" name="highgraduationDate" id="highgraduationDate0" class="form-control" placeholder="졸업년도"/></li>
 					<li>
-						<select id="graduationState0" class="custom-select">
+						<select name="highgraduationState" id="highgraduationState0" class="custom-select">
 							<option value="" disabled selected>졸업상태</option>
 							<option value="graduated">졸업</option>
 							<option value="ungraduated">졸업예정</option>
@@ -159,8 +158,6 @@
 		<button type="button" id="addEducation" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeHopeFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="hopeworkTotal" class="wrap-container">
 	<h3>희망근무조건</h3>
 	<div id="hopeworkWrap">
@@ -195,8 +192,6 @@
 		</div>
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeInternFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="internTotal" class="wrap-container" style="display:none;">
 	<h3>인턴,대외활동</h3>
 	<div id="internWrap">
@@ -232,8 +227,6 @@
 		<button type="button" id="addIntern" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeLearnFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="learnTotal" class="wrap-container" style="display:none;">
 	<h3>교육</h3>
 	<div id="learnWrap">
@@ -262,8 +255,6 @@
 		<button type="button" id="addLearn" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeCertifiFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="certificateTotal" class="wrap-container" style="display:none;">
 <h3>자격증</h3>
 	<div id="certificateWrap">
@@ -285,8 +276,6 @@
 		<button type="button" id="addCert" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeAwardFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="awardTotal" class="wrap-container" style="display:none;">
 	<h3>수상</h3>
 	<div id="awardWrap">
@@ -313,8 +302,6 @@
 		<button type="button" id="addAward" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeOverseasFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="overseasTotal" class="wrap-container" style="display:none;">
 	<h3>해외경험</h3>
 	<div id="overseasWrap">
@@ -341,35 +328,45 @@
 		<button type="button" id="addOverseas" class="btn btn-outline-info">해외경험 추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeLanguageFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="languageTotal" class="wrap-container" style="display:none;">
 	<h3>어학</h3>
 	<div id="languageWrap">
 		<div id="formLanguage" class="input-group-prepend">
-			<select name="languageDivision" id="languageDivision0" class="custom-select">
-				<option value="" disabled selected>구분</option>
-				<option value="speakingAbility">회화능력</option>
-				<option value="standardExam">공인시험</option>
-			</select>
-			<select name="languageName" id="languageName0" class="custom-select language-select">
-				<option value="" disabled selected>외국어명</option>
-				<option value="english">영어</option>
-				<option value="japanese">일본어</option>
-				<option value="chinese">중국어</option>
-				<option value="selfSelect">직접입력</option>
-			</select>
-			<input type="text" name="selfText" id="selfText0" class="form-control"/>
-			<select name="speakingDivision" id="speakingDivision0" class="custom-select">
-				<option value="" disabled selected>회화능력</option>
-				<option value="good">일상회화 가능</option>
-				<option value="better">비즈니스 회화가능</option>
-				<option value="best">원어민 수준</option>
-			</select>
 			<div id="deleteBox">
 				<button type="button" id="deleteLanguage" onclick="deleteTwice(event);">
 					<span aria-hidden="true">X</span>
 				</button>
+			</div>
+			<div id="formLanguage1" class="input-group-prepend">
+				<select name="languageDivision" id="languageDivision0" class="custom-select">
+					<option value="" disabled selected>구분</option>
+					<option value="speakingAbility">회화능력</option>
+					<option value="standardExam">공인시험</option>
+				</select>
+				<select name="languageName" id="languageName0" class="custom-select language-select">
+					<option value="" disabled selected>외국어명</option>
+					<option value="english">영어</option>
+					<option value="japanese">일본어</option>
+					<option value="chinese">중국어</option>
+					<option value="selfSelect">직접입력</option>
+				</select>
+				<input type="text" name="selfText" id="selfText0" class="form-control"/>
+				<select name="speakingDivision" id="speakingDivision0" class="custom-select">
+					<option value="" disabled selected>회화능력</option>
+					<option value="good">일상회화 가능</option>
+					<option value="better">비즈니스 회화가능</option>
+					<option value="best">원어민 수준</option>
+				</select>
+			</div>
+			<div id="formLanguage2" class="input-group-prepend">
+				<select name="examName" id="examName0" class="custom-select">
+					<option value="" disabled selected>공인시험</option>
+					<option value="etc">기타</option>
+					<option value="selfExam">직접입력</option>
+				</select>
+				<input type="text" name="selfExam" id="selfExam0" class="form-control"/>
+				<input type="text" name="examscore" id="examscore0" class="form-control" placeholder="급수/점수"/>
+				<input type="text" name="examDate" id="examDate0" class="form-control" placeholder="취득년월(예.1991.01)"/>
 			</div>
 		</div>
 	</div>
@@ -377,8 +374,6 @@
 		<button type="button" id="addLanguage" class="btn btn-outline-info">어학 추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumepotFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="potfolioTotal" class="wrap-container" style="display:none;">
 	<h3>포트폴리오</h3>
 	<div id="potfolioWrap">
@@ -398,8 +393,6 @@
 		<div id="potfolioList" class="input-group-prepend"></div>
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumePreferFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="preferenceTotal" class="wrap-container" style="display:none;">
 	<h3>취업우대</h3>
 	<div id="preferenceWrap">
@@ -455,8 +448,6 @@
 		</div>
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeLetterFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="letterTotal" class="wrap-container" style="display:none;">
 	<h3>자기소개서</h3>
 	<div id="letterWrap">
@@ -467,8 +458,6 @@
 		</div>
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" id="resumeCareerFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="careerTotal" class="wrap-container" style="display:none;">
 	<h3>경력</h3>
 	<div id="careerWrap">
@@ -506,7 +495,7 @@
 						<input type="text" name="job" id="job0" class="form-control" placeholder="직무"/>
 					</li>
 					<li>
-						<input type="text" name="income0" id="income0" class="form-control" onkeydown="validateText(event)" placeholder="연봉(단위 :만원)"/>
+						<input type="text" name="income" id="income0" class="form-control" onkeydown="validateText(event)" placeholder="연봉(단위 :만원)"/>
 					</li>
 				</ul>
 			</div>
@@ -522,10 +511,8 @@
 			<button type="button" id="addCareer" class="btn btn-outline-info">추가</button>	
 	</div>
 </div>
-</form>
-<form class="resumeResultFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
 <div id="finishButtonWrap" class="input-group-prepend">
-	<button type="submit" id="emsisaveButton" class="btn btn-light">임시저장</button>&nbsp;&nbsp;&nbsp;&nbsp;
+	<button type="button" id="emsisaveButton" class="btn btn-light">뒤로가기</button>&nbsp;&nbsp;&nbsp;&nbsp;
 	<button type="submit" id="saveButton" class="btn btn-primary">작성완료</button>
 </div>
 </form>
@@ -683,7 +670,7 @@ $("#addEducation").on("click",function() {
 	html += '<option value="doublemajor">이중전공</option></select></li><li><input type="text" name="secmajor" id="secmajor'+eduFrmcount+'" class="form-control" placeholder="전공명"/></li></ul>';
 	html += '<ul><li><textarea name="otherDepartText" id="otherDepartText'+eduFrmcount+'" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품"></textarea></li></ul></div>';
 	html += '<div id="formEducation2" class="input-group-prepend"><ul><li><input type="text" name="highgraduationDate" id="highgraduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년도"/></li>';
-	html += '<li><select id="graduationState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option><option value="graduated">졸업</option><option value="ungraduated">졸업예정</option></select></li>';
+	html += '<li><select name="highgraduationState" id="highgraduationState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option><option value="graduated">졸업</option><option value="ungraduated">졸업예정</option></select></li>';
 	html += '<li><input type="checkbox" name="ged" id="ged'+eduFrmcount+'" aria-label="Checkbox for following text input" value="ged"/>&nbsp;대입검정고시</li></ul></div></div>';
 	$('#educationWrap').append(html);
 	eduFrmcount++;
@@ -834,32 +821,53 @@ $(document).on("mouseout", "textarea[name=overseasTextarea]", function() {
 });
 /* 어학 */
 $("#addLanguage").on("click",function() {
-	var html = '<div id="formLanguage" class="input-group-prepend"><select name="languageDivision" id="languageDivision'+langFrmcount+'" class="custom-select">';
-	html += '<option value="" disabled selected>구분</option><option value="speakingAbility">회화능력</option><option value="standardExam">공인시험</option></select>';
+	var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" id="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+	html += '<div id="formLanguage1" class="input-group-prepend"><select name="languageDivision" id="languageDivision'+langFrmcount+'" class="custom-select"><option value="" disabled selected>구분</option>';
+	html += '<option value="speakingAbility">회화능력</option><option value="standardExam">공인시험</option></select>';
 	html += '<select name="languageName" id="languageName'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
 	html += '<option value="english">영어</option><option value="japanese">일본어</option><option value="chinese">중국어</option><option value="selfSelect">직접입력</option></select>';
 	html += '<input type="text" name="selfText" id="selfText'+langFrmcount+'" class="form-control"/>';
-	html += '<select name="speakingDivision" id="speakingDivision'+langFrmcount+'" class="custom-select">';
-	html += '<option value="" disabled selected>회화능력</option><option value="good">일상회화 가능</option><option value="better">비즈니스 회화가능</option><option value="best">원어민 수준</option></select>';
-	html += '<div id="deleteBox"><button type="button" id="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div></div>';
+	html += '<select name="speakingDivision" id="speakingDivision'+langFrmcount+'" class="custom-select"><option value="" disabled selected>회화능력</option><option value="good">일상회화 가능</option>';
+	html += '<option value="better">비즈니스 회화가능</option><option value="best">원어민 수준</option></select></div>';
+	html += '<div id="formLanguage2" class="input-group-prepend"><select name="examName" id="examName'+langFrmcount+'" class="custom-select"><option value="" disabled selected>공인시험</option>';
+	html += '<option value="etc">기타</option><option value="selfExam">직접입력</option></select>';
+	html += '<input type="text" name="selfExam" id="selfExam'+langFrmcount+'" class="form-control"/>';
+	html += '<input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
+	html += '<input type="text" name="examDate" id="examDate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
 	$('#languageWrap').append(html);
 	langFrmcount++;
 });
+$(document).on("change","select[name=languageDivision]",function(){
+	var state = $(this).val();
+	if(state == "standardExam") {
+		$(this).parent().parent().find("select[name=examName]").show();
+		$(this).parent().parent().find("input[name=examscore]").show();
+		$(this).parent().parent().find("input[name=examDate]").show();
+		$(this).parent().parent().find("select[name=speakingDivision]").hide();
+	}
+	else {
+		$(this).parent().parent().find("select[name=examName]").hide();
+		$(this).parent().parent().find("input[name=examscore]").hide();
+		$(this).parent().parent().find("input[name=examDate]").hide();
+		$(this).parent().parent().find("select[name=speakingDivision]").show();
+		$(this).parent().parent().find("input[name=selfExam]").hide();
+	}
+});
+$(document).on("change","select[name=examName]",function() {
+	var state = $(this).val();
+	if(state == "selfExam") {
+		$(this).parent().find("input[name=selfExam]").show();
+	}
+	else {
+		$(this).parent().find("input[name=selfExam]").hide();
+	}
+});
 $(document).on("change", ".language-select" , function(){
-	console.log("야왔냐?");
 	var state = $(this).val();
 	if(state == "selfSelect") {
-		console.log(state);
-		console.log("inputtext나와랏");
-		console.log($(this));
-		console.log($(this).next());
 		$(this).next().show();
 	}
 	else {
-		console.log(state);
-		console.log($(this));
-		console.log($(this).next());
-		console.log("inputtext꺼졍");
 		$(this).next().hide();
 	}
 });
@@ -868,7 +876,7 @@ $("#addUrl").on("click",function() {
 	var html = '<ul><li><select id="potselect" class="custom-select"><option value="" disabled selected>구분</option>';
 	html += '<option value="pot1">이력서</option><option value="pot2">포트폴리오</option><option value="pot3">증명서</option>';
 	html += '<option value="pot4">자격증</option><option value="pot5">추천서</option><option value="pot6">기획서</option>';
-	html += '</select></li><li><input type="text" name="addpot" id="addpot'+fotFrmcount+'" class="form-control" placeholder="http://example.com"/></li>';
+	html += '</select></li><li><input type="text" name="url" id="url'+fotFrmcount+'" class="form-control" placeholder="http://example.com"/></li>';
 	html += '<li><button type="button" id="deletefotinput" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></li></ul>';
 	$("#potfolioList").append(html);
 	fotFrmcount++;
@@ -877,7 +885,7 @@ $("#addFile").on("click",function() {
 	var html = '<ul><li><select id="potselect" class="custom-select"><option value="" disabled selected>구분</option>';
 	html += '<option value="pot1">이력서</option><option value="pot2">포트폴리오</option><option value="pot3">증명서</option>';
 	html += '<option value="pot4">자격증</option><option value="pot5">추천서</option><option value="pot6">기획서</option>';
-	html += '</select></li><li><input type="file" name="addfile" id="addfile'+fotFilecount+'" class="form-control" placeholder="http://example.com"/></li>';
+	html += '</select></li><li><input type="file" name="pOriginalFileName" id="pOriginalFileName'+fotFilecount+'" class="form-control" placeholder="http://example.com"/></li>';
 	html += '<li><button type="button" id="deletefotinput" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></li></ul>';
 	$("#potfolioList").append(html);
 	fotFilecount++;
@@ -907,12 +915,6 @@ $("#addLetter").on("click",function() {
 	html += '<textarea name="letterArea" id="letterArea'+count+'" placeholder="해당내용을 입력하세요."></textarea></div></div>';
 	$('#formLetter').append(html);
 	count++;
-});
-/* 한꺼번에 submit */
-$("#saveButton").on("click",function() {
-	$.post("${pageContext.request.contextPath}/resume/saveResume.do"),$(".resumeResultFrm").serialize(),function(data) {
-		console.log(data);
-	}
 });
 /* 항목삭제버튼바로 윗단계 */
 function deleteone(event) {

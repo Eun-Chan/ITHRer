@@ -5,6 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="com.spring.ithrer.user.model.vo.*" %>
 <%@ page import="com.spring.ithrer.company.model.vo.*" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
 <%
 	// 개인 회원 세션에 있는 정보 가져오기
 	Member member = (Member)session.getAttribute("member");
@@ -37,6 +40,19 @@
 	
 	System.out.println("여기서 나오면 세션 끝(개인회원) = "+member);
 	System.out.println("여기서 나오면 세션 끝(기업회원) = "+company);
+	
+	// 네이버 로그인 시작
+		String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
+ 	    String redirectURI = URLEncoder.encode("http://localhost:9090/ithrer/user/naverLoginCallback.ithrer", "UTF-8");
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString();
+	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+	    apiURL += "&client_id=" + clientId;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&state=" + state;
+	    session.setAttribute("state", state);
+	// 네이버 로그인 끝
+	System.out.println("확인 = "+request.getContextPath()+"/user/naverLoginCallback.ithrer");
 %>
 
 <!DOCTYPE html>
@@ -71,6 +87,11 @@
 
 <!-- 카카오톡 로그인용 -->
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+<!-- 페이스북 로그인용(로그인 버튼) -->
+<script async defer src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1894308784031760&autoLogAppEvents=1"></script>
+
+
 
 </head>
 <body>
@@ -181,7 +202,12 @@
 				  			<div class="form-group">
 				  			<br />
 				  				<p class="font-italic text-info">다른 계정으로 로그인</p>
+				  				<!-- 카카오로그인 -->
 				  				<img src="${pageContext.request.contextPath }/resources/images/kakao_login.png" class="rounded-circle" onclick="kakaoLogin()" width="50px">
+				  				<!-- 페이스북로그인 -->
+				  				<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+				  				<!-- 네이버로그인 -->
+				  				<img height="35" src="http://static.nid.naver.com/oauth/small_g_in.PNG" onclick="naverPopup();" style="cursor: pointer;"/>
 				  			</div>
 						</form>	
 					</div>
@@ -193,7 +219,7 @@
 				  			</div>
 				  			<div class="form-group">
 				    			<label for="userPassword">비밀번호</label>
-				    			<input type="password" class="form-control" id="companyPassword" onkeyup="enterkey();">
+				    			<input type="password" class="form-control" id="companyPassword" onkeyup="enterkey2();">
 				    			<span><p id="login-help2"></p></span>
 				  			</div>
 				  			<div class="form-group form-check">
@@ -220,6 +246,11 @@
 </div> <!-- modal fade 끝 -->
 
 <script>
+	/* 네이버 로그인 새창 띄우기용 */
+	function naverPopup(){
+		window.open("<%=apiURL%>","_blank","width=300, height=300;"); 
+	}
+
 	/* 카카오톡 api 로그인 */
 	//<![CDATA[
     // 사용할 앱의 JavaScript 키를 설정해 주세요.
@@ -282,7 +313,13 @@
 	/* Enter 로 바로 로그인 */
 	function enterkey(){
 		if(window.event.keyCode == 13)
-			console.log("하앙");
+			memberLoginCheck();
+	}
+	
+	function enterkey2(){
+		if(window.event.keyCode == 13){
+			companyLoginCheck();
+		}
 	}
 	
 	function memberLoginCheck(){
@@ -346,6 +383,45 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
+	
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 페이스북 로그인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1894308784031760',
+	      cookie     : true,
+	      xfbml      : true,
+	      version    : 'v3.2'
+	    });
+      
+    	FB.AppEvents.logPageView();   
+      
+ 	};
+ 	
+ 	(function(d, s, id){
+ 	     var js, fjs = d.getElementsByTagName(s)[0];
+ 	     if (d.getElementById(id)) {return;}
+ 	     js = d.createElement(s); js.id = id;
+ 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+ 	     fjs.parentNode.insertBefore(js, fjs);
+ 	   }(document, 'script', 'facebook-jssdk'));
+ 	
+ 	function checkLoginState() {
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+          });
+    }
+  	
+ 	function statusChangeCallback(response) {
+    	if (response.status === 'connected') {
+         	FB.AppEvents.logPageView();
+         	testAPI();
+    	}
+    	else {
+    		FB.AppEvents.logPageView();
+    	}
+  	}
+ 	
+ 	
 </script>
 	
 	<section id="content">

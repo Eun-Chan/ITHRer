@@ -25,6 +25,6 @@ public class Career implements Serializable{
 	private String[] buttonWorking;
 	private String jobposition;
 	private String job;
-	private String income0;
+	private String income;
 	private String description;
 }

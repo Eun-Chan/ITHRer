@@ -38,8 +38,8 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public AnonyBoard anonyBoardSelectOne(int anonyBoardNo) {
 		AnonyBoard oneInfo = sqlSession.selectOne("anonyboard.selectAnonyBoardOne", anonyBoardNo);
-		System.out.println("BoardDao -anony: oneInfo = "+oneInfo);
-		System.out.println("BoardDao -anony : anonyBoardNo = "+anonyBoardNo);
+//		System.out.println("BoardDao -anony: oneInfo = "+oneInfo);
+//		System.out.println("BoardDao -anony : anonyBoardNo = "+anonyBoardNo);
 		
 		return oneInfo;
 	}
@@ -61,15 +61,15 @@ public class BoardDaoImpl implements BoardDao{
 
 	@Override
 	public int passBoardTotalContents() {
-			int result = sqlSession.selectOne("passboard.selectPassBoardTotalContents");
-			return result;
+		int result = sqlSession.selectOne("passboard.selectPassBoardTotalContents");
+		return result;
 		}
 
 	@Override
 	public PassBoard passBoardSelectOne(int passBoardNo) {
 		PassBoard oneInfo = sqlSession.selectOne("passboard.selectPassBoardOne", passBoardNo);
-		System.out.println("BoardDao -pass: oneInfo = "+oneInfo);
-		System.out.println("BoardDao -pass: passBoardNo = "+passBoardNo);
+//		System.out.println("BoardDao -pass: oneInfo = "+oneInfo);
+//		System.out.println("BoardDao -pass: passBoardNo = "+passBoardNo);
 		return oneInfo;
 	}
 
@@ -79,8 +79,6 @@ public class BoardDaoImpl implements BoardDao{
 		return passInsert;
 	}
 
-	
-	
 	@Override
 	public List<Map<String, String>> searchAnonyListAll(int cPage, int numPerPage, String searchOption, String keyword) {
 		
@@ -91,10 +89,10 @@ public class BoardDaoImpl implements BoardDao{
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
 		
-		System.out.println("여기오냐siba");
-		System.out.println("BoardDao-SALA="+searchOption);
-		System.out.println("BoardDao-SALA="+keyword);
-		System.out.println("BoardDao-SALA="+map);
+//		System.out.println("여기오냐siba");
+//		System.out.println("BoardDao-SALA="+searchOption);
+//		System.out.println("BoardDao-SALA="+keyword);
+//		System.out.println("BoardDao-SALA="+map);
 		
 		return sqlSession.selectList("anonyboard.anonySearchList", map, rowBounds);
 	}
@@ -105,10 +103,10 @@ public class BoardDaoImpl implements BoardDao{
 		map.put("searchOption", searchOption);
 		map.put("keyword", keyword);
 		
-		System.out.println("여기오냐siba");
-		System.out.println("BoardDao-CAL="+searchOption);
-		System.out.println("BoardDao-CAL="+keyword);
-		System.out.println("BoardDao-CAL="+map);
+//		System.out.println("여기오냐siba");
+//		System.out.println("BoardDao-CAL="+searchOption);
+//		System.out.println("BoardDao-CAL="+keyword);
+//		System.out.println("BoardDao-CAL="+map);
 
 		return sqlSession.selectOne("anonyboard.countAnonyList", map);
 		
@@ -148,8 +146,14 @@ public class BoardDaoImpl implements BoardDao{
 		return result;
 	}
 
+	@Override
+    public void updateAnonyViewCount(int anonyBoardNo){
+      sqlSession.update("anonyboard.anonyBoardReadCount", anonyBoardNo);
+    }
 	
-
-	
+	@Override
+    public void updatePassViewCount(int passBoardNo){
+      sqlSession.update("passboard.passBoardReadCount", passBoardNo);
+    }
 	
 }

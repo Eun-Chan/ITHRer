@@ -76,14 +76,14 @@ function addEducation() {
 	}
 	else {
 		$("#educationTotal").hide();	
-		$("#resumeEduFrm").trigger('reset');
+		$("#educationTotal").empty();	
 	}
 }
 function addCareer() {
 	carerrcount++;
 	if(carerrcount%2==0) {
 		$("#careerTotal").hide();
-		$("#resumeCareerFrm").trigger('reset');
+		$("#careerTotal").empty();	
 	}
 	else {
 		$("#careerTotal").show();		
@@ -93,7 +93,7 @@ function addIntern() {
 	interncount++;
 	if(interncount%2==0) {
 		$("#internTotal").hide();
-		$("#resumeInternFrm").trigger('reset');
+		$("#internTotal").empty();
 	}
 	else {
 		$("#internTotal").show();		
@@ -103,7 +103,7 @@ function addLearn() {
 	learncount++;
 	if(learncount%2==0) {
 		$("#learnTotal").hide();
-		$("#resumeLearnFrm").trigger('reset');
+		$("#learnTotal").empty();
 	}
 	else {
 		$("#learnTotal").show();	
@@ -113,7 +113,7 @@ function addCertificate() {
 	certificatecount++;
 	if(certificatecount%2==0) {
 		$("#certificateTotal").hide();	
-		$("#resumeCertifiFrm").trigger('reset');
+		$("#certificateTotal").empty();	
 	}
 	else {
 		$("#certificateTotal").show();
@@ -123,7 +123,7 @@ function addAward() {
 	awardcount++;
 	if(awardcount%2==0) {
 		$("#awardTotal").hide();
-		$("#resumeAwardFrm").trigger('reset');	
+		$("#awardTotal").empty();
 	}
 	else {
 		$("#awardTotal").show();
@@ -133,7 +133,7 @@ function addOverseas() {
 	overseascount++;
 	if(overseascount%2==0) {
 		$("#overseasTotal").hide();
-		$("#resumeOverseasFrm").trigger('reset');	
+		$("#overseasTotal").empty();
 	}
 	else {
 		$("#overseasTotal").show();
@@ -143,7 +143,7 @@ function addLanguage() {
 	languagecount++;
 	if(languagecount%2==0) {
 		$("#languageTotal").hide();
-		$("#resumeLanguageFrm").trigger('reset');
+		$("#languageTotal").empty();
 	}
 	else {
 		$("#languageTotal").show();
@@ -153,7 +153,7 @@ function addPotfolio() {
 	potfoliocount++;
 	if(potfoliocount%2==0) {
 		$("#potfolioTotal").hide();
-		$("#resumepotFrm").trigger('reset');
+		$("#potfolioTotal").empty();
 	}
 	else {
 		$("#potfolioTotal").show();
@@ -163,7 +163,7 @@ function addPreference() {
 	preferencecount++;
 	if(preferencecount%2==0) {
 		$("#preferenceTotal").hide();
-		$("#resumePreferFrm").trigger('reset');
+		$("#preferenceTotal").empty();
 	}
 	else {
 		$("#preferenceTotal").show();
@@ -173,7 +173,7 @@ function addLetter() {
 	lettercount++;
 	if(lettercount%2==0) {
 		$("#letterTotal").hide();
-		$("#resumeLetterFrm").trigger('reset');
+		$("#letterTotal").empty();
 	}
 	else {
 		$("#letterTotal").show();
