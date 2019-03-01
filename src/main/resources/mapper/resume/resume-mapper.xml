@@ -5,4 +5,8 @@
 		select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
 	</select>
 	<resultMap type="map" id="certificateMap"></resultMap>
+	<insert id="insertAward" parameterType="hashmap">
+		insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
+			(#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})		
+	</insert>
 </mapper>

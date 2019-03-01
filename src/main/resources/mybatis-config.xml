@@ -25,6 +25,7 @@
 		<typeAlias type="com.spring.ithrer.common.typehandler.StringArrayTypeHandler" alias="strArrTypeHandler"/>
 		<typeAlias type="com.spring.ithrer.board.model.vo.PassBoard" alias="passboard"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.PortFolio" alias="portfolio"/>
+		<typeAlias type="com.spring.ithrer.resume.model.vo.Award" alias="award"/>
 
 	</typeAliases>
 
