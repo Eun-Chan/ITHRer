@@ -29,7 +29,7 @@
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount ,
 		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
-		from recruitment s order by recruitment_no desc )t where rownum between 1 and 6
+		from recruitment s where end = 'N' order by recruitment_no desc )t where rownum between 1 and 6
 	</select>
 	<select id="selectOneFavorites" parameterType="map" resultType="favorites">
 		select * from favorites where member_id = #{memberId} and recruitment_no = #{recNo} and select_no = 0
@@ -124,7 +124,7 @@
 	</select>
 	
 	<insert id="insertPortFolio" parameterType="portfolio">
-		insert into potfolio values(null,#{pOriginalFileName},#{pRenamedFileName},'ikso2000',seq_potfolio_no.nextval)
+		insert into PORTFOLIO values(#{url},#{pOriginalFileName},#{pRenamedFileName},'ikso2000',seq_pf_no.nextval)
 	</insert>
 	<update id="updateMember" parameterType="map">
 		update member set email = #{email}, phone =#{phone} where member_id=#{memberId}
@@ -140,6 +140,13 @@
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount,
 		(select count(*) from companyapplication where recruitment_no = s.recruitment_no ) count ,
 		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
-		from recruitment s order by count desc )t where rownum between 1 and 6
+		from recruitment s where end = 'N' order by count desc )t where rownum between 1 and 6
 	</select>
+	
+	<select id="selectListPortFolio" parameterType="string" resultType="portfolio">
+		select * from PORTFOLIO where member_id = #{memberId}
+	</select>
+	<delete id="deletePortFolio" parameterType="_int">
+		delete from portfolio where pf_no = #{pfNo}
+	</delete>
 </mapper>

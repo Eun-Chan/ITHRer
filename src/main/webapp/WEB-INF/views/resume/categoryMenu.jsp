@@ -15,11 +15,10 @@
 <style>
 #category-container{
 	border: 1px solid gray;
-	max-width: 180px;
+	max-width: 165px;
 	background-color: #b89dff;
 	color: white;
 	margin-top: 200px;
-	margin-left:75px;
 	cursor: pointer;
 	display: block;
 	float: left;
@@ -59,102 +58,122 @@
 	</ul>
 </div>
 <script>
-var count = 0;
+var educount = 0;
+var carerrcount = 0;
+var interncount = 0;
+var learncount = 0;
+var certificatecount = 0;
+var awardcount = 0;
+var overseascount = 0;
+var languagecount = 0;
+var potfoliocount = 0;
+var preferencecount = 0;
+var lettercount = 0;
 function addEducation() {
-	count++;
-	if(count%2==0) {
+	educount++;
+	if(educount%2==0) {
 		$("#educationTotal").show();	
 	}
 	else {
-		$("#educationTotal").hide();		
+		$("#educationTotal").hide();	
+		$("#resumeEduFrm").trigger('reset');
 	}
-	console.log(count);
 }
 function addCareer() {
-	count++;
-	if(count%2==0) {
+	carerrcount++;
+	if(carerrcount%2==0) {
 		$("#careerTotal").hide();
+		$("#resumeCareerFrm").trigger('reset');
 	}
 	else {
 		$("#careerTotal").show();		
 	}
 }
 function addIntern() {
-	count++;
-	if(count%2==0) {
-		$("#internTotal").hide();		
+	interncount++;
+	if(interncount%2==0) {
+		$("#internTotal").hide();
+		$("#resumeInternFrm").trigger('reset');
 	}
 	else {
 		$("#internTotal").show();		
 	}
 }
 function addLearn() {
-	count++;
-	if(count%2==0) {
-		$("#learnTotal").hide();		
+	learncount++;
+	if(learncount%2==0) {
+		$("#learnTotal").hide();
+		$("#resumeLearnFrm").trigger('reset');
 	}
 	else {
 		$("#learnTotal").show();	
 	}
 }
 function addCertificate() {
-	count++;
-	if(count%2==0) {
+	certificatecount++;
+	if(certificatecount%2==0) {
 		$("#certificateTotal").hide();	
+		$("#resumeCertifiFrm").trigger('reset');
 	}
 	else {
 		$("#certificateTotal").show();
 	}
 }
 function addAward() {
-	count++;
-	if(count%2==0) {
-		$("#awardTotal").hide();	
+	awardcount++;
+	if(awardcount%2==0) {
+		$("#awardTotal").hide();
+		$("#resumeAwardFrm").trigger('reset');	
 	}
 	else {
 		$("#awardTotal").show();
 	}
 }
 function addOverseas() {
-	count++;
-	if(count%2==0) {
+	overseascount++;
+	if(overseascount%2==0) {
 		$("#overseasTotal").hide();
+		$("#resumeOverseasFrm").trigger('reset');	
 	}
 	else {
 		$("#overseasTotal").show();
 	}
 }
 function addLanguage() {
-	count++;
-	if(count%2==0) {
+	languagecount++;
+	if(languagecount%2==0) {
 		$("#languageTotal").hide();
+		$("#resumeLanguageFrm").trigger('reset');
 	}
 	else {
 		$("#languageTotal").show();
 	}
 }
 function addPotfolio() {
-	count++;
-	if(count%2==0) {
+	potfoliocount++;
+	if(potfoliocount%2==0) {
 		$("#potfolioTotal").hide();
+		$("#resumepotFrm").trigger('reset');
 	}
 	else {
 		$("#potfolioTotal").show();
 	}
 }
 function addPreference() {
-	count++;
-	if(count%2==0) {
+	preferencecount++;
+	if(preferencecount%2==0) {
 		$("#preferenceTotal").hide();
+		$("#resumePreferFrm").trigger('reset');
 	}
 	else {
 		$("#preferenceTotal").show();
 	}
 }
 function addLetter() {
-	count++;
-	if(count%2==0) {
+	lettercount++;
+	if(lettercount%2==0) {
 		$("#letterTotal").hide();
+		$("#resumeLetterFrm").trigger('reset');
 	}
 	else {
 		$("#letterTotal").show();

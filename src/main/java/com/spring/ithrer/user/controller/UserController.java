@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -267,7 +268,7 @@ public class UserController {
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*10);
-			session.setAttribute("company", company);
+			session.setAttribute("companyLoggedIn", company);
 			
 			test.put("result" , "true");
 		}
@@ -580,5 +581,17 @@ public class UserController {
 		messageHelper.setSubject(subject);
 		
 		mailSender.send(message);
+	}
+	/*
+	 * 로그아웃 
+	 */
+	@RequestMapping("/member/memberLogout.do")
+	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
+		
+		req.getSession().removeAttribute("member");
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
 	}
 }

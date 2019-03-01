@@ -334,14 +334,34 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		List<Member> applicantList = new ArrayList<>();
 		
-		if(applicantIdList != null) {
-			for(int i=0; i<applicantIdList.size(); i++) {
-				Member applicant = companyDao.selectApplicantWithAllInfo(paramMap);
-				applicantList.add(applicant);
-			}
-		}
+//		if(applicantIdList != null) {
+//			for(int i=0; i<applicantIdList.size(); i++) {
+//				Member applicant = companyDao.selectApplicantWithAllInfo(paramMap);
+//				applicantList.add(applicant);
+//			}
+//		}
 		
 		return applicantList;
+	}
+
+	@Override
+	public Recruitment selectRecruitmentOne(int recruitmentNo) {
+		return companyDao.selectRecruitmentOne(recruitmentNo);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap) {
+		return companyDao.selectRcrtListNotThis(paramMap);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtEndList(String compId) {
+		return companyDao.selectRcrtEndList(compId);
+	}
+
+	@Override
+	public int updateRcrtEnd(int recruitmentNo) {
+		return companyDao.updateRcrtEnd(recruitmentNo);
 	}
 
 }

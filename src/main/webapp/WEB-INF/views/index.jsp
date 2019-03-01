@@ -1221,19 +1221,19 @@
 	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
 	               <c:if test="${empty member }">
-	               		<button class="star"><img src="${pageContext.request.contextPath}/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               </c:if>
 	               <c:if test="${not empty member }">
 	               		<c:if test="${list.favoritesCount == 1 }">
-	               			<button class="star"><img src="${pageContext.request.contextPath}/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               		<c:if test="${list.favoritesCount ==0 }">
-	               			<button class="star"><img src="${pageContext.request.contextPath}/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
 	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
 	            	<input type="hidden" value="${list.compId }" id="hiddenCompId" />
-	            	<input type="hidden" value="${list.applyCount }" />
+	            	<input type="hidden" value="${list.applyCount }" id="hiddenApplyCount"/>
 	            </li>
 	         </c:forEach>   
 	         </ul>
@@ -1255,7 +1255,7 @@
 	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               		<c:if test="${toplist.favoritesCount ==0 }">
-	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
 	               <input type="hidden" value="${toplist.recruitmentNo }" id="hiddenRecruitNo" />
@@ -1348,7 +1348,7 @@ $(".star").on("click",function(){
 });
 $(".applyButton").on("click",function(e){
 	var recNo = $(this).parent().siblings("#hiddenRecruitNo").val();
-	var hiddenApplyCount = $("#hiddenApplyCount").val();
+	var hiddenApplyCount = $(this).parent().siblings("#hiddenApplyCount").val();
 	e.stopPropagation();
 	 if(${empty member}){
 			alert("로그인 후 이용 해 주세용");

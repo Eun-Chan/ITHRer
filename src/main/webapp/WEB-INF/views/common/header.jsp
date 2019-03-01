@@ -41,9 +41,17 @@
 
 <!DOCTYPE html>
 <html>
+<style>
+.memberNames{
+	color:black;
+	display: inline-block;
+	padding-right: 2px
+}
+</style>
 <head>
 <meta charset="UTF-8">
 <title>Hello Spring</title>
+
 <!-- 부트스트랩관련 라이브러리 -->
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -64,7 +72,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}" style="color:#ffb6c1">
-				<img src="${pageContext.request.contextPath }/resources/images/ITHRerLogo.png" alt="" width="50px" height="50px"/>
+				<img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="50px" height="50px"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -80,28 +88,29 @@
 			    </ul>
 			    
 			    
-			    <c:if test="${empty memberLoggedIn and empty company }">
+			    <c:if test="${empty member and empty companyLoggedIn }">
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/login.ithrer">기업로그인(임시)</a></li>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer">공고등록 테스트</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
-
 	        		</ul>
 			 	</c:if>
-			 	<c:if test="${!empty company }">
+			 	<c:if test="${!empty companyLoggedIn }">
 					<ul class="navbar-nav">
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/index.ithrer?compId=${company.compId }">기업홈</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${company.compId }">기업정보관리</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/index.ithrer?compId=${companyLoggedIn.compId }">기업홈</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${companyLoggedIn.compId }">기업정보관리</a></li>
 		        	</ul>
 		        	<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/company/logout.ithrer'">로그아웃</button>
 			 	</c:if>
-			 	<c:if test="${memberLoggedIn != null }">
-			 		<a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${memberLoggedIn.memberId}">${memberLoggedIn.memberName }</a>님, 안녕하세요
-			 		&nbsp;
-			 		<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button>
+			 	<c:if test="${member != null }">
+			 		<ul class="navbar-nav">
+				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames">${member.memberName }</a>님</span></li>
+				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
+			 		</ul>
 			 	</c:if>
 			 </div>
 		</nav>

@@ -93,10 +93,10 @@
 	.timeimg{
 		text-align: center;
 	}
-	.btn{
+	#apply{
 		width: 200px;
     	height: 65px;
-    	margin-bottom: 5px
+    	margin-bottom: 5px;
 	}
 	.resumeDl dt{
 		letter-spacing: -1px;
@@ -209,15 +209,22 @@
 				<dd>${com.bussinessScale }</dd>
 			</dl>
 	</div>
-	
+	<div class="DetailHeader">
+		<h1>채용정보</h1>
+	</div>
+	<div class="row main">
+		여기에 채용정보가 들어가 보리기이이이
+		이이이이꾸요이이이잇
+		아아아아앙아아아아아
+	</div>
 	<div class="DetailHeader">
 		<h1>접수기간/방법</h1>
 	</div>
 	<div class="row main">
 		<div class="col-sm-3 timeimg">
 			<dl>
-				<dt>
-					<img src="${pageContext.request.contextPath }/resources/images/time.svg" alt="" style="width: 50px;height: 50px;display: block; margin-bottom: 5px; position: relative; left: 25px;"/>
+				<dt style="width: 130px; position: relative; left: -7px;">
+					<img src="${pageContext.request.contextPath }/resources/images/time.svg" alt="" style="width: 50px;height: 50px;display: block; margin-bottom: 5px; position: relative; left: 38px;"/>
 					<span style="font-size: 0.8em;">남은시간</span>
 					<br />
 					<span id="d-day"></span>
@@ -269,7 +276,7 @@
 			</div>
 		</div>
 		<div class="col-sm-3">
-			<span>언령별</span>
+			<span>연령별</span>
 			<div  id="age" style="width: 220px; height: 160px;">
 			</div>
 		</div>
