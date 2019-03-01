@@ -47,6 +47,15 @@
 	display: inline-block;
 	padding-right: 2px
 }
+.headerMember{
+	top: 7.1px;
+}
+.headerMemberTitle{
+	color: rgba(0, 0, 0, 0.5);
+    border: none;
+    background: #f8f9fa!important;
+    cursor: pointer;
+}
 </style>
 <head>
 <meta charset="UTF-8">
@@ -69,7 +78,7 @@
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}" style="color:#ffb6c1">
-				<img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="50px" height="50px"/>
+				<img src="${pageContext.request.contextPath }/resources/images/ITHRerLogo.png" alt="" width="50px" height="50px"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -91,7 +100,6 @@
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer">공고등록 테스트</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty companyLoggedIn }">
@@ -103,10 +111,19 @@
 			 	</c:if>
 			 	<c:if test="${member != null }">
 			 		<ul class="navbar-nav">
-				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames">${member.memberName }</a>님</span></li>
+			 		<div class="dropdown headerMember">
+					  <button type="button" data-toggle="dropdown" class="headerMemberTitle">
+					   ${member.memberName }님
+					  </button>
+					  <div class="dropdown-menu">
+					    <a class="dropdown-item" href="#">이력서 관리</a>
+					    <a class="dropdown-item" onclick="window.open('${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}','apply','width=950, height=700, resizable = no, scrollbars = no');">스크랩한 공고</a>
+					    <a class="dropdown-item" href="#">회원정보 수정</a>
+					  </div>
+					</div>
+				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
 				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
-				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
 			 		</ul>
 			 	</c:if>
 			 </div>

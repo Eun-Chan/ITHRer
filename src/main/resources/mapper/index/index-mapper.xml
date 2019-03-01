@@ -25,7 +25,7 @@
 	<insert id="insertLocation" parameterType="map">
 		insert into area values(#{code},#{name})
 	</insert>
-	<select id="selectListRecruitment" resultType="recruitment">
+	<select id="selectListRecruitment" resultType="recruitment" parameterType="string">
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount ,
 		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
@@ -135,7 +135,7 @@
 	<select id="selectCountCompanyApplication" parameterType="map" resultType="_int">
 		select count(*) count from companyapplication where recruitment_no=#{recNo} and member_id = #{memberId}
 	</select>
-	<select id="selectTopListRecruitment" parameterType="map" resultType="recruitment">
+	<select id="selectTopListRecruitment" parameterType="string" resultType="recruitment">
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount,
 		(select count(*) from companyapplication where recruitment_no = s.recruitment_no ) count ,
@@ -149,4 +149,15 @@
 	<delete id="deletePortFolio" parameterType="_int">
 		delete from portfolio where pf_no = #{pfNo}
 	</delete>
+	<select id="selectListRandomRecruitment" parameterType="string" resultType="recruitment">
+		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
+		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount
+		from recruitment s where end = 'N' order by DBMS_RANDOM.VALUE )t where rownum <![CDATA[<]]> 13
+	</select>
+	<select id="selectCountFavorite" parameterType="string" resultType="_int">
+		select count(*) totalCount from favorites where member_id = #{memberId} and select_no = 0
+	</select>
+	<select id="selectListFavorites" parameterType="string" resultType="favorites">
+		select * from favorites where member_id = #{memberId} and select_no = 0
+	</select>
 </mapper>
