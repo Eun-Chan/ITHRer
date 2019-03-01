@@ -57,4 +57,6 @@ public interface CompanyService {
 
 	List<Recruitment> selectRcrtEndList(String compId);
 
+	int updateRcrtEnd(int recruitmentNo);
+
 }

@@ -12,6 +12,11 @@
 div#all-container{
 	width: 1000px;
 }
+
+/* border 두께 설정 */
+div.border-top.border-bottom{
+	border-width: 3px !important;
+}
 </style>
 
 <div id="all-container" class="container my-4">
@@ -33,7 +38,7 @@ div#all-container{
 	
 	<div id="applicant-list-container" class="container my-2">
 	
-	<div class="row border-top border-bottom border-primary text-center py-3 font-weight-bold d-flex flex-wrap align-items-center">
+	<div class="row rounded border-top border-bottom border-primary text-center py-3 font-weight-bold d-flex flex-wrap align-items-center">
 		<div class="col">지원자</div>
 		<div class="col">모집부문</div>
 		<div class="col">학교<br />(학력/지역)</div>

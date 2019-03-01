@@ -92,7 +92,11 @@
 	
 	<!-- 관심인재 삭제 -->
 	<delete id="deleteFavorite" parameterType="map">
-		delete from favorites where comp_id=#{compId} and member_id=#{memberId} and recruitment_no=#{recruitmentNo}
+		delete from favorites 
+		where member_id=#{memberId} and comp_id=#{compId} 
+		<if test="recruitmentNo != 0">
+		and recruitment_no=#{recruitmentNo}
+		</if>
 	</delete>
 	
 	<!-- 관심인재 추가 -->
@@ -109,7 +113,8 @@
 	<select id="selectRcrtList" parameterType="string" resultType="recruitment">
 		select 
 		r.*,
-		(select count(*) from companyapplication where recruitment_no=r.recruitment_no) no_of_applicant
+		(select count(*) from companyapplication where recruitment_no=r.recruitment_no) count,
+		(select count(*) from companyapplication where recruitment_no=r.recruitment_no and read='N') not_read_count
 		from recruitment r where comp_id=#{compId} and end='N'
 	</select>
 	
@@ -137,5 +142,10 @@
 	<select id="selectRcrtEndList" parameterType="string" resultType="recruitment">
 		select * from recruitment where comp_id=#{compId} and end='Y'
 	</select>
+	
+	<!-- 채용공고 마감하기 -->
+	<update id="updateRcrtEnd" parameterType="_int">
+		update recruitment set end='Y' where recruitment_no=#{recruitmentNo}
+	</update>
 	
 </mapper>

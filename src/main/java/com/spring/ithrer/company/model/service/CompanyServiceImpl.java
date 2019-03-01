@@ -359,4 +359,9 @@ public class CompanyServiceImpl implements CompanyService {
 		return companyDao.selectRcrtEndList(compId);
 	}
 
+	@Override
+	public int updateRcrtEnd(int recruitmentNo) {
+		return companyDao.updateRcrtEnd(recruitmentNo);
+	}
+
 }

@@ -47,4 +47,11 @@ public interface IndexDao {
 
 	int deletePortFolio(int pfNo);
 
+	List<Recruitment> selectListRandomRecruitment(String memberId);
+
+
+	int selectCountFavorite(String memberId);
+
+	List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage);
+
 }

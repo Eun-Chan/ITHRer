@@ -20,7 +20,7 @@ footer{
 		<div class="row footer">
 				<div class="col-sm-4">
 					<a href="${pageContext.request.contextPath}" style="color:#ffb6c1">
-						<img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="120px" height="80px"/>
+						<img src="${pageContext.request.contextPath }/resources/images/ITHRerLogo.png" alt="" width="120px" height="80px"/>
 					</a>
 				</div>
 				<div class="col-sm-8">

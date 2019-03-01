@@ -22,6 +22,6 @@ public class Profile implements Serializable{
 	private String birth;
 	private String gender;
 	private String email;
-	private String tel;
+	private String phone;
 	private String address;
 }

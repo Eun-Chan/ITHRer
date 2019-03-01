@@ -17,17 +17,20 @@ public class Education implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String[] nonhigh;
 	private String graduaction;
 	private String schoolName;
+	private String highgraduationDate;
+	private String highgraduationState;
 	private String admissionDate;
 	private String graduationDate;
-	private String graduationState;
-	private String grade;
+	private String graducationstate;
 	private String[] transfer;
 	private String major;
-	private int score;
+	private String score;
 	private double totalscore;
-	private String senierproject;
 	private String degree;
-	private String secmajor;	
+	private String otherDepartSel;
+	private String secmajor;
+	private String otherDepartText;	
 }

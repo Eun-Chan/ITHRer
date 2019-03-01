@@ -13,6 +13,9 @@
 div#company-info-container.container{
 	width: 1000px;
 }
+div.title{
+	font-size: 1.5em;
+}
 span.title{
 	font-size: 1em;
 }
@@ -30,14 +33,19 @@ div[id$=-container]{
 	display: none;
 }
 
+/* border 두께 설정 */
+div.border-top.border-bottom{
+	border-width: 4px !important;
+}
+
 </style>
 
 
 <div id="company-info-container" class="container">
 
-	<div id="company-info-container">
-		<div class="text-center">
-			<span class="title badge badge-dark">기업 정보</span>
+	<div id="company-info-container" class="rounded border-primary border-top border-bottom py-3">
+		<div class="text-center mb-3">
+			<div class="title py-2 font-weight-bold text-primary">기업 정보</div>
 		</div>
 		
 		<form id="company-info-form">
@@ -753,7 +761,7 @@ $("#insert-location-modal-btn").on("click",function(){
 	html += '</div>';
 	html += '<div class="col-sm-2 text-center">';
 	html += '<button type="button" class="btn btn-outline-success btn-sm insert-location-btn">저장</button> ';
-	html += '<button type="button" class="btn btn-outline-danger btn-sm delete-location-btn">삭제</button>';
+	html += '<button type="button" class="btn btn-outline-danger btn-sm cancel-location-btn">취소</button>';
 	html += '</div>';
 	html += '</div>';
 	html += '</form>';
@@ -764,6 +772,11 @@ $("#insert-location-modal-btn").on("click",function(){
 	$("#location-info-container").append(html);
 	
 	loIndex++;
+});
+
+/* 주소 추가 취소버튼 */
+$(document).on("click",".cancel-location-btn",function(){
+	$(this).parents("form").remove();
 });
 
 /* 주소 추가 */

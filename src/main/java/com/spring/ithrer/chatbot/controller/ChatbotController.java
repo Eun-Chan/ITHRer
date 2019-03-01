@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.ithrer.board.model.vo.AnonyBoard;
+import com.spring.ithrer.chatbot.model.service.ChatbotService;
 import com.spring.ithrer.chatbot.model.vo.Keyboard;
 import com.spring.ithrer.chatbot.model.vo.Message;
 import com.spring.ithrer.chatbot.model.vo.MessageButton;
@@ -27,6 +29,8 @@ public class ChatbotController {
 	
 	@Autowired
 	IndexService indexService;
+	@Autowired
+	ChatbotService chatbotService;
 	
 	ICommand command;
 	
@@ -101,6 +105,7 @@ public class ChatbotController {
 					    + "지역 : " + rec.getLocation() + "\n"
 					    + "접수 시작일 : " + rec.getOpeningDate() + "\n"
 					    + "접수 마감일 : " + rec.getClosingDate() + "\n"
+					    + "지원자 수 " + rec.getCount()+ "\n"
 					    + "ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n\n";
 			}
 			
@@ -108,17 +113,50 @@ public class ChatbotController {
 			msg.setText(result);
 		}
 		
-		// 채용 캘린더
+		// 채용 달력
 		else if(req.getContent().equals("채용 달력")) {
 			// 채용 달려 보여 줘 보리기
 			res.setKeyboard(new Keyboard(btn_init(0)));
 			
 			// 채용 달력 메세지 버튼
 			MessageButton msgBtn = new MessageButton();
-			msgBtn.setLabel("ITHRer");
+			msgBtn.setLabel("채용 달력");
 			msgBtn.setUrl("http://52.78.61.219:8080/ITHRer/calendar.ithrer");
 			msg.setMessage_button(msgBtn);
-			msg.setText("채용 정보 캘린더");
+			msg.setText("현재 채용 진행중인 IT회사들에 대한 정보를 캘린더 형태로 제공 해드립니다(하트)");
+		}
+		
+		// ITHRer 게시판 정보
+		else if(req.getContent().equals("ITHRer 게시판 정보")) {
+			res.setKeyboard(new Keyboard(btn_init(2)));
+			msg.setText(req.getContent());
+		}
+		
+		// 익명 게시판
+		else if(req.getContent().equals("익명 게시판")) {
+			// 최신 익명 게시판 5개 받아오기
+			List<AnonyBoard> boards = chatbotService.selectBoardList();
+			
+			String result = "";
+			// 5개 정도 쫘악 뿌리기
+			if(!boards.isEmpty()) {
+				for(int i = 0 ; i < boards.size(); i++) {
+					AnonyBoard board = boards.get(i);
+					result += String.valueOf(i+1)+"\n"
+						    + "제목 : " + board.getAnonyBoardTitle() + "\n"
+						    + "작성자 : " + board.getAnonyBoardWriter() + "\n"
+						    + "작성일 : " + board.getAnonyBoardDate() + "\n"
+						    + "조회수 : " + board.getAnonyBoardReadCount() + "\n"
+							+ "ㅡㅡㅡㅡㅡ내용ㅡㅡㅡㅡㅡ\n"
+							+ board.getAnonyBoardContent()+"\n\n";
+				}
+				msg.setText(result);
+			}
+			// 익명 게시판이 empty 일 때
+			else {
+				msg.setText("익명 게시판 정보가 없습니다.");
+			}
+			res.setKeyboard(new Keyboard(btn_init(2)));
 		}
 		
 		// 처음으로
@@ -136,11 +174,15 @@ public class ChatbotController {
 	 */
 	public String[] btn_init(int idx) {
 		if(idx == 0) {
-			String[] btn = {"채용 공고","채용 달력","사용법","공지사항"};
+			String[] btn = {"채용 공고","채용 달력","ITHRer 게시판 정보","공지사항"};
 			return btn;
 		}
 		else if(idx == 1) {
 			String[] btn = {"최근 공고","인기 공고","처음으로"};
+			return btn;
+		}
+		else if(idx == 2) {
+			String[] btn = {"익명 게시판","합소서 게시판","처음으로"};
 			return btn;
 		}
 		

@@ -23,7 +23,6 @@
     $(document).ready(function () {
         // popover demo
         $("[data-toggle=popover]").popover({trigger: "hover"});
-        
     });
 </script>
 
@@ -113,7 +112,7 @@
 	                                    <label class="col-md-2 col-form-label form-control-label"></label>
 	                                    <div class="col-md-9">
 	                                        <input type="submit" class="btn btn-primary" value="회원가입">
-	                                        <input type="button" class="btn btn-secondary" value="홈으로" onclick="location.href='/ithrer'">
+	                                        <input type="button" class="btn btn-secondary" value="홈으로" onclick="goHome();">
 	                                    </div>
 	                                </div>
 	                            </form>
@@ -225,7 +224,7 @@
 	                                    <label class="col-md-2 col-form-label form-control-label"></label>
 	                                    <div class="col-md-9">
 	                                        <input type="submit" class="btn btn-primary" value="회원가입">
-	                                        <input type="button" class="btn btn-secondary" value="홈으로" onclick="location.href='/ithrer'">
+	                                        <input type="button" class="btn btn-secondary" value="홈으로" onclick="goHome();">
 	                                    </div>
 	                                </div>
                             	</form>
@@ -631,15 +630,20 @@
 		$.ajax({
 			crossOrigin: true,
 			url: "https://teht.hometax.go.kr/wqAction.do?actionId=ATTABZAA001R08&screenId=UTEABAAA13&popupYn=false&realScreenId=", 
-			data: "<map id='ATTABZAA001R08'><pubcUserNo/><mobYn>N</mobYn><inqrTrgtClCd>1</inqrTrgtClCd><txprDscmNo>1248639732</txprDscmNo><dongCode>05</dongCode><psbSearch>Y</psbSearch><map id='userReqInfoVO'/></map>", 
+			data: "<map id='ATTABZAA001R08'><pubcUserNo/><mobYn>N</mobYn><inqrTrgtClCd>1</inqrTrgtClCd><txprDscmNo>1248639732</txprDscmNo><dongCode>05</dongCode><psbSearch>Y</psbSearch><map id='userReqInfoVO'/></map>", 			
 			type: "POST",
 			contentType: "text/xml",
+			dataType : "xml",
 			success : function(data){
 				alert(data);
 			}
 		});
 	});
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 사업자 번호 조회 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+	
+	function goHome(){
+		location.href="/ithrer"
+	}
 </script>
 </body>
 </html>
