@@ -3,19 +3,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-<title>스크랩 공고창</title>
-</head>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+
 <style>
+	.fareMain{
+		width: 1000px;
+		margin: 0 auto;
+	}
 	.row ul{
 		list-style: none;
 		width: 100%;
@@ -52,13 +46,80 @@
 	.favoriteContent{
 		padding: 10px 25px 15px 25px;
 	}
+	.faRe{
+		float: left;
+		margin: 0 auto;
+		width: 730px;
+	}
+	.fareBanner{
+		float: right;
+		width: 250px;
+		margin-right: 15px;
+	}
+	.BannerHeader{
+		position: relative;
+	    padding: 25px 0 25px 0;
+	    font-size: 18px;
+	    color: #444;
+	    letter-spacing: -1px;
+	    font-weight: bold;
+	}
+	.fareBanner ul{
+		list-style: none;
+		padding: 0px 0px 0px 10px;
+	}
+	.BannerOpen{
+		width: 200px;
+		height: 140px;
+		border: 1px solid black;
+		margin-bottom: 20px;
+		position: relative;
+		cursor: pointer;
+	}
+	.star{
+		position: absolute;
+		bottom: 13px;
+		left: 10px;
+		border: 0;
+	    background: white;
+	}
+	.content{
+		overflow: hidden;
+	    position: absolute;
+	    top: 0;
+	    left: 0;
+	    padding:15px;
+	    width: 100%;
+	    height: 100%;
+	    box-sizing: border-box;
+	    background: #fff;
+	}
+	.endDate{
+		position: absolute;
+	    right: 20px;
+	    bottom: 13px;
+	    line-height: 15px;
+	    font-size: 0.8em;
+	    letter-spacing: 0;
+	}
+	.recruitTitle{
+	display: block;
+	overflow: hidden;
+	max-height: 39px;
+	line-height: 19px;
+	text-overflow: ellipsis;
+	margin-top: 5px;
+	font-size: 0.7em;
+	font-weight: 700;
+	}
 </style>
 <body>
-	<div class="container">
+<div class ="fareMain">
+	<div class="container faRe">
 		<div class="row">
 			<span style="font-size: 24px;">스크랩 공고</span>
 		</div>
-		<div class="row">
+		<div class="row favorite">
 			<ul class="headerUl">
 				<li><button>삭제</button></li>
 				<li>
@@ -71,14 +132,14 @@
 		</div>
 		<div>
 			<div class="row favoriteHeader">
-				<div class="col-sm-2"><input type="checkbox" name="" id="" /></div>
+				<div class="col-sm-2"><input type="checkbox" name="" id="" class="checkbox All"/></div>
 				<div class="col-sm-8" style="text-align: center;"><span style="font-size: 0.9em;" >채용공고</span></div>
 				<div class="col-sm-2" style="text-align: center;"><span style="font-size: 0.9em;">마감일</span></div>
 			</div>
 			<c:forEach items="${favorites }" var="favorite">
 			<div class="row favoriteContent">
 				<ul class="col-sm-2" style="padding-left:29px;">
-					<li><input type="checkbox" name="" id="" /></li>
+					<li><input type="checkbox" name="test" id="" class="checkbox"/></li>
 				</ul>
 				<ul class="col-sm-8" style="text-align: center;">
 					<li><span style="font-size: 0.8em;">${favorite.memberId }</span></li>
@@ -95,5 +156,85 @@
 			${pageBar}
 		</div>
 	</div>
-</body>
-</html>
+	<div class="fareBanner">
+		<h3 class="BannerHeader">
+			<span>스크랩 기반 <em style="color:#ffb6c1;">ITHRer</em>&nbsp;추천공고</span>
+		</h3>
+		<ul>
+			<c:forEach items="${rcList }" var="RecommendList"> 
+				<li class="BannerOpen open">
+					<div class="content" onclick="moveDetail('${RecommendList.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${RecommendList.compName }</strong>
+	                  <span class="recruitTitle">${RecommendList.recruitmentTitle }</span>
+	                  <div class="endDate">D-${RecommendList.endTime }</div>
+	               </div>
+	               <c:if test="${not empty member }">
+	               		<c:if test="${RecommendList.favoritesCount == 1 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               		<c:if test="${RecommendList.favoritesCount ==0 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               </c:if>
+	                <input type="hidden" value="${RecommendList.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${RecommendList.compId }" class="hiddenCompId" />
+				</li>
+			</c:forEach>
+		</ul>
+	</div>
+</div>
+<script>
+function moveDetail(no){
+	   var no = no;
+		
+	   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no);
+	}
+	
+//스크랩한 공고
+$(".star").on("click",function(){
+	var recNo = $(this).siblings(".hiddenRecruitNo").val();
+	var compId = $(this).siblings(".hiddenCompId").val();
+	 if(${empty member}){
+		alert("로그인 후 이용 해 주세용");
+		return;
+ 	}
+	 else{		 
+		$.ajax({
+				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,
+				success:function(data){
+					if(data == 1){
+						if(recNo == $("[value="+recNo+"]").val()){
+							$("[value="+recNo+"]").siblings(".star").children("img").attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+							/* img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg"); */
+						}
+					}
+					else {
+						if(recNo == $("[value="+recNo+"]").val()){
+							$("[value="+recNo+"]").siblings(".star").children("img").attr("src","${pageContext.request.contextPath}/resources/images/star.svg");				
+						}
+					}
+				}
+		});		 
+	 }
+});
+$(".open").hover(function(){
+	   $(this).css("border","2px solid #ffb6c1");
+		},function(){
+	   		$(this).css("border","2px solid #d6d6d6");
+		}
+);
+$(".All").on("click",function(){
+	$(".checkbox").prop("checked",this.checked);
+});
+$(".checkbox").on("click",function(){
+	if(!$(this).hasClass("All") && this.checked==false){
+		$(".All").prop("checked",false);
+	}
+ 	if($("input:checkbox[name=test]:checked").length == $("input:checkbox[name=test]").length){
+ 		console.log("ALL checked");
+		$(".All").prop("checked",this.checked);
+	}
+});
+
+</script>
+<jsp:include page="/WEB-INF/views/common/footer.jsp"/>

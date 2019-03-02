@@ -1343,7 +1343,6 @@ function moveDetail(no){
 }
 
 $("#btn-search-notice").on("click", function(){
-   console.log("아아");	
    var searchKeyWord = $("#searchKeyWord").val();
    var locationCode = $(".hiddenLocationCode").val();
    

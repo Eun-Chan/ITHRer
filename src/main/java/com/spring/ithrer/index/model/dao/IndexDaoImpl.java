@@ -135,4 +135,9 @@ public class IndexDaoImpl implements IndexDao{
 		return sqlSession.selectList("index.selectListFavorites", memberId,rowBounds);
 	}
 
+	@Override
+	public List<Recruitment> selectListRecommendRecruitmentList(Map<String,Object> map) {
+		return sqlSession.selectList("index.selectListRecommendRecruitmentList", map);
+	}
+
 }
