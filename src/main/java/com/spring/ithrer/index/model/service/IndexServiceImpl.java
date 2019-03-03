@@ -113,6 +113,26 @@ public class IndexServiceImpl implements IndexService{
 		return indexDao.deletePortFolio(pfNo);
 	}
 
+	@Override
+	public List<Recruitment> selectListRandomRecruitment(String memberId) {
+		return indexDao.selectListRandomRecruitment(memberId);
+	}
+
+	@Override
+	public int selectCountFavorite(String memberId) {
+		return indexDao.selectCountFavorite(memberId);
+	}
+
+	@Override
+	public List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage) {
+		return indexDao.selectListFavorites(memberId,cPage,numPerPage);
+	}
+
+	@Override
+	public List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map) {
+		return indexDao.selectListRecommendRecruitmentList(map);
+	}
+
 
 
 }

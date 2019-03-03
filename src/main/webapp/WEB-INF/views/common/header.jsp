@@ -5,6 +5,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="com.spring.ithrer.user.model.vo.*" %>
 <%@ page import="com.spring.ithrer.company.model.vo.*" %>
+<%@ page import="java.net.URLEncoder" %>
+<%@ page import="java.security.SecureRandom" %>
+<%@ page import="java.math.BigInteger" %>
 <%
 	// 개인 회원 세션에 있는 정보 가져오기
 	Member member = (Member)session.getAttribute("member");
@@ -37,6 +40,19 @@
 	
 	System.out.println("여기서 나오면 세션 끝(개인회원) = "+member);
 	System.out.println("여기서 나오면 세션 끝(기업회원) = "+company);
+	
+	// 네이버 로그인 시작
+		String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
+ 	    String redirectURI = URLEncoder.encode("http://localhost:9090/ithrer/user/naverLoginCallback.ithrer", "UTF-8");
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString();
+	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+	    apiURL += "&client_id=" + clientId;
+	    apiURL += "&redirect_uri=" + redirectURI;
+	    apiURL += "&state=" + state;
+	    session.setAttribute("state", state);
+	// 네이버 로그인 끝
+	System.out.println("확인 = "+request.getContextPath()+"/user/naverLoginCallback.ithrer");
 %>
 
 <!DOCTYPE html>
@@ -46,6 +62,15 @@
 	color:black;
 	display: inline-block;
 	padding-right: 2px
+}
+.headerMember{
+	top: 7.1px;
+}
+.headerMemberTitle{
+	color: rgba(0, 0, 0, 0.5);
+    border: none;
+    background: #f8f9fa!important;
+    cursor: pointer;
 }
 </style>
 <head>
@@ -66,13 +91,15 @@
 <!-- 페이스북 로그인용(로그인 버튼) -->
 <script async defer src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1894308784031760&autoLogAppEvents=1"></script>
 
+
+
 </head>
 <body>
 <div id="container">
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<a class="navbar-brand" href="${pageContext.request.contextPath}" style="color:#ffb6c1">
-				<img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="50px" height="50px"/>
+				<img src="${pageContext.request.contextPath }/resources/images/ITHRerLogo.png" alt="" width="50px" height="50px"/>
 			</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -94,7 +121,6 @@
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer">공고등록 테스트</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty companyLoggedIn }">
@@ -106,10 +132,19 @@
 			 	</c:if>
 			 	<c:if test="${member != null }">
 			 		<ul class="navbar-nav">
-				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames">${member.memberName }</a>님</span></li>
+			 		<div class="dropdown headerMember">
+					  <button type="button" data-toggle="dropdown" class="headerMemberTitle">
+					   ${member.memberName }님
+					  </button>
+					  <div class="dropdown-menu">
+					    <a class="dropdown-item" href="#">이력서 관리</a>
+					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
+					    <a class="dropdown-item" href="#">회원정보 수정</a>
+					  </div>
+					</div>
+				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
 				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
-				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer"><img src="${pageContext.request.contextPath }/resources/images/AsCenter.svg" alt="고객센터" width="30px" height="30px" /></a></li>
 			 		</ul>
 			 	</c:if>
 			 </div>
@@ -167,8 +202,12 @@
 				  			<div class="form-group">
 				  			<br />
 				  				<p class="font-italic text-info">다른 계정으로 로그인</p>
+				  				<!-- 카카오로그인 -->
 				  				<img src="${pageContext.request.contextPath }/resources/images/kakao_login.png" class="rounded-circle" onclick="kakaoLogin()" width="50px">
+				  				<!-- 페이스북로그인 -->
 				  				<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+				  				<!-- 네이버로그인 -->
+				  				<img height="35" src="http://static.nid.naver.com/oauth/small_g_in.PNG" onclick="naverPopup();" style="cursor: pointer;"/>
 				  			</div>
 						</form>	
 					</div>
@@ -207,7 +246,10 @@
 </div> <!-- modal fade 끝 -->
 
 <script>
-	
+	/* 네이버 로그인 새창 띄우기용 */
+	function naverPopup(){
+		window.open("<%=apiURL%>","_blank","width=300, height=300;"); 
+	}
 
 	/* 카카오톡 api 로그인 */
 	//<![CDATA[

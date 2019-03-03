@@ -146,7 +146,7 @@ public class ChatbotController {
 						    + "제목 : " + board.getAnonyBoardTitle() + "\n"
 						    + "작성자 : " + board.getAnonyBoardWriter() + "\n"
 						    + "작성일 : " + board.getAnonyBoardDate() + "\n"
-						    + "조회수 : " + board.getReadCount() + "\n"
+						    + "조회수 : " + board.getAnonyBoardReadCount() + "\n"
 							+ "ㅡㅡㅡㅡㅡ내용ㅡㅡㅡㅡㅡ\n"
 							+ board.getAnonyBoardContent()+"\n\n";
 				}
