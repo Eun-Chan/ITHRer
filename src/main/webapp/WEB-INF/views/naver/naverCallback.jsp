@@ -8,12 +8,13 @@
 <%@ page import="java.net.HttpURLConnection" %>
 <%@ page import="java.io.BufferedReader" %>
 <%@ page import="java.io.InputStreamReader" %>
+<%@ page import="com.google.gson.Gson" %>
 <fmt:requestEncoding value="UTF-8" />
 
 <!-- index.jsp ===> header.jsp 로 데이터 전송 -->
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <%
-    String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
+    /* String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
     String clientSecret = "mjQDsfEB9_";//애플리케이션 클라이언트 시크릿값";
     String code = request.getParameter("code");
     String state = request.getParameter("state");
@@ -48,14 +49,20 @@
       br.close();
       if(responseCode==200) {
         out.println(res.toString());
+        //request.setAttribute("res", res);
+        //new Gson().toJson(res , response.getWriter());
       }
     } catch (Exception e) {
       System.out.println(e);
-    }
+    } */
   %>
 
 <script>
-location.href = "${pageContext.request.contextPath}/user/naverLogin.ithrer";
+alert("${naverAccessToken}");
+//location.href="${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken=${naverAccessToken}";
+location.href="${pageContext.request.contextPath}/user/naverLogout.ithrer?naverAccessToken=${naverAccessToken}";
+//window.opener.naverLogin("${naverAccessToken}");
+//window.close();
 </script>
 
 
