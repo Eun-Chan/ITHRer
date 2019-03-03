@@ -648,7 +648,9 @@ public class IndexController {
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
-		pf.setPOriginalFileName(o_fileName);
+		/* 되는걸로 하세요 */
+		//pf.setPOriginalFileName(o_fileName);
+		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
 		pf.setUrl(path);
 		
@@ -747,7 +749,8 @@ public class IndexController {
    }
    //스크랩한 공고 보여주는 창
    @RequestMapping("/index/favoriteRecruitment.ithrer")
-   public ModelAndView favoriteRecruitment(@RequestParam("memberId") String memberId,ModelAndView mav,HttpServletRequest request) {
+   public ModelAndView favoriteRecruitment(@RequestParam("memberId") String memberId,ModelAndView mav,HttpServletRequest request) throws ParseException {
+	   Date sysdate = new Date();
 	   int cPage = 0;
 	   try {
 		   cPage = Integer.parseInt(request.getParameter("cPage"));		   
@@ -766,6 +769,38 @@ public class IndexController {
 	   int pageNo = startPage;
 	   
 	   List<Favorites> favorites = indexService.selectListFavorites(memberId,cPage,numPerPage);
+	   List<String>  categoryList = new ArrayList<String>(); 		   
+	   for(int i = 0 ; i<favorites.size(); i++) {
+		   categoryList.add(favorites.get(i).getCategory());
+	   }
+	   //카테고리를 가져온후 중복제거
+	   List<String>  categoryLists = new ArrayList<String>(); 		   
+	   for(int i = 0 ; i<categoryList.size() ; i++) {
+		   if(!categoryLists.contains(categoryList.get(i))) {
+			   categoryLists.add(categoryList.get(i));
+		   }
+	   }
+	  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     
+      String sysdate1 = format.format(sysdate);
+      Date sysdate2 = format.parse(sysdate1);
+      int endTime = 0;
+      Date date = null;
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("array",categoryLists);
+	   map.put("memberId", memberId);
+	   List<Recruitment> recommendationRecruitmentList = indexService.selectListRecommendRecruitmentList(map);
+	   
+	   for(int i = 0 ; i<recommendationRecruitmentList.size() ; i++) {
+	     	  date = format.parse(recommendationRecruitmentList.get(i).getClosingDate());    	  
+	    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+	    	  recommendationRecruitmentList.get(i).setEndTime(endTime);
+	    	  if(endTime<0) {
+	    		  recommendationRecruitmentList.get(i).setEnd("Y");
+	    	  }  
+	      }
+	   
+	   mav.addObject("rcList", recommendationRecruitmentList);
 	   mav.addObject("favorites",favorites);
 	   
 	   // bootstrap 처리위해 리스트로 처리

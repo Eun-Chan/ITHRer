@@ -21,7 +21,8 @@ public class PortFolio implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String url;
-	private String pOriginalFileName;
+//	private String pOriginalFileName;
+	private String pOriginalFileNameTest;
 	private String pRenamedFileName;
 	private String memberId;
 	private int pfNo;

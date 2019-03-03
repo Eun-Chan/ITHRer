@@ -136,9 +136,13 @@ public class IndexDaoImpl implements IndexDao{
 	}
 
 	@Override
+	public List<Recruitment> selectListRecommendRecruitmentList(Map<String,Object> map) {
+		return sqlSession.selectList("index.selectListRecommendRecruitmentList", map);
+	}
+	
+	@Override
 	public List<Map<String, String>> selectListCharged() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("index.selectListCharged");
 	}
-
 }
