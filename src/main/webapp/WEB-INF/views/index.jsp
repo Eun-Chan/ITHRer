@@ -1159,6 +1159,8 @@
          </div>
       </div>
    </div>
+   
+   <!-- 배너 광고 영역 -->
       <div id="banner-container" class="container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
@@ -1169,33 +1171,29 @@
           </ul>
          <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="${pageContext.request.contextPath }/resources/images/la.jpg" alt="Los Angeles" >
+            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
             <div class="carousel-caption">
-              <h3>Los Angeles</h3>
-              <p>We had such a great time in LA!</p>
+             <!--  <h3>Los Angeles</h3>
+              <p>We had such a great time in LA!</p> -->
             </div>   
           </div>
-          <div class="carousel-item">
-            <img src="${pageContext.request.contextPath }/resources/images/chicago.jpg" alt="Chicago" >
-            <div class="carousel-caption">
-              <h3>Chicago</h3>
-              <p>Thank you, Chicago!</p>
-            </div>   
+          <c:forEach items="${bannerList}" var="banner">
+	          <div class="carousel-item">
+	            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	            <div class="carousel-caption">
+	            
+	            </div>   
+	          </div>
+          
+          </c:forEach>   
           </div>
-          <div class="carousel-item">
-            <img src="${pageContext.request.contextPath }/resources/images/ny.jpg" alt="New York" >
-            <div class="carousel-caption">
-              <h3>New York</h3>
-              <p>We love the Big Apple!</p>
-            </div>   
-          </div>
-        </div>
         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
           <span class="carousel-control-prev-icon"></span>
         </a>
         <a class="carousel-control-next" href="#myCarousel" data-slide="next">
           <span class="carousel-control-next-icon"></span>
         </a>
+        </div>
       </div>
    </div>
    <div class="main">

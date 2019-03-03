@@ -128,6 +128,12 @@ public class IndexServiceImpl implements IndexService{
 		return indexDao.selectListFavorites(memberId,cPage,numPerPage);
 	}
 
+	@Override
+	public List<Map<String, String>> selectListCharged() {
+		// TODO Auto-generated method stub
+		return indexDao.selectListCharged();
+	}
+
 
 
 }

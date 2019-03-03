@@ -54,4 +54,6 @@ public interface IndexDao {
 
 	List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage);
 
+	List<Map<String, String>> selectListCharged();
+
 }

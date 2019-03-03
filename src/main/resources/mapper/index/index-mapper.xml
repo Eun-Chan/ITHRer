@@ -67,7 +67,7 @@
 			and applicant_age_end #{age}
 		</if>
 		
-		<if test="gender != null and gender !=0 and gender !='null'">
+		<if test='gender != null and gender !="0" and gender !=""'>
 			and gender_cut = #{gender}
 		</if>
 		
@@ -160,4 +160,10 @@
 	<select id="selectListFavorites" parameterType="string" resultType="favorites">
 		select * from favorites where member_id = #{memberId} and select_no = 0
 	</select>
+	
+	<!-- 배너광고 파일이름을 가져오는 쿼리 -->
+	<select id="selectListCharged" resultType="map">
+		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date]]>
+	</select>
+	
 </mapper>

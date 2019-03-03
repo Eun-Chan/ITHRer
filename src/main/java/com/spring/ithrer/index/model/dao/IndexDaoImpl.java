@@ -135,4 +135,10 @@ public class IndexDaoImpl implements IndexDao{
 		return sqlSession.selectList("index.selectListFavorites", memberId,rowBounds);
 	}
 
+	@Override
+	public List<Map<String, String>> selectListCharged() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("index.selectListCharged");
+	}
+
 }

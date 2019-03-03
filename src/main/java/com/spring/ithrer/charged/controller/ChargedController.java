@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -48,12 +49,14 @@ public class ChargedController {
 		return mav;
 	} 
 	
-	@RequestMapping("/fileUpload.ithrer")
-	public ModelAndView fileUpload(ModelAndView mav, HttpServletRequest request,
+	@RequestMapping(value="/fileUpload.ithrer", produces="application/json")
+	public int fileUpload(ModelAndView mav, HttpServletRequest request,
 			@RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
 			@RequestParam(value="compId",required=false)String compId)  {
 		
-		logger.debug("originalName: " + upFiles.getOriginalFilename());
+		logger.info("originalName: " + upFiles.getOriginalFilename());
+		logger.info("directory: " + directory);
+		logger.info("originalName: " + upFiles.getOriginalFilename());
 		//uploadpath 예시 : "images/banner"
 		String uploadpath = directory;
 
@@ -68,15 +71,17 @@ public class ChargedController {
 			e.printStackTrace();
 		}
 		String path = (String) img_path.getBody();
-		logger.debug("path : "+path);
+		logger.info("path : "+path);
 		//경로별로 분기해야됨.
 		
 		//db에 path 저장
 		//directory로 분기하여 각자 기능 구현 할 수 있게 주의 할 것!
-		if(directory == "images/banner") {
+		
+		int result=0;
+		if("images/banner".equals(directory.trim())) {
 			String no = request.getParameter("charged");
-			logger.debug("민우no"+no);
-			int result = chargedService.updateFileName(no, path);
+			logger.info("민우no"+no);
+			result = chargedService.updateFileName(no, path);
 			
 		}
 		
@@ -84,9 +89,9 @@ public class ChargedController {
 
 		}
 		
-		mav.setViewName("redirect:/fileUpload.ithrer");
+		//mav.setViewName("redirect:/fileUpload.ithrer");
 		
-		return mav;
+		return result;
 	}
 	@SuppressWarnings("resource")
 	@ResponseBody

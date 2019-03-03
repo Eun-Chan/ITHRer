@@ -54,6 +54,8 @@ public interface IndexService {
 
 	List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage);
 
+	List<Map<String, String>> selectListCharged();
+
 
 
 }
