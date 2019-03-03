@@ -630,7 +630,9 @@ public class IndexController {
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
-		pf.setPOriginalFileName(o_fileName);
+		/* 되는걸로 하세요 */
+		//pf.setPOriginalFileName(o_fileName);
+		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
 		pf.setUrl(path);
 		
