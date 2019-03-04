@@ -56,6 +56,8 @@ public interface IndexService {
 
 	List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map);
 
+	int deleteFavoritesList(Map<String, Object> map);
+
 
 
 }

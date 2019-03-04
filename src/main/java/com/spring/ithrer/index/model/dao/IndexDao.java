@@ -56,4 +56,6 @@ public interface IndexDao {
 
 	List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map);
 
+	int deleteFavoritesList(Map<String, Object> map);
+
 }

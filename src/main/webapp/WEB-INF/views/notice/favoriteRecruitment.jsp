@@ -4,7 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+<%
+	if(request.getSession().getAttribute("member") == null){
+		response.sendRedirect("/");
+	}
+%>
 <style>
 	.fareMain{
 		width: 1000px;
@@ -45,6 +49,9 @@
 	}
 	.favoriteContent{
 		padding: 10px 25px 15px 25px;
+		width: 100%;
+    	margin: 0;
+    	cursor: pointer;
 	}
 	.faRe{
 		float: left;
@@ -103,14 +110,14 @@
 	    letter-spacing: 0;
 	}
 	.recruitTitle{
-	display: block;
-	overflow: hidden;
-	max-height: 39px;
-	line-height: 19px;
-	text-overflow: ellipsis;
-	margin-top: 5px;
-	font-size: 0.7em;
-	font-weight: 700;
+		display: block;
+		overflow: hidden;
+		max-height: 39px;
+		line-height: 19px;
+		text-overflow: ellipsis;
+		margin-top: 5px;
+		font-size: 0.7em;
+		font-weight: 700;
 	}
 </style>
 <body>
@@ -121,7 +128,7 @@
 		</div>
 		<div class="row favorite">
 			<ul class="headerUl">
-				<li><button>삭제</button></li>
+				<li><button class="favoriteDel">삭제</button></li>
 				<li>
 					<select name="" id="" style="width: 100px;height: 44px; border: border: 1px solid #ccc;">
 						<option value="마감일순">마감일순</option>
@@ -132,20 +139,20 @@
 		</div>
 		<div>
 			<div class="row favoriteHeader">
-				<div class="col-sm-2"><input type="checkbox" name="" id="" class="checkbox All"/></div>
+				<div class="col-sm-2"><input type="checkbox" class="checkbox All"/></div>
 				<div class="col-sm-8" style="text-align: center;"><span style="font-size: 0.9em;" >채용공고</span></div>
 				<div class="col-sm-2" style="text-align: center;"><span style="font-size: 0.9em;">마감일</span></div>
 			</div>
 			<c:forEach items="${favorites }" var="favorite">
-			<div class="row favoriteContent">
+			<div class="row favoriteContent" onclick="moveDetail(${favorite.recruitmentNo})">
 				<ul class="col-sm-2" style="padding-left:29px;">
-					<li><input type="checkbox" name="test" id="" class="checkbox"/></li>
+					<li><input type="checkbox" name="recruitmentNo" value=${favorite.recruitmentNo } class="checkbox"  /></li>
 				</ul>
 				<ul class="col-sm-8" style="text-align: center;">
-					<li><span style="font-size: 0.8em;">${favorite.memberId }</span></li>
+					<li><span style="font-size: 0.8em;">${favorite.recruitmentTitle }</span></li>
 				</ul>
 				<ul class="col-sm-2" style="text-align: center;">
-					<li><span style="font-size: 0.8em;">${favorite.compId }</span></li>
+					<li><span style="font-size: 0.8em;">${favorite.closingDate }</span></li>
 				</ul>
 			</div>
 			</c:forEach>
@@ -230,11 +237,38 @@ $(".checkbox").on("click",function(){
 	if(!$(this).hasClass("All") && this.checked==false){
 		$(".All").prop("checked",false);
 	}
- 	if($("input:checkbox[name=test]:checked").length == $("input:checkbox[name=test]").length){
- 		console.log("ALL checked");
+ 	if($("input:checkbox[name=recruitmentNo]:checked").length== $("input:checkbox[name=recruitmentNo]").length){
 		$(".All").prop("checked",this.checked);
 	}
 });
 
+$(".favoriteDel").on("click",function(){
+	console.log("아아");
+    var test = "";  
+    $("input:checkbox[name=recruitmentNo]:checked").each(function (index) {
+    	if(index==$("input:checkbox[name=recruitmentNo]:checked").length - 1){
+    		test+= $(this).val();
+    	}
+    	else{
+    		test += $(this).val()+",";
+    	}
+    });
+    if(confirm("해당 스크랩을 삭제하시겠습니까?")){
+	   $.ajax({
+		  url:"${pageContext.request.contextPath}/index/deleteFavorite.ithrer?test="+test,
+		  success: function(data){
+			  if(data>0){
+				  location.reload();
+			  }
+		  }
+	   });
+    }
+});
+$(".favoriteContent").hover(function(){
+	   $(this).css("border","2px solid #ffb6c1");
+		},function(){
+	   		$(this).css("border","none");
+		}
+);
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
