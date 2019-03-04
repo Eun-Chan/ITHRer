@@ -11,9 +11,14 @@ import org.springframework.stereotype.Service;
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.dao.CompanyDao;
 import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
+import com.spring.ithrer.company.model.vo.Position;
+import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
 import com.spring.ithrer.user.model.vo.Member;
 
@@ -322,6 +327,70 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<Favorites> selectFavoriteAppList(String compId) {
 		return companyDao.selectFavoriteAppList(compId);
+	}
+
+	/**
+	 * @박광준
+	 * 모집직종에 대한 정보를 가져온다. - JOB1
+	 */
+	@Override
+	public List<Job> selectJobList() {
+		return companyDao.selectJobList();
+	}
+
+	/**
+	 * @박광준
+	 * 모집직책/직급에 대한 정보를 가져온다. -JOB1
+	 */
+	@Override
+	public List<Position> selectPositionList() {
+		return companyDao.selectPositionList();
+	}
+
+	/**
+	 * @박광준
+	 * 모집직종에 대한 정보를 가져온다. - JOB2
+	 */
+	@Override
+	public List<Job> selectJobList2() {
+		return companyDao.selectJobList2();
+	}
+
+	/**
+	 * @박광준
+	 * 컴퓨터활용능력에 대한 정보를 가져온다.
+	 */
+	@Override
+	public List<Computerabllity> selectComputerAbllity() {
+		return companyDao.selectComputerAbllity();
+	}
+
+	@Override
+	public List<Computerabllity> selectComputerAbllity2() {
+		return companyDao.selectComputerAbllity2();
+	}
+
+	/**
+	 * @박광준
+	 * 대망의 Insert
+	 */
+	@Override
+	public int insertRecruitment(Recruitment rect) {
+		return companyDao.insertRecruitment(rect);
+	}
+
+	/**
+	 * @박광준
+	 * 지하철 노선도 정보 가져오기
+	 */
+	@Override
+	public List<SubwayStation> selectSubwayStation() {
+		return companyDao.selectSubwayStation();
+	}
+
+	@Override
+	public List<SubwayStation> selectSubwayStationAll() {
+		return companyDao.selectSubwayStationAll();
 	}
 
 }

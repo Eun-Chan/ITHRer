@@ -105,4 +105,43 @@
 		select * from favorites where comp_id=#{compId}
 	</select>
 	
+	<!-- 모집직종 정보1 가져오기 -->
+	<select id="selectJobList" resultType="Job">
+		SELECT DISTINCT JOB1 FROM JOB
+	</select>
+	
+	<!-- 모집직종 정보2 가져오기 -->
+	<select id="selectJobList2" resultType="Job">
+		SELECT DISTINCT * FROM JOB
+	</select>
+	
+	<!-- 모집직급/직책 정보 가져오기 -->
+	<select id="selectPositionList" resultType="Position">
+		SELECT * FROM POSITION
+	</select>
+	
+	<!-- 컴퓨터활용정보-1 가져오기 -->
+	<select id="selectComputerAbllityList" resultType="ComputerAbllity">
+		SELECT DISTINCT DIVISION FROM COMPUTERABLLITY
+	</select>
+	
+	<!-- 컴퓨터활용정보-2 가져오기 -->
+	<select id="selectComputerAbllityList2" resultType="ComputerAbllity">
+		SELECT * FROM COMPUTERABLLITY
+	</select>
+	
+	<!-- 기업공고 등록하기 -->
+	<insert id="insertRecruitment" parameterType="Recruitment">
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation}, '',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference}, #{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'','서울시 강남구', #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate}, #{closingDate}, 101010, #{applicantAgeEnd}, #{genderCut}, #{certificate}, #{major}, 'WORK_DAY주1일','N',#{certificate},#{foreLang},#{summernoteHtml})
+	</insert>
+	
+	<!-- 지하철노선도-구분 가져오기 -->
+	<select id="selectSubwayStation" resultType="SubwayStation">
+		SELECT DISTINCT LINE_NAME FROM SUBWAYSTATION
+	</select>
+	
+	<!-- 지하철노선도-역이름 가져오기 -->
+	<select id="selectSubwayStationAll" resultType="SubwayStation">
+		SELECT * FROM SUBWAYSTATION
+	</select>
 </mapper>
