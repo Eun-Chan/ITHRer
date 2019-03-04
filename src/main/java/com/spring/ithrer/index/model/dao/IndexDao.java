@@ -58,4 +58,7 @@ public interface IndexDao {
 
 	int deleteFavoritesList(Map<String, Object> map);
 
+	List<Map<String, String>> selectListCharged();
+
+
 }

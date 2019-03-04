@@ -123,6 +123,11 @@ public class IndexController {
       //공고 끝나는 날짜 가져오기
       
       //오늘날짜 가져오기
+      
+      //배너광고 s3에서 가져올 수 있도록 등록된 주소를 가져오는 부분
+      List<Map<String, String>> bannerList = indexService.selectListCharged();
+      
+      mav.addObject("bannerList", bannerList);
       mav.addObject("rcList", rcList);
       mav.addObject("rc", rc);
       mav.addObject("topRc", topRc);
@@ -244,6 +249,7 @@ public class IndexController {
 		   age = 0;
 	   }
 	   String gender = request.getParameter("gender");
+	   System.out.println("민우"+gender);
 	   String subway = request.getParameter("subway");
 	   String licence = request.getParameter("licence");
 	   String[] major = request.getParameterValues("major");
@@ -642,7 +648,9 @@ public class IndexController {
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
-		pf.setPOriginalFileName(o_fileName);
+		/* 되는걸로 하세요 */
+		//pf.setPOriginalFileName(o_fileName);
+		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
 		pf.setUrl(path);
 		

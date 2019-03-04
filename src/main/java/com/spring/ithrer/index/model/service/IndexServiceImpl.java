@@ -132,12 +132,15 @@ public class IndexServiceImpl implements IndexService{
 	public List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map) {
 		return indexDao.selectListRecommendRecruitmentList(map);
 	}
-
 	@Override
 	public int deleteFavoritesList(Map<String, Object> map) {
 		return indexDao.deleteFavoritesList(map);
 	}
 
+	@Override
+	public List<Map<String, String>> selectListCharged() {
+		return indexDao.selectListCharged();
+	}
 
 
 }

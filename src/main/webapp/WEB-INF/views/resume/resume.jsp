@@ -9,8 +9,8 @@
 <jsp:include page="/WEB-INF/views/resume/categoryMenu.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/resume.css" />
 <br /><br />
-<div class="container">
-<form class="resumeResultFrm" id="resumeProfileFrm" action="${pageContext.request.contextPath}/resume/saveResume.do">
+<div name="container" class="container">
+<form class="resumeResultFrm" id="resumeProfileFrm" method="post" action="${pageContext.request.contextPath}/resume/saveResume.do" encType="multipart/form-data">
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" name="userResumeTitle" id="userResumeTitle" 
@@ -32,7 +32,7 @@
 			<input type="email" id="email" name="email" class="form-control" placeholder="이메일"/>
 		</div>
 		<div id="formProfile2" class="input-group-prepend">
-			<input type="tel" id="tel" name="tel" class="form-control" 
+			<input type="tel" id="phone" name="phone" class="form-control" 
 				   placeholder="전화번호(01012345678)" maxlength="11"
 				   onkeydown="validateText(event)"/>
 			<input type="text" id="address" name="address" class="form-control" placeholder="주소"/>	
@@ -71,7 +71,7 @@
 						<input type="text" name="schoolName" id="schoolName0" class="form-control" placeholder="학교명"/>
 					</li>
 				</ul>
-				<div id="searchHidden0"></div>
+				<div name="searchHidden" id="searchHidden0"></div>
 			</div>
 			<div id="formEducation3" class="input-group-prepend">
 				<ul>
@@ -405,19 +405,24 @@
 			<div id="divCheckbox">
 				<ul>
 					<li>
-						<input type="checkbox" name="preferCheck" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>보훈대상	
+						<input type="checkbox" name="preferCheck" id="veteran" aria-label="Checkbox for following text input" value="veteran"/>
+						<label for="veteran">보훈대상</label>
 					</li>
 					<li>
-						<input type="checkbox" name="preferCheck" id="protected" aria-label="Checkbox for following text input" value="protected"/>취업보호 대상
+						<input type="checkbox" name="preferCheck" id="protected" aria-label="Checkbox for following text input" value="protected"/>
+						<label for="protected">취업보호 대상</label>
 					</li>
 					<li>
-						<input type="checkbox" name="preferCheck" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>고용지원금 대상
+						<input type="checkbox" name="preferCheck" id="subsidy" aria-label="Checkbox for following text input" value="subsidy"/>
+						<label for="subsidy">고용지원금 대상</label>	
 					</li>
 					<li>
-						<input type="checkbox" name="preferCheck" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>장애
+						<input type="checkbox" name="preferCheck" id="disorder" aria-label="Checkbox for following text input" value="disorder"/>
+						<label for="disorder">장애</label>
 					</li>
 					<li>
-						<input type="checkbox" name="preferCheck" id="military" aria-label="Checkbox for following text input" value="military"/>병역
+						<input type="checkbox" name="preferCheck" id="military" aria-label="Checkbox for following text input" value="military"/>
+						<label for="military">병역</label>
 					</li>
 				</ul>
 			</div>
@@ -554,6 +559,9 @@ $(".deleteWrap").on("click",function() {
 $("#nonHigh").change(function(){
 	if($(this).prop('checked')) {
 		$('#educationWrap').hide();
+		$('#educationWrap input').val('');
+		$('#educationWrap select').val('');
+		$('#educationWrap textarea').val('');
 	}
 	else {
 		$('#educationWrap').show();
@@ -567,8 +575,8 @@ $(document).on("keypress","input[name=schoolName]",function() {
 	if (event.keyCode === 13) {
         event.preventDefault();
     }
-	divsearch.show();
 	if(selectval == 'high') {
+		divsearch.show();
 		$.ajax({
 			url : "http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=1511a833705c3185adf10f04ecfff3e3&svcType=api&svcCode=SCHOOL&contentType=json&gubun=high_list&searchSchulNm="+searchKeyword,
 			success : function(data) {
@@ -586,7 +594,8 @@ $(document).on("keypress","input[name=schoolName]",function() {
 			}
 		});
 	}
-	else {
+	else if(selectval == 'shortUniver' || selectval == 'longUniver'){
+		divsearch.show();
 		$.ajax({
 			url : "http://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=1511a833705c3185adf10f04ecfff3e3&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&searchSchulNm="+searchKeyword,
 			success : function(data) {
@@ -603,6 +612,9 @@ $(document).on("keypress","input[name=schoolName]",function() {
 			}
 		});
 	}
+	else {
+		divsearch.hide();
+	}
 });
 $(document).on("click","div[name=searchHidden] a",function() {
 	var output = $(this).children().text();
@@ -616,19 +628,31 @@ $(document).on("change","select[name=graduaction]",function() {
 	if(state =='high') {
 		$(this).parent().parent().parent().parent().children("#formEducation2").show();
 		$(this).parent().parent().parent().parent().children("#formEducation3").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation3 input").val('');
+		$(this).parent().parent().parent().parent().children("#formEducation3 select").val('');
 		$(this).parent().parent().parent().parent().children("#formEducation4").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation4 input").val('');
+		$(this).parent().parent().parent().parent().children("#formEducation4 select").val('');
 		$(this).parent().parent().parent().parent().find("select[name=degree]").hide();
+		$(this).parent().parent().parent().parent().find("select[name=degree]").val('');
 		$(this).parent().parent().parent().parent().children("#formEducation5").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation5 select").val('');
+		$(this).parent().parent().parent().parent().children("#formEducation5 textarea").val('');
 	}
 	else if(state == 'shortUniver' || state == 'longUniver') {
 		$(this).parent().parent().parent().parent().children("#formEducation2").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation2 input").val('');
+		$(this).parent().parent().parent().parent().children("#formEducation2 select").val('');
 		$(this).parent().parent().parent().parent().children("#formEducation3").show();
 		$(this).parent().parent().parent().parent().children("#formEducation4").show();
 		$(this).parent().parent().parent().parent().find("select[name=degree]").hide();
+		$(this).parent().parent().parent().parent().find("select[name=degree]").val('');
 		$(this).parent().parent().parent().parent().children("#formEducation5").show();
 	}
 	else {
 		$(this).parent().parent().parent().parent().children("#formEducation2").hide();
+		$(this).parent().parent().parent().parent().children("#formEducation2 input").val('');
+		$(this).parent().parent().parent().parent().children("#formEducation2 select").val('');
 		$(this).parent().parent().parent().parent().children("#formEducation3").show();
 		$(this).parent().parent().parent().parent().children("#formEducation4").show();
 		$(this).parent().parent().parent().parent().find("select[name=degree]").show();
@@ -638,6 +662,7 @@ $(document).on("change","select[name=graduaction]",function() {
 $(document).on("change","input[name=ged]",function() {
 	if($(this).prop('checked')) {
 		$(this).parent().parent().find("select").hide(); /* 졸업상태 */
+		$(this).parent().parent().find("select").val(''); /* 졸업상태 */
 		$(this).parent().parent().find("input:text").attr("placeholder","합격년도")/* 졸업년도 */
 		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").attr("placeholder",""); /* 학교명 */
 		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").val("대입자격검정고시"); /* 학교명 */
@@ -764,6 +789,9 @@ $(document).on("keypress","input[name=certName]",function() {
 	var divsearch = $(this).parent().parent().find("div[name=showCertificate]");
 	var certName = $(this).val();
 	divsearch.show();
+	if (event.keyCode === 13) {
+        event.preventDefault();
+    }
 	$.ajax({
 		url : "${pageContext.request.contextPath }/resume/certificateList.do",
 		data : {"certName" : certName},
@@ -844,13 +872,18 @@ $(document).on("change","select[name=languageDivision]",function(){
 		$(this).parent().parent().find("input[name=examscore]").show();
 		$(this).parent().parent().find("input[name=examDate]").show();
 		$(this).parent().parent().find("select[name=speakingDivision]").hide();
+		$(this).parent().parent().find("select[name=speakingDivision]").val('');
 	}
 	else {
 		$(this).parent().parent().find("select[name=examName]").hide();
+		$(this).parent().parent().find("select[name=examName]").val('');
 		$(this).parent().parent().find("input[name=examscore]").hide();
+		$(this).parent().parent().find("input[name=examscore]").val('');
 		$(this).parent().parent().find("input[name=examDate]").hide();
+		$(this).parent().parent().find("input[name=examDate]").val('');
 		$(this).parent().parent().find("select[name=speakingDivision]").show();
 		$(this).parent().parent().find("input[name=selfExam]").hide();
+		$(this).parent().parent().find("input[name=selfExam]").val('');
 	}
 });
 $(document).on("change","select[name=examName]",function() {
@@ -860,6 +893,7 @@ $(document).on("change","select[name=examName]",function() {
 	}
 	else {
 		$(this).parent().find("input[name=selfExam]").hide();
+		$(this).parent().find("input[name=selfExam]").val('');
 	}
 });
 $(document).on("change", ".language-select" , function(){
@@ -869,6 +903,7 @@ $(document).on("change", ".language-select" , function(){
 	}
 	else {
 		$(this).next().hide();
+		$(this).next().val('');
 	}
 });
 /* 포트폴리오 */
@@ -897,6 +932,7 @@ $("#disorder").change(function() {
 	}
 	else {
 		$('#preferdisorder').hide();		
+		$('#preferdisorder select').val('');		
 	}
 });
 $("#military").change(function() {
@@ -905,6 +941,7 @@ $("#military").change(function() {
 	}
 	else {
 		$('#prefermilitary').hide();		
+		$('#prefermilitary select').val('');	
 	}
 });
 /* 자기소개서추가 */
