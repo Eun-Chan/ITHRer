@@ -104,7 +104,6 @@ public class IndexDaoImpl implements IndexDao{
 
 	@Override
 	public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("index.selectListSearchIthrer", map);
 	}
 
@@ -116,6 +115,40 @@ public class IndexDaoImpl implements IndexDao{
 	@Override
 	public int deletePortFolio(int pfNo) {
 		return sqlSession.delete("index.deletePortFolio", pfNo);
+	}
+
+	@Override
+	public List<Recruitment> selectListRandomRecruitment(String memberId) {
+		return sqlSession.selectList("index.selectListRandomRecruitment", memberId);
+	}
+
+
+
+	@Override
+	public int selectCountFavorite(String memberId) {
+		return sqlSession.selectOne("index.selectCountFavorite",memberId);
+	}
+
+	@Override
+	public List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage) {
+		RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+		return sqlSession.selectList("index.selectListFavorites", memberId,rowBounds);
+	}
+
+	@Override
+	public List<Recruitment> selectListRecommendRecruitmentList(Map<String,Object> map) {
+		return sqlSession.selectList("index.selectListRecommendRecruitmentList", map);
+	}
+
+	@Override
+	public int deleteFavoritesList(Map<String, Object> map) {
+		return sqlSession.delete("index.deleteFavoritesList", map);
+	}
+
+	@Override
+	public List<Map<String, String>> selectListCharged() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("index.selectListCharged");
 	}
 
 }

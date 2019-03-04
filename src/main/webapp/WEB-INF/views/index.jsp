@@ -1159,6 +1159,8 @@
          </div>
       </div>
    </div>
+   
+   <!-- 배너 광고 영역 -->
       <div id="banner-container" class="container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
@@ -1169,33 +1171,29 @@
           </ul>
          <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="${pageContext.request.contextPath }/resources/images/la.jpg" alt="Los Angeles" >
+            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
             <div class="carousel-caption">
-              <h3>Los Angeles</h3>
-              <p>We had such a great time in LA!</p>
+             <!--  <h3>Los Angeles</h3>
+              <p>We had such a great time in LA!</p> -->
             </div>   
           </div>
-          <div class="carousel-item">
-            <img src="${pageContext.request.contextPath }/resources/images/chicago.jpg" alt="Chicago" >
-            <div class="carousel-caption">
-              <h3>Chicago</h3>
-              <p>Thank you, Chicago!</p>
-            </div>   
+          <c:forEach items="${bannerList}" var="banner">
+	          <div class="carousel-item">
+	            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	            <div class="carousel-caption">
+	            
+	            </div>   
+	          </div>
+          
+          </c:forEach>   
           </div>
-          <div class="carousel-item">
-            <img src="${pageContext.request.contextPath }/resources/images/ny.jpg" alt="New York" >
-            <div class="carousel-caption">
-              <h3>New York</h3>
-              <p>We love the Big Apple!</p>
-            </div>   
-          </div>
-        </div>
         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
           <span class="carousel-control-prev-icon"></span>
         </a>
         <a class="carousel-control-next" href="#myCarousel" data-slide="next">
           <span class="carousel-control-next-icon"></span>
         </a>
+        </div>
       </div>
    </div>
    <div class="main">
@@ -1227,13 +1225,13 @@
 	               		<c:if test="${list.favoritesCount == 1 }">
 	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
-	               		<c:if test="${list.favoritesCount ==0 }">
+	               		<c:if test="${list.favoritesCount == 0 }">
 	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
-	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
-	            	<input type="hidden" value="${list.compId }" id="hiddenCompId" />
-	            	<input type="hidden" value="${list.applyCount }" id="hiddenApplyCount"/>
+	            	<input type="hidden" value="${list.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${list.compId }" class="hiddenCompId" />
+	            	<input type="hidden" value="${list.applyCount }" class="hiddenApplyCount"/>
 	            </li>
 	         </c:forEach>   
 	         </ul>
@@ -1255,12 +1253,12 @@
 	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               		<c:if test="${toplist.favoritesCount ==0 }">
-	               			<button class="star"><img src="${pageContext.request.contextPath }resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
-	               <input type="hidden" value="${toplist.recruitmentNo }" id="hiddenRecruitNo" />
-	            	<input type="hidden" value="${toplist.compId }" id="hiddenCompId" />
-	            	<input type="hidden" value="${toplist.applyCount }" id="hiddenApplyCount"/>
+	               <input type="hidden" value="${toplist.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${toplist.compId }" class="hiddenCompId" />
+	            	<input type="hidden" value="${toplist.applyCount }" class="hiddenApplyCount"/>
 	            </li>
 	            </c:forEach>
 	         </ul>
@@ -1272,6 +1270,37 @@
    </div>
    <br />
    <div id="job">
+   <fieldset>
+   <legend><img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="200px"/></legend>
+      <ul id ="list-open">
+         <c:forEach items="${rcList }" var="recuritmentlist">
+	            <li class="open" >
+	               <div class="content" onclick="moveDetail('${recuritmentlist.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${recuritmentlist.compName }</strong>
+	                  <span class="recruitTitle">${recuritmentlist.recruitmentTitle }</span>
+	                  <div class="endDate">D-${recuritmentlist.endTime }</div>
+	               </div>
+	               <c:if test="${empty member }">
+	               		<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               </c:if>
+	               <c:if test="${not empty member }">
+	               		<c:if test="${recuritmentlist.favoritesCount == 1 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               		<c:if test="${recuritmentlist.favoritesCount ==0 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               </c:if>
+	                <input type="hidden" value="${recuritmentlist.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${recuritmentlist.compId }" class="hiddenCompId" />
+	            </li>
+	            </c:forEach>
+      </ul>
+   </fieldset>
+   </div>
+   <div id="job">
+   <fieldset>
+   <legend><img src="${pageContext.request.contextPath }/resources/images/saramin_logo.png" alt="" width="200px"/></legend>
       <ul id ="list-open">
          <c:forEach items="${jobList }" var="map">
                   <li class="open" onclick="moveCrwaling('${map.id}');">
@@ -1287,10 +1316,9 @@
                         </div>
                      </div>
                   </li>
-         <script>
-         </script>
          </c:forEach>   
       </ul>
+   </fieldset>
    </div>
    <div id="cal">
       <iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/week" frameborder="0"
@@ -1313,7 +1341,6 @@ function moveDetail(no){
 }
 
 $("#btn-search-notice").on("click", function(){
-   console.log("아아");	
    var searchKeyWord = $("#searchKeyWord").val();
    var locationCode = $(".hiddenLocationCode").val();
    
@@ -1325,9 +1352,8 @@ $("#btn-search-notice").on("click", function(){
 
 //스크랩한 공고
 $(".star").on("click",function(){
-	var recNo = $(this).siblings("#hiddenRecruitNo").val();
-	var compId = $(this).siblings("#hiddenCompId").val();
-	var img = $(this).children("img");
+	var recNo = $(this).siblings(".hiddenRecruitNo").val();
+	var compId = $(this).siblings(".hiddenCompId").val();
 	 if(${empty member}){
 		alert("로그인 후 이용 해 주세용");
 		return;
@@ -1337,10 +1363,16 @@ $(".star").on("click",function(){
 				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,
 				success:function(data){
 					if(data == 1){
-						img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+						if(recNo == $("[value="+recNo+"]").val()){
+							$("[value="+recNo+"]").siblings(".star").children("img").attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+							/* img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg"); */
+						}
 					}
 					else {
-						img.attr("src","${pageContext.request.contextPath}/resources/images/star.svg");
+						if(recNo == $("[value="+recNo+"]").val()){
+							console.log("여긴?");
+							$("[value="+recNo+"]").siblings(".star").children("img").attr("src","${pageContext.request.contextPath}/resources/images/star.svg");				
+						}
 					}
 				}
 		});		 

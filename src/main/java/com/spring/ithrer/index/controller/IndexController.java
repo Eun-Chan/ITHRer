@@ -84,6 +84,9 @@ public class IndexController {
       // 지원자 많은 공곡 6 리스트
       List<Recruitment> topRc = indexService.selectTopListRecruitment(memberId);
       
+      //우리 공고 랜덤 12개 리스트
+      List<Recruitment> rcList = indexService.selectListRandomRecruitment(memberId);
+      
       
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
       String sysdate1 = format.format(sysdate);
@@ -106,12 +109,26 @@ public class IndexController {
     	  if(endTime<0) {
     		  topRc.get(i).setEnd("Y");
     	  }
-    	  
+      }
+      
+      for(int i = 0 ; i<rcList.size() ; i++) {
+     	  date = format.parse(rcList.get(i).getClosingDate());    	  
+    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+    	  rcList.get(i).setEndTime(endTime);
+    	  if(endTime<0) {
+    		  rcList.get(i).setEnd("Y");
+    	  }  
       }
      
       //공고 끝나는 날짜 가져오기
       
       //오늘날짜 가져오기
+      
+      //배너광고 s3에서 가져올 수 있도록 등록된 주소를 가져오는 부분
+      List<Map<String, String>> bannerList = indexService.selectListCharged();
+      
+      mav.addObject("bannerList", bannerList);
+      mav.addObject("rcList", rcList);
       mav.addObject("rc", rc);
       mav.addObject("topRc", topRc);
       mav.addObject("jobList", jobList);
@@ -232,6 +249,7 @@ public class IndexController {
 		   age = 0;
 	   }
 	   String gender = request.getParameter("gender");
+	   System.out.println("민우"+gender);
 	   String subway = request.getParameter("subway");
 	   String licence = request.getParameter("licence");
 	   String[] major = request.getParameterValues("major");
@@ -630,7 +648,9 @@ public class IndexController {
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
-		pf.setPOriginalFileName(o_fileName);
+		/* 되는걸로 하세요 */
+		//pf.setPOriginalFileName(o_fileName);
+		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
 		pf.setUrl(path);
 		
@@ -708,13 +728,141 @@ public class IndexController {
    @RequestMapping("/index/deletePortFolio.ithrer")
    public void deleteFolio(@RequestParam("pfNo") int pfNo,@RequestParam("url") String url,HttpServletResponse res) {
 	   int result = indexService.deletePortFolio(pfNo);
+	   url = "resume/portfolio"+url;
 	   if(result>0) {
 		   S3Util s3 = new S3Util();
 		   for(int i = 0 ; i<s3.getBucketList().size(); i++) {
 			   System.out.println(s3.getBucketList().get(i));		   
 		   }
-		   s3.fileDelete("eunchan-origin"+"/resume/portfolio/2019/02/28/", "542a8da2-8369-4bae-a38a-6e06768cf95d_취업특강자료_자바H오후 20190131.pdf");
+		   s3.fileDelete("eunchan-origin", url);
 	   }
+	   Gson gson = new Gson();
+	   try {
+		gson.toJson(result,res.getWriter());
+	} catch (JsonIOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+   }
+   //스크랩한 공고 보여주는 창
+   @RequestMapping("/index/favoriteRecruitment.ithrer")
+   public ModelAndView favoriteRecruitment(@RequestParam("memberId") String memberId,ModelAndView mav,HttpServletRequest request) throws ParseException {
+	  if(memberId == null) {
+		  memberId ="";
+	  }
+	   Date sysdate = new Date();
+	   int cPage = 0;
+	   try {
+		   cPage = Integer.parseInt(request.getParameter("cPage"));		   
+	   } catch(NumberFormatException e) {
+		   cPage = 0;
+	   }
+	   
+	   int totalCount = indexService.selectCountFavorite(memberId);
+	   int numPerPage = 5;
+	   int totalPages = (int)Math.ceil(((double)totalCount/numPerPage));
+	   int pageBarSize = 5;
+	    
+	   int startPage = ((cPage - 1) / pageBarSize) * pageBarSize + 1;
+	   int endPage = startPage + pageBarSize - 1;
+	       
+	   int pageNo = startPage;
+	   
+	   List<Favorites> favorites = indexService.selectListFavorites(memberId,cPage,numPerPage);
+	   List<String>  categoryList = new ArrayList<String>(); 		   
+	   for(int i = 0 ; i<favorites.size(); i++) {
+		   categoryList.add(favorites.get(i).getCategory());
+		   String closingDate = favorites.get(i).getClosingDate();
+		   String date2 = closingDate.substring(0,10);
+		   favorites.get(i).setClosingDate(date2);
+		   
+	   }
+	   //카테고리를 가져온후 중복제거
+	   List<String>  categoryLists = new ArrayList<String>(); 		   
+	   for(int i = 0 ; i<categoryList.size() ; i++) {
+		   if(!categoryLists.contains(categoryList.get(i))) {
+			   categoryLists.add(categoryList.get(i));
+		   }
+	   }
+	  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+     
+      String sysdate1 = format.format(sysdate);
+      Date sysdate2 = format.parse(sysdate1);
+      int endTime = 0;
+      Date date = null;
+	   Map<String, Object> map = new HashMap<String, Object>();
+	   map.put("array",categoryLists);
+	   map.put("memberId", memberId);
+	   List<Recruitment> recommendationRecruitmentList = indexService.selectListRecommendRecruitmentList(map);
+	   
+	   
+	   for(int i = 0 ; i<recommendationRecruitmentList.size() ; i++) {
+	     	  date = format.parse(recommendationRecruitmentList.get(i).getClosingDate());    	  
+	    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
+	    	  recommendationRecruitmentList.get(i).setEndTime(endTime);
+	    	  if(endTime<0) {
+	    		  recommendationRecruitmentList.get(i).setEnd("Y");
+	    	  }  
+	      }
+	   
+	   mav.addObject("rcList", recommendationRecruitmentList);
+	   mav.addObject("favorites",favorites);
+	   
+	   // bootstrap 처리위해 리스트로 처리
+	   	String url = request.getContextPath()+"/index/favoriteRecruitment.ithrer?";
+	    String pageBar = "<ul class='pagination'>";
+	       
+	    // [이전] 이전
+	    if(pageNo == 1) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+(pageNo-1)+"&memberId="+memberId+ "'>이전</a></li>";
+	    }
+	    
+	    // 페이지 숫자 영역
+	    while(!(pageNo > endPage || pageNo > totalPages)) {
+	       if(pageNo == cPage) {
+	          pageBar += "<li class='page-item active'><a class='page-link' href='#'>" + pageNo + "</a></li>";
+	       }
+	       else {
+	          pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+pageNo +"&memberId="+memberId+"'>" + pageNo + "</a></li>";
+	       }
+	       pageNo++;
+	    }
+	    // [다음] 영역
+	    if(pageNo > totalPages) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+pageNo+"&memberId="+memberId + "'>다음</a>";
+	    }
+	    pageBar += "</ul>";
+	   
+	   mav.addObject("pageBar", pageBar);	    
+	   
+	   mav.setViewName("notice/favoriteRecruitment");
+	   return mav;
+   }
+   
+   @RequestMapping("/index/deleteFavorite.ithrer")
+   public void deleteFavorite(HttpServletResponse res , @RequestParam("test") String [] test,HttpServletRequest req) {
+	   Member member = (Member)req.getSession().getAttribute("member");
+	   Map<String, Object> map = new HashMap<String, Object>();
+	  List<Integer> arr = new ArrayList<Integer>();
+	   int a = 0 ;
+	   for(int i = 0 ; i<test.length; i++) {
+		   System.out.println(test.length);
+		   System.out.println(test[i]);
+		   a = Integer.parseInt(test[i]);
+		   arr.add(a);
+	   }
+	   map.put("memberId", member.getMemberId());
+	   map.put("param", arr);
+	   int result = indexService.deleteFavoritesList(map);
 	   Gson gson = new Gson();
 	   try {
 		gson.toJson(result,res.getWriter());
