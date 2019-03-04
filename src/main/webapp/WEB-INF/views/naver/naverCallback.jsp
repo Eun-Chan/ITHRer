@@ -58,11 +58,11 @@
   %>
 
 <script>
-alert("${naverAccessToken}");
+//alert("${naverAccessToken}");
 //location.href="${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken=${naverAccessToken}";
-location.href="${pageContext.request.contextPath}/user/naverLogout.ithrer?naverAccessToken=${naverAccessToken}";
-//window.opener.naverLogin("${naverAccessToken}");
-//window.close();
+//location.href="${pageContext.request.contextPath}/user/naverLogout.ithrer?naverAccessToken=${naverAccessToken}";
+window.opener.naverLogin("${naverAccessToken}");
+window.close();
 </script>
 
 

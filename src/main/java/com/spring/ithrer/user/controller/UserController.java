@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -26,6 +25,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -603,13 +603,16 @@ public class UserController {
 	}
 	
 	//	네이버 로그인, 가입되어있지않다면 가입까지 진행
-	@RequestMapping("/user/naverLogin.ithrer")
-	public String naverLogin(@RequestParam("naverAccessToken") String naverAccessToken, HttpServletRequest req) {
+	@RequestMapping(value="/user/naverLogin.ithrer", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> naverLogin(@RequestParam("naverAccessToken") String naverAccessToken, HttpServletRequest req) {
 		System.out.println("명훈명훈");
 		Map<String,String> map = new HashMap<>();
 		
         String header = "Bearer " + naverAccessToken; // Bearer 다음에 공백 추가 // 네이버 로그인 접근 토큰; 여기에 복사한 토큰값을 넣어줍니다.
+        System.out.println("try 전");
         try {
+        	System.out.println("try 후");
             String apiURL = "https://openapi.naver.com/v1/nid/me";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -632,28 +635,54 @@ public class UserController {
             // StringBuffer to String
 			String resStr = res.substring(0);
 			
+			System.out.println("naver 정보 sdfsd");
 			// Json 스타일의 문자를 Json객체로 만들기
 			JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(resStr);
+            Map<String,String> jsonArr = (Map<String,String>) jsonObj.get("response");
             
             // 아이디, 이름, 이메일 정보 추출
             // 아이디는 네이버 아이디가 아닌 숫자로 이루어진 아이디
-            String naverLoginId = (String)jsonObj.get("response");
-            String naverName = (String)jsonObj.get("name");
-            String naverEmail = (String)jsonObj.get("email");
+            
+            String naverLoginId = (String)jsonArr.get("id");
+            System.out.println("아이디 = "+naverLoginId);
+            String naverName = (String)jsonArr.get("name");
+            System.out.println("이름 = "+naverName);
+            String naverEmail = (String)jsonArr.get("email");
+            System.out.println("이메일 = "+naverEmail);
+            
             
             // 네이버아이디로 우리 디비에 회원가입되어 있는지 확인
+            Member member = userService.kakaoLogin(naverLoginId);
+            
+            if(member != null) {
+            	logger.debug("네이버 회원가입 되어있음");
+            }
+            else {
+            	Map<String,String> user = new HashMap<>();
+    			user.put("kakaoId",naverLoginId);
+    			user.put("kakaoName",naverName);
+    			user.put("kakaoEmail", naverEmail);
+            	
+            	int result = userService.createKakaoUser(user);
+            	
+            	if(result>0) {
+            		logger.debug("네이버 회원가입 성공!");
+            		
+            	}
+            	else {
+            		logger.debug("네이버 회원가입 성공!");
+            	}
+            }
+            
+            Member naverLoginMember = userService.kakaoLogin(naverLoginId);
+            System.out.println(naverLoginMember);
             
             // 가입안된 회원이면 회원가입하기
             
             // 가입된 회원이면 회원가입 x
             
             // 멤버 객체 생성
-            Member naverLoginMember = new Member();
-            naverLoginMember.setMemberId(naverLoginId);
-            naverLoginMember.setMemberName(naverName);
-            naverLoginMember.setEmail(naverEmail);
-            
             // 세션에 네이버로그인 추가
             HttpSession session = req.getSession();
 			session.setMaxInactiveInterval(60*10);
@@ -661,17 +690,13 @@ public class UserController {
             
 			map.put("result","true");
             
-            // 
-            
-            // Json객체에서 access token 추출
-//            String naverAccessToken = (String)jsonObj.get("access_token");
-//            mav.addObject("naverAccessToken",naverAccessToken);
+			System.out.println("네이버 로그인 끝");
             
         } catch (Exception e) {
             System.out.println(e);
         }
 		
-		return "redirect:/";
+		return map;
 	}
 	
 //	네이버로그인 callback
@@ -743,24 +768,46 @@ public class UserController {
 		try {
 			String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
 			String clientSecret = "mjQDsfEB9_";//애플리케이션 클라이언트 시크릿값";
-			String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
+			//String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&";
 			apiURL += "client_id=" + clientId;
 			apiURL += "&client_secret=" + clientSecret;
 			apiURL += "&access_token=" + naverAccessToken;
-			apiURL += "&sercive_provider=NAVER";
+			apiURL += "&service_provider=NAVER";
 			//apiURL += "&redirect_uri=" + redirectURI;
 			System.out.println("apiURL="+apiURL);
 			URL url = new URL(apiURL);
 			HttpURLConnection con = (HttpURLConnection)url.openConnection();
 			con.setRequestMethod("GET");
 			int responseCode = con.getResponseCode();
+			BufferedReader br;
 			System.out.print("responseCode="+responseCode);
 			if(responseCode==200) { // 정상 호출
 				System.out.println("네이버 연동 로그아웃 성공!");
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			} else {  // 에러 발생
 				System.out.println("네이버 연동 로그아웃 실패!");
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			
+			String inputLine;
+			StringBuffer res = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				res.append(inputLine);
+			}
+			br.close();
+			if(responseCode==200) {
+				// StringBuffer to String
+				String resStr = res.substring(0);
+				
+				// Json 스타일의 문자를 Json객체로 만들기
+				JSONParser jsonParser = new JSONParser();
+	            JSONObject jsonObj = (JSONObject) jsonParser.parse(resStr);
+	            
+	            // Json객체에서 access token 추출
+	            String naverResult = (String)jsonObj.get("result");
+	            System.out.println(naverResult);
 			}
 		} catch (Exception e) {
 			System.out.println(e);
