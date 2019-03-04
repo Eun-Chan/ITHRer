@@ -52,7 +52,6 @@
 	    apiURL += "&state=" + state;
 	    session.setAttribute("state", state);
 	// 네이버 로그인 끝
-	System.out.println("확인 = "+request.getContextPath()+"/user/naverLoginCallback.ithrer");
 %>
 
 <!DOCTYPE html>
@@ -232,6 +231,24 @@
 	/* 네이버 로그인 새창 띄우기용 */
 	function naverPopup(){
 		window.open("<%=apiURL%>","_blank","width=300, height=300;"); 
+	}
+	/* 네이버 로그인 새창에서 access token 받아와서 로그인 처리 */
+	function naverLogin(accessToken){
+		$.ajax({
+    		url : "${pageContext.request.contextPath}/user/naverLogin.ithrer",
+    		data : {naverAccessToken: accessToken},
+    		type : "POST",
+    		success : function(data){
+    			console.log(data);
+   				// 네이버 로그인후 새로고침	
+   				if(data.result == 'true')
+    				location.reload();
+   				else if(data == 'false'){
+   					$("#login-help").text("이미 아이디가 접속중입니다!");
+					$("#login-help").addClass("text-danger");
+   				}
+    		}
+    	});
 	}
 
 	/* 카카오톡 api 로그인 */
