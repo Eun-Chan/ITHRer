@@ -9,10 +9,9 @@ import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
-<<<<<<< HEAD
+
 import com.spring.ithrer.company.model.vo.Position;
-=======
->>>>>>> be2b4f10b16ffbc0a81c14e1f32388cf836a3768
+
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
