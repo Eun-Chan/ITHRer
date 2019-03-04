@@ -54,4 +54,11 @@ public interface IndexDao {
 
 	List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage);
 
+	List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map);
+
+	int deleteFavoritesList(Map<String, Object> map);
+
+	List<Map<String, String>> selectListCharged();
+
+
 }

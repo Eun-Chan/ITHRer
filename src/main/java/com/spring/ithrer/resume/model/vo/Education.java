@@ -17,7 +17,7 @@ public class Education implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] nonhigh;
+	private String[] nonHigh;
 	private String graduaction;
 	private String schoolName;
 	private String highgraduationDate;

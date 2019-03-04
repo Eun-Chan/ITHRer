@@ -271,7 +271,7 @@
 					모집인원
 				</div>
 				<div>
-					<em>00명</em>
+					<em>${rc.recruitmentPersonnel }명</em>
 				</div>
 			</div>
 		</div>
