@@ -13,6 +13,9 @@
 div#company-info-container.container{
 	width: 1000px;
 }
+div.title{
+	font-size: 1.5em;
+}
 span.title{
 	font-size: 1em;
 }
@@ -30,14 +33,19 @@ div[id$=-container]{
 	display: none;
 }
 
+/* border 두께 설정 */
+div.border-top.border-bottom{
+	border-width: 4px !important;
+}
+
 </style>
 
 
 <div id="company-info-container" class="container">
 
-	<div id="company-info-container">
-		<div class="text-center">
-			<span class="title badge badge-dark">기업 정보</span>
+	<div id="company-info-container" class="rounded border-primary border-top border-bottom py-3">
+		<div class="text-center mb-3">
+			<div class="title py-2 font-weight-bold text-primary">기업 정보</div>
 		</div>
 		
 		<form id="company-info-form">
@@ -58,7 +66,6 @@ div[id$=-container]{
 			<div class="row">
 				<div class="col-sm-4">
 					<label for="">로고</label>
-					
 					<div class="custom-file">
 						<input type="file" name="logo" class="custom-file-input" id="logo">
 						<label class="custom-file-label" for="customFile"></label>
@@ -521,6 +528,22 @@ function inputNumberFormat(obj) {
 /* 기업정보 수정 버튼 */
 $("#company-info-submit").on("click",function(){
 	
+	var formData = new FormData();
+	formData.append("upFile",$("input#logo")[0].files[0]);
+	$.ajax({
+		url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+		contentType: false,
+		cache: false,
+		processData: false,
+		type: "put",
+		success: function(data){
+			alert(data.msg);
+		},
+		error: function(){
+			console.log("기업정보 수정 ajax error!");
+		}
+	});
+	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
 		type: "put",
@@ -753,7 +776,7 @@ $("#insert-location-modal-btn").on("click",function(){
 	html += '</div>';
 	html += '<div class="col-sm-2 text-center">';
 	html += '<button type="button" class="btn btn-outline-success btn-sm insert-location-btn">저장</button> ';
-	html += '<button type="button" class="btn btn-outline-danger btn-sm delete-location-btn">삭제</button>';
+	html += '<button type="button" class="btn btn-outline-danger btn-sm cancel-location-btn">취소</button>';
 	html += '</div>';
 	html += '</div>';
 	html += '</form>';
@@ -764,6 +787,11 @@ $("#insert-location-modal-btn").on("click",function(){
 	$("#location-info-container").append(html);
 	
 	loIndex++;
+});
+
+/* 주소 추가 취소버튼 */
+$(document).on("click",".cancel-location-btn",function(){
+	$(this).parents("form").remove();
 });
 
 /* 주소 추가 */

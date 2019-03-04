@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/tast"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tast
+		http://www.springframework.org/schema/task/spring-task-3.1.xsd">
 	
 	<!-- 여기는 Gmail을 사용하기 위한 빈 생성 -->
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
@@ -25,6 +28,7 @@
         <property name="username" value="eunchan2000"/>
         <property name="password" value="12345678"/>
     </bean>
+    
     
     <bean id="dataSource" 
     	  class="net.sf.log4jdbc.Log4jdbcProxyDataSource">

@@ -24,4 +24,14 @@ public interface UserDao {
 	Member memberIdView(Map<String, String> member);
 
 	Member findPasswordEmailAuth(Map<String, String> member);
+
+	Company compIdCheck(String compId);
+
+	int compEmailAuth(String email);
+
+	int createCompany(Company company);
+
+	int createKakaoUser(Map<String, String> user);
+
+	int memberPasswordUpdate(Member member);
 }

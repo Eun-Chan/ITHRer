@@ -66,5 +66,17 @@ public class Recruitment implements Serializable {
 	
 	//데이터 저장용 D-day 타임
 	private int endTime;
+	
+	//지원자 수 저장용
+	private int count;
+	
+	// 지원한 지원자들 중 읽지 않은 지원자수
+	private int notReadCount;
+	
+	//회사에 지원한적있는지 없는지 카운트 해당회원이 지원햇으면1 안햇으면0
+	private int applyCount;
+	
+	//종료했으면 Y , N이면 종료 안함
+	private String end;
 
 }

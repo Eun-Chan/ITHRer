@@ -93,10 +93,10 @@
 	.timeimg{
 		text-align: center;
 	}
-	.btn{
+	#apply{
 		width: 200px;
     	height: 65px;
-    	margin-bottom: 5px
+    	margin-bottom: 5px;
 	}
 	.resumeDl dt{
 		letter-spacing: -1px;
@@ -145,15 +145,15 @@
 		<div class="col-sm-2">
 		<c:if test="${empty member }">
 			<button class="detailStar">
-				<img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;">
+				<img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;">
 			</button>
 		</c:if>
 		<c:if test="${not empty member }">
        		<c:if test="${rc.favoritesCount == 1 }">
-       			<button class="detailStar"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+       			<button class="detailStar"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
        		</c:if>
        		<c:if test="${rc.favoritesCount ==0 }">
-       			<button class="detailStar"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+       			<button class="detailStar"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
        		</c:if>
 	   </c:if>
 		</div>
@@ -204,20 +204,27 @@
 				<dt>산업(업종)</dt>
 				<dd>${com.category }</dd>
 				<dt>설립년도</dt>
-				<dd>${com.enrollDate }</dd>
+				<dd>${com.dateOfEstablishment }</dd>
 				<dt>기업형태</dt>
 				<dd>${com.bussinessScale }</dd>
 			</dl>
 	</div>
-	
+	<div class="DetailHeader">
+		<h1>채용정보</h1>
+	</div>
+	<div class="row main">
+		여기에 채용정보가 들어가 보리기이이이
+		이이이이꾸요이이이잇
+		아아아아앙아아아아아
+	</div>
 	<div class="DetailHeader">
 		<h1>접수기간/방법</h1>
 	</div>
 	<div class="row main">
 		<div class="col-sm-3 timeimg">
 			<dl>
-				<dt>
-					<img src="${pageContext.request.contextPath }/resources/images/time.svg" alt="" style="width: 50px;height: 50px;display: block; margin-bottom: 5px; position: relative; left: 25px;"/>
+				<dt style="width: 130px; position: relative; left: -7px;">
+					<img src="${pageContext.request.contextPath }/resources/images/time.svg" alt="" style="width: 50px;height: 50px;display: block; margin-bottom: 5px; position: relative; left: 38px;"/>
 					<span style="font-size: 0.8em;">남은시간</span>
 					<br />
 					<span id="d-day"></span>
@@ -264,12 +271,12 @@
 					모집인원
 				</div>
 				<div>
-					<em>00명</em>
+					<em>${rc.recruitmentPersonnel }명</em>
 				</div>
 			</div>
 		</div>
 		<div class="col-sm-3">
-			<span>언령별</span>
+			<span>연령별</span>
 			<div  id="age" style="width: 220px; height: 160px;">
 			</div>
 		</div>
@@ -289,6 +296,8 @@
 	<div class="row main" id="map" style="height: 400px;">
 
 	</div>
+	<input type="hidden" value="${rc.recruitmentNo }" id="hiddenRNo"/>
+	<input type="hidden" value="${com.compName }" id="hiddenCName"/>
 </div>
 <script>
 /* 	var time = '${rc.closingDate}';
@@ -492,7 +501,15 @@ function genderChart() {
 	chart.draw(data, options);
 }
 $("#apply").on("click",function(){
-	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer","apply","width=570, height=600, resizable = no, scrollbars = no");
+	 if(${empty member}){
+			alert("로그인 후 이용 해 주세용");
+			return;
+	 }
+	 if("${count}"==1){
+		 alert("해당회사에 지원한 이력이 존재합니다.");
+		 return;
+	 }
+	window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer?recruitmentNo=${rc.recruitmentNo}","apply","width=570, height=600, resizable = no, scrollbars = no");
 });
 $(".detailStar").on("click",function(){
 	var recNo = "${rc.recruitmentNo}";
@@ -501,7 +518,7 @@ $(".detailStar").on("click",function(){
 	 if(${empty member}){
 		alert("로그인 후 이용 해 주세용");
 		return;
- 	}
+ 		}
 	 else{		 
 		$.ajax({
 				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,

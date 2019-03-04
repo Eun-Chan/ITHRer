@@ -1,5 +1,10 @@
 package com.spring.ithrer.user.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +25,11 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,7 +38,7 @@ import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Controller
-@SessionAttributes(value= {"member" , "company"})
+//@SessionAttributes(value= {"member" , "company"})
 public class UserController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -139,9 +146,14 @@ public class UserController {
 		// 0. 회원가입하러 가즈아 ! 서비스로
 		System.out.println("암호화전: "+member.getPassword());
 		String temp = member.getPassword();
+		
 		//BCrypt 방식 암호화
 		member.setPassword(bcryptPasswordEncoder.encode(temp));
 		System.out.println("암호화후: "+member.getPassword());
+		
+		//전화번호 구분자 (-) 넣기
+		String phone = member.getPhone();
+		member.setPhone(phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7));
 		
 		System.out.println("member = "+member);
 		int result = userService.createMember(member);
@@ -229,6 +241,7 @@ public class UserController {
 			@RequestParam(name="companySaveId") String companySaveId,
 			HttpServletResponse res,
 			HttpServletRequest req){
+		logger.debug("companyLogin ! 여긴 들어오시나요");
 		
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("companyId" , companyId);
@@ -237,7 +250,11 @@ public class UserController {
 		
 		Map<String,String> test = new HashMap<String, String>();
 		if(company != null) {
-			System.out.println("로긴 성공");
+			if(!bcryptPasswordEncoder.matches(companyPassword, company.getPassword())) {
+				logger.debug("비밀번호 틀림!");
+				test.put("result" , "false");
+				return test;
+			}
 			
 			// (아이디 저장 체크시) 쿠키 생성
 			if(companySaveId.equals("true")) {
@@ -258,7 +275,7 @@ public class UserController {
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*10);
-			session.setAttribute("company", company);
+			session.setAttribute("companyLoggedIn", company);
 			
 			test.put("result" , "true");
 		}
@@ -277,18 +294,53 @@ public class UserController {
 	@ResponseBody
 	public Map<String,String> kakaoLogin(@RequestParam(name="kakaoId") String kakaoId,
 										 @RequestParam(name="kakaoName") String kakaoName,
-										 @RequestParam(name="kakaoEmail" ,required=false) String kakaoEmail){
+										 @RequestParam(name="kakaoEmail" ,required=false) String kakaoEmail,
+										 HttpServletRequest req){
 		Map<String,String> map = new HashMap<>();
 		System.out.println("여긴 옵니까");
 		// 0. 로그인한 카카오 회원 아이디 일단 조회!
 		Member member = userService.kakaoLogin(kakaoId);
+		
 		if(member != null) {
 			System.out.println("이미 가입된 카카오 회원");
 			System.out.println("member = "+member);
 		}
 		else {
 			System.out.println("카카오로 처음 접속한 회원");
+			logger.debug("kakaoId = "+kakaoId);
+			logger.debug("kakaoName = "+kakaoName);
+			logger.debug("kakaoEmail = "+kakaoEmail);
+			// 카카오톡으로 처음 접속한 회원 DB에 저장하기
+			Map<String,String> user = new HashMap<>();
+			user.put("kakaoId",kakaoId);
+			user.put("kakaoName",kakaoName);
+			user.put("kakaoEmail", kakaoEmail);
+			int result = userService.createKakaoUser(user);
+			
+			if(result > 0) {
+				logger.debug("카카오 유저 등록 성공");
+			}
+			else {
+				logger.debug("카카오 유저 등록 실패");
+			}
+			
+			// 세션에 넣을 객체 저장
+			member = new Member();
+			member.setMemberId(kakaoId);
+			member.setMemberName(kakaoName);
+			if(kakaoEmail != null) {
+				member.setEmail(kakaoEmail);
+			}
 		}
+		
+		// 카카오톡 유저 정보 세션에 담기
+		// 로그인 한 유저 세션에 넣기
+		HttpSession session = req.getSession();
+			
+		session.setMaxInactiveInterval(60*10);
+		
+		session.setAttribute("member", member);
+		
 		return map;
 	}
 	
@@ -354,16 +406,10 @@ public class UserController {
 		// 보낼 이메일 주소		
 		String to = memberEmail;
 		
-		MimeMessage message = mailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-		messageHelper.setTo(new InternetAddress(to));
-		messageHelper.setText("회원 아이디 = "+mem.getMemberId());
-		messageHelper.setFrom(new InternetAddress(from));
-		messageHelper.setSubject("ITHRer 회원 아이디 조회");
+		// 아이디 이메일로 보내주기
+		emailSend(to, "회원 아이디 = "+mem.getMemberId(), "ITHRer 아이디 조회 결과 입니다.");
 		
-		mailSender.send(message);
-		
-		mav.setViewName("/user/findIdEnd");
+		mav.setViewName("redirect:/");
 		
 		return mav;
 	}
@@ -407,8 +453,126 @@ public class UserController {
 	public ModelAndView memberPasswordUpdateGoing(Member member , ModelAndView mav) {
 		mav.addObject("member", member);
 		
+		mav.setViewName("user/memberUpdatePwd");
 		
+		return mav;
+	}
+	
+	/**
+	 * 기업회원 회원가입 - 아이디 중복 검사
+	 */
+	@RequestMapping(value="/user/compIdCheck")
+	@ResponseBody
+	public Map<String,String> compIdCheck(@RequestParam(name="compId") String compId){
+		Map<String,String> test = new HashMap<>();
 		
+		Company company = userService.compIdCheck(compId);
+		
+		// 중복된 아이디가 있을 때
+		if(company != null) {
+			test.put("result" , "false");
+		}
+		else {
+			test.put("result" , "true");
+		}
+		
+		return test;
+	}
+	
+	/**
+	 * 기업회원 회원가입 - 이메일 인증 (메일 보내기)
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/compEmailAuth")
+	@ResponseBody
+	public Map<String,String> compEmailAuth(@RequestParam(name="email") String email) throws Exception{
+		Map<String,String> test = new HashMap<>();
+		
+		int result = userService.compEmailAuth(email);
+		authNum = getAuthNum();
+		
+		// 이메일 중복
+		if(result > 0) {
+			test.put("result" , "false");
+		}
+		// 이메일 회원가입 가능
+		else {
+			test.put("result" , String.valueOf(authNum));
+			emailSend(email , "인증번호 = "+String.valueOf(authNum) , "기업회원 회원가입 인증번호");
+		}
+		return test;
+	}
+	
+	/**
+	 * 기업회원 회원가입
+	 */
+	@RequestMapping(value="/user/createCompany" ,method=RequestMethod.POST)
+	public ModelAndView createCompany(Company company , ModelAndView mav) {
+		// 0. 비밀번호 암호화
+		logger.debug("기업 비밀번호 암호화전 : "+company.getPassword());
+		String temp = company.getPassword();
+		
+		// BCrypt 방식 암호화
+		company.setPassword(bcryptPasswordEncoder.encode(temp));
+		logger.debug("기업 비밀번호 암호화후 : "+company.getPassword());
+		
+		// 전화번호 구분자 (-) 넣기
+		String phone = company.getPhone();
+		company.setPhone(phone.substring(0,3)+"-"+phone.substring(3,7)+"-"+phone.substring(7));
+		
+		logger.debug("company = "+company);
+		
+		// 1. DB로 출바알!
+		int result = userService.createCompany(company);
+		
+		if(result > 0) {
+			logger.debug("기업 회원가입 성공!");
+		}
+		else {
+			logger.debug("기업 회원가입 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
+	}
+	
+	/**
+	 * 기업회원 아이디 찾기
+	 */
+	@RequestMapping(value="/user/findCompanyId" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> findCompanyId(Company company){
+		Map<String,String> result = new HashMap<>();
+		result.put("result", "true");
+		
+		// 0. 입력 값 확인
+		logger.debug("compName = "+company.getCompName());
+		logger.debug("licenseNo = "+company.getLicenseNo());
+		
+		return result;
+	}
+	
+	/**
+	 * 개인회원 비밀번호 변경
+	 */
+	@RequestMapping(value="/user/memberPasswordUpdate" , method=RequestMethod.POST)
+	public ModelAndView memberPasswordUpdate(ModelAndView mav, Member member) {
+		logger.debug("암호화 하기 전 : " +member.getPassword());
+		String tmp = member.getPassword();
+		member.setPassword(bcryptPasswordEncoder.encode(tmp));
+		logger.debug("암호화 후 : "+member.getPassword());
+		
+		int result = userService.memberPasswordUpdate(member);
+		
+		if(result > 0) {
+			logger.debug("비밀번호 변경 성공!");
+		}
+		else {
+			logger.debug("비밀번호 변경 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 	
@@ -425,4 +589,235 @@ public class UserController {
 		
 		mailSender.send(message);
 	}
+	/*
+	 * 로그아웃 
+	 */
+	@RequestMapping("/member/memberLogout.do")
+	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
+		
+		req.getSession().removeAttribute("member");
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
+	}
+	
+	//	네이버 로그인, 가입되어있지않다면 가입까지 진행
+	@RequestMapping(value="/user/naverLogin.ithrer", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> naverLogin(@RequestParam("naverAccessToken") String naverAccessToken, HttpServletRequest req) {
+		System.out.println("명훈명훈");
+		Map<String,String> map = new HashMap<>();
+		
+        String header = "Bearer " + naverAccessToken; // Bearer 다음에 공백 추가 // 네이버 로그인 접근 토큰; 여기에 복사한 토큰값을 넣어줍니다.
+        System.out.println("try 전");
+        try {
+        	System.out.println("try 후");
+            String apiURL = "https://openapi.naver.com/v1/nid/me";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("GET");
+            con.setRequestProperty("Authorization", header);
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            String inputLine;
+            StringBuffer res = new StringBuffer();
+            while ((inputLine = br.readLine()) != null) {
+                res.append(inputLine);
+            }
+            br.close();
+            
+            // StringBuffer to String
+			String resStr = res.substring(0);
+			
+			System.out.println("naver 정보 sdfsd");
+			// Json 스타일의 문자를 Json객체로 만들기
+			JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObj = (JSONObject) jsonParser.parse(resStr);
+            Map<String,String> jsonArr = (Map<String,String>) jsonObj.get("response");
+            
+            // 아이디, 이름, 이메일 정보 추출
+            // 아이디는 네이버 아이디가 아닌 숫자로 이루어진 아이디
+            
+            String naverLoginId = (String)jsonArr.get("id");
+            System.out.println("아이디 = "+naverLoginId);
+            String naverName = (String)jsonArr.get("name");
+            System.out.println("이름 = "+naverName);
+            String naverEmail = (String)jsonArr.get("email");
+            System.out.println("이메일 = "+naverEmail);
+            
+            
+            // 네이버아이디로 우리 디비에 회원가입되어 있는지 확인
+            Member member = userService.kakaoLogin(naverLoginId);
+            
+            if(member != null) {
+            	logger.debug("네이버 회원가입 되어있음");
+            }
+            else {
+            	Map<String,String> user = new HashMap<>();
+    			user.put("kakaoId",naverLoginId);
+    			user.put("kakaoName",naverName);
+    			user.put("kakaoEmail", naverEmail);
+            	
+            	int result = userService.createKakaoUser(user);
+            	
+            	if(result>0) {
+            		logger.debug("네이버 회원가입 성공!");
+            		
+            	}
+            	else {
+            		logger.debug("네이버 회원가입 성공!");
+            	}
+            }
+            
+            Member naverLoginMember = userService.kakaoLogin(naverLoginId);
+            System.out.println(naverLoginMember);
+            
+            // 가입안된 회원이면 회원가입하기
+            
+            // 가입된 회원이면 회원가입 x
+            
+            // 멤버 객체 생성
+            // 세션에 네이버로그인 추가
+            HttpSession session = req.getSession();
+			session.setMaxInactiveInterval(60*10);
+			session.setAttribute("member", naverLoginMember);
+            
+			map.put("result","true");
+            
+			System.out.println("네이버 로그인 끝");
+            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+		
+		return map;
+	}
+	
+//	네이버로그인 callback
+	@RequestMapping("/user/naverLoginCallback.ithrer")
+	public ModelAndView naverLoginCallback(ModelAndView mav, HttpServletRequest request, HttpServletResponse response) {
+		
+		logger.debug("naverLogin callback");
+		
+		try {
+			String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
+			String clientSecret = "mjQDsfEB9_";//애플리케이션 클라이언트 시크릿값";
+			String code = request.getParameter("code");
+			String state = request.getParameter("state");
+			String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
+			String apiURL;
+			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+			apiURL += "client_id=" + clientId;
+			apiURL += "&client_secret=" + clientSecret;
+			apiURL += "&redirect_uri=" + redirectURI;
+			apiURL += "&code=" + code;
+			apiURL += "&state=" + state;
+			System.out.println("apiURL="+apiURL);
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("GET");
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			System.out.print("responseCode="+responseCode);
+			if(responseCode==200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {  // 에러 발생
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			StringBuffer res = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				res.append(inputLine);
+			}
+			br.close();
+			if(responseCode==200) {
+			
+				// StringBuffer to String
+				String resStr = res.substring(0);
+				
+				// Json 스타일의 문자를 Json객체로 만들기
+				JSONParser jsonParser = new JSONParser();
+	            JSONObject jsonObj = (JSONObject) jsonParser.parse(resStr);
+	            
+	            // Json객체에서 access token 추출
+	            String naverAccessToken = (String)jsonObj.get("access_token");
+	            mav.addObject("naverAccessToken",naverAccessToken);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		mav.setViewName("naver/naverCallback");
+		
+		return mav;
+	}
+	
+	// 네이버 연동 로그아웃
+	@RequestMapping("/user/naverLogout.ithrer")
+	public ModelAndView naverLogout(ModelAndView mav, HttpServletRequest request, HttpServletResponse response, @RequestParam("naverAccessToken") String naverAccessToken) {
+		
+		logger.debug("naverLogout");
+		
+		try {
+			String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
+			String clientSecret = "mjQDsfEB9_";//애플리케이션 클라이언트 시크릿값";
+			//String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
+			String apiURL;
+			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=delete&";
+			apiURL += "client_id=" + clientId;
+			apiURL += "&client_secret=" + clientSecret;
+			apiURL += "&access_token=" + naverAccessToken;
+			apiURL += "&service_provider=NAVER";
+			//apiURL += "&redirect_uri=" + redirectURI;
+			System.out.println("apiURL="+apiURL);
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("GET");
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			System.out.print("responseCode="+responseCode);
+			if(responseCode==200) { // 정상 호출
+				System.out.println("네이버 연동 로그아웃 성공!");
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {  // 에러 발생
+				System.out.println("네이버 연동 로그아웃 실패!");
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			
+			String inputLine;
+			StringBuffer res = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				res.append(inputLine);
+			}
+			br.close();
+			if(responseCode==200) {
+				// StringBuffer to String
+				String resStr = res.substring(0);
+				
+				// Json 스타일의 문자를 Json객체로 만들기
+				JSONParser jsonParser = new JSONParser();
+	            JSONObject jsonObj = (JSONObject) jsonParser.parse(resStr);
+	            
+	            // Json객체에서 access token 추출
+	            String naverResult = (String)jsonObj.get("result");
+	            System.out.println(naverResult);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		
+		mav.setViewName("redirect:/resume/resume");
+		
+		return mav;
+		}
+	
+	
 }

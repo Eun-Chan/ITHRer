@@ -14,6 +14,7 @@ import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
+
 import com.spring.ithrer.company.model.vo.Position;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
@@ -164,6 +165,39 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.selectList("company.selectSubwayStationAll");
 	}
 
-	
+
+	public List<Recruitment> selectRcrtList(String compId) {
+		return sqlSession.selectList("company.selectRcrtList",compId);
+	}
+
+	@Override
+	public List<String> selectApplicantIdList(int recruitmentNo) {
+		return sqlSession.selectList("company.selectApplicantIdList",recruitmentNo);
+	}
+
+	@Override
+	public Member selectApplicantWithAllInfo(Map<String, Object> paramMap) {
+		return sqlSession.selectOne("company.selectApplicantWithAllInfo",paramMap);
+	}
+
+	@Override
+	public Recruitment selectRecruitmentOne(int recruitmentNo) {
+		return sqlSession.selectOne("company.selectRecruitmentOne",recruitmentNo);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap) {
+		return sqlSession.selectList("company.selectRcrtListNotThis",paramMap);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtEndList(String compId) {
+		return sqlSession.selectList("company.selectRcrtEndList",compId);
+	}
+
+	@Override
+	public int updateRcrtEnd(int recruitmentNo) {
+		return sqlSession.update("company.updateRcrtEnd",recruitmentNo);
+	}
 
 }

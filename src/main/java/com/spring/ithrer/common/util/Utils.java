@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,6 +65,7 @@ public class Utils {
 					map.put("salary", getTagValue("salary",eElement));
 					map.put("opening", getTagValue("opening-timestamp", eElement)); //접수 시작일
 					map.put("expiration", getTagValue("expiration-timestamp", eElement));
+					map.put("location", getTagValue("location", eElement)); //근무지역 
 					
 					String endTime = getTagValue("expiration-timestamp", eElement);
 					int endTimes = Integer.parseInt(endTime)/(24*60*60*1000);
@@ -239,4 +242,14 @@ public class Utils {
 		return pageBar; 
 	}
 	
+	
+	//파일 리네임용
+	public static String getRenamedFileName(String fname) {
+		//확장자 분리
+		String ext = fname.substring(fname.lastIndexOf(".")+1);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmssSSS");
+		int rndNum = (int)(Math.random()*1000);
+		return sdf.format(new Date())+"_"+rndNum+"."+ext;
+		
+	}
 }

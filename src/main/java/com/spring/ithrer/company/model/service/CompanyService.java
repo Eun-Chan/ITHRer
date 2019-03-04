@@ -10,6 +10,7 @@ import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Position;
+
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
@@ -66,5 +67,17 @@ public interface CompanyService {
 	List<SubwayStation> selectSubwayStation();
 
 	List<SubwayStation> selectSubwayStationAll();
+
+	List<Recruitment> selectRcrtList(String compId);
+
+	List<Member> selectAppList(Map<String, Object> paramMap);
+
+	Recruitment selectRecruitmentOne(int recruitmentNo);
+
+	List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap);
+
+	List<Recruitment> selectRcrtEndList(String compId);
+
+	int updateRcrtEnd(int recruitmentNo);
 
 }

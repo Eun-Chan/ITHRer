@@ -1,5 +1,6 @@
 package com.spring.ithrer.company.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +16,16 @@ import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
+
 import com.spring.ithrer.company.model.vo.Position;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
+
+import com.spring.ithrer.company.model.vo.Recruitment;
+import com.spring.ithrer.company.model.vo.Sales;
+
 import com.spring.ithrer.user.model.vo.Member;
 
 @Service
@@ -42,15 +48,12 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		List<Location> locationList = companyDao.selectLocationList(compId);
 		
-		List<CompanyApplication> companyAppList = companyDao.selectCompanyAppList(compId);
-		
 		
 		Map<String, Object> companyMap = new HashMap<>();
 		companyMap.put("company",company);
 		companyMap.put("hrManagerList",hrManagerList);
 		companyMap.put("salesList",salesList);
 		companyMap.put("locationList",locationList);
-		companyMap.put("companyAppList",companyAppList);
 		
 		return companyMap;
 	}
@@ -391,6 +394,47 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<SubwayStation> selectSubwayStationAll() {
 		return companyDao.selectSubwayStationAll();
+	}
+	@Override
+	public List<Recruitment> selectRcrtList(String compId) {
+		return companyDao.selectRcrtList(compId);
+	}
+
+	@Override
+	public List<Member> selectAppList(Map<String, Object> paramMap) {
+		
+		List<String> applicantIdList = companyDao.selectApplicantIdList((int)paramMap.get("recruitmentNo"));
+		
+		List<Member> applicantList = new ArrayList<>();
+		
+//		if(applicantIdList != null) {
+//			for(int i=0; i<applicantIdList.size(); i++) {
+//				Member applicant = companyDao.selectApplicantWithAllInfo(paramMap);
+//				applicantList.add(applicant);
+//			}
+//		}
+		
+		return applicantList;
+	}
+
+	@Override
+	public Recruitment selectRecruitmentOne(int recruitmentNo) {
+		return companyDao.selectRecruitmentOne(recruitmentNo);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap) {
+		return companyDao.selectRcrtListNotThis(paramMap);
+	}
+
+	@Override
+	public List<Recruitment> selectRcrtEndList(String compId) {
+		return companyDao.selectRcrtEndList(compId);
+	}
+
+	@Override
+	public int updateRcrtEnd(int recruitmentNo) {
+		return companyDao.updateRcrtEnd(recruitmentNo);
 	}
 
 }

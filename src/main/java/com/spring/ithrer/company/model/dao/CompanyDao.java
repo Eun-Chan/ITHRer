@@ -9,7 +9,10 @@ import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
+<<<<<<< HEAD
 import com.spring.ithrer.company.model.vo.Position;
+=======
+>>>>>>> be2b4f10b16ffbc0a81c14e1f32388cf836a3768
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
@@ -71,5 +74,19 @@ public interface CompanyDao {
 	List<SubwayStation> selectSubwayStation();
 
 	List<SubwayStation> selectSubwayStationAll();
+	
+	List<Recruitment> selectRcrtList(String compId);
+
+	List<String> selectApplicantIdList(int recruitmentNo);
+
+	Member selectApplicantWithAllInfo(Map<String, Object> paramMap);
+
+	Recruitment selectRecruitmentOne(int recruitmentNo);
+
+	List<Recruitment> selectRcrtListNotThis(Map<String, Object> paramMap);
+
+	List<Recruitment> selectRcrtEndList(String compId);
+
+	int updateRcrtEnd(int recruitmentNo);
 
 }

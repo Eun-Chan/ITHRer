@@ -1,0 +1,143 @@
+@charset "UTF-8";
+
+#noticeSearch-container{
+	width: 1000px;
+	margin: 0 auto;
+}
+.main-search{
+	position: relative;
+	z-index: 1;
+	height: 250px;
+	background: #e4ebfe;
+}
+.search-bar{
+	position: absolute;
+	top: 80px;
+	left: 56.8%;
+	z-index: 5;
+	margin-left: -600px;
+	padding: 10px;
+	width: 1000px;
+	height: 80px;
+	box-sizing: border-box;
+	background: pink;
+}
+.bar-main{
+	position: relative;
+	z-index: 2;
+	margin: 0 auto;
+	width: 980px;
+	height: 60px;
+	background: #ddd;
+}
+.container{
+	margin-top: 20px;
+}
+.bar-option{
+	position: absolute;
+    z-index: 1;
+	width: 420px;
+    height: 60px;;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 15px;
+    letter-spacing: -1px;
+    text-align: left;
+    background: #fff;
+}
+.bar-option.area{
+	left: 423px;
+}
+.bar-option span{
+	z-index: 4;
+}
+.bar-button{
+	position: absolute;
+    left: 841px;
+    z-index: 1;
+    padding: 12px 0 15px;
+    width: 71px;
+    height: 59px;
+    background: cyan;
+    border: 0;
+    cursor: pointer;
+}
+.bar-button span{
+	color: #fff;
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: -1px;
+}
+#searchKeyWord{
+/* 	position: relative; */
+    z-index: 1;
+    padding: 12px 40px 15px 49px;
+    width: 100%;
+    height: 60px;
+    border: 0;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 17px;
+    letter-spacing: -1px;
+    line-height: 23px;
+    background: #fff;
+}
+.bar-option img{
+	position:absolute;
+	width: 32px;
+    height: 32px;
+    top: 13px;
+    left: 10px;
+}
+.detail2 span{
+	padding-right: 10px;
+	padding-left: 10px;
+	border-right: solid 1px gray;
+}
+.detail2 span:last-of-type{
+	border-right: none;
+}
+span#resultKeyWord{
+	color: red;
+	font-weight: bold;
+}
+#detail-area{
+	background: #fcfcfc;
+	border: 1px solid black;
+}
+#detail-area h2{
+	display: inline-block;
+    width: 142px;
+    color: #222;
+    font-size: 15px;
+    vertical-align: top;
+    font-weight: bold;
+	
+}
+#detail-area select, #detail-area input{
+	display: inline-block;
+}
+#detail-area div{
+	padding: 5px;
+}
+#detail-area hr{
+	margin-top: 0;
+	margin-bottom: 5px;
+}
+.checkbox-area{
+	display:inline-block;
+	font-size: 12px;
+}
+.checkbox-area div{
+	width: 130px;
+    white-space: nowrap;
+}
+#emp_type-area div.checkbox-area div{
+	width: 100px;
+}
+span.add_keyword{
+	width:120px;
+	color:#888;
+	font-size:15px;
+	padding-right: 5px;
+}

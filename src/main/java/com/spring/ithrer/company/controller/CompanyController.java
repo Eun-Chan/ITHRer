@@ -43,7 +43,7 @@ import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
 @RequestMapping("/company")
-@SessionAttributes("company")
+@SessionAttributes("companyLoggedIn")
 public class CompanyController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -129,9 +129,6 @@ public class CompanyController {
 	@GetMapping("/index.ithrer")
 	public ModelAndView index(@RequestParam("compId") String compId, ModelAndView mav, HttpServletRequest req) {
 		
-		// 회사, 인사담당자, 매출액 정보 가져오기
-		Map<String, Object> map = companyService.selectCompanyMap(compId);
-		
 		// 쿠키가져와서 멤버가져오기
 		// 쿠키 관련
 		// 오늘 본 지원자 쿠키 생성
@@ -154,50 +151,40 @@ public class CompanyController {
 			}
 		}
 		
-		// 쿠키에서 오늘 본 지원자 아이디 가져오기
+		// 회사, 인사담당자, 매출액 정보 가져오기
+		Map<String, Object> companyMap = companyService.selectCompanyMap(compId);
+		
+		// 채용정보 가져오기
+		List<Recruitment> rcrtList = companyService.selectRcrtList(compId);
+		
+		// 쿠키에서 오늘 본 지원자 아이디 가져와서 리스트 가져오기
 		// 홀수 인덱스에 아이디가 담김
 		String[] splitStr = applicantCookieVal.split("\\|");
 		
-		List<Member> readApplicantList = new ArrayList<>();
+		List<Member> readAppList = new ArrayList<>();
 		for(int i=0; i<splitStr.length; i++) {
 			if(i%2 == 0) continue;
 			
 			Map<String,Object> map2 = new HashMap<>();
 			map2.put("memberId", splitStr[i]);
+			map2.put("compId", compId);
 			Member member = companyService.selectApplicant(map2);
-			readApplicantList.add(member);
+			readAppList.add(member);
 		}
-		
-		logger.debug(""+readApplicantList);
 		
 		// 관심인재 리스트 가져오기
 		List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
 		
+		// 마감된 채용공고 리스트 가져오기
+		List<Recruitment> rcrtEndList = companyService.selectRcrtEndList(compId);
 		
-		
-		mav.addObject("map",map);
-		mav.addObject("readApplicantList",readApplicantList);
+		mav.addObject("companyMap",companyMap);
+		mav.addObject("rcrtList",rcrtList);
+		mav.addObject("rcrtEndList",rcrtEndList);
+		mav.addObject("readAppList",readAppList);
 		mav.addObject("favoriteAppList",favoriteAppList);
 		
 		mav.setViewName("company/companyIndex");
-		
-		return mav;
-	}
-	
-	@RequestMapping("/login.ithrer")
-	public ModelAndView login(ModelAndView mav) {
-		
-		// 회사 아이디 임시로 주기
-		String compId = "audgnsdlsp";
-		
-		
-		
-		
-		mav.addObject("company",companyService.selectCompanyOne(compId));
-		
-		
-		
-		mav.setViewName("redirect:/");
 		
 		return mav;
 	}
@@ -207,22 +194,19 @@ public class CompanyController {
 		
 		sessionStatus.setComplete();
 		
-		
 		mav.setViewName("redirect:/");
 		
 		return mav;
 	}
 	
 	@RequestMapping("/viewApplicant.ithrer")
-	public ModelAndView viewApplicant(ModelAndView mav, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("memberId") String memberId
+	public ModelAndView viewApplicant(ModelAndView mav, @RequestParam("compId") String compId, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("memberId") String memberId
 									, HttpServletRequest req, HttpServletResponse res) {
 		
-		// 회사 아이디 임시로 주기 (세션에서 가져와야함)
-		String compId = "audgnsdlsp";
-		mav.addObject("compId",compId);
+		logger.debug("compId = "+compId);
+		
 		// recruitmentNo 임시로 넘겨주기
 		mav.addObject("recruitmentNo",recruitmentNo);
-		
 		
 		// 쿠키 관련
 		// 오늘 본 지원자 쿠키 생성
@@ -284,6 +268,7 @@ public class CompanyController {
 
 		Member member = companyService.selectApplicant(map); 
 		
+		
 		mav.addObject("member",member);
 		mav.setViewName("company/viewApplicant");
 		
@@ -298,7 +283,9 @@ public class CompanyController {
 	}
 	
 	@DeleteMapping("/favorite")
-	public Map<String, Object> deleteFavorite(@RequestParam("compId") String compId, @RequestParam("memberId") String memberId, @RequestParam("recruitmentNo") int recruitmentNo) {
+	public Map<String, Object> deleteFavorite(@RequestParam("compId") String compId
+			, @RequestParam("memberId") String memberId
+			, @RequestParam(value="recruitmentNo",required=false,defaultValue="0") int recruitmentNo) {
 		
 		logger.debug("audgns"+compId);
 		logger.debug(memberId);
@@ -315,6 +302,9 @@ public class CompanyController {
 		
 		if(result > 0) {
 			map2.put("newCount",0);
+			// 관심인재 리스트 가져오기
+			List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
+			map2.put("favoriteAppList",favoriteAppList);
 		}
 		else {
 			map2.put("newCount",1);
@@ -324,7 +314,9 @@ public class CompanyController {
 	}
 	
 	@PostMapping("/favorite")
-	public Map<String, Object> insertFavorite(@RequestParam("compId") String compId, @RequestParam("memberId") String memberId, @RequestParam("recruitmentNo") int recruitmentNo) {
+	public Map<String, Object> insertFavorite(@RequestParam(value="compId") String compId
+			, @RequestParam("memberId") String memberId
+			, @RequestParam(value="recruitmentNo",required=false,defaultValue="0") int recruitmentNo) {
 		
 		logger.debug("audgns"+compId);
 		logger.debug(memberId);
@@ -341,6 +333,9 @@ public class CompanyController {
 		
 		if(result > 0) {
 			map2.put("newCount",1);
+			// 관심인재 리스트 가져오기
+			List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
+			map2.put("favoriteAppList",favoriteAppList);
 		}
 		else {
 			map2.put("newCount",0);
@@ -348,7 +343,7 @@ public class CompanyController {
 		
 		return map2;
 	}
-	
+
 	/**
 	 * @박광준
 	 * 채용공고등록 - 페이지 로드 시 필요한 데이터 로드
@@ -511,6 +506,60 @@ public class CompanyController {
 		int insertResult = companyService.insertRecruitment(rect);
 		System.out.println("rect:"+rect);
 		System.out.println(insertResult);
+	}
+	
+	@GetMapping("/viewApplicantList.ithrer")
+	public ModelAndView viewApplicantList(ModelAndView mav, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("compId") String compId){
+		
+		// 채용공고번호로 지원자 리스트 가져오기
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("recruitmentNo", recruitmentNo);
+		paramMap.put("compId", compId);
+		List<Member> applicantList = companyService.selectAppList(paramMap);
+		
+		// 해당 채용공고 가져오기
+		Recruitment recruitment = companyService.selectRecruitmentOne(recruitmentNo);
+		
+		// 해당 채용공고를 제외한 마감되지 않은 채용공고리스트 가져오기
+		List<Recruitment> rcrtList = companyService.selectRcrtListNotThis(paramMap);
+		
+		logger.debug("recruitment | "+recruitment);
+		logger.debug("rcrtList | "+rcrtList);
+		
+		mav.addObject("applicantList",applicantList);
+		mav.addObject("recruitment",recruitment);
+		mav.addObject("rcrtList",rcrtList);
+		
+		mav.setViewName("company/viewApplicantList");
+		return mav;
+	}
+	
+	@PutMapping("/rcrtEnd")
+	public Map<String,Object> updateRcrtEnd(@RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("compId") String compId) {
+		Map<String,Object> map = new HashMap<>();
+		
+		int result = companyService.updateRcrtEnd(recruitmentNo);
+		
+		String resultStr = "";
+		
+		if(result > 0) {
+			resultStr = "마감 성공!";
+			// 채용정보 가져오기
+			List<Recruitment> rcrtList = companyService.selectRcrtList(compId);
+			// 마감된 채용공고 리스트 가져오기
+			List<Recruitment> rcrtEndList = companyService.selectRcrtEndList(compId);
+			
+			map.put("rcrtList",rcrtList);
+			map.put("rcrtEndList",rcrtEndList);
+			map.put("recruitmentNo",recruitmentNo);
+		}
+		else {
+			resultStr = "마감 실패!";
+		}
+		
+		map.put("result", resultStr);
+		
+		return map;
 	}
 	
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="anonyboard">
+
+	<select resultMap="boardMap" id="selectAnonyBoardList">
+		select * from anonyBoard order by anonyBoardNo desc</select>
+	<resultMap id="boardMap" type="map"></resultMap>
+	
+	<select id="selectAnonyBoardTotalContents" resultType="_int">
+		select count(*) from anonyboard
+	</select>
+	
+	<select resultType="anonyboard" id="selectAnonyBoardOne">
+		select * from anonyBoard where anonyBoardNo = #{anonyBoardNo} 
+	</select>
+
+	<insert id="insertAnonyBoard" parameterType="anonyboard" >
+		insert into anonyBoard(anonyBoardno, anonyBoardTitle, anonyBoardWriter, anonyBoardContent, anonyBoardPassword)values(seq_anonyboardno.nextval,#{anonyBoardTitle},#{anonyBoardWriter},#{anonyBoardContent},#{anonyBoardPassword}) 
+	</insert>
+	
+	<select id="anonySearchList" resultMap="boardSearchMap">
+		select * from anonyBoard 
+	<include refid="search"/>
+		order by anonyBoardNo desc
+	</select>
+	<resultMap id="boardSearchMap" type="map"></resultMap>
+
+	<select id="countAnonyList" resultType="_int">
+		select count(*) from anonyBoard
+	<include refid="search"/>
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				where anonyBoardWriter like '%'||#{keyword}||'%'
+				or anonyBoardTitle like '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+			where ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<delete id="anonyBoardDelete" parameterType="_int">
+		delete from anonyBoard where anonyBoardNo = #{no}
+	</delete>
+
+	<update id="anonyBoardReadCount" parameterType="_int">
+		update anonyBoard set anonyBoardReadCount = anonyBoardReadCount+1 where anonyBoardNo = #{anonyBoardNo}
+	</update>
+
+</mapper>

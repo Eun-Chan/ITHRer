@@ -92,7 +92,11 @@
 	
 	<!-- 관심인재 삭제 -->
 	<delete id="deleteFavorite" parameterType="map">
-		delete from favorites where comp_id=#{compId} and member_id=#{memberId} and recruitment_no=#{recruitmentNo}
+		delete from favorites 
+		where member_id=#{memberId} and comp_id=#{compId} 
+		<if test="recruitmentNo != 0">
+		and recruitment_no=#{recruitmentNo}
+		</if>
 	</delete>
 	
 	<!-- 관심인재 추가 -->
@@ -144,4 +148,44 @@
 	<select id="selectSubwayStationAll" resultType="SubwayStation">
 		SELECT * FROM SUBWAYSTATION
 	</select>
+
+	<!-- 채용정보 리스트 가져오기 -->
+	<select id="selectRcrtList" parameterType="string" resultType="recruitment">
+		select 
+		r.*,
+		(select count(*) from companyapplication where recruitment_no=r.recruitment_no) count,
+		(select count(*) from companyapplication where recruitment_no=r.recruitment_no and read='N') not_read_count
+		from recruitment r where comp_id=#{compId} and end='N'
+	</select>
+	
+	<!-- 지원자 아이디 가져오기 -->
+	<select id="selectApplicantIdList" parameterType="_int" resultType="string">
+		select member_id from companyapplication where recruitment_no=#{recruitment_no}
+	</select>
+	
+	<!-- 이력서, 내가지원한회사, 관심인재, 멤버 정보 모두 다 담기 -->
+	<select id="selectApplicantWithAllInfo">
+		select * from member where 
+	</select>
+	
+	<!-- 해당 채용공고 가져오기 -->
+	<select id="selectRecruitmentOne" parameterType="_int" resultType="recruitment">
+		select * from recruitment where recruitment_no=#{recruitmentNo} and end='N'
+	</select>
+	
+	<!-- 해당 채용공고를 제외한 채용공고리스트 가져오기 -->
+	<select id="selectRcrtListNotThis" parameterType="map" resultType="recruitment">
+		select * from recruitment where comp_id=#{compId} and not recruitment_no=#{recruitmentNo} and end='N'
+	</select>
+	
+	<!-- 마감된 채용공고 리스트 가져오기 -->
+	<select id="selectRcrtEndList" parameterType="string" resultType="recruitment">
+		select * from recruitment where comp_id=#{compId} and end='Y'
+	</select>
+	
+	<!-- 채용공고 마감하기 -->
+	<update id="updateRcrtEnd" parameterType="_int">
+		update recruitment set end='Y' where recruitment_no=#{recruitmentNo}
+	</update>
+	
 </mapper>

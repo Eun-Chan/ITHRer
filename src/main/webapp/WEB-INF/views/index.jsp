@@ -9,6 +9,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/jobSearchDetail.css" />
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/index.css" />
+<script src="${pageContext.request.contextPath }/resources/js/location.js"></script>
 
    <div class="main-search">
       <div class="search-bar">
@@ -1066,6 +1067,9 @@
                      	</ul>
                      	<!-- 충북 -->
                      	<ul class="detail chungbuk">
+                     		<div class="deleteLocation">
+                     			<button class="reset">지역 초기화</button>
+                     		</div> 
                      		<li>
                      			<input type="checkbox" name="114000" id="114000_1" class="loc-detail all"/>
                      			<label for="114000_1">충북전체</label>
@@ -1155,6 +1159,8 @@
          </div>
       </div>
    </div>
+   
+   <!-- 배너 광고 영역 -->
       <div id="banner-container" class="container">
         <div id="myCarousel" class="carousel slide" data-ride="carousel">
           <!-- Indicators -->
@@ -1165,33 +1171,29 @@
           </ul>
          <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="${pageContext.request.contextPath }/resources/images/la.jpg" alt="Los Angeles" >
+            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
             <div class="carousel-caption">
-              <h3>Los Angeles</h3>
-              <p>We had such a great time in LA!</p>
+             <!--  <h3>Los Angeles</h3>
+              <p>We had such a great time in LA!</p> -->
             </div>   
           </div>
-          <div class="carousel-item">
-            <img src="${pageContext.request.contextPath }/resources/images/chicago.jpg" alt="Chicago" >
-            <div class="carousel-caption">
-              <h3>Chicago</h3>
-              <p>Thank you, Chicago!</p>
-            </div>   
+          <c:forEach items="${bannerList}" var="banner">
+	          <div class="carousel-item">
+	            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	            <div class="carousel-caption">
+	            
+	            </div>   
+	          </div>
+          
+          </c:forEach>   
           </div>
-          <div class="carousel-item">
-            <img src="${pageContext.request.contextPath }/resources/images/ny.jpg" alt="New York" >
-            <div class="carousel-caption">
-              <h3>New York</h3>
-              <p>We love the Big Apple!</p>
-            </div>   
-          </div>
-        </div>
         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
           <span class="carousel-control-prev-icon"></span>
         </a>
         <a class="carousel-control-next" href="#myCarousel" data-slide="next">
           <span class="carousel-control-next-icon"></span>
         </a>
+        </div>
       </div>
    </div>
    <div class="main">
@@ -1214,37 +1216,51 @@
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
 	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
 	                  <div class="endDate">D-${list.endTime }</div>
+	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
 	               <c:if test="${empty member }">
-	               		<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               </c:if>
 	               <c:if test="${not empty member }">
 	               		<c:if test="${list.favoritesCount == 1 }">
-	               			<button class="star"><img src="/ithrer/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
-	               		<c:if test="${list.favoritesCount ==0 }">
-	               			<button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		<c:if test="${list.favoritesCount == 0 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
 	               		</c:if>
 	               </c:if>
-	            	<input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
-	            	<input type="hidden" value="${list.compId }" id="hiddenCompId" />
+	            	<input type="hidden" value="${list.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${list.compId }" class="hiddenCompId" />
+	            	<input type="hidden" value="${list.applyCount }" class="hiddenApplyCount"/>
 	            </li>
 	         </c:forEach>   
 	         </ul>
 	         
 	         <ul style="list-style: none; padding-left: 20px;" id="popularity" class="container tab-pane fade">
-	         <c:forEach items="${rc }" var="list">
-	            <li class="recommend-open">
-	               <div class="recommend-content" onclick="moveDetail('${list.recruitmentNo}');">
-	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
-	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
-	                 <div class="endDate">D-${list.endTime }</div>
-	                 <button class="star"><img src="/ithrer/resources/images/star.svg" alt="" style="width: 20px;"></button>
-	                 <input type="hidden" value="${list.recruitmentNo }" id="hiddenRecruitNo" />
-	                 <input type="hidden" value="${list.compId }" id="hiddenCompId" />
+	          <c:forEach items="${topRc }" var="toplist">
+	            <li class="recommend-open" >
+	               <div class="recommend-content" onclick="moveDetail('${toplist.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${toplist.compName }</strong>
+	                  <span class="recruitTitle">${toplist.recruitmentTitle }</span>
+	                  <div class="endDate">D-${toplist.endTime }</div>
+	                  <input type="button" value="즉시지원" class="applyButton"/>
 	               </div>
+	               <c:if test="${empty member }">
+	               		<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               </c:if>
+	               <c:if test="${not empty member }">
+	               		<c:if test="${toplist.favoritesCount == 1 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               		<c:if test="${toplist.favoritesCount ==0 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               </c:if>
+	               <input type="hidden" value="${toplist.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${toplist.compId }" class="hiddenCompId" />
+	            	<input type="hidden" value="${toplist.applyCount }" class="hiddenApplyCount"/>
 	            </li>
-			</c:forEach>
+	            </c:forEach>
 	         </ul>
          </div>
       </div>
@@ -1254,6 +1270,37 @@
    </div>
    <br />
    <div id="job">
+   <fieldset>
+   <legend><img src="${pageContext.request.contextPath }/resources/images/logo.png" alt="" width="200px"/></legend>
+      <ul id ="list-open">
+         <c:forEach items="${rcList }" var="recuritmentlist">
+	            <li class="open" >
+	               <div class="content" onclick="moveDetail('${recuritmentlist.recruitmentNo}');">
+	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${recuritmentlist.compName }</strong>
+	                  <span class="recruitTitle">${recuritmentlist.recruitmentTitle }</span>
+	                  <div class="endDate">D-${recuritmentlist.endTime }</div>
+	               </div>
+	               <c:if test="${empty member }">
+	               		<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               </c:if>
+	               <c:if test="${not empty member }">
+	               		<c:if test="${recuritmentlist.favoritesCount == 1 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/yelloStar.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               		<c:if test="${recuritmentlist.favoritesCount ==0 }">
+	               			<button class="star"><img src="${pageContext.request.contextPath }/resources/images/star.svg" alt="" style="width: 20px;"></button>
+	               		</c:if>
+	               </c:if>
+	                <input type="hidden" value="${recuritmentlist.recruitmentNo }" class="hiddenRecruitNo" />
+	            	<input type="hidden" value="${recuritmentlist.compId }" class="hiddenCompId" />
+	            </li>
+	            </c:forEach>
+      </ul>
+   </fieldset>
+   </div>
+   <div id="job">
+   <fieldset>
+   <legend><img src="${pageContext.request.contextPath }/resources/images/saramin_logo.png" alt="" width="200px"/></legend>
       <ul id ="list-open">
          <c:forEach items="${jobList }" var="map">
                   <li class="open" onclick="moveCrwaling('${map.id}');">
@@ -1269,10 +1316,9 @@
                         </div>
                      </div>
                   </li>
-         <script>
-         </script>
          </c:forEach>   
       </ul>
+   </fieldset>
    </div>
    <div id="cal">
       <iframe id="pageFrame" name="pageFrame" src="http://www.jobkorea.co.kr/Starter/calendar/sub/week" frameborder="0"
@@ -1287,8 +1333,6 @@ function moveCrwaling(id){
    var id = id;
    console.log("id?? = ",id);
    window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id, "채용정보", "width=1200px, height=800px");
-   
-
 };
 function moveDetail(no){
    var no = no;
@@ -1297,342 +1341,19 @@ function moveDetail(no){
 }
 
 $("#btn-search-notice").on("click", function(){
-   console.log("아아");	
    var searchKeyWord = $("#searchKeyWord").val();
    var locationCode = $(".hiddenLocationCode").val();
-   //지역검색 추가 해야함
+   
    
    location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode;
    $(".loc-detail").prop("checked",false);
 });
 
-$("#locationKeyWord").on("click",function(){
-   if(!$(".location-hide").hasClass("on")){
-      $(".location-hide").addClass("on");
-   }
-   else{
-      $(".location-hide").removeClass("on");
-   }
-});
-$("html").click(function(e){
-    if(!$(e.target).hasClass("locationKeyWord")){
-      if($(e.target).hasClass("loc")){
-         $(".location-hide").addClass("on");
-         return;
-      }
-      if($(e.target).hasClass("locationKeyWordSelected")){
-         $(".location-hide").addClass("on");
-         return;
-      }
-      if($(e.target).hasClass("location-view-detail")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-      if($(e.target).hasClass("loc-detail")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-      if($(e.target).hasClass("deleteLocation")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-      if($(e.target).hasClass("reset")){
-    	  $(".location-hide").addClass("on");
-          return;
-      }
-	console.log($(e.target));
-      $(".location-hide").removeClass("on");
-   } 
 
-});
-$(".location-hide button").on("click",function(){
-	var location_name =  new Array();
-/*   if($(".locationKeyWordSelected").text()==""){
-      $(".locationKeyWordSelected").text($(this).val());
-      $(".placeholder").hide();
-   }else{
-      $(".locationKeyWordSelected").text($(".locationKeyWordSelected").html()+", "+$(this).val());
-   } */
-   $(".deleteLocation").css("display","block");
-   if($(this).val()=="101000"){
-	   $(".detail").css("display","none");
-	   $(".seoul").css("display","block");
-	   if($(".seoul li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=101000]").prop("checked",true);
-		   }
-	   }
-	   
-   }
-   if($(this).val()=="102000"){
-	   $(".detail").css("display","none");
-	   $(".gyeonggi").css("display","block");
-	   if($(".gyeonggi li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=102000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="108000"){
-	   $(".detail").css("display","none");
-	   $(".incheon").css("display","block");
-	   if($(".incheon li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=108000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="106000"){
-	   $(".detail").css("display","none");
-	   $(".busan").css("display","block");
-	   if($(".busan li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=106000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="104000"){
-	   $(".detail").css("display","none");
-	   $(".daegu").css("display","block");
-	   if($(".daegu li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=104000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="103000"){
-	   $(".detail").css("display","none");
-	   $(".gwangju").css("display","block");
-	   if($(".gwangju li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=103000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   
-   if($(this).val()=="105000"){
-	   $(".detail").css("display","none");
-	   $(".daejeon").css("display","block");
-	   if($(".daejeon li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=105000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="107000"){
-	   $(".detail").css("display","none");
-	   $(".ulsan").css("display","block");
-	   if($(".ulsan li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=107000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="118000"){
-	   $(".detail").css("display","none");
-	   $(".sejong").css("display","block");
-	   if($(".sejong li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=118000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="109000"){
-	   $(".detail").css("display","none");
-	   $(".kangwon").css("display","block");
-	   if($(".kangwon li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=109000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="110000"){
-	   $(".detail").css("display","none");
-	   $(".gyeongnam").css("display","block");
-	   if($(".gyeongnam li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=110000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="111000"){
-	   $(".detail").css("display","none");
-	   $(".gyeongbuk").css("display","block");
-	   if($(".gyeongbuk li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=111000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="112000"){
-	   $(".detail").css("display","none");
-	   $(".chonnam").css("display","block");
-	   if($(".chonnam li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($("	.loc-detail:checked").length<5){
-			   $("input[name=112000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="113000"){
-	   $(".detail").css("display","none");
-	   $(".chonbuk").css("display","block");
-	   if($(".chonbuk li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=113000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="115000"){
-	   $(".detail").css("display","none");
-	   $(".chungnam").css("display","block");
-	   if($(".chungnam li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=115000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="114000"){
-	   $(".detail").css("display","none");
-	   $(".chungbuk").css("display","block");
-	   if($(".chungbuk li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=114000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="116000"){
-	   $(".detail").css("display","none");
-	   $(".jeju").css("display","block");
-	   if($(".jeju li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=116000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   if($(this).val()=="117000"){
-	   $(".detail").css("display","none");
-	   $(".jongok").css("display","block");
-	   if($(".jongok li").find(".loc-detail:checked").siblings("label").text()==""){
-		   if($(".loc-detail:checked").length<5){
-			   $("input[name=117000]").prop("checked",true);
-		   }		   
-	   }
-   }
-   var location_code =  new Array();
-   var locationCode = "";
-   var text = "";
-   
-	$('.loc-detail:checked').each(function() { 
-		location_code.push($(this).attr("name"));
-	 });
-   $('.loc-detail:checked').each(function() { 
-	   location_name.push($(this).siblings("label").text());
-     });
-	for(var i = 0 ; i<location_name.length ; i++){
-		if(i==location_name.length-1){
-			text+=location_name[i];
-		}else{			
-			text+=location_name[i]+",";
-		}
-	}
-	for(var i = 0 ; i<location_code.length ; i++){
-		locationCode += location_code[i]+",";
-	}
-
-
-	 $(".hiddenLocationCode").val(locationCode);
-	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
-	 $(".placeholder").hide();
-
-
-});
-$(".open").hover(function(){
-   $(this).css("border","2px solid #ffb6c1");
-	},function(){
-   		$(this).css("border","2px solid #d6d6d6");
-	}
-);
-/* $(function(){
-	var i = 1;
-	$(".sejong").children("li").each(function(){
-		var code = $(this).children("#118000_"+i).attr("name");
-		var name = $(this).children("label").text();
-		i = i+1;
- 		$.ajax({
-			url:"${pageContext.request.contextPath}/index/locaton.ithrer?code="+code+"&name="+ qname,
-			success:function(data){
-				console.log(data);
-			}
-		}); 
-	});	
-}); */
-$(".loc-detail").on("click",function(){
-	console.log($(".loc-detail:checked").attr("name"));
-	var location_name =  new Array();
-	var location_code =  new Array();
-	var text = "";
-	var locationCode = "";
-	if(!$(this).hasClass("all")){
-		$(this).parent("li").siblings("li").find(".all").prop("checked",false);
-	}
-	else if($(this).hasClass("all")){
-		console.log("체크 트루");
-		$(this).parent("li").siblings("li").find(".loc-detail").prop("checked",false);
-		$(this).prop("checked");
-	}
-	
-	$('.loc-detail:checked').each(function() { 
-		location_name.push($(this).siblings("label").text());
-	 });
-	$('.loc-detail:checked').each(function() { 
-		location_code.push($(this).attr("name"));
-	 });
-	for(var i = 0 ; i<location_name.length ; i++){
-		if(location_name.length>5){
-			alert("지역은 5개 까지만 선택 가능합니다.");
-			$(this).prop("checked",false);
-			return;
-		}
-		if(i==location_name.length-1){
-			text+=location_name[i];
-		}
-		else{
-			text+=location_name[i]+",";
-		}
-	}
-	for(var i = 0 ; i<location_code.length ; i++){
-		locationCode += location_code[i]+",";
-	}
-
-
-	 $(".hiddenLocationCode").val(locationCode);
- 	 $(".locationKeyWordSelected").text((location_name.length)+" "+text);
-	 $(".placeholder").hide();
-	
-});	 
-$(".reset").on("click",function(){
-	console.log("왓지?");
-	var location_name =  new Array();
-	var text="";
-	$(this).parents().siblings("li").find(".loc-detail").prop("checked",false);
-
-  	$('.loc-detail:checked').each(function() { 
-	   location_name.push($(this).siblings("label").text());
-    });
-	for(var i = 0 ; i<location_name.length ; i++){
-		if(i==location_name.length-1){
-				text+=location_name[i];
-		}else{			
-			text+=location_name[i]+",";
-		}
-	}
-	$(".locationKeyWordSelected").text((location_name.length)+" "+text);
-});
-
+//스크랩한 공고
 $(".star").on("click",function(){
-	var recNo = $(this).siblings("#hiddenRecruitNo").val();
-	var compId = $(this).siblings("#hiddenCompId").val();
-	var img = $(this).children("img");
+	var recNo = $(this).siblings(".hiddenRecruitNo").val();
+	var compId = $(this).siblings(".hiddenCompId").val();
 	 if(${empty member}){
 		alert("로그인 후 이용 해 주세용");
 		return;
@@ -1642,14 +1363,37 @@ $(".star").on("click",function(){
 				url:"${pageContext.request.contextPath}/index/favorites.ithrer?memberId=${member.memberId}&recruitment_no="+recNo+"&compId="+compId,
 				success:function(data){
 					if(data == 1){
-						img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+						if(recNo == $("[value="+recNo+"]").val()){
+							$("[value="+recNo+"]").siblings(".star").children("img").attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg");
+							/* img.attr("src","${pageContext.request.contextPath}/resources/images/yelloStar.svg"); */
+						}
 					}
 					else {
-						img.attr("src","${pageContext.request.contextPath}/resources/images/star.svg");
+						if(recNo == $("[value="+recNo+"]").val()){
+							console.log("여긴?");
+							$("[value="+recNo+"]").siblings(".star").children("img").attr("src","${pageContext.request.contextPath}/resources/images/star.svg");				
+						}
 					}
 				}
 		});		 
 	 }
+});
+$(".applyButton").on("click",function(e){
+	var recNo = $(this).parent().siblings("#hiddenRecruitNo").val();
+	var hiddenApplyCount = $(this).parent().siblings("#hiddenApplyCount").val();
+	e.stopPropagation();
+	 if(${empty member}){
+			alert("로그인 후 이용 해 주세용");
+			return;
+	 } if(hiddenApplyCount==1){
+		 alert("해당회사에 지원한 이력이 존재합니다.");
+		 return;
+	 }
+/* 	 if("${count}"==1){
+		 alert("해당회사에 지원한 이력이 존재합니다.");
+		 return;
+	 } */
+	 window.open("${pageContext.request.contextPath}/notice/companyApply.ithrer?recruitmentNo="+recNo,"apply","width=570, height=600, resizable = no, scrollbars = no");
 });
 </script>
 

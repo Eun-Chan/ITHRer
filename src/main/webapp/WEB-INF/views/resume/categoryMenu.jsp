@@ -15,11 +15,10 @@
 <style>
 #category-container{
 	border: 1px solid gray;
-	max-width: 180px;
+	max-width: 165px;
 	background-color: #b89dff;
 	color: white;
 	margin-top: 200px;
-	margin-left:75px;
 	cursor: pointer;
 	display: block;
 	float: left;
@@ -38,123 +37,159 @@
 	margin-top : 5px;
 }
 #category-container li:first-child{
-	margin-left : 27px;
+	margin-left : 22px;
 	margin-bottom : 5px;
+}
+a[name=hovercheck] span:hover{
+	color : darkgreen;
 }
 </style>
 <div id="category-container">
 	<ul class="nav flex-column">
 		<li class="nav-item"><span>이력서 항목</span></li>
-		<li class="nav-item"><a onclick="addEducation();"><span>학력</span></a></li>
-		<li class="nav-item"><a onclick="addCareer();"><span>경력</span></a></li>
-		<li class="nav-item"><a onclick="addIntern();"><span>인턴,대외활동</span></a></li>
-		<li class="nav-item"><a onclick="addLearn();"><span>교육이수</span></a></li>
-		<li class="nav-item"><a onclick="addCertificate();"><span>자격증</span></a></li>
-		<li class="nav-item"><a onclick="addAward();"><span>수상</span></a></li>
-		<li class="nav-item"><a onclick="addOverseas();"><span>해외경험</span></a></li>
-		<li class="nav-item"><a onclick="addLanguage();"><span>어학</span></a></li>
-		<li class="nav-item"><a onclick="addPotfolio();"><span>포트폴리오</span></a></li>
-		<li class="nav-item"><a onclick="addPreference();"><span>취업우대</span></a></li>
-		<li class="nav-item"><a onclick="addLetter();"><span>자기소개서</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addEducation();"><span>학력</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addCareer();"><span>경력</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addIntern();"><span>인턴,대외활동</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addLearn();"><span>교육이수</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addCertificate();"><span>자격증</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addAward();"><span>수상</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addOverseas();"><span>해외경험</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addLanguage();"><span>어학</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addPotfolio();"><span>포트폴리오</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addPreference();"><span>취업우대</span></a></li>
+		<li class="nav-item"><a name="hovercheck" onclick="addLetter();"><span>자기소개서</span></a></li>
 	</ul>
 </div>
 <script>
-var count = 0;
+var educount = 0;
+var carerrcount = 0;
+var interncount = 0;
+var learncount = 0;
+var certificatecount = 0;
+var awardcount = 0;
+var overseascount = 0;
+var languagecount = 0;
+var potfoliocount = 0;
+var preferencecount = 0;
+var lettercount = 0;
 function addEducation() {
-	count++;
-	if(count%2==0) {
+	educount++;
+	if(educount%2==0) {
 		$("#educationTotal").show();	
 	}
 	else {
-		$("#educationTotal").hide();		
+		$("#educationTotal").hide();	
+		$("#educationTotal input").val('');	
+		$("#educationTotal select").val('');	
+		$("#educationTotal textarea").val('');	
 	}
-	console.log(count);
 }
 function addCareer() {
-	count++;
-	if(count%2==0) {
+	carerrcount++;
+	if(carerrcount%2==0) {
 		$("#careerTotal").hide();
+		$("#careerTotal input").val('');	
+		$("#careerTotal textarea").val('');	
 	}
 	else {
 		$("#careerTotal").show();		
 	}
 }
 function addIntern() {
-	count++;
-	if(count%2==0) {
-		$("#internTotal").hide();		
+	interncount++;
+	if(interncount%2==0) {
+		$("#internTotal").hide();
+		$("#internTotal input").val('');	
+		$("#internTotal select").val('');	
+		$("#internTotal textarea").val('');	
+		
 	}
 	else {
 		$("#internTotal").show();		
 	}
 }
 function addLearn() {
-	count++;
-	if(count%2==0) {
-		$("#learnTotal").hide();		
+	learncount++;
+	if(learncount%2==0) {
+		$("#learnTotal").hide();
+		$("#learnTotal input").val('');	
+		$("#learnTotal textarea").val('');
 	}
 	else {
 		$("#learnTotal").show();	
 	}
 }
 function addCertificate() {
-	count++;
-	if(count%2==0) {
+	certificatecount++;
+	if(certificatecount%2==0) {
 		$("#certificateTotal").hide();	
+		$("#certificateTotal input").val('');		
 	}
 	else {
 		$("#certificateTotal").show();
 	}
 }
 function addAward() {
-	count++;
-	if(count%2==0) {
-		$("#awardTotal").hide();	
+	awardcount++;
+	if(awardcount%2==0) {
+		$("#awardTotal").hide();
+		$("#awardTotal input").val('');	
+		$("#awardTotal textarea").val('');	
 	}
 	else {
 		$("#awardTotal").show();
 	}
 }
 function addOverseas() {
-	count++;
-	if(count%2==0) {
+	overseascount++;
+	if(overseascount%2==0) {
 		$("#overseasTotal").hide();
+		$("#overseasTotal input").val('');	
+		$("#overseasTotal textarea").val('');	
 	}
 	else {
 		$("#overseasTotal").show();
 	}
 }
 function addLanguage() {
-	count++;
-	if(count%2==0) {
+	languagecount++;
+	if(languagecount%2==0) {
 		$("#languageTotal").hide();
+		$("#languageTotal input").val('');	
+		$("#languageTotal select").val('');	
 	}
 	else {
 		$("#languageTotal").show();
 	}
 }
 function addPotfolio() {
-	count++;
-	if(count%2==0) {
+	potfoliocount++;
+	if(potfoliocount%2==0) {
 		$("#potfolioTotal").hide();
+		$("#potfolioTotal input").val('');	
 	}
 	else {
 		$("#potfolioTotal").show();
 	}
 }
 function addPreference() {
-	count++;
-	if(count%2==0) {
+	preferencecount++;
+	if(preferencecount%2==0) {
 		$("#preferenceTotal").hide();
+		$("#preferenceTotal input").val('');	
+		$("#preferenceTotal input").prop("checked",false);
+		$("#preferenceTotal select").val('');	
 	}
 	else {
 		$("#preferenceTotal").show();
 	}
 }
 function addLetter() {
-	count++;
-	if(count%2==0) {
+	lettercount++;
+	if(lettercount%2==0) {
 		$("#letterTotal").hide();
+		$("#letterTotal input").val('');	
+		$("#letterTotal textarea").val('');	
 	}
 	else {
 		$("#letterTotal").show();
