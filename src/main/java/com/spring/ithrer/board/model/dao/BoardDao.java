@@ -44,4 +44,6 @@ public interface BoardDao {
 
 	void updatePassViewCount(int passBoardNo);
 
+	int autoDelete();
+
 }

@@ -155,5 +155,10 @@ public class BoardDaoImpl implements BoardDao{
     public void updatePassViewCount(int passBoardNo){
       sqlSession.update("passboard.passBoardReadCount", passBoardNo);
     }
+
+	@Override
+	public int autoDelete() {
+		return sqlSession.delete("anonyboard.autoDelete");
+	}
 	
 }

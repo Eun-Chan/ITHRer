@@ -92,6 +92,11 @@ public class BoardServiceImpl implements BoardService{
 		return BoardDao.passBoardDelete(passBoardNo);
 	}
 
+	@Override
+	public int autoDelete() {
+		return BoardDao.autoDelete();
+	}
+
 	
 	
 }

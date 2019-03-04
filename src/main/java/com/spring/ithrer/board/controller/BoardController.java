@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -275,8 +276,17 @@ public class BoardController {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
 	
+	/*
+     * 5초 마다 실행
+     */
+//    @Scheduled(cron="0 0/30 * * * *")
+//    public void autoDelete() {
+//    	int result = boardService.autoDelete();
+//    	
+//    	logger.debug("삭제된 익명게시판 수 : "+result);
+//    	System.out.println("init()!!!");
+//    }
 }

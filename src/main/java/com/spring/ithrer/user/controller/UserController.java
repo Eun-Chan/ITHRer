@@ -647,4 +647,21 @@ public class UserController {
 		
 		return mav;
 	}
+	
+	/**
+	 * 페이스북 로그인
+	 */
+	@RequestMapping(value="/user/facebookLogin" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> facebookLogin(@RequestParam(name="memberId") String memberId,
+											@RequestParam(name="memberName") String memberName,
+											@RequestParam(name="email") String email){
+		Map<String, String> res = new HashMap<>();
+		
+		logger.debug("memberId = "+memberId);
+		logger.debug("memberName = "+memberName);
+		logger.debug("email = "+email);
+		
+		return res;
+	}
 }

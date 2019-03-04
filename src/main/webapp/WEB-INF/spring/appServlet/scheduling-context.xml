@@ -12,5 +12,5 @@
 <!-- Activates @Scheduled and @Async annotations for scheduling -->
         <task:annotation-driven />    
 <!-- 스케쥴러 클래스 정의  -->
-        <bean id="Scheduler" class="com.spring.ithrer.board.controller.Cron" />
+        <bean id="Scheduler" class="com.spring.ithrer.board.controller.BoardController" />
 </beans>

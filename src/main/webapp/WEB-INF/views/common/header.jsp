@@ -421,6 +421,38 @@
     	}
   	}
  	
+ 	function testAPI() {
+        FB.api('/me?fields=id,name,email,gender',  function(response) {            
+       
+            var memberId = response.id;
+            var memberName = response.name;
+            var email = response.email;
+
+			console.log(memberId);
+			console.log(memberName);
+			console.log(email);
+			
+       $.ajax({
+             url: "${pageContext.request.contextPath}/user/facebookLogin.ithrer",
+             method:"post",
+             data: {memberId : memberId, memberName : memberName, email : email },
+             success: function(data){
+             if(data.fbisUsable == false){
+              alert("FaceBook 기존 회원 로그인성공");
+                 window.location.href = "/spring";
+             }else{
+                  alert("FaceBook 신규 회원 로그인성공");
+                   window.location.href = "/spring";
+             }
+             
+             },
+             error:function(){
+                 console.log("ajax요청 실패 에러!");
+             }
+          });
+
+     });
+ 	}
  	
 </script>
 	
