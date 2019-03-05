@@ -155,5 +155,11 @@ public class BoardDaoImpl implements BoardDao{
     public void updatePassViewCount(int passBoardNo){
       sqlSession.update("passboard.passBoardReadCount", passBoardNo);
     }
+
+	@Override
+	public int passBoardUpdate(PassBoard passBoard) {
+		return sqlSession.update("passboard.passBoardUpdate", passBoard);
+	}
+	
 	
 }
