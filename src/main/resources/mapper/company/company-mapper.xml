@@ -148,4 +148,54 @@
 		update recruitment set end='Y' where recruitment_no=#{recruitmentNo}
 	</update>
 	
+	<!-- 기업 로고 s3 주소로 등록 -->
+	<update id="updateCompanyLogo" parameterType="map">
+		update company set logo_s3=#{path} where comp_id=#{compId}
+	</update>
+	
+	<!-- 채용공고에 지원한 지원자 리스트 가져오기 -->
+	<select id="selectAppList" resultMap="ApplicantList" parameterType="_int">
+		select 
+			(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
+			(select count(*) from favorites where comp_id=ca.comp_Id and member_id=ca.member_id and select_no=1) count,
+            m.member_id,
+			m.member_name,
+			m.gender,
+			ca.cu_resdate,
+            ca.recruitment_no,
+            ca.comp_id,
+			e.schoolname,
+			e.score,
+			e.totalscore,
+			c.corpname,
+			h.wantpay
+		from
+			member m
+				left join education e on m.member_id=e.member_id
+				left join career c on m.member_id=c.member_id
+				left join hopework h on m.member_id=h.member_id
+                left join companyapplication ca on m.member_id=ca.member_id
+		where ca.recruitment_no=#{recruitmentNo}
+	</select>
+	<resultMap type="member" id="ApplicantList">
+		<id column="member_id" property="memberId"/>
+		<result column="member_name" property="memberName"/>
+      	<result column="age" property="age"/>
+      	<result column="gender" property="gender"/>
+ 		<association javaType="ca" property="ca">
+			<result column="cu_resdate" property="cuResdate"/>
+		</association>
+ 		<association javaType="education" property="education">
+			<result column="schoolname" property="schoolname"/>
+			<result column="score" property="score"/>
+			<result column="totalscore" property="totalscore"/>
+		</association>
+ 		<association javaType="career" property="career">
+			<result column="corpname" property="corpname"/>
+		</association>
+ 		<association javaType="hopework" property="hopework">
+			<result column="wantpay" property="wantpay"/>
+		</association>
+	</resultMap>
+	
 </mapper>

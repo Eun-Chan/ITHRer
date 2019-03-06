@@ -1,61 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="resume">
-	<select id="certificateList" resultMap="certificateMap">
-		select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
-	</select>
-	<resultMap type="map" id="certificateMap"></resultMap>
-	<insert id="insertAward" parameterType="hashmap">
-		insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
-			(#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})		
-	</insert>
-	<insert id="insertCareer" parameterType="hashmap">
-		insert into career(corpName,department,hiredDate,retiredDate,buttonWorking,jobposition,job,income,description,member_id)
-		values(#{career.corpName},#{career.department},#{career.hiredDate},#{career.retiredDate},#{career.buttonWorking,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
-		,#{career.jobposition},#{career.job},#{career.income},#{career.description},#{memberIdHide})
-	</insert>
-	<insert id="insertCertificate" parameterType="hashmap">
-		insert into certification(certName,certPublisher,certDate,member_id) 
-		values(#{certificate.certName},#{certificate.certPublisher},#{certificate.certDate},#{memberIdHide})
-	</insert>
-	<insert id="insertHopework" parameterType="hashmap">
-		insert into hopework(jobType,wantPay,visitDetermine,hopePlace,hopeDuty,member_id)
-		values(#{hopework.jobType},#{hopework.wantPay},#{hopework.visitDetermine,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
-		,#{hopework.hopePlace},#{hopework.hopeDuty},#{memberIdHide})
-	</insert>
-	<insert id="insertIntern" parameterType="hashmap">
-		insert into intern(internDivision,socialInst,internstartDate,internendDate,internTextarea,member_id)
-		values(#{intern.internDivision},#{intern.socialInst},#{intern.internstartDate},#{intern.internendDate},#{intern.internTextarea},#{memberIdHide})
-	</insert>
-	<insert id="insertLanguage" parameterType="hashmap">
-		insert into language(languageDivision,languageName,selfText,speakingDivision,examName,selfExam,examscore,examDate,member_id)
-		values(#{language.languageDivision},#{language.languageName},#{language.selfText},#{language.speakingDivision},
-		#{language.examName},#{language.selfExam},#{language.examscore},#{language.examDate},#{memberIdHide})
-	</insert>
-	<insert id="insertLearn" parameterType="hashmap">
-		insert into learn(learnTitle,learnAgency,learnstartDate,learnendDate,learnTextarea,member_id)
-		values(#{learn.learnTitle},#{learn.learnAgency},#{learn.learnstartDate},#{learn.learnendDate},#{learn.learnTextarea},#{memberIdHide})
-	</insert>
-	<insert id="insertOverseas" parameterType="hashmap">
-		insert into overseas(country,overseasstartDate,overseasendDate,overseasTextarea,member_id)
-		values(#{overseas.country},#{overseas.overseasstartDate},#{overseas.overseasendDate},#{overseas.overseasTextarea},#{memberIdHide})
-	</insert>
-	<insert id="insertPreference" parameterType="hashmap">
-		insert into preference(preferCheck,disoderselect,militaryselect,member_id)
-		values(#{preference.preferCheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{preference.disoderselect},#{preference.militaryselect},#{memberIdHide})
-	</insert>
-	<insert id="insertProfile" parameterType="hashmap">
-		insert into profile(userResumeTitle,name,birth,gender,email,phone,address,member_id)
-		values(#{profile.userResumeTitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{memberIdHide})
-	</insert>
-	<insert id="insertEducation" parameterType="hashmap">
-		insert into education(nonhigh,graduaction,schoolName,highgraduationDate,highgraduationState,admissionDate,graduationDate,graducationstate,transfer,major,score,totalscore,degree
-		,otherDepartSel,secmajor,otherDepartText,member_id) values(#{education.nonHigh,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
-		#{education.graduaction},#{education.schoolName},#{education.highgraduationDate},#{education.highgraduationState},#{education.admissionDate},#{education.graduationDate},
-		#{education.graducationstate},#{education.transfer,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{education.major},#{education.score},#{education.totalscore},
-		#{education.degree},#{education.otherDepartSel},#{education.secmajor},#{education.otherDepartText},#{memberIdHide})
-	</insert>
-	<insert id="insertPortFolio" parameterType="hashmap">
-		insert into PORTFOLIO values(#{pf.url},#{pf.pOriginalFileNameTest},#{pf.pRenamedFileName},#{memberIdHide},seq_pf_no.nextval)
-	</insert>
+   <select id="certificateList" resultMap="certificateMap">
+      select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
+   </select>
+   <resultMap type="map" id="certificateMap"></resultMap>
+   <insert id="insertAward" parameterType="hashmap">
+      insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
+         (#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})      
+   </insert>
+   <insert id="insertCareer" parameterType="hashmap">
+      insert into career(corpName,department,hiredDate,retiredDate,buttonWorking,jobposition,job,income,description,member_id)
+      values(#{career.corpName},#{career.department},#{career.hiredDate},#{career.retiredDate},#{career.buttonWorking,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
+      ,#{career.jobposition},#{career.job},#{career.income},#{career.description},#{memberIdHide})
+   </insert>
+   <insert id="insertCertificate" parameterType="hashmap">
+      insert into certification(certName,certPublisher,certDate,member_id) 
+      values(#{certification.certName},#{certification.certPublisher},#{certification.certDate},#{memberIdHide})
+   </insert>
+   <insert id="insertHopework" parameterType="hashmap">
+      insert into hopework(jobType,wantPay,visitDetermine,hopePlace,hopeDuty,member_id)
+      values(#{hopework.jobType},#{hopework.wantPay},#{hopework.visitDetermine,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
+      ,#{hopework.hopePlace},#{hopework.hopeDuty},#{memberIdHide})
+   </insert>
+   <insert id="insertIntern" parameterType="hashmap">
+      insert into intern(internDivision,socialInst,internstartDate,internendDate,internTextarea,member_id)
+      values(#{intern.internDivision},#{intern.socialInst},#{intern.internstartDate},#{intern.internendDate},#{intern.internTextarea},#{memberIdHide})
+   </insert>
+   <insert id="insertLanguage" parameterType="hashmap">
+      insert into language(languageDivision,languageName,selfText,speakingDivision,examName,selfExam,examscore,examDate,member_id)
+      values(#{language.languageDivision},#{language.languageName},#{language.selfText},#{language.speakingDivision},
+      #{language.examName},#{language.selfExam},#{language.examscore},#{language.examDate},#{memberIdHide})
+   </insert>
+   <insert id="insertLearn" parameterType="hashmap">
+      insert into learn(learnTitle,learnAgency,learnstartDate,learnendDate,learnTextarea,member_id)
+      values(#{learn.learnTitle},#{learn.learnAgency},#{learn.learnstartDate},#{learn.learnendDate},#{learn.learnTextarea},#{memberIdHide})
+   </insert>
+   <insert id="insertOverseas" parameterType="hashmap">
+      insert into overseas(country,overseasstartDate,overseasendDate,overseasTextarea,member_id)
+      values(#{overseas.country},#{overseas.overseasstartDate},#{overseas.overseasendDate},#{overseas.overseasTextarea},#{memberIdHide})
+   </insert>
+   <insert id="insertPreference" parameterType="hashmap">
+      insert into preference(preferCheck,disoderselect,militaryselect,member_id)
+      values(#{preference.preferCheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{preference.disoderselect},#{preference.militaryselect},#{memberIdHide})
+   </insert>
+   <insert id="insertProfile" parameterType="hashmap">
+      insert into profile(user_resume_title,name,birth,gender,email,phone,address,member_id)
+      values(#{profile.userResumeTitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{memberIdHide})
+   </insert>
+   <insert id="insertEducation" parameterType="hashmap">
+      insert into education(nonhigh,graduaction,schoolName,highgraduationDate,highgraduationState,admissionDate,graduationDate,graducationstate,transfer,major,score,totalscore,degree
+      ,otherDepartSel,secmajor,otherDepartText,member_id) values(#{education.nonHigh,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+      #{education.graduaction},#{education.schoolName},#{education.highgraduationDate},#{education.highgraduationState},#{education.admissionDate},#{education.graduationDate},
+      #{education.graducationstate},#{education.transfer,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{education.major},#{education.score},#{education.totalscore},
+      #{education.degree},#{education.otherDepartSel},#{education.secmajor},#{education.otherDepartText},#{memberIdHide})
+   </insert>
+   <insert id="insertPortFolio" parameterType="hashmap">
+      insert into PORTFOLIO values(#{pf.url},#{pf.pOriginalFileNameTest},#{pf.pRenamedFileName},#{memberIdHide},seq_pf_no.nextval)
+   </insert>
+   <select id="awardView" resultType="award">
+      select * from award where member_id = #{memberId}
+   </select>
+   <select id="careerView" resultType="career">
+      select * from career where member_id = #{memberId}
+   </select>
+   <select id="certificateView" resultType="certification">
+      select * from certification where member_id = #{memberId}
+   </select>
+   <select id="hopeworkView" resultType="hopework">
+      select * from hopework where member_id = #{memberId}
+   </select>
+   <select id="internView" resultType="intern">
+      select * from intern where member_id = #{memberId}
+   </select>
+   <select id="languageView" resultType="language">
+      select * from language where member_id = #{memberId}
+   </select>
+   <select id="learnView" resultType="learn">
+      select * from learn where member_id = #{memberId}
+   </select>
+   <select id="overseasView" resultType="overseas">
+      select * from overseas where member_id = #{memberId}
+   </select>
+   <select id="portFolioView" resultType="portfolio">
+      select * from portfolio where member_id = #{memberId}
+   </select>
+   <select id="preferenceView" resultType="preference">
+      select * from preference where member_id = #{memberId}
+   </select>
+   <select id="profileView" resultType="profile">
+      select * from profile where member_id = #{memberId}
+   </select>
+   <select id="educationView" resultType="education">
+      select * from education where member_id = #{memberId}
+   </select>
 </mapper>
