@@ -138,7 +138,7 @@
 					  <div class="dropdown-menu">
 					    <a class="dropdown-item" href="#">이력서 관리</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
-					    <a class="dropdown-item" href="#">회원정보 수정</a>
+					    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
 					  </div>
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>

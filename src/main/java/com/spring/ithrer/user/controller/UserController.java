@@ -819,5 +819,13 @@ public class UserController {
 		return mav;
 		}
 	
-	
+	//회원정보 수정 페이지 이동
+	@RequestMapping("/user/modifyMemberInfo.ithrer")
+	public ModelAndView modifyMemberInfo(ModelAndView mav, HttpServletRequest request) {
+		Member m = (Member) request.getSession().getAttribute("member");
+		
+		mav.addObject("memberInfo",m);
+		mav.setViewName("user/modifyMemberInfo");
+		return mav;
+	}
 }
