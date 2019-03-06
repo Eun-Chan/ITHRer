@@ -40,6 +40,18 @@ import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.resume.model.service.ResumeService;
+import com.spring.ithrer.resume.model.vo.Award;
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Certification;
+import com.spring.ithrer.resume.model.vo.Education;
+import com.spring.ithrer.resume.model.vo.Hopework;
+import com.spring.ithrer.resume.model.vo.Intern;
+import com.spring.ithrer.resume.model.vo.Language;
+import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Overseas;
+import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
@@ -271,8 +283,35 @@ public class CompanyController {
 
 		Member member = companyService.selectApplicant(map); 
 		
+		// 이력서 가져오기
+		Education education = resumeService.educationView(memberId);
+		logger.debug("에듀케이션 | "+education);
+		Profile profile = resumeService.profileView(memberId);
+	    Award award = resumeService.awardView(memberId);
+	    Career career = resumeService.careerView(memberId);
+	    Certification certificate = resumeService.certificateView(memberId);
+	    Hopework hopework = resumeService.hopeworkView(memberId);
+	    Intern intern = resumeService.internView(memberId);
+	    Language language = resumeService.languageView(memberId);
+	    Learn learn = resumeService.learnView(memberId);
+	    Overseas overseas = resumeService.overseasView(memberId);
+	    PortFolio portFolio = resumeService.portFolioView(memberId);
+	    Preference preference = resumeService.preferenceView(memberId);
+	    
+	    mav.addObject("profile",profile);
+	    mav.addObject("award",award);
+	    mav.addObject("career",career);
+	    mav.addObject("certificate",certificate);
+	    mav.addObject("hopework",hopework);
+	    mav.addObject("intern",intern);
+	    mav.addObject("language",language);
+	    mav.addObject("learn",learn);
+	    mav.addObject("overseas",overseas);
+	    mav.addObject("portFolio",portFolio);
+	    mav.addObject("preference",preference);
+	    mav.addObject("education",education);
 		
-		mav.addObject("member",member);
+		mav.addObject("member2",member);
 		mav.setViewName("company/viewApplicant");
 		
 		return mav;
@@ -522,9 +561,25 @@ public class CompanyController {
 		logger.debug("지원자 리스트 | "+applicantList);
 		
 		for(int i=0; i<applicantList.size(); i++) {
-			String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
-			logger.debug("지원자 리스트 | "+schoolName[schoolName.length+1]);
+			if(applicantList.get(i).getEducation() != null) {
+				// 최종 학교이름 추출
+				String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
+				applicantList.get(i).getEducation().setSchoolname(schoolName[schoolName.length-1]);
+				
+				// 최종 학점 추출
+				String[] score = applicantList.get(i).getEducation().getScore().split(",");
+				applicantList.get(i).getEducation().setScore(score[score.length-1]);
+				
+				// 최종 학점 만점 추출
+				String[] totalScore = applicantList.get(i).getEducation().getTotalscore().split(",");
+				applicantList.get(i).getEducation().setTotalscore(totalScore[totalScore.length-1]);
+			}
+			
+			if(applicantList.get(i).getCareer() != null) {
+				
+			}
 		}
+		
 		
 		// 해당 채용공고 가져오기
 		Recruitment recruitment = companyService.selectRecruitmentOne(recruitmentNo);
