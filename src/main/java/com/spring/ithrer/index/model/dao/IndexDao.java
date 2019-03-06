@@ -64,4 +64,5 @@ public interface IndexDao {
    Profile selectOneProfile(String memberId);
 
 
+
 }

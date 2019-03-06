@@ -19,7 +19,7 @@ import com.spring.ithrer.user.model.vo.Member;
 
 @Repository
 public class IndexDaoImpl implements IndexDao{
-   
+ 
    @Autowired
    SqlSessionTemplate sqlSession;
 
@@ -66,11 +66,6 @@ public class IndexDaoImpl implements IndexDao{
       return sqlSession.delete("index.deleteFavorites", map);
    }
 
-//   @Override
-//   public List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map) {
-//      
-//      return sqlSession.selectList("index.selectListSearchIthrer", map);
-//   }
    @Override
    public int insertPortFolio(Map<String, Object> map) {
       return sqlSession.insert("index.insertPortFolio", map);
@@ -158,3 +153,4 @@ public class IndexDaoImpl implements IndexDao{
    }
 
 }
+

@@ -12,7 +12,7 @@ footer{
 .footer{
 	background: #eaeaea;
 	position: relative;
-	
+	margin: 0;
 }
 </style>    
 </section>

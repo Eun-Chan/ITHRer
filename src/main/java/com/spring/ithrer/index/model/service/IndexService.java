@@ -31,9 +31,10 @@ public interface IndexService {
 
    int deleteFavorites(Map<String, Object> map);
 
-   List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage, int ithrerCPage);
-   
-   int insertPortFolio(Map<String, Object> map);
+	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage, int ithrerCPage);
+	
+	int insertPortFolio(Map<String, Object> map);
+
 
    int updateMember(Map<String, Object> param);
 
@@ -63,8 +64,5 @@ public interface IndexService {
    List<Map<String, String>> selectListCharged();
 
    Profile selectOneProfile(String memberId);
-
-
-
 
 }
