@@ -13,7 +13,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Certificate implements Serializable {
+public class Certification implements Serializable {
 	/**
 	 * 
 	 */

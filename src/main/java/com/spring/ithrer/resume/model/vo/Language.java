@@ -18,13 +18,13 @@ public class Language implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String languageDivision;
-	private String languageName;
-	private String selfText;
-	private String speakingDivision;
-	private String examName;
-	private String selfExam;
+	private String languagedivision;
+	private String languagename;
+	private String selftext;
+	private String speakingdivision;
+	private String examname;
+	private String selfexam;
 	private String examscore;
-	private String examDate;
+	private String examdate;
 
 }

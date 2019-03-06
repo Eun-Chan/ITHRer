@@ -19,18 +19,18 @@ public class Education implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private String[] nonHigh;
 	private String graduaction;
-	private String schoolName;
-	private String highgraduationDate;
-	private String highgraduationState;
-	private String admissionDate;
-	private String graduationDate;
+	private String schoolname;
+	private String highgraduationdate;
+	private String highgraduationstate;
+	private String admissiondate;
+	private String graduationdate;
 	private String graducationstate;
 	private String[] transfer;
 	private String major;
 	private String score;
-	private double totalscore;
+	private String totalscore;
 	private String degree;
-	private String otherDepartSel;
+	private String otherdepartSel;
 	private String secmajor;
-	private String otherDepartText;	
+	private String otherdepartText;	
 }
