@@ -43,7 +43,8 @@ public class Recruitment implements Serializable {
 	private String applicationForm; //접수양식
 	private String recruitmentStage; //전형단계
 	private String docMethod; //제출서류 및 전형방법
-	private String location; //근무지역
+	private String location; //근무지역(명)
+	private String locationCode; //근무지역(코드)
 	private String payCondition; //급여조건
 	private String nearbyStation; //인근전철역
 	private String welfare; //복리후생
@@ -57,6 +58,8 @@ public class Recruitment implements Serializable {
 	private int applicantAgeStart; //나이 시작
 	private int applicantAgeEnd; //나이 끝
 	private String genderCut; //성별제한
+	private String salaryType; //급여구분(구분)
+	private String workDay; //근무시간
 
 	//서브쿼리용 copmName
 	private String compName;
