@@ -3,6 +3,8 @@ package com.spring.ithrer.board.model.dao;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.spring.ithrer.board.model.vo.AnonyBoard;
 import com.spring.ithrer.board.model.vo.PassBoard;
 
@@ -44,4 +46,8 @@ public interface BoardDao {
 
 	void updatePassViewCount(int passBoardNo);
 
+	
+	int passBoardUpdate(PassBoard passBoard);
+
+	
 }

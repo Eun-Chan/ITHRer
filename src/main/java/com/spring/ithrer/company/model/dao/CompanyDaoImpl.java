@@ -10,10 +10,15 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
+
+import com.spring.ithrer.company.model.vo.Position;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
 import com.spring.ithrer.user.model.vo.Member;
 
@@ -121,6 +126,46 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
+	public List<Job> selectJobList() {
+		return sqlSession.selectList("company.selectJobList");
+	}
+
+	@Override
+	public List<Position> selectPositionList() {
+		return sqlSession.selectList("company.selectPositionList");
+	}
+
+	@Override
+	public List<Job> selectJobList2() {
+		return sqlSession.selectList("company.selectJobList2");
+	}
+
+	@Override
+	public List<Computerabllity> selectComputerAbllity() {
+		return sqlSession.selectList("company.selectComputerAbllityList");
+	}
+
+	@Override
+	public List<Computerabllity> selectComputerAbllity2() {
+		return sqlSession.selectList("company.selectComputerAbllityList2");
+	}
+
+	@Override
+	public int insertRecruitment(Recruitment rect) {
+		return sqlSession.insert("company.insertRecruitment", rect);
+	}
+
+	@Override
+	public List<SubwayStation> selectSubwayStation() {
+		return sqlSession.selectList("company.selectSubwayStation");
+	}
+
+	@Override
+	public List<SubwayStation> selectSubwayStationAll() {
+		return sqlSession.selectList("company.selectSubwayStationAll");
+	}
+
+
 	public List<Recruitment> selectRcrtList(String compId) {
 		return sqlSession.selectList("company.selectRcrtList",compId);
 	}
