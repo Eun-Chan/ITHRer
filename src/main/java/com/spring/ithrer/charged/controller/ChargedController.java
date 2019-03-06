@@ -59,6 +59,7 @@ public class ChargedController {
 		logger.info("originalName: " + upFiles.getOriginalFilename());
 		//uploadpath 예시 : "images/banner"
 		String uploadpath = directory;
+		
 
 		ResponseEntity<String> img_path = null;
 		try {
