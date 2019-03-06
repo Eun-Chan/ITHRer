@@ -70,7 +70,7 @@ public interface CompanyService {
 
 	List<Recruitment> selectRcrtList(String compId);
 
-	List<Member> selectAppList(Map<String, Object> paramMap);
+	List<Member> selectAppList(int recruitmentNo);
 
 	Recruitment selectRecruitmentOne(int recruitmentNo);
 
@@ -79,5 +79,7 @@ public interface CompanyService {
 	List<Recruitment> selectRcrtEndList(String compId);
 
 	int updateRcrtEnd(int recruitmentNo);
+
+	int updateCompanyLogo(String path, String compId);
 
 }

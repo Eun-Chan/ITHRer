@@ -18,11 +18,11 @@ public class Career implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String corpName;
+	private String corpname;
 	private String department;
-	private String hiredDate;
-	private String retiredDate;
-	private String[] buttonWorking;
+	private String hireddate;
+	private String retireddate;
+	private String[] buttonworking;
 	private String jobposition;
 	private String job;
 	private String income;

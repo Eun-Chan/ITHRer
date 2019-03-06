@@ -44,15 +44,16 @@
 	<!-- 상세조건으로 하는 검색 -->
 	
 	<select id="selectListSearchIthrer" parameterType="map" resultType="map">
-		select * from recruitment join area using(location_code) join company c using(comp_id) where recruitment_title like '%'||#{searchKeyword}||'%'
+		select * from recruitment join area using(location_code) join company c using(comp_id) 
+			where (recruitment_title like '%'||#{searchKeyword}||'%' or comp_name like '%'||#{searchKeyword}||'%') and closing_date >= sysdate
 		<if test="locationCode != null and locationCode[0] != '' and locationCode[0] != 'null'" >
-			and (location_code in
+			and (
 			<foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
-				#{item}		
+				location_code like '%'||#{item}||'%'	
 			</foreach>
-			or location_total_code in
+			or 
 			<foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
-				#{item}		
+				location_total_code in '%'||#{item}||'%'		
 			</foreach>
 			)
 		</if>
@@ -61,9 +62,9 @@
 			and(pay_condition = '회사내규에따름' or pay_condition > #{salary})
 		</if>
 		
-		<if test="age != 0 and age !='' and age != 'null'">
+		<if test="age != 0 and age !='' and age != null">
 			and applicant_age_start <![CDATA[<=]]> #{age}
-			and applicant_age_end #{age}
+			and applicant_age_end >= #{age}
 		</if>
 		
 		<if test='gender != null and gender !="0" and gender !=""'>
@@ -76,6 +77,10 @@
 		
 		<if test="licence != null and licence != '' and licence != 'null'">
 			and CERTIFICATE LIKE '%'||#{licence}||'%'
+		</if>
+		
+		<if test="language != null and language != '' and language != 'null'">
+			and FORE_LANG LIKE '%'||#{language}||'%'
 		</if>
 		
 		<if test="major != null and major[0] != '' and major[0] != 'null'">		
@@ -95,7 +100,7 @@
 		<if test="preference != null and preference[0] != '' and preference[0] != 'null'">
 			 AND
 			<foreach collection="preference" item="item" open="(" close=")" separator="OR">			
-				EMPLOYMENT_PREFERENCE = #{item}
+				EMPLOYMENT_PREFERENCE like '%'||#{item}||'%'
 			</foreach>
 		</if>
 		
@@ -122,8 +127,8 @@
 		
 	</select>
 	
-	<insert id="insertPortFolio" parameterType="portfolio">
-		insert into PORTFOLIO values(#{url},#{pOriginalFileName},#{pRenamedFileName},'ikso2000',seq_pf_no.nextval)
+	<insert id="insertPortFolio" parameterType="map">
+		insert into PORTFOLIO values(#{pf.url},null,#{pf.pRenamedFileName},#{memberId},seq_pf_no.nextval)
 	</insert>
 	<update id="updateMember" parameterType="map">
 		update member set email = #{email}, phone =#{phone} where member_id=#{memberId}
@@ -194,4 +199,8 @@
 	</select>
 	
 
+	<!-- 프로필 가져오기-->
+	<select id="selectOneProfile" resultType="profile">
+		select * from profile where member_id =#{memberId} 
+	</select>
 </mapper>

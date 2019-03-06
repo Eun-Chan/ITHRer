@@ -200,4 +200,14 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.update("company.updateRcrtEnd",recruitmentNo);
 	}
 
+	@Override
+	public int updateCompanyLogo(Map<String,String> map) {
+		return sqlSession.update("company.updateCompanyLogo",map);
+	}
+
+	@Override
+	public List<Member> selectAppList(int recruitmentNo) {
+		return sqlSession.selectList("company.selectAppList",recruitmentNo);
+	}
+
 }

@@ -22,7 +22,16 @@
 
 <script>
 $(function(){
-	$("[name=upFile]").on('change', function(){
+	$("[name=upFile1]").on('click',function(){
+		if($("input:radio[name=charged]:checked").length == 0){
+			console.log($("input:radio[name=charged]:checked"))
+			alert("상단의 등록할 회사를 먼저 선택하세요!:D");
+			return;
+		}
+	});
+	
+	$("[name=upFile1]").on('change', function(){
+		
 		//var fileName = $(this).val();
 		console.log($(this));
 		var fileName = $(this).prop("files")[0].name;
@@ -62,14 +71,36 @@ $(function(){
 	
 	<form action="" method="post" enctype="multipart/form-data" id="frm-charged">
 		<div id="charged-company">
-		<h4>유료 서비스 기간이 남은 회사</h4>
+		<h4 style="color:navy;">유료 서비스 기간이 남은 회사</h4>
+			<div class="form-check form-check-inline">
+			<table class="table table-hover" style="width:1000px;">
+				<tr>
+					<th scope="col">회사명</th>
+					<th scope="col">시작일</th>
+					<th scope="col">종료일</th>
+					<th scope="col">등록된배너</th>
+				</tr>
 			<c:forEach items="${chargedList}" var="one"  varStatus="index">
-				<div class="form-check form-check-inline">
-				  <input class="form-check-input" type="radio" name="charged" id="${index.count}" value= ${one.CS_NO}>
-				  <label class="form-check-label" for="${index.count}">${one.COMP_NAME}</label> 
-				</div>	<br />	
+					<tr>
+						<td>
+						  <input class="form-check-input" type="radio" name="charged" id="${index.count}" value= ${one.CS_NO}>
+						  <label class="form-check-label" for="${index.count}">${one.COMP_NAME}</label> 						
+						</td>
+						<td>
+							<fmt:formatDate value="${one.CS_START_DATE}" var="formattedDateStart" type="date" pattern="yy-MM-dd" />
+							<span>${formattedDateStart}</span>
+						</td>
+						<td>
+							<fmt:formatDate value="${one.CS_END_DATE}" var="formattedDateEnd" type="date" pattern="yy-MM-dd" />
+							<span>${formattedDateEnd}</span>
+						</td>
+						<td>
+							<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${one.CS_FILE_NAME}&directory=banner" width="200px"/>
+						</td>
+					</tr>	
 			</c:forEach>
-		
+			</table>
+			</div>
 		</div>
 		
 		<br /><br />

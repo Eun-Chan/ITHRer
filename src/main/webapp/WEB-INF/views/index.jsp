@@ -1179,7 +1179,9 @@
           </div>
           <c:forEach items="${bannerList}" var="banner">
 	          <div class="carousel-item">
-	            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	          	<a href="${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord=${banner.COMP_NAME}&location=">
+	            	<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	            </a>
 	            <div class="carousel-caption">
 	            
 	            </div>   
@@ -1379,8 +1381,8 @@ $(".star").on("click",function(){
 	 }
 });
 $(".applyButton").on("click",function(e){
-	var recNo = $(this).parent().siblings("#hiddenRecruitNo").val();
-	var hiddenApplyCount = $(this).parent().siblings("#hiddenApplyCount").val();
+	var recNo = $(this).parent().siblings(".hiddenRecruitNo").val();
+	var hiddenApplyCount = $(this).parent().siblings(".hiddenApplyCount").val();
 	e.stopPropagation();
 	 if(${empty member}){
 			alert("로그인 후 이용 해 주세용");

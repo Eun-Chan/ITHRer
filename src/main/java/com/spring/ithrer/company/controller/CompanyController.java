@@ -39,6 +39,7 @@ import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
+import com.spring.ithrer.resume.model.service.ResumeService;
 import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
@@ -50,6 +51,8 @@ public class CompanyController {
 	
 	@Autowired
 	CompanyService companyService;
+	@Autowired
+	ResumeService resumeService;
 	
 	@GetMapping("/info.ithrer")
 	public ModelAndView info(@RequestParam("compId") String compId, ModelAndView mav) {
@@ -515,11 +518,16 @@ public class CompanyController {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("recruitmentNo", recruitmentNo);
 		paramMap.put("compId", compId);
-		List<Member> applicantList = companyService.selectAppList(paramMap);
+		List<Member> applicantList = companyService.selectAppList(recruitmentNo);
+		logger.debug("지원자 리스트 | "+applicantList);
+		
+		for(int i=0; i<applicantList.size(); i++) {
+			String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
+			logger.debug("지원자 리스트 | "+schoolName[schoolName.length+1]);
+		}
 		
 		// 해당 채용공고 가져오기
 		Recruitment recruitment = companyService.selectRecruitmentOne(recruitmentNo);
-		
 		// 해당 채용공고를 제외한 마감되지 않은 채용공고리스트 가져오기
 		List<Recruitment> rcrtList = companyService.selectRcrtListNotThis(paramMap);
 		

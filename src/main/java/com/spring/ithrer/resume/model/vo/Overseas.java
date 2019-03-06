@@ -19,8 +19,8 @@ public class Overseas implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String country;
-	private String overseasstartDate;
-	private String overseasendDate;
-	private String overseasTextarea;
+	private String overseasstartdate;
+	private String overseasenddate;
+	private String overseastxtarea;
 	
 }
