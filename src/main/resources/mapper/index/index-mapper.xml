@@ -1,6 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="index">
+   
+   <select id="selectOneRecruitment" resultType="recruitment" parameterType="map">
+      select t.*,(select count(*) from favorites where recruitment_no = t.recruitment_no  and member_id = #{memberId}) favoritesCount from recruitment t where recruitment_no = #{recNo}
+   </select>
+   <select id="selectOneCompany" resultType="company" parameterType="string">
+      select * from company where comp_id = #{compId}
+   </select>
+   
+   <select id="selectStatistics" resultMap="Member" parameterType="_int">
+      select m.member_id,m.birth,m.gender,a.comp_id,a.cu_resdate from member m join companyApplication a on m.member_id = a.member_id where a.recruitment_no=#{recruitment_no}
+   </select>
+   <resultMap type="member" id="Member">
+      <id column="member_id" property="memberId"/>
+      <result column="birth" property="birth"/>
+      <result column="gender" property="gender"/>
+       <association javaType="ca" property="ca">
+         <result column="comp_id" property="compId"/>
+         <result column="cu_resdate" property="cuResdate"/>
+      </association>
+   </resultMap>
+   
+   <insert id="insertLocation" parameterType="map">
+      insert into area values(#{code},#{name})
+   </insert>
+   <select id="selectListRecruitment" resultType="recruitment" parameterType="string">
+      select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
+      (select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount ,
+      (select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
+      from recruitment s where end = 'N' order by recruitment_no desc )t where rownum between 1 and 6
+   </select>
+   <select id="selectOneFavorites" parameterType="map" resultType="favorites">
+      select * from favorites where member_id = #{memberId} and recruitment_no = #{recNo} and select_no = 0
+   </select>
+   <insert id="insertFavorites" parameterType="map">
+      insert into favorites values(seq_favorites_no.nextval,#{memberId},#{recNo},#{compId},0)   
+   </insert>
+   <delete id="deleteFavorites" parameterType="map">
+      delete from favorites where member_Id = #{memberId} and recruitment_no = #{recNo}
+   </delete>
+   
+   <!-- 상세조건으로 하는 검색 -->
+   
+   <select id="selectListSearchIthrer" parameterType="map" resultType="map">
+      select * from recruitment join area using(location_code) join company c using(comp_id) where recruitment_title like '%'||#{searchKeyword}||'%'
+      <if test="locationCode != null and locationCode[0] != '' and locationCode[0] != 'null'" >
+         and (location_code in
+         <foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
+            #{item}      
+         </foreach>
+         or location_total_code in
+         <foreach collection="locationCode" item="item" open="(" close=")" separator=","> 
+            #{item}      
+         </foreach>
+         )
+      </if>
+      
+      <if test="salary != null and salary !='' and salary !='null'">
+         and(pay_condition = '회사내규에따름' or pay_condition > #{salary})
+      </if>
+      
+      <if test="age != 0 and age !='' and age != 'null'">
+         and applicant_age_start <![CDATA[<=]]> #{age}
+         and applicant_age_end #{age}
+      </if>
+      
+      <if test='gender != null and gender !="0" and gender !=""'>
+         and gender_cut = #{gender}
+      </if>
+      
+      <if test="subway != null and subway != '' and subway != 'null'">
+         and nearby_station LIKE '%'||#{subway}||'%'
+      </if>
+      
+      <if test="licence != null and licence != '' and licence != 'null'">
+         and CERTIFICATE LIKE '%'||#{licence}||'%'
+      </if>
+      
+      <if test="major != null and major[0] != '' and major[0] != 'null'">      
+         and 
+         <foreach collection="major" item="item" open="(" close=")" separator="or">
+            major like '%'||#{item}||'%'         
+         </foreach>
+      </if>
+      
+      <if test="position != null and position[0] != '' and position[0] != 'null'">
+         and 
+         <foreach collection="position" item="item" open="(" close=")" separator=" or ">
+             position like '%'||#{item}||'%'   
+         </foreach>
+      </if>
+      
+      <if test="preference != null and preference[0] != '' and preference[0] != 'null'">
+          AND
+         <foreach collection="preference" item="item" open="(" close=")" separator="OR">         
+            EMPLOYMENT_PREFERENCE = #{item}
+         </foreach>
+      </if>
+      
+      <if test="emp_type != null and emp_type[0] != '' and emp_type[0] != 'null'">
+         and 
+         <foreach collection="emp_type" item="item" open="(" close=")" separator="or">          
+            EMPLOYMENT_TYPE like '%'||#{item}||'%'
+         </foreach>
+      </if>
+      
+      <if test="work_day != null and work_day[0] != '' and work_day[0] != 'null'">
+         and 
+         <foreach collection="work_day" item="item" open="(" close=")" separator="or">
+            work_day like '%'||#{item}||'%'   
+         </foreach>
+      </if>
+      
+      <if test="welfare != null and welfare[0] != '' and welfare[0] != 'null'">
+         and 
+         <foreach collection="welfare" item="item" open="(" close=")" separator="or">
+            welfare like '%'||#{item}||'%'   
+         </foreach>
+      </if>
+      
+   </select>
+   
+   <insert id="insertPortFolio" parameterType="map">
+      insert into PORTFOLIO values(#{pf.url},null,#{pf.pRenamedFileName},#{memberId},seq_pf_no.nextval)
+   </insert>
+   <update id="updateMember" parameterType="map">
+      update member set email = #{email}, phone =#{phone} where member_id=#{memberId}
+   </update>
+   <insert id="insertCompanyApplication" parameterType="map">
+      insert into companyapplication values(#{memberId},#{recruitmentNo},default,#{compId},seq_companyapplication_no.nextval,default,#{resumeNo})
+   </insert>
+   <select id="selectCountCompanyApplication" parameterType="map" resultType="_int">
+      select count(*) count from companyapplication where recruitment_no=#{recNo} and member_id = #{memberId}
+   </select>
+   <select id="selectTopListRecruitment" parameterType="string" resultType="recruitment">
+      select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
+      (select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount,
+      (select count(*) from companyapplication where recruitment_no = s.recruitment_no ) count ,
+      (select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
+      from recruitment s where end = 'N' order by count desc )t where rownum between 1 and 6
+   </select>
+   
+   <select id="selectListPortFolio" parameterType="string" resultType="portfolio">
+      select * from PORTFOLIO where member_id = #{memberId}
+   </select>
+   <delete id="deletePortFolio" parameterType="_int">
+      delete from portfolio where pf_no = #{pfNo}
+   </delete>
+   <select id="selectListRandomRecruitment" parameterType="string" resultType="recruitment">
+      select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
+      (select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount
+      from recruitment s where end = 'N' order by DBMS_RANDOM.VALUE )t where rownum <![CDATA[<]]> 13
+   </select>
+   
+   <select id="selectCountFavorite" parameterType="string" resultType="_int">
+      select count(*) totalCount from favorites where member_id = #{memberId} and select_no = 0
+   </select>
+   
+   <!-- 스크랩한 공고 리스트 -->
+   <select id="selectListFavorites" parameterType="string" resultType="favorites">
+      select f.*,(select category from company where comp_id = f.comp_id) category,(select closing_date from recruitment where recruitment_no = f.recruitment_no) closingDate,
+      (select recruitment_title from recruitment where recruitment_no = f.recruitment_no) recruitmentTitle
+      from favorites f where member_id = #{memberId} and select_no = 0
+   </select>
+   
+   <!-- 스크랩한 카테고리 기반으로 채용공고 리스트 가져오기 -->
+   <select id="selectListRecommendRecruitmentList" parameterType="map" resultType="recruitment">
+      select t.* from (select r.*,(select comp_name from company where comp_id = r.comp_id)compName,
+      (select count(*) from favorites where member_id = #{memberId} and recruitment_no = r.recruitment_no) favoritesCount ,
+            (select count(*) count from companyapplication where recruitment_no=r.recruitment_no  and member_id = #{memberId}) applyCount 
+      from company c  join recruitment r
+      on c.comp_id = r.comp_id
+      where c.category in
+      <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+      </foreach> 
+      and r.end = 'N' 
+      order by DBMS_RANDOM.VALUE)t where rownum <![CDATA[<]]> 5
+   </select>
+   <!-- 체크박스 클릭한 스크랩 공고 삭제 -->
+   <delete id="deleteFavoritesList" parameterType="map">
+      delete from favorites where member_id = #{memberId} and recruitment_no  
+      in
+      <foreach collection="param" item="item" open="(" close=")" separator=",">
+         #{item}
+      </foreach>
+   </delete>
+=======
 	
 	<select id="selectOneRecruitment" resultType="recruitment" parameterType="map">
 		select t.*,(select count(*) from favorites where recruitment_no = t.recruitment_no  and member_id = #{memberId}) favoritesCount from recruitment t where recruitment_no = #{recNo}
@@ -192,11 +379,16 @@
 			#{item}
 		</foreach>
 	</delete>
+>>>>>>> 15b6ecf58a099b506a8ad1082970fca5500c0083
 
-	<!-- 배너광고 파일이름을 가져오는 쿼리 -->
-	<select id="selectListCharged" resultType="map">
-		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date]]>
-	</select>
-	
+   <!-- 배너광고 파일이름을 가져오는 쿼리 -->
+   <select id="selectListCharged" resultType="map">
+      <![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date]]>
+   </select>
+   
 
+   <!-- 프로필 가져오기-->
+   <select id="selectOneProfile" resultType="profile">
+      select * from profile where member_id =#{memberId} 
+   </select>
 </mapper>
