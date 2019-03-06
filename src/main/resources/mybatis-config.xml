@@ -27,7 +27,7 @@
 		<typeAlias type="com.spring.ithrer.resume.model.vo.PortFolio" alias="portfolio"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Award" alias="award"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Career" alias="career"/>
-		<typeAlias type="com.spring.ithrer.resume.model.vo.Certificate" alias="certificate"/>
+		<typeAlias type="com.spring.ithrer.resume.model.vo.Certification" alias="certification"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Hopework" alias="hopework"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Intern" alias="intern"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Language" alias="language"/>
@@ -36,6 +36,7 @@
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Preference" alias="preference"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Profile" alias="profile"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Education" alias="education"/>
+		<typeAlias type="com.spring.ithrer.resume.model.vo.Letter" alias="letter"/>
 
 	</typeAliases>
 

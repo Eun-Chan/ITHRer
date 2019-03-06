@@ -8,6 +8,17 @@ import org.springframework.stereotype.Service;
 
 import com.spring.ithrer.resume.model.dao.ResumeDao;
 import com.spring.ithrer.resume.model.vo.Award;
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Certification;
+import com.spring.ithrer.resume.model.vo.Education;
+import com.spring.ithrer.resume.model.vo.Hopework;
+import com.spring.ithrer.resume.model.vo.Intern;
+import com.spring.ithrer.resume.model.vo.Language;
+import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Overseas;
+import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
+import com.spring.ithrer.resume.model.vo.Profile;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {
@@ -93,5 +104,84 @@ public class ResumeServiceImpl implements ResumeService {
 		int result = resumeDao.insertPortFolio(portFolioMap);
 		return result;
 	}
+	
+	@Override
+	public Award awardView(String memberId) {
+		Award award = resumeDao.awardView(memberId);
+		return award;
+	}
+
+	@Override
+	public Career careerView(String memberId) {
+		Career career = resumeDao.careerView(memberId);
+		return career;
+	}
+
+	@Override
+	public Certification certificateView(String memberId) {
+		Certification certificate = resumeDao.certificateView(memberId);
+		return certificate;
+	}
+
+	@Override
+	public Hopework hopeworkView(String memberId) {
+		Hopework hopework = resumeDao.hopeworkView(memberId);
+		return hopework;
+	}
+
+	@Override
+	public Intern internView(String memberId) {
+		Intern intern = resumeDao.internView(memberId);
+		return intern;
+	}
+
+	@Override
+	public Language languageView(String memberId) {
+		Language language = resumeDao.languageView(memberId);
+		return language;
+	}
+
+	@Override
+	public Learn learnView(String memberId) {
+		Learn learn = resumeDao.learnView(memberId);
+		return learn;
+	}
+
+	@Override
+	public Overseas overseasView(String memberId) {
+		Overseas overseas = resumeDao.overseasView(memberId);
+		return overseas;
+	}
+
+	@Override
+	public PortFolio portFolioView(String memberId) {
+		PortFolio portFolio = resumeDao.portFolioView(memberId);
+		return portFolio;
+	}
+
+	@Override
+	public Preference preferenceView(String memberId) {
+		Preference preference = resumeDao.preferenceView(memberId);
+		return preference;
+	}
+
+	@Override
+	public Profile profileView(String memberId) {
+		Profile profile = resumeDao.profileView(memberId);
+		return profile;
+	}
+
+	@Override
+	public Education educationView(String memberId) {
+		Education education = resumeDao.educationView(memberId);
+		return education;
+	}
+	
+	@Override
+	public int insertLetter(Map<String, Object> letterMap) {
+		int result = resumeDao.insertLetter(letterMap);
+		return result;
+	}
+
 
 }

@@ -4,6 +4,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.ithrer.resume.model.vo.Award;
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Certification;
+import com.spring.ithrer.resume.model.vo.Education;
+import com.spring.ithrer.resume.model.vo.Hopework;
+import com.spring.ithrer.resume.model.vo.Intern;
+import com.spring.ithrer.resume.model.vo.Language;
+import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Overseas;
+import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
+import com.spring.ithrer.resume.model.vo.Profile;
 
 public interface ResumeDao {
 
@@ -32,5 +43,31 @@ public interface ResumeDao {
 	int insertEducation(Map<String, Object> educationMap);
 
 	int insertPortFolio(Map<String, Object> portFolioMap);
+
+	Award awardView(String memberId);
+
+	Career careerView(String memberId);
+
+	Certification certificateView(String memberId);
+
+	Hopework hopeworkView(String memberId);
+
+	Intern internView(String memberId);
+
+	Language languageView(String memberId);
+
+	Learn learnView(String memberId);
+
+	Overseas overseasView(String memberId);
+
+	PortFolio portFolioView(String memberId);
+
+	Preference preferenceView(String memberId);
+
+	Profile profileView(String memberId);
+
+	Education educationView(String memberId);
+
+	int insertLetter(Map<String, Object> letterMap);
 
 }

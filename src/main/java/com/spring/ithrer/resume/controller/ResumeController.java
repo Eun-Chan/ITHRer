@@ -27,12 +27,13 @@ import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.resume.model.service.ResumeService;
 import com.spring.ithrer.resume.model.vo.Award;
 import com.spring.ithrer.resume.model.vo.Career;
-import com.spring.ithrer.resume.model.vo.Certificate;
+import com.spring.ithrer.resume.model.vo.Certification;
 import com.spring.ithrer.resume.model.vo.Education;
 import com.spring.ithrer.resume.model.vo.Hopework;
 import com.spring.ithrer.resume.model.vo.Intern;
 import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Letter;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
@@ -54,8 +55,51 @@ public class ResumeController {
 		return mav;
 	}
 
+	/* 내이력서가기 */
+	@RequestMapping(value="/resume/resumeView")
+	public ModelAndView myResumeView(ModelAndView mav, @RequestParam("memberId") String memberId) {
+		logger.info("memberId="+memberId);
+		Award award = resumeService.awardView(memberId);
+		logger.info("award="+award);
+		Career career = resumeService.careerView(memberId);
+		logger.info("career="+career);
+		Certification certification = resumeService.certificateView(memberId);
+		logger.info("certification="+certification);
+		Hopework hopework = resumeService.hopeworkView(memberId);
+		logger.info("hopework="+hopework);
+		Intern intern = resumeService.internView(memberId);
+		logger.info("intern="+intern);
+		Language language = resumeService.languageView(memberId);
+		logger.info("language="+language);
+		Learn learn = resumeService.learnView(memberId);
+		logger.info("learn="+learn);
+		Overseas overseas = resumeService.overseasView(memberId);
+		logger.info("overseas="+overseas);
+		PortFolio portFolio = resumeService.portFolioView(memberId);
+		logger.info("portFolio="+portFolio);
+		Preference preference = resumeService.preferenceView(memberId);
+		logger.info("preference="+preference);
+		Profile profile = resumeService.profileView(memberId);
+		logger.info("profile="+profile);
+		Education education = resumeService.educationView(memberId);
+		logger.info("education="+education);
+		mav.addObject("award",award);
+		mav.addObject("career",career);
+		mav.addObject("certification",certification);
+		mav.addObject("hopework",hopework);
+		mav.addObject("intern",intern);
+		mav.addObject("language",language);
+		mav.addObject("learn",learn);
+		mav.addObject("overseas",overseas);
+		mav.addObject("portFolio",portFolio);
+		mav.addObject("preference",preference);
+		mav.addObject("profile",profile);
+		mav.addObject("education",education);
+		mav.setViewName("/resume/resumeView");
+		return mav;
+	}
 	/* 자격증db에서 자격증명찾기 */
-	@RequestMapping(value="/resume/certificateList.do")
+	@RequestMapping(value="/resume/certificateList.ithrer")
 	@ResponseBody
 	public List<Map<String,String>> certificateList(@RequestParam("certName") String certName) {
 		List<Map<String,String>> list = resumeService.certificateList(certName);
@@ -63,19 +107,19 @@ public class ResumeController {
 	}
 
 	/* db저장용 */
-	@RequestMapping(value="/resume/saveResume.do")
+	@RequestMapping(value="/resume/saveResume.ithrer")
 	@ResponseBody
 	public ModelAndView saveResume(ModelAndView mav,
-								   Award award,Career career,Certificate certificate,
+								   Award award,Career career,Certification certification,
 								   Hopework hopework, Intern intern,
 								   Language language, Learn learn,
 								   Overseas overseas, PortFolio portFolio,
 								   Preference preference, Profile profile,
 								   Education education, @RequestParam("memberIdHide") String memberIdHide,
-								   MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
+								   Letter letter, MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
 		logger.info("award="+award);
 		logger.info("career="+career);
-		logger.info("certificate="+certificate);
+		logger.info("certification="+certification);
 		logger.info("education="+education);
 		logger.info("hopework="+hopework);
 		logger.info("intern="+intern);
@@ -85,6 +129,7 @@ public class ResumeController {
 		logger.info("portFolio="+portFolio);
 		logger.info("preference="+preference);
 		logger.info("profile="+profile);
+		logger.info("letter="+letter);
 		
 		Map<String,Object> awardMap = new HashMap<>();
 		awardMap.put("award", award);
@@ -93,7 +138,7 @@ public class ResumeController {
 		careerMap.put("career",career);
 		careerMap.put("memberIdHide",memberIdHide);
 		Map<String,Object> certificateMap = new HashMap<>();
-		certificateMap.put("certificate",certificate);
+		certificateMap.put("certification",certification);
 		certificateMap.put("memberIdHide",memberIdHide);
 		Map<String,Object> hopeworkMap = new HashMap<>();
 		hopeworkMap.put("hopework",hopework);
@@ -119,6 +164,9 @@ public class ResumeController {
 		Map<String,Object> educationMap = new HashMap<>();
 		educationMap.put("education",education);
 		educationMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> letterMap = new HashMap<>();
+		letterMap.put("letter",letter);
+		letterMap.put("memberIdHide",memberIdHide);
 		
 		res.setCharacterEncoding("utf-8");
 		/* file들어왔는지 확인용 */
@@ -181,9 +229,13 @@ public class ResumeController {
 		int profileresult = resumeService.insertProfile(profileMap);
 		int educationresult = resumeService.insertEducation(educationMap);
 		int portFolioresult = resumeService.insertPortFolio(portFolioMap);
-		System.out.println(awardresult>0?"성공":"실패");
-		//mav.setViewName("redirect:/");
-		mav.setViewName("resume/resume");
+		try {
+			int letterresult = resumeService.insertLetter(letterMap);			
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
+		
+		mav.setViewName("redirect:/");
 		return mav;	
 	}
 }

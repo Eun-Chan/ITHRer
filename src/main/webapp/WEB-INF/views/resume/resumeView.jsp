@@ -11,9 +11,9 @@
 <br /><br />
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
-	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.ithrer" 
-	  encType="multipart/form-data">
-	  <!-- onsubmit = "return checkNull()" -->
+	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.do" 
+	  encType="multipart/form-data" onsubmit = "return checkNull()">
+	 
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" name="userResumeTitle" id="userResumeTitle" 
@@ -25,20 +25,20 @@
 	<h3>인적사항</h3>
 	<div id="profileWrap">
 		<div id="formProfile1" class="input-group-prepend">
-			<input type="text" id="name" name="name" class="form-control" placeholder="이름"/>
-			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)"/>
+			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value = "${profile.name}"/>
+			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)" value = "${profile.birth}"/>
 			<select id="gender" name="gender" class="custom-select">
 				<option value="" disabled selected>성별</option>
-			  	<option value="M">남</option>
-			 	<option value="F">여</option>
+			 	<option value="M" ${profile.gender == 'M  '?'selected="selected"':"" }>남</option>								
+		 		<option value="F" ${profile.gender == 'F  '?'selected="selected"':"" }>여</option>								
 			</select>
-			<input type="email" id="email" name="email" class="form-control" placeholder="이메일"/>
+			<input type="email" id="email" name="email" class="form-control" placeholder="이메일" value = "${profile.email}"/>
 		</div>
 		<div id="formProfile2" class="input-group-prepend">
 			<input type="tel" id="phone" name="phone" class="form-control" 
 				   placeholder="전화번호(010-1234-5678)" maxlength="13"
-				   onkeydown="validateText(event)"/>
-			<input type="text" id="address" name="address" class="form-control" placeholder="주소"/>	
+				   onkeydown="validateText(event)" value = "${profile.phone}"/>
+			<input type="text" id="address" name="address" class="form-control" placeholder="주소" value = "${profile.address}"/>	
 		</div>		
 	</div>
 </div>
@@ -48,7 +48,8 @@
 			<h3>학력</h3>		
 		</div>
 		<div id="headerInput">
-			<input type="checkbox" name="nonHigh" id="nonHigh" value="nonHigh"/>
+			<input type="checkbox" name="nonHigh" id="nonHigh" value="nonHigh"
+			${education.nonHigh[0] == "nonHigh"?'checked':''}/>
 			<label for="nonHigh">고등학교 미만 졸업</label>
 		</div>
 	</div>
@@ -71,7 +72,7 @@
 						</select>
 					</li>
 					<li>
-						<input type="text" name="schoolName" id="schoolName0" class="form-control" placeholder="학교명"/>
+						<input type="text" name="schoolName" id="schoolName0" class="form-control" placeholder="학교명" value="${education.schoolName}"/>						
 					</li>
 				</ul>
 				<div name="searchHidden" id="searchHidden0"></div>
@@ -91,7 +92,8 @@
 						</select> 
 					</li>
 					<li>
-						<input type="checkbox" name="transfer" id="transfer0" aria-label="Checkbox for following text input" value="transfer"/>&nbsp;편입
+						<input type="checkbox" name="transfer" id="transfer0" aria-label="Checkbox for following text input" 
+						value="transfer" ${education.transfer[0] == "transfer"?'checked':''}/>&nbsp;편입
 					</li>
 				</ul>
 			</div>
@@ -167,13 +169,15 @@
 		<div id="formHopework1" class="input-group-prepend input-group-text">
 			<ul>
 				<li>
-					<input type="text" name="jobType" id="jobType" class="form-control" placeholder="고용형태"/>
+					<input type="text" name="jobType" id="jobType" class="form-control" placeholder="고용형태" value="${hopework.jobType}"/>
 				</li>
 				<li>
-					<input type="text" name="wantPay" id="wantPay" class="form-control" onkeydown="validateText(event)" placeholder="희망연봉(단위 :만원)"/>
+					<input type="text" name="wantPay" id="wantPay" class="form-control" onkeydown="validateText(event)" placeholder="희망연봉(단위 :만원)" value="${hopework.wantPay}"/>
 				</li>
 				<li>
-					<input type="checkbox" name="visitDetermine" id="visitDetermine" value="visitDetermine" aria-label="Checkbox for following text input"/>&nbsp;면접 후 결정
+					<input type="checkbox" name="visitDetermine" id="visitDetermine" 
+						   value="visitDetermine" aria-label="Checkbox for following text input"
+						   ${hopework.visitDetermine[0] == "visitDetermine"?'checked':''}/>&nbsp;면접 후 결정				
 				</li>
 			</ul>
 		</div>
@@ -181,7 +185,7 @@
 			<ul>
 				<li>희망근무지 :</li>
 				<li>
-					<textarea name="hopePlace" id="hopePlace" class="form-control" aria-label="With textarea"></textarea>
+					<textarea name="hopePlace" id="hopePlace" class="form-control" aria-label="With textarea">${hopework.hopePlace}</textarea>
 				</li>
 			</ul>
 		</div>
@@ -189,7 +193,7 @@
 			<ul>
 				<li>직무,산업,키워드 :</li>
 				<li>
-					<textarea name="hopeDuty" id="hopeDuty" class="form-control" aria-label="With textarea"></textarea>		
+					<textarea name="hopeDuty" id="hopeDuty" class="form-control" aria-label="With textarea">${hopework.hopeDuty}</textarea>		
 				</li>
 			</ul>
 		</div>
@@ -521,7 +525,7 @@
 </div>
 <div id="finishButtonWrap" class="input-group-prepend">
 	<button type="button" id="homeButton" onclick="location='${pageContext.request.contextPath}'" class="btn btn-light">뒤로가기</button>&nbsp;&nbsp;&nbsp;&nbsp;
-	<button type="submit" id="saveButton" class="btn btn-primary">작성완료</button>
+	<button type="submit" id="saveButton" class="btn btn-primary">수정하기</button>
 </div>
 </form>
 </div>
@@ -671,8 +675,36 @@ $(document).on("change","input[name=ged]",function() {
 		$(this).parent().parent().parent().parent().find("div#formEducation1").find("input:text").val(""); /* 학교명 */
 	}
 });
+/* 값들어온만큼 append시키기 */
+var eduStr = "${education.graduaction}";
+var eduArr = eduStr.split(',');
+for(var eduFrmcount=1;eduFrmcount<=eduArr.length-1;eduFrmcount++) {
+	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
+	html += '<option value="high">고등학교</option><option value="shortUniver">대학(2,3년)</option><option value="longUniver">대학교(4년)</option><option value="graduate">대학원</option></select></li>';
+	html += '<li><input type="text" name="schoolName" id="schoolName'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li><div name="searchHidden" id="searchHidden'+eduFrmcount+'"></div></ul></div>';
+	html += '<div id="formEducation3" class="input-group-prepend"><ul><li><input type="text" name="admissionDate" id="admissionDate'+eduFrmcount+'" class="form-control" placeholder="입학년월"/></li>';
+	html += '<li><input type="text" name="graduationDate" id="graduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년월"/></li>';
+	html += '<li><select name="graducationstate" id="graducationstate'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option>	<option value="graduated">졸업</option>';
+	html += '<option value="completion">수료</option>	<option value="ungraduated">졸업예정</option><option value="restschool">휴학</option><option value="leaveschool">중퇴</option></select></li>';
+	html += '<li><input type="checkbox" name="transfer" id="transfer'+eduFrmcount+'" aria-label="Checkbox for following text input" value="transferuni"/>&nbsp;편입</li></ul></div>';
+	html += '<div id="formEducation4" class="input-group-prepend"><ul><li><input type="text" class="form-control" name="major" id="major'+eduFrmcount+'" placeholder="전공명"/></li>';
+	html += '<li><input type="text" class="form-control" name="score" id="score'+eduFrmcount+'" placeholder="학점"/></li>	<li><select name="totalscore" id="totalscore'+eduFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>총점</option><option value="fourdotfive">4.5</option><option value="fourdotthree">4.3</option><option value="fourdotzero">4.0</option>';
+	html += '<option value="hundred">100</option></select></li><li><select name="degree"id="degree'+eduFrmcount+'" class="custom-select eduDegree">';
+	html += '<option value="" disabled selected>학위</option><option value="master">석사</option><option value="doctor">박사</option><option value="boss">석박사</option></select></li></ul></div>';
+	html += '<div id="formEducation5"><button type ="button" name="otherDepartment" id="otherDepartment'+eduFrmcount+'">다른전공</button><button type ="button" name="senierProject" id="senierProject'+eduFrmcount+'">졸업 논문/작품</button>';
+	html += '<ul><li><select name="otherDepartSel" id="otherDepartSel'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>전공선택</option><option value="submajor">부전공</option><option value="multimajor">복수전공</option>';
+	html += '<option value="doublemajor">이중전공</option></select></li><li><input type="text" name="secmajor" id="secmajor'+eduFrmcount+'" class="form-control" placeholder="전공명"/></li></ul>';
+	html += '<ul><li><textarea name="otherDepartText" id="otherDepartText'+eduFrmcount+'" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품"></textarea></li></ul></div>';
+	html += '<div id="formEducation2" class="input-group-prepend"><ul><li><input type="text" name="highgraduationDate" id="highgraduationDate'+eduFrmcount+'" class="form-control" placeholder="졸업년도"/></li>';
+	html += '<li><select name="highgraduationState" id="highgraduationState'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option><option value="graduated">졸업</option><option value="ungraduated">졸업예정</option></select></li>';
+	html += '<li><input type="checkbox" name="ged" id="ged'+eduFrmcount+'" aria-label="Checkbox for following text input" value="ged"/>&nbsp;대입검정고시</li></ul></div></div>';
+	$('#educationWrap').append(html);
+};
 
 $("#addEducation").on("click",function() {
+	var eduFrmcount = eduArr.length;
 	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="high">고등학교</option><option value="shortUniver">대학(2,3년)</option><option value="longUniver">대학교(4년)</option><option value="graduate">대학원</option></select></li>';
@@ -790,7 +822,7 @@ $(document).on("keypress","input[name=certName]",function() {
         event.preventDefault();
     }
 	$.ajax({
-		url : "${pageContext.request.contextPath }/resume/certificateList.ithrer",
+		url : "${pageContext.request.contextPath }/resume/certificateList.do",
 		data : {"certName" : certName},
 		success : function(data) {
 			var showul = $("<ul></ul>");
@@ -813,6 +845,21 @@ $(document).on("click","div[name=showCertificate] a",function() {
 	$(this).parent().parent().hide();
 });
 /* 수상 */
+var awardStr = "${award.awardName}";
+var awardexist = "${award}";
+var awardArr = awardStr.split(',');
+if(awardexist != '') {
+	$("#awardTotal").show();
+	for(var AwardFrmcount=1;AwardFrmcount<=awardArr.length-1;AwardFrmcount++) {
+		var html = '<div id="formAward"><div id="deleteBox"><button type="button" id="deleteAward" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+		html += '<div id="formAward1" class="input-group-prepend"><input type="text" name="awardName" id="awardName'+AwardFrmcount+'" class="form-control" placeholder="수상명"/>';
+		html += '<input type="text" name="awardAgency" id="awardAgency'+AwardFrmcount+'" class="form-control" placeholder="수여기관"/>';
+		html += '<input type="text" name="awardDate" id="awardDate'+AwardFrmcount+'" class="form-control" placeholder="수상연도(예.2019)"/></div>';
+		html += '<div id="formAward2" class="input-group-prepend"><ul><li>수여내용 :</li><li><textarea name="awardTextarea" class="form-control" aria-label="With textarea" id="awardContent'+AwardFrmcount+'" placeholder="수여 내용 및 결과를 자세히 입력해주세요."></textarea></li></ul></div></div>';
+		$('#awardWrap').append(html);
+	}
+}
+
 $("#addAward").on("click",function() {
 	var html = '<div id="formAward"><div id="deleteBox"><button type="button" id="deleteAward" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formAward1" class="input-group-prepend"><input type="text" name="awardName" id="awardName'+AwardFrmcount+'" class="form-control" placeholder="수상명"/>';

@@ -8,6 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.ithrer.resume.model.vo.Award;
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Certification;
+import com.spring.ithrer.resume.model.vo.Education;
+import com.spring.ithrer.resume.model.vo.Hopework;
+import com.spring.ithrer.resume.model.vo.Intern;
+import com.spring.ithrer.resume.model.vo.Language;
+import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Overseas;
+import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
+import com.spring.ithrer.resume.model.vo.Profile;
 
 @Repository
 public class ResumeDaoImpl implements ResumeDao {
@@ -78,5 +89,70 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public int insertPortFolio(Map<String, Object> portFolioMap) {
 		return sqlSession.insert("resume.insertPortFolio",portFolioMap);
+	}
+
+	@Override
+	public Award awardView(String memberId) {
+		return sqlSession.selectOne("resume.awardView",memberId);
+	}
+
+	@Override
+	public Career careerView(String memberId) {
+		return sqlSession.selectOne("resume.careerView",memberId);
+	}
+
+	@Override
+	public Certification certificateView(String memberId) {
+		return sqlSession.selectOne("resume.certificateView",memberId);
+	}
+
+	@Override
+	public Hopework hopeworkView(String memberId) {
+		return sqlSession.selectOne("resume.hopeworkView",memberId);
+	}
+
+	@Override
+	public Intern internView(String memberId) {
+		return sqlSession.selectOne("resume.internView",memberId);
+	}
+
+	@Override
+	public Language languageView(String memberId) {
+		return sqlSession.selectOne("resume.languageView",memberId);
+	}
+
+	@Override
+	public Learn learnView(String memberId) {
+		return sqlSession.selectOne("resume.learnView",memberId);
+	}
+
+	@Override
+	public Overseas overseasView(String memberId) {
+		return sqlSession.selectOne("resume.overseasView",memberId);
+	}
+
+	@Override
+	public PortFolio portFolioView(String memberId) {
+		return sqlSession.selectOne("resume.portFolioView",memberId);
+	}
+
+	@Override
+	public Preference preferenceView(String memberId) {
+		return sqlSession.selectOne("resume.preferenceView",memberId);
+	}
+
+	@Override
+	public Profile profileView(String memberId) {
+		return sqlSession.selectOne("resume.profileView",memberId);
+	}
+
+	@Override
+	public Education educationView(String memberId) {
+		return sqlSession.selectOne("resume.educationView",memberId);
+	}
+
+	@Override
+	public int insertLetter(Map<String, Object> letterMap) {
+		return sqlSession.insert("resume.insertLetter",letterMap);
 	}
 }
