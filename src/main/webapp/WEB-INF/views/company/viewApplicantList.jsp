@@ -43,19 +43,25 @@ div.border-top.border-bottom{
 		<div class="col">학교</div>
 		<div class="col">전공/학점</div>
 		<div class="col">총 경력</div>
-		<div class="col">희망연봉<br />(최근연봉)</div>
+		<div class="col">희망연봉 (만원)</div>
 		<div class="col">지원일</div>
-		<div class="col">평가내용</div>
 	</div>
 	<c:forEach var="app" items="${applicantList }">
 	<div class="row rounded border-top border-bottom border-primary text-center py-3 font-weight-bold d-flex flex-wrap align-items-center">
-		<div class="col">${app.memberName }(${app.gender }, ${app.age })</div>
+		<div class="col">
+			<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=2&memberId=${app.memberId}">
+			${app.memberName }(${app.gender }, ${app.age })
+			</a>
+		</div>
 		<div class="col">${app.education.schoolname }</div>
-		<div class="col">전공/학점</div>
-		<div class="col">총 경력</div>
-		<div class="col">희망연봉<br />(최근연봉)</div>
-		<div class="col">지원일</div>
-		<div class="col">평가내용</div>
+		<div class="col">${app.education.score }/${app.education.totalscore }</div>
+		<div class="col">
+		<c:if test="${empty app.career }">
+		신입
+		</c:if>
+		</div>
+		<div class="col">${app.hopework.wantpay }</div>
+		<div class="col">${app.ca.cuResdate }</div>
 	</div>
 	</c:forEach>
 	

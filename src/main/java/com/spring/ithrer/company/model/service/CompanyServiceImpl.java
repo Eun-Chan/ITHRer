@@ -10,21 +10,16 @@ import org.springframework.stereotype.Service;
 
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.dao.CompanyDao;
+import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
-
 import com.spring.ithrer.company.model.vo.Position;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
-import com.spring.ithrer.index.model.vo.CompanyApplication;
-
-import com.spring.ithrer.company.model.vo.Recruitment;
-import com.spring.ithrer.company.model.vo.Sales;
-
 import com.spring.ithrer.user.model.vo.Member;
 
 @Service
@@ -430,6 +425,11 @@ public class CompanyServiceImpl implements CompanyService {
 		map.put("path", path);
 		map.put("compId", compId);
 		return companyDao.updateCompanyLogo(map);
+	}
+	
+	@Override
+	public List<Area> selectLocationcodeList(int param) {
+		return companyDao.selectLocationcodeList(param);
 	}
 
 }

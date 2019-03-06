@@ -9,9 +9,10 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Computerabllity {
+public class Area {
 	private static final long serialVersionUID = 1L;
 	
-	private String division;
-	private String functionName;
+	private int locationCode;
+	private String locationName;
+	private int locationTotalCode;
 }
