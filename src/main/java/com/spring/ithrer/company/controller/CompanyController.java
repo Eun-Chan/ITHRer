@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.service.CompanyService;
+import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
@@ -465,13 +466,15 @@ public class CompanyController {
 					 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
 					 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
 					 @RequestParam(defaultValue="", value="payCondition") String payCondition,
+					 @RequestParam(defaultValue="", value="salaryType") String salaryType,
 					 @RequestParam(defaultValue="", value="welfare") String welfare,
 					 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
-					 @RequestParam(defaultValue="", value="closingDate") String closingDate,
+					 @RequestParam(defaultValue="SYSDATE", value="closingDate") String closingDate,
 					 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
 					 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
 					 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
-					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml)
+					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
+					 @RequestParam(defaultValue="", value="workDay") String workDay)
 	{
 		System.out.println("테스트시작");
 		/*frm1*/
@@ -525,17 +528,20 @@ public class CompanyController {
 		rect.setCertificate(result_certificate);
 		rect.setComputerLiteracy(result_computerLiteracy);
 		rect.setEmploymentPreference(result_employmentPreference);
-		if(result_genderCut.equals("무관")) result_genderCut = "";
+		if(result_genderCut.equals("무관")) result_genderCut = " ";
 		else if(result_genderCut.equals("남자")) result_genderCut = "M";
 		else if(result_genderCut.equals("여자")) result_genderCut = "F";
+		System.out.println("넣고있는 성별값 : " + result_genderCut);
 		rect.setGenderCut(result_genderCut);
 		rect.setEtcQualificationRequirement(result_etcQualificationRequirement);
 		
 		/* frm3 */
 		nearbyStation.replace("- ", "/");
 		rect.setNearbyStation(nearbyStation);
+		rect.setSalaryType(salaryType);
 		rect.setPayCondition(payCondition+"만원");
 		rect.setWelfare(welfare.replaceAll("\\p{Z}", ""));
+		rect.setWorkDay(workDay);
 
 		/* frm4 */
 		rect.setOpeningDate(openingDate);
@@ -623,6 +629,27 @@ public class CompanyController {
 		map.put("result", resultStr);
 		
 		return map;
+	}
+	
+	/**
+	 * @박광준
+	 * 채용공고등록 - 페이지 로드 시 필요한 데이터 로드 (지역코드 정보)
+	 */
+	@GetMapping("/recruitmentLoadLocation.ithrer")
+	@ResponseBody
+	public void recruitmentLoadLocation(HttpServletResponse response, HttpServletRequest request) {
+		logger.debug("채용공고등록 페이지에 필요한 정보를 로드합니다. - 지역코드");
+		int param = Integer.parseInt(request.getParameter("targetLocation"));
+		List<Area> locationList = companyService.selectLocationcodeList(param);
+		
+		try {
+			response.setContentType("application/json; charset=utf-8");
+			new Gson().toJson(locationList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

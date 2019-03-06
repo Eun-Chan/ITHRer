@@ -7,8 +7,13 @@
 <!-- 폰트추가 -->
 <link href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700" rel="stylesheet">
 <!-- Jquery 추가 - Summernote와 맞추기 위해 다운그레이드 -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<!-- 충돌확인 -->
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script> 
+ 
 <!-- include summernote css/js -->
 <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote-lite.js"></script>
@@ -19,6 +24,7 @@
 html
 {
 	display: none;
+	
 }
 </style>
 <!-- 모집직종팝업 -->
@@ -840,16 +846,16 @@ html
 		</tr>
 		<!-- 자격증 -->
 		
-		<tr class="td-line">
+		<!-- <tr class="td-line">
 			<th class="content-title"><span class="content-title-in none-essential">자격증</span></th>
 			<td colspan="5" class="input-content">
 				<input type="text" id="input-certificate" class="input-textBox" placeholder="자격증을 입력해 주세요."/>
 			</td>
-		</tr>
+		</tr> -->
 		<!-- 컴퓨터활용능력 -->
 		
 		<tr class="td-line">
-			<th class="content-title"><span class="content-title-in none-essential">컴퓨터활용능력</span></th>
+			<th class="content-title"><span class="content-title-in none-essential">자격증</span></th>
 			<td colspan="5" class="input-content">
 			<!-- 결과div -->
 			<div id="comAbill-code-result-Div" class="code-result-Div" style="display:none;">
@@ -869,6 +875,8 @@ html
 						<select class="form-control formStyleChange inlineblock-select fore-select" id="computer-ability-name">
 							<option value="기능명" selected>기능명</option>
 						</select>
+						<!-- 직접입력 -->
+						<input type="text" class="input-textBox" id="otherInput-comabill" />
 					</li>
 					<button type="button" id="comAbill-lang-Btn3" class="btn btn-Primary btnCss" onclick="foreInput();">입력</button>
 					<button type="button" id="comAbill-Btn-cancle" class="btn btn-default btnCss" onclick="reset_comAbill();">초기화</button>
@@ -970,9 +978,40 @@ html
 		<tr class="td-line">
 			<th class="content-title"> <div class="essential">* </div><span class="content-title-in">근무지역</span></th>
 			<td colspan="5" class="input-content" style="width: 750px">
+				<div id="workLocation-code-result-Div" class="code-result-Div" style="display:none;">
+					<ul id="workLocation-select-result" class="select-result">
+						
+					</ul>
+				</div>
 				<!-- 체크 -->
-				<input type='checkbox' class='ipt-chkBox' id="workCondition-Cd1" ><label for='workCondition-Cd1'>재택근무 가능</label>
-				<button type="button" class="btn btn-primary" onclick="전체보기버튼">전체보기</button> 
+				<!-- 1차 선택지 -->
+				<select class="form-control formStyleChange inlineblock-select fore-select subwayBtn work-location" id="location-select-1">
+					<option value="지역" selected>지역</option>
+					<option value="101000">서울</option>
+					<option value="102000">경기</option>
+					<option value="103000">광주</option>
+					<option value="104000">대구</option>
+					<option value="105000">대전</option>
+					<option value="106000">부산</option>
+					<option value="107000">울산</option>
+					<option value="108000">인천</option>
+					<option value="109000">강원</option>
+					<option value="110000">경남</option>
+					<option value="111000">경북</option>
+					<option value="112000">전남</option>
+					<option value="113000">전북</option>
+					<option value="114000">충북</option>
+					<option value="115000">충남</option>
+					<option value="116000">제주</option>
+					<option value="117000">전국</option>
+					<option value="118000">세종특별자치시</option>
+				</select>
+				<!-- 2차 선택지 -->
+				<select class="form-control formStyleChange inlineblock-select fore-select subwayBtn work-location2" id="location-select-2">
+					
+				</select>
+				<button type="button" id="workLocation-Btn" class="btn btn-primary btnCss" onclick="input_workLocation();">입력</button>
+				<button type="button" id="workLocation-Btn-cancle" class="btn btn-default btnCss" onclick="reset_workLocation();">초기화</button> 
 			</td>
 		</tr>
 		<!-- 인근전철역 -->
@@ -1013,6 +1052,21 @@ html
 						</li>
 					</ul>
 				</div>
+			</td>
+		</tr>
+		<!-- 근무시간 -->
+		<tr class="td-line">
+			<th class="content-title"> <span class="content-title-in">근무시간</span></th>
+			<td colspan="5" class="input-content" style="width: 750px">
+				<!-- 체크 -->
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-0" ><label for='workTime-0'>주 5일</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-1" ><label for='workTime-1'>토요일 격주휴무</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-2" ><label for='workTime-2'>주 6일</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-3" ><label for='workTime-3'>주 3일 격일제</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-4" ><label for='workTime-4'>탄력적근무제</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-5" ><label for='workTime-5'>2교대</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-6" ><label for='workTime-6'>3교대</label>
+				<input type='checkbox' class='ipt-chkBox workTime' id="workTime-7" ><label for='workTime-7'>4교대</label>
 			</td>
 		</tr>
 		<!-- 급여조건 -->
@@ -1232,14 +1286,20 @@ html
 	<!-- 기타자격요건 정보를 저장하기위한 히든태그 -->
 	<input type="hidden" name="etcQualificationRequirement" id="frm2-9"/>
 	
-	<!-- 근무지역 정보를 저장하기 위한 히든태그 -->
+	<!-- 근무지역 정보(지역명)를 저장하기 위한 히든태그 -->
+	<input type="hidden" name="locationCode" id="frm3-0" />
+	<!-- 근무지역 정보(지역코드)를 저장하기 위한 히든태그 -->
 	<input type="hidden" name="location" id="frm3-1" />
 	<!-- 인근전철역 정보를 저장하기 위한 히든태그 -->
 	<input type="hidden" name="nearbyStation" id="frm3-2" />
-	<!-- 급여조건 정보를 저장하기 위한 히든태그 -->
-	<input type="hidden" name="payCondition" id="frm3-3" />
+	<!-- 급여조건 구분 정보를 저장하기 위한 히든태그 -->
+	<input type="hidden" name="salaryType" id="frm3-3-1" />
+	<!-- 급여금액 정보를 저장하기 위한 히든태그 -->
+	<input type="hidden" name="payCondition" id="frm3-3-2" />
 	<!-- 복리후생 정보를 저장하기 위한 히든태그 -->
 	<input type="hidden" name="welfare" id="frm3-4" />
+	<!-- 근무시간 정보를 저장하기 위한 히든태그 -->
+	<input type="hidden" name="workDay" id="frm3-5" />
 	
 	<!-- 공고시작 기간을 저장하기 위한 히든태그 -->
 	<input type="hidden" name="openingDate" id="frm4-1" />
@@ -1269,10 +1329,10 @@ function recruitmentSend()
 	frm2hiddenInput();
 	frm3hiddenInput();
 	frm4hiddenInput();
-	
-	
+	//summernoteInputImage();
 	$("#testFrm").submit();
 }
+
 /* 접수기간 및 방법 */
 function frm4hiddenInput()
 {
@@ -1335,6 +1395,21 @@ function frm4hiddenInput()
 function frm3hiddenInput()
 {
 	/* ============= 근무지역 ============= */
+	var result_workLocation = '';
+	var result_workLocationName = '';
+	
+    for (var i=0; i<$('#workLocation-select-result').find('li').length; i++)
+    {
+    	result_workLocation += $('#workLocation-select-result').find('li').eq(i).val() +',';
+    	result_workLocationName += $('#workLocation-select-result').find('li').eq(i).text() +',';
+    }
+    result_workLocationName = result_workLocationName.substr(0, result_workLocationName.length -1);
+    result_workLocation = result_workLocation.substr(0, result_workLocation.length -1);
+    
+    console.log("근무지역(이름) : "+result_workLocationName);
+    console.log("근무지역(코드) : "+result_workLocation);
+    $("#frm3-0").val(result_workLocationName);
+	$("#frm3-1").val(result_workLocation);
 	
 	/* ============= 인근전철역 ============= */
 	var result_subway = $("#subway-code-result-Div").text();
@@ -1345,12 +1420,23 @@ function frm3hiddenInput()
 	var result_salaryDiv = $("#salary-select option:selected").text();
 	var result_salary = $("#salary").val();
 	console.log("급여조건:"+result_salaryDiv+","+result_salary);
-	$("#frm3-3").val(result_salaryDiv+","+result_salary);
+	$("#frm3-3-1").val(result_salaryDiv);
+	$("#frm3-3-2").val(result_salary);
 	
 	/* ============= 복리후생 ============= */
 	var result_benefits = $("#input-Benefits").val();
 	console.log("복리후생:"+result_benefits);
 	$("#frm3-4").val(result_benefits);
+	
+	/* ============= 근무시간 ============= */
+	var result_workDay = "";
+	for(var i=0; i<=7; i++)
+	{
+		if($("#workTime-"+i).prop("checked")) result_workDay += $("#workTime-"+i).next().text()+",";
+	}
+	result_workDay = result_workDay.substr(0, result_workDay.length -1);
+	console.log("근무시간:"+result_workDay);
+	$("#frm3-5").val(result_workDay);
 	
 }
 /*지원조건 및 우대조건*/
@@ -1372,7 +1458,9 @@ function frm2hiddenInput()
 	$("#frm2-3").val(result_fore);
 	
 	/* ============= 자격증 ============= */
-	var result_certificate = $("#input-certificate").text().trim();
+	var result_certificate;
+	/* result_certificate = $("#input-certificate").text().trim(); */
+	result_certificate = $("#comAbill-code-result-Div").text().trim();
 	console.log("자격증 : "+result_certificate);
 	$("#frm2-4").val(result_certificate);
 	
@@ -1530,8 +1618,58 @@ function sendFile(file){
 		}
 	});
 }
-*/    
-
+*/
+function reset_workLocation()
+{
+	$("#workLocation-select-result li").remove();
+	$("#workLocation-code-result-Div").hide();
+}
+/* 지역정보를 1차적으로 입력 */
+function input_workLocation()
+{
+	var result_text1 = $("#location-select-1 option:selected").text();
+	var result_text2 = $("#location-select-2 option:selected").text();
+	var result_val = $("#location-select-2 option:selected").val();
+	
+	$("#workLocation-select-result").append("<li value='"+result_val+"'>"+result_text1+" "+result_text2+"</li>");
+	$("#workLocation-code-result-Div").show();	
+}
+/* 근무지역 1차 선택 시 2차 선택지 출력 */
+$("#location-select-1").on("change", function(){
+	var targetLocation = $("#location-select-1 option:selected").val();
+	$("#location-select-2 option").remove();
+	$.ajax({
+		url: "${pageContext.request.contextPath}/company/recruitmentLoadLocation.ithrer?targetLocation="+targetLocation,
+		dataType: "json",
+		Type: "get",
+		success: function(data)
+		{
+			console.log(data);
+			for(var i in data)
+			{
+				$("#location-select-2").append("<option value='"+data[i].locationCode+"'>"+data[i].locationName+"</option>");		
+			}
+		},
+		error: function () 
+		{
+	        console.log("페이지 데이터 로드 실패_ajax");
+	    }
+	});
+});
+/* 컴퓨터활용능력 값이 변경 시 - 직접입력 */
+$("#computer-ability").on("change", function(){
+ 	var selected = $("#computer-ability option:selected").text();
+	if(selected == "직접입력")
+	{
+		$("#computer-ability-name").hide();
+		$("#otherInput-comabill").show();
+	}
+	else
+	{
+		$("#computer-ability-name").show();
+		$("#otherInput-comabill").hide();
+	}
+});
 /* 복리후생 결과 입력 */
 function addBenefitList()
 {
@@ -1681,7 +1819,12 @@ function reset_comAbill()
 function foreInput()
 {
 	var category1 = $("#computer-ability option:selected").text();
-	var category2 = $("#computer-ability-name option:selected").text();
+	
+	var otherInputCheckBool = $("#computer-ability option:selected").text()=="직접입력"?true:false;
+	var category2;
+	
+	if(otherInputCheckBool) category2 = $("#otherInput-comabill").val();
+	else category2 = $("#computer-ability-name option:selected").text();
 
 	var check = " - "+category1+","+category2;
 	console.log(check);
@@ -2091,6 +2234,30 @@ $(document).ready(function(){
 	
 	
 	$("html").css("display", "block");
+	//서머노트 이미지 업로드
+	var sendFile = function (upFile, el) {
+	  var directory = 'images/summernote';
+	  var form = $("#testFrm")[0];
+      var form_data = new FormData();
+      form_data.append('upFile', upFile);
+      form_data.append("directory", directory);
+      $.ajax({
+        data: form_data,
+        type: "POST",
+        url: '${pageContext.request.contextPath}/fileUpload.ithrer',
+        cache: false,
+        processData: false,
+        contentType: false,
+        enctype: 'multipart/form-data',
+        processData: false,
+        success: function(url) {
+        	console.log(url);
+        	console.log("이미지 전송 성공!!!!!!");
+        		$('#summernote').summernote('insertImage', url);
+	        $('#imageBoard > ul').append('<li><img src="'+ url +'" width="480" height="auto"/></li>');
+        }
+      });
+    }
 	//서머노트 준비
 	$("#summernote-area").summernote({
 		width: "100%",
@@ -2761,5 +2928,15 @@ ul.inlineblock-select li
 #salary
 {
 	width: 50%;
+}
+#otherInput-comabill
+{
+	display: none;
+	margin-left: 35px;
+	width: 225px;
+}
+#workLocation-select-result li
+{
+	list-style: none;
 }
 </style>
