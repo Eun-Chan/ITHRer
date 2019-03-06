@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -63,7 +64,7 @@ public class ResumeController {
 	}
 
 	/* db저장용 */
-	@RequestMapping(value="/resume/saveResume.do")
+	@RequestMapping(value="/resume/saveResume.do" ,method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ModelAndView saveResume(ModelAndView mav,
 								   Award award,Career career,Certificate certificate,
@@ -85,7 +86,6 @@ public class ResumeController {
 		logger.info("portFolio="+portFolio);
 		logger.info("preference="+preference);
 		logger.info("profile="+profile);
-		
 		Map<String,Object> awardMap = new HashMap<>();
 		awardMap.put("award", award);
 		awardMap.put("memberIdHide", memberIdHide);

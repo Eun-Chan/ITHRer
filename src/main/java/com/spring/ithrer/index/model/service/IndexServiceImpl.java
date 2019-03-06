@@ -11,6 +11,7 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.dao.IndexDao;
 import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Service
@@ -68,8 +69,8 @@ public class IndexServiceImpl implements IndexService{
 	 */
 	
 	@Override
-	public int insertPortFolio(PortFolio pf) {
-		return indexDao.insertPortFolio(pf);
+	public int insertPortFolio(Map<String, Object> map) {
+		return indexDao.insertPortFolio(map);
 	}
 
 	@Override
@@ -140,6 +141,11 @@ public class IndexServiceImpl implements IndexService{
 	@Override
 	public List<Map<String, String>> selectListCharged() {
 		return indexDao.selectListCharged();
+	}
+
+	@Override
+	public Profile selectOneProfile(String memberId) {
+		return indexDao.selectOneProfile(memberId);
 	}
 
 

@@ -1379,8 +1379,8 @@ $(".star").on("click",function(){
 	 }
 });
 $(".applyButton").on("click",function(e){
-	var recNo = $(this).parent().siblings("#hiddenRecruitNo").val();
-	var hiddenApplyCount = $(this).parent().siblings("#hiddenApplyCount").val();
+	var recNo = $(this).parent().siblings(".hiddenRecruitNo").val();
+	var hiddenApplyCount = $(this).parent().siblings(".hiddenApplyCount").val();
 	e.stopPropagation();
 	 if(${empty member}){
 			alert("로그인 후 이용 해 주세용");

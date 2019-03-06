@@ -152,7 +152,13 @@
 					<strong>지원이력서</strong>
 				</div>
 				<div class="col-sm-12 row2">
-					<span style="font-size: 0.9em; letter-spacing: 1px;" >이력서 제목(이력서가 없다면 추가버튼 만들어야함.)</span>
+				<c:if test="${not empty pf.userResumeTitle }">
+					<span style="font-size: 0.9em; letter-spacing: 1px;" class="pfTitle">${pf.userResumeTitle }</span>
+				</c:if>
+				<c:if test="${empty pf.userResumeTitle }">
+					<span style="font-size: 0.9em; letter-spacing: 1px;" >이력서가 존재하지 않습니다 작성해주세요.</span>
+					<input type="button" value="작성하기" class="btn btn-info" style="float: right" id="profileInsert"/>
+				</c:if>
 				</div>
 				<div class="col-sm-12 row3">
 					<span class="memberEmail">이메일 : ${member.email }</span>
@@ -172,12 +178,14 @@
 				</div>
 				<div class="col-sm-12 row2 port">
 						<c:forEach items="${portFolio }" var="port">
+						<c:if test="${not empty port.url}">
 							<div class="portfolioDiv">
-								<span style="font-size: 0.9em; letter-spacing: 1px;" >${port.POriginalFileName }</span>
+								<span style="font-size: 0.9em; letter-spacing: 1px;" >${port.url }</span>
 								<button class="btn btn-outline-danger deletePortFolio">삭제</button>
 								<input type="hidden" value="${port.pfNo }" id="hiddenPfNo"/>
 								<input type="hidden" value="${port.url }" id="hiddenUrl" />
 							</div>
+						</c:if>
 						</c:forEach>	
 				</div>
 			</div>
@@ -249,7 +257,11 @@ $(function(){
 
 });
 
-
+$("#profileInsert").on("click",function(){
+	/* location.href="${pageContext.request.contextPath}/resume/resume"; */
+	window.open('${pageContext.request.contextPath}/resume/resume','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
+	self.close();
+});
 $("#emailSelect").on("change",function(){
 	console.log("아아");
 	if($("#emailSelect option:selected").val()=="etc" || $("#emailSelect option:selected").val()==""){
@@ -276,8 +288,8 @@ $("#Addportfolio").on("change",function(){
 		data:formData,
 		type:"POST",
 		success:function(data){
-			console.log(JSON.parse(data).pOriginalFileName);
-			html+=JSON.parse(data).pOriginalFileName+"</span>";
+			/* var url = JSON.parse(data).url.substr(JSON.parse(data).url.indexOf("_")+1); */
+			html+=JSON.parse(data).url+"</span>";
 			html+="<button class='btn btn-outline-danger'>삭제</button></div>";
 			div.append(html);
 		}	
@@ -308,6 +320,10 @@ $("#memberUpdate").on("click",function(){
 	});
 });
 $(".applybutton").on("click",function(){
+	if(${empty pf}){
+		alert("이력서를 작성해 주세요.");
+		return;
+	}
 	var memberId =$("input[name=memberId]").val();
 	var recruitmentNo = $("input[name=recruitmentNo]").val();
 	var compName = $("input[name=compName]").val();

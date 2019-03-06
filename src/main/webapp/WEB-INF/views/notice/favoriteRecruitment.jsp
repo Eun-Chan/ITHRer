@@ -119,6 +119,17 @@
 		font-size: 0.7em;
 		font-weight: 700;
 	}
+	.favoriteContents{
+		display: table;
+	    min-height: 350px;
+	    text-align: center;
+	}
+	.favoriteContents p{
+		display: table-cell;
+	    text-align: center;
+	    vertical-align: middle;
+	    padding-left: 215px;
+	}
 </style>
 <body>
 <div class ="fareMain">
@@ -128,13 +139,7 @@
 		</div>
 		<div class="row favorite">
 			<ul class="headerUl">
-				<li><button class="favoriteDel">삭제</button></li>
-				<li>
-					<select name="" id="" style="width: 100px;height: 44px; border: border: 1px solid #ccc;">
-						<option value="마감일순">마감일순</option>
-						<option value="지원자순">지원자순</option>
-					</select>
-				</li>
+				<li style="float: left;"><button class="favoriteDel">삭제</button></li>
 			</ul>
 		</div>
 		<div>
@@ -143,19 +148,26 @@
 				<div class="col-sm-8" style="text-align: center;"><span style="font-size: 0.9em;" >채용공고</span></div>
 				<div class="col-sm-2" style="text-align: center;"><span style="font-size: 0.9em;">마감일</span></div>
 			</div>
-			<c:forEach items="${favorites }" var="favorite">
-			<div class="row favoriteContent" onclick="moveDetail(${favorite.recruitmentNo})">
-				<ul class="col-sm-2" style="padding-left:29px;">
-					<li><input type="checkbox" name="recruitmentNo" value=${favorite.recruitmentNo } class="checkbox"  /></li>
-				</ul>
-				<ul class="col-sm-8" style="text-align: center;">
-					<li><span style="font-size: 0.8em;">${favorite.recruitmentTitle }</span></li>
-				</ul>
-				<ul class="col-sm-2" style="text-align: center;">
-					<li><span style="font-size: 0.8em;">${favorite.closingDate }</span></li>
-				</ul>
-			</div>
-			</c:forEach>
+			<c:if test="${not empty favorites}">
+				<c:forEach items="${favorites }" var="favorite">
+				<div class="row favoriteContent" onclick="moveDetail(${favorite.recruitmentNo})">
+					<ul class="col-sm-2" style="padding-left:15px;">
+						<li><input type="checkbox" name="recruitmentNo" value=${favorite.recruitmentNo } class="checkbox"  /></li>
+					</ul>
+					<ul class="col-sm-8" style="text-align: center;">
+						<li><span style="font-size: 0.8em;">${favorite.recruitmentTitle }</span></li>
+					</ul>
+					<ul class="col-sm-2" style="text-align: center;">
+						<li><span style="font-size: 0.8em;">${favorite.closingDate }</span></li>
+					</ul>
+				</div>
+				</c:forEach>
+			</c:if>
+			<c:if test="${empty favorites }">
+					<div class="row favoriteContents">
+						<p>스크랩한 공고가 존재하지 않습니다.</p>
+				</div>
+			</c:if>
 		</div>
 			<!-- 페이징 바 부분 -->
 		<div class="page-bar">
@@ -164,6 +176,7 @@
 		</div>
 	</div>
 	<div class="fareBanner">
+		<c:if test="${not empty favorites }">
 		<h3 class="BannerHeader">
 			<span>스크랩 기반 <em style="color:#ffb6c1;">ITHRer</em>&nbsp;추천공고</span>
 		</h3>
@@ -188,6 +201,7 @@
 				</li>
 			</c:forEach>
 		</ul>
+		</c:if>
 	</div>
 </div>
 <script>

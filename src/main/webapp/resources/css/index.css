@@ -17,17 +17,17 @@
 .main-search{
    position: relative;
    z-index: 1;
-   height: 200px;
+   height: 170px;
    background: #e4ebfe;
 }
 .search-bar{
    position: absolute;
    top: 59px;
-   left: 56.8%;
+   left: 60.8%;
    z-index: 5;
    margin-left: -600px;
    padding: 10px;
-   width: 1000px;
+   width: 800px;
    height: 80px;
    box-sizing: border-box;
    background: pink;
@@ -36,7 +36,7 @@
    position: relative;
    z-index: 2;
    margin: 0 auto;
-   width: 980px;
+   width: 780px;
    height: 60px;
    background: #ddd;
 }
@@ -47,7 +47,7 @@
 .bar-option{
    position: absolute;
     z-index: 1;
-   width: 420px;
+   width: 310px;
     height: 60px;;
     box-sizing: border-box;
     color: #666;
@@ -57,17 +57,18 @@
     background: #fff;
 }
 .bar-option.area{
-   left: 423px;
+   left: 313px;
+   width: 350px;
 }
 .bar-option span{
    z-index: 4;
 }
 .bar-button{
-   position: absolute;
-    left: 841px;
+    position: absolute;
+    left: 664px;
     z-index: 1;
     padding: 12px 0 15px;
-    width: 139px;
+    width: 117px;
     height: 59px;
     background: cyan;
     border: 0;
@@ -129,7 +130,7 @@
 .location-hide{
    display:none;
    width: 860px;
-   right:-17px;
+   right:-187px;
    position: absolute;
    margin-top:5px;
    border: 1px solid black;

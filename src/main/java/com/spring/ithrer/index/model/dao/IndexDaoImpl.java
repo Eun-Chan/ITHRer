@@ -12,6 +12,7 @@ import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 
@@ -71,8 +72,8 @@ public class IndexDaoImpl implements IndexDao{
 //		return sqlSession.selectList("index.selectListSearchIthrer", map);
 //	}
 	@Override
-	public int insertPortFolio(PortFolio pf) {
-		return sqlSession.insert("index.insertPortFolio", pf);
+	public int insertPortFolio(Map<String, Object> map) {
+		return sqlSession.insert("index.insertPortFolio", map);
 	}
 
 	@Override
@@ -149,6 +150,11 @@ public class IndexDaoImpl implements IndexDao{
 	public List<Map<String, String>> selectListCharged() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("index.selectListCharged");
+	}
+
+	@Override
+	public Profile selectOneProfile(String memberId) {
+		return sqlSession.selectOne("index.selectOneProfile", memberId);
 	}
 
 }

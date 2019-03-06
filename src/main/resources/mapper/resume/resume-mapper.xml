@@ -45,7 +45,7 @@
 		values(#{preference.preferCheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{preference.disoderselect},#{preference.militaryselect},#{memberIdHide})
 	</insert>
 	<insert id="insertProfile" parameterType="hashmap">
-		insert into profile(userResumeTitle,name,birth,gender,email,phone,address,member_id)
+		insert into profile(user_resume_title,name,birth,gender,email,phone,address,member_id)
 		values(#{profile.userResumeTitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{memberIdHide})
 	</insert>
 	<insert id="insertEducation" parameterType="hashmap">
