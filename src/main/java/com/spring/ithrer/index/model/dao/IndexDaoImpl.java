@@ -139,10 +139,16 @@ public class IndexDaoImpl implements IndexDao{
 	public List<Recruitment> selectListRecommendRecruitmentList(Map<String,Object> map) {
 		return sqlSession.selectList("index.selectListRecommendRecruitmentList", map);
 	}
-	
+
+	@Override
+	public int deleteFavoritesList(Map<String, Object> map) {
+		return sqlSession.delete("index.deleteFavoritesList", map);
+	}
+
 	@Override
 	public List<Map<String, String>> selectListCharged() {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("index.selectListCharged");
 	}
+
 }

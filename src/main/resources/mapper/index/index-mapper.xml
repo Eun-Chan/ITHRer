@@ -158,14 +158,19 @@
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount
 		from recruitment s where end = 'N' order by DBMS_RANDOM.VALUE )t where rownum <![CDATA[<]]> 13
 	</select>
+	
 	<select id="selectCountFavorite" parameterType="string" resultType="_int">
 		select count(*) totalCount from favorites where member_id = #{memberId} and select_no = 0
 	</select>
 	
+	<!-- 스크랩한 공고 리스트 -->
 	<select id="selectListFavorites" parameterType="string" resultType="favorites">
-		select f.*,(select category from company where comp_id = f.comp_id) category from favorites f where member_id = #{memberId} and select_no = 0
+		select f.*,(select category from company where comp_id = f.comp_id) category,(select closing_date from recruitment where recruitment_no = f.recruitment_no) closingDate,
+		(select recruitment_title from recruitment where recruitment_no = f.recruitment_no) recruitmentTitle
+		from favorites f where member_id = #{memberId} and select_no = 0
 	</select>
 	
+	<!-- 스크랩한 카테고리 기반으로 채용공고 리스트 가져오기 -->
 	<select id="selectListRecommendRecruitmentList" parameterType="map" resultType="recruitment">
 		select t.* from (select r.*,(select comp_name from company where comp_id = r.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = r.recruitment_no) favoritesCount ,
@@ -179,10 +184,19 @@
 		and r.end = 'N' 
 		order by DBMS_RANDOM.VALUE)t where rownum <![CDATA[<]]> 5
 	</select>
-	
+	<!-- 체크박스 클릭한 스크랩 공고 삭제 -->
+	<delete id="deleteFavoritesList" parameterType="map">
+		delete from favorites where member_id = #{memberId} and recruitment_no  
+		in
+		<foreach collection="param" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+
 	<!-- 배너광고 파일이름을 가져오는 쿼리 -->
 	<select id="selectListCharged" resultType="map">
 		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date]]>
 	</select>
 	
+
 </mapper>

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -278,5 +277,36 @@ public class BoardController {
 		}
 		
 	}
+	
+	@RequestMapping("/board/passBoardMoveUpdate")
+	public ModelAndView passBoardMoveUpdate(@RequestParam("passBoardNo") int passBoardNo, ModelAndView mav) {
+		
+		PassBoard passBoard = boardService.passBoardSelectOne(passBoardNo);
+		
+		mav.addObject("passBoard", passBoard);
+		mav.setViewName("board/passBoardUpdate");
+
+		System.out.println("Controller passBoardUpdate - passBoard : "+passBoard);
+		
+		return mav;
+		
+	}
+	
+	@RequestMapping("/board/passBoardUpdate")
+	public ModelAndView passBoardUpdate(PassBoard passBoard, ModelAndView mav) {
+		
+		int result = boardService.passBoardUpdate(passBoard);
+		
+		mav.addObject("result", result);
+		mav.addObject("passBoard", passBoard);
+		mav.setViewName("redirect:/board/passBoardList");
+		
+		System.out.println("Controller passBoardUpdate - passBoard : "+passBoard);
+		System.out.println("Controller passBoardUpdate - result : "+result);
+		
+		return mav;
+		
+	}
+	
 	
 }

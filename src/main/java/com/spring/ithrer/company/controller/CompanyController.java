@@ -1,5 +1,6 @@
 package com.spring.ithrer.company.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -20,18 +21,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.service.CompanyService;
 import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
@@ -270,7 +277,6 @@ public class CompanyController {
 	
 	@GetMapping("/recruitmentAdd")
 	public ModelAndView recruitmentAddView(ModelAndView mav) {
-		
 		mav.setViewName("company/recruitmentAdd");
 		
 		return mav;
@@ -336,6 +342,170 @@ public class CompanyController {
 		}
 		
 		return map2;
+	}
+
+	/**
+	 * @박광준
+	 * 채용공고등록 - 페이지 로드 시 필요한 데이터 로드
+	 */
+	@GetMapping("/recruitmentAddLoad.ithrer")
+	@ResponseBody
+	public void recruitmentAddLoad(HttpServletResponse response) {
+		logger.debug("채용공고등록 페이지에 필요한 정보를 로드합니다.");
+		
+		//최종 정보
+		List<Object> resultList = new ArrayList<>();
+		
+		//모집직종 정보-JOB1
+		List<Job> jobList = new ArrayList<>();
+		jobList = companyService.selectJobList();
+		
+		//모집직종 정보-JOB2
+		List<Job> jobList2 = new ArrayList<>();
+		jobList2 = companyService.selectJobList2();
+		
+		//컴퓨터활용능력-1
+		List<Computerabllity> computerAbllityList = new ArrayList<>();
+		computerAbllityList = companyService.selectComputerAbllity();
+		
+		//컴퓨터활용능력-1
+		List<Computerabllity> computerAbllityList2 = new ArrayList<>();
+		computerAbllityList2 = companyService.selectComputerAbllity2();
+		
+		//지하철노선도-라인
+		List<SubwayStation> subwayStationLine = new ArrayList<>();
+		subwayStationLine = companyService.selectSubwayStation();
+		
+		//지하철노선도-전체
+		List<SubwayStation> subwayStationAll = new ArrayList<>();
+		subwayStationAll = companyService.selectSubwayStationAll();
+		
+		//최종 정보 담기
+		resultList.add(jobList);
+		resultList.add(jobList2);
+		resultList.add(computerAbllityList);
+		resultList.add(computerAbllityList2);
+		resultList.add(subwayStationLine);
+		resultList.add(subwayStationAll);
+		/* resultList.add(positionList); */
+		
+		try {
+			response.setContentType("application/json; charset=utf-8");
+			new Gson().toJson(resultList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * @박광준
+	 * 테스트용
+	 */
+	@RequestMapping("/testSend")
+	public void test(@RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
+					 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
+					 @RequestParam(defaultValue="", value="career") String career,
+					 @RequestParam(defaultValue="", value="employment_type") String employment_type,
+					 @RequestParam(defaultValue="0", value="recruitmentPersonnel") int recruitmentPersonnel,
+					 @RequestParam(defaultValue="", value="asignedTask") String asignedTask,
+					 @RequestParam(defaultValue="", value="resultDepartment") String resultDepartment,
+					 @RequestParam(defaultValue="", value="jobGrade") String jobGrade,
+					 @RequestParam(defaultValue="", value="education") String education,
+					 @RequestParam(defaultValue="", value="major") String major,
+					 @RequestParam(defaultValue="", value="foreLang") String foreLang,
+					 @RequestParam(defaultValue="", value="certificate") String certificate,
+					 @RequestParam(defaultValue="", value="computerLiteracy") String computerLiteracy,
+					 @RequestParam(defaultValue="", value="employmentPreference") String employmentPreference,
+					 @RequestParam(defaultValue="", value="applicantAge") String applicantAge,
+					 @RequestParam(defaultValue="", value="genderCut") String genderCut,
+					 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
+					 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
+					 @RequestParam(defaultValue="", value="payCondition") String payCondition,
+					 @RequestParam(defaultValue="", value="welfare") String welfare,
+					 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
+					 @RequestParam(defaultValue="", value="closingDate") String closingDate,
+					 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
+					 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
+					 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
+					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml)
+	{
+		System.out.println("테스트시작");
+		/*frm1*/
+		String result_recruitmentTitle = recruitmentTitle;
+		String result_typeOfOccupation = typeOfOccupation.replaceAll("\\p{Z}", "");
+		String result_career = career.replaceAll("\\p{Z}", "");
+		String result_employmentType = employment_type.replaceAll("\\p{Z}", "");
+		int result_recruitmentPersonnel = recruitmentPersonnel;
+		String result_asignedTask = asignedTask;
+		String result_department = resultDepartment;
+		String result_position = jobGrade.replaceAll("\\p{Z}", "");
+		
+		/*frm2*/
+		String result_education = education;
+		String result_major = major.replaceAll("\\p{Z}", "");
+		String result_foreLang = foreLang.replaceAll("\\p{Z}", "");
+		String result_certificate = certificate;
+		String result_computerLiteracy = computerLiteracy.replaceAll("\\p{Z}", "");
+		String result_employmentPreference = employmentPreference.replaceAll("\\p{Z}", "");
+		String result_applicantAge = applicantAge.replaceAll("\\p{Z}", "");
+		String[] resultAge = result_applicantAge.split("/");
+		
+		
+		String result_genderCut = genderCut;
+		String result_etcQualificationRequirement = etcQualificationRequirement;
+		
+		Recruitment rect = new Recruitment();
+		rect.setRecruitmentTitle(result_recruitmentTitle);
+		rect.setTypeOfOccupation(result_typeOfOccupation);
+		rect.setCareer(result_career);
+		rect.setEmploymentType(result_employmentType);
+		rect.setRecruitmentPersonnel(result_recruitmentPersonnel);
+		rect.setAsignedTask(result_asignedTask);
+		rect.setDepartment(result_department);
+		rect.setPosition(result_position);
+		if("연령제한".equals(resultAge[0]))
+		{
+			rect.setApplicantAgeStart(Integer.parseInt(resultAge[1]));
+			rect.setApplicantAgeEnd(Integer.parseInt(resultAge[2]));
+		}
+		else //연령제한이 아닐 경우
+		{
+			rect.setApplicantAgeStart(0);
+			rect.setApplicantAgeEnd(100);
+		}
+		
+		/* frm2 */
+		rect.setEducation(result_education);
+		rect.setMajor(result_major);
+		rect.setForeLang(result_foreLang);
+		rect.setCertificate(result_certificate);
+		rect.setComputerLiteracy(result_computerLiteracy);
+		rect.setEmploymentPreference(result_employmentPreference);
+		if(result_genderCut.equals("무관")) result_genderCut = "";
+		else if(result_genderCut.equals("남자")) result_genderCut = "M";
+		else if(result_genderCut.equals("여자")) result_genderCut = "F";
+		rect.setGenderCut(result_genderCut);
+		rect.setEtcQualificationRequirement(result_etcQualificationRequirement);
+		
+		/* frm3 */
+		nearbyStation.replace("- ", "/");
+		rect.setNearbyStation(nearbyStation);
+		rect.setPayCondition(payCondition+"만원");
+		rect.setWelfare(welfare.replaceAll("\\p{Z}", ""));
+
+		/* frm4 */
+		rect.setOpeningDate(openingDate);
+		rect.setClosingDate(closingDate);
+		rect.setApplicationMethod(applicationMethod);
+		rect.setApplicationForm(applicationForm);
+		rect.setRecruitmentStage(recruitmentStage);
+		rect.setSummernoteHtml(summernoteHtml);
+		
+		int insertResult = companyService.insertRecruitment(rect);
+		System.out.println("rect:"+rect);
+		System.out.println(insertResult);
 	}
 	
 	@GetMapping("/viewApplicantList.ithrer")

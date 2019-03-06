@@ -10,7 +10,7 @@
 		select count(*) from passboard
 	</select>
 	
-	<select resultType="passboard" id="selectPassBoardOne">
+	<select id="selectPassBoardOne" resultType="passboard">
 		select * from passBoard where passBoardNo = #{passBoardNo} 
 	</select>
 
@@ -49,5 +49,10 @@
 	<update id="passBoardReadCount" parameterType="_int">
 		update passBoard set passBoardReadCount = passBoardReadCount+1 where passBoardNo = #{passBoardNo}
 	</update>
+
+    <update id="passBoardUpdate">
+        update passBoard set passBoardTitle = #{passBoardTitle}, passBoardWriter = #{passBoardWriter}, passBoardContent = #{passBoardContent} , passBoardDate = sysdate
+        where passBoardNo = #{passBoardNo}
+    </update>
 
 </mapper>

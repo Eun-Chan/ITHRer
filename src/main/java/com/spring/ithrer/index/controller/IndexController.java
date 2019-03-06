@@ -753,6 +753,9 @@ public class IndexController {
    //스크랩한 공고 보여주는 창
    @RequestMapping("/index/favoriteRecruitment.ithrer")
    public ModelAndView favoriteRecruitment(@RequestParam("memberId") String memberId,ModelAndView mav,HttpServletRequest request) throws ParseException {
+	  if(memberId == null) {
+		  memberId ="";
+	  }
 	   Date sysdate = new Date();
 	   int cPage = 0;
 	   try {
@@ -775,6 +778,10 @@ public class IndexController {
 	   List<String>  categoryList = new ArrayList<String>(); 		   
 	   for(int i = 0 ; i<favorites.size(); i++) {
 		   categoryList.add(favorites.get(i).getCategory());
+		   String closingDate = favorites.get(i).getClosingDate();
+		   String date2 = closingDate.substring(0,10);
+		   favorites.get(i).setClosingDate(date2);
+		   
 	   }
 	   //카테고리를 가져온후 중복제거
 	   List<String>  categoryLists = new ArrayList<String>(); 		   
@@ -793,6 +800,7 @@ public class IndexController {
 	   map.put("array",categoryLists);
 	   map.put("memberId", memberId);
 	   List<Recruitment> recommendationRecruitmentList = indexService.selectListRecommendRecruitmentList(map);
+	   
 	   
 	   for(int i = 0 ; i<recommendationRecruitmentList.size() ; i++) {
 	     	  date = format.parse(recommendationRecruitmentList.get(i).getClosingDate());    	  
@@ -841,5 +849,32 @@ public class IndexController {
 	   
 	   mav.setViewName("notice/favoriteRecruitment");
 	   return mav;
+   }
+   
+   @RequestMapping("/index/deleteFavorite.ithrer")
+   public void deleteFavorite(HttpServletResponse res , @RequestParam("test") String [] test,HttpServletRequest req) {
+	   Member member = (Member)req.getSession().getAttribute("member");
+	   Map<String, Object> map = new HashMap<String, Object>();
+	  List<Integer> arr = new ArrayList<Integer>();
+	   int a = 0 ;
+	   for(int i = 0 ; i<test.length; i++) {
+		   System.out.println(test.length);
+		   System.out.println(test[i]);
+		   a = Integer.parseInt(test[i]);
+		   arr.add(a);
+	   }
+	   map.put("memberId", member.getMemberId());
+	   map.put("param", arr);
+	   int result = indexService.deleteFavoritesList(map);
+	   Gson gson = new Gson();
+	   try {
+		gson.toJson(result,res.getWriter());
+	} catch (JsonIOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
 } 

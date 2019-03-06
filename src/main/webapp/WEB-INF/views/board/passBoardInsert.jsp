@@ -7,8 +7,6 @@
 <%
 	// 개인 회원 세션에 있는 정보 가져오기
 	Member member = (Member)session.getAttribute("member");
-
-	
 %>
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="익명게시판" name="pageTitle"/>
