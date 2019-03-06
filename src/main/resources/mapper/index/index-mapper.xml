@@ -127,8 +127,8 @@
 		
 	</select>
 	
-	<insert id="insertPortFolio" parameterType="portfolio">
-		insert into PORTFOLIO values(#{url},#{pOriginalFileName},#{pRenamedFileName},'ikso2000',seq_pf_no.nextval)
+	<insert id="insertPortFolio" parameterType="map">
+		insert into PORTFOLIO values(#{pf.url},null,#{pf.pRenamedFileName},#{memberId},seq_pf_no.nextval)
 	</insert>
 	<update id="updateMember" parameterType="map">
 		update member set email = #{email}, phone =#{phone} where member_id=#{memberId}
@@ -199,4 +199,8 @@
 	</select>
 	
 
+	<!-- 프로필 가져오기-->
+	<select id="selectOneProfile" resultType="profile">
+		select * from profile where member_id =#{memberId} 
+	</select>
 </mapper>

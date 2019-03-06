@@ -17,10 +17,15 @@ public class Intern implements Serializable{/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String internDivision;
-	private String socialInst;
-	private String internstartDate;
-	private String internendDate;
-	private String internTextarea;
+	private String interndivision;
+	private String[] interndivisionArr;
+	private String socialinst;
+	private String[] socialinstArr;
+	private String internstartdate;
+	private String[] internstartdateArr;
+	private String internenddate;
+	private String[] internenddateArr;
+	private String interntextarea;
+	private String[] interntextareaArr;
 
 }

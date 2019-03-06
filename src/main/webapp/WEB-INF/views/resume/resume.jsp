@@ -10,7 +10,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/resume.css" />
 <br /><br />
 <div name="container" class="container">
-<form class="resumeResultFrm" id="resumeProfileFrm" method="post" action="${pageContext.request.contextPath}/resume/saveResume.do" encType="multipart/form-data">
+<form class="resumeResultFrm" id="resumeProfileFrm" method="get" action="${pageContext.request.contextPath}/resume/saveResume.do" enctype="multipart/form-data">
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" name="userResumeTitle" id="userResumeTitle" 

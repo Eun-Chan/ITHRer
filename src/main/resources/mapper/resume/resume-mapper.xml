@@ -1,61 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="resume">
-	<select id="certificateList" resultMap="certificateMap">
-		select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
+   <select id="certificateList" resultMap="certificateMap">
+      select cert_name from searchcerti where cert_name like '%'||#{certName}||'%'
+   </select>
+   <resultMap type="map" id="certificateMap"></resultMap>
+   <insert id="insertAward" parameterType="hashmap">
+      insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
+         (#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})      
+   </insert>
+   <insert id="insertCareer" parameterType="hashmap">
+      insert into career(corpName,department,hiredDate,retiredDate,buttonWorking,jobposition,job,income,description,member_id)
+      values(#{career.corpName},#{career.department},#{career.hiredDate},#{career.retiredDate},#{career.buttonWorking,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
+      ,#{career.jobposition},#{career.job},#{career.income},#{career.description},#{memberIdHide})
+   </insert>
+   <insert id="insertCertificate" parameterType="hashmap">
+      insert into certification(certName,certPublisher,certDate,member_id) 
+      values(#{certification.certName},#{certification.certPublisher},#{certification.certDate},#{memberIdHide})
+   </insert>
+   <insert id="insertHopework" parameterType="hashmap">
+      insert into hopework(jobType,wantPay,visitDetermine,hopePlace,hopeDuty,member_id)
+      values(#{hopework.jobType},#{hopework.wantPay},#{hopework.visitDetermine,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
+      ,#{hopework.hopePlace},#{hopework.hopeDuty},#{memberIdHide})
+   </insert>
+   <insert id="insertIntern" parameterType="hashmap">
+      insert into intern(internDivision,socialInst,internstartDate,internendDate,internTextarea,member_id)
+      values(#{intern.internDivision},#{intern.socialInst},#{intern.internstartDate},#{intern.internendDate},#{intern.internTextarea},#{memberIdHide})
+   </insert>
+   <insert id="insertLanguage" parameterType="hashmap">
+      insert into language(languageDivision,languageName,selfText,speakingDivision,examName,selfExam,examscore,examDate,member_id)
+      values(#{language.languageDivision},#{language.languageName},#{language.selfText},#{language.speakingDivision},
+      #{language.examName},#{language.selfExam},#{language.examscore},#{language.examDate},#{memberIdHide})
+   </insert>
+   <insert id="insertLearn" parameterType="hashmap">
+      insert into learn(learnTitle,learnAgency,learnstartDate,learnendDate,learnTextarea,member_id)
+      values(#{learn.learnTitle},#{learn.learnAgency},#{learn.learnstartDate},#{learn.learnendDate},#{learn.learnTextarea},#{memberIdHide})
+   </insert>
+   <insert id="insertOverseas" parameterType="hashmap">
+      insert into overseas(country,overseasstartDate,overseasendDate,overseasTextarea,member_id)
+      values(#{overseas.country},#{overseas.overseasstartDate},#{overseas.overseasendDate},#{overseas.overseasTextarea},#{memberIdHide})
+   </insert>
+   <insert id="insertPreference" parameterType="hashmap">
+      insert into preference(preferCheck,disoderselect,militaryselect,member_id)
+      values(#{preference.preferCheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{preference.disoderselect},#{preference.militaryselect},#{memberIdHide})
+   </insert>
+   <insert id="insertProfile" parameterType="hashmap">
+      insert into profile(user_resume_title,name,birth,gender,email,phone,address,member_id)
+      values(#{profile.userResumeTitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{memberIdHide})
+   </insert>
+   <insert id="insertEducation" parameterType="hashmap">
+      insert into education(nonhigh,graduaction,schoolName,highgraduationDate,highgraduationState,admissionDate,graduationDate,graducationstate,transfer,major,score,totalscore,degree
+      ,otherDepartSel,secmajor,otherDepartText,member_id) values(#{education.nonHigh,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+      #{education.graduaction},#{education.schoolName},#{education.highgraduationDate},#{education.highgraduationState},#{education.admissionDate},#{education.graduationDate},
+      #{education.graducationstate},#{education.transfer,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{education.major},#{education.score},#{education.totalscore},
+      #{education.degree},#{education.otherDepartSel},#{education.secmajor},#{education.otherDepartText},#{memberIdHide})
+   </insert>
+   <insert id="insertPortFolio" parameterType="hashmap">
+      insert into PORTFOLIO values(#{pf.url},#{pf.pOriginalFileNameTest},#{pf.pRenamedFileName},#{memberIdHide},seq_pf_no.nextval)
+   </insert>
+   
+   
+   <select id="awardView" resultMap="awardViewMap">
+      select * from award where member_id = #{memberId}
+   </select>
+   <resultMap type="award" id="awardViewMap">
+		<result column="awardname" property="awardnameArr" typeHandler="strArrTypeHandler"/>
+		<result column="awardagency" property="awardagencyArr" typeHandler="strArrTypeHandler"/>
+		<result column="awarddate" property="awarddateArr" typeHandler="strArrTypeHandler"/>
+		<result column="awardtextarea" property="awardtextareaArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
+   <select id="careerView" resultMap="careerViewMap">
+      select * from career where member_id = #{memberId}
+   </select>
+   <resultMap type="career" id="careerViewMap">
+		<result column="corpname" property="corpnameArr" typeHandler="strArrTypeHandler"/>
+		<result column="department" property="departmentArr" typeHandler="strArrTypeHandler"/>
+		<result column="hireddate" property="hireddateArr" typeHandler="strArrTypeHandler"/>
+		<result column="retireddate" property="retireddateArr" typeHandler="strArrTypeHandler"/>
+		<result column="buttonworking" property="buttonworking" typeHandler="strArrTypeHandler"/>
+		<result column="jobposition" property="jobpositionArr" typeHandler="strArrTypeHandler"/>
+		<result column="job" property="jobArr" typeHandler="strArrTypeHandler"/>
+		<result column="income" property="incomeArr" typeHandler="strArrTypeHandler"/>
+		<result column="description" property="descriptionArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
+   <select id="certificateView" resultMap="certificateViewMap">
+      select * from certification where member_id = #{memberId}
+   </select>
+    <resultMap type="certification" id="certificateViewMap">
+		<result column="certName" property="certNameArr" typeHandler="strArrTypeHandler"/>
+		<result column="certPublisher" property="certPublisherArr" typeHandler="strArrTypeHandler"/>
+		<result column="certDate" property="certDateArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
+   <select id="hopeworkView" resultType="hopework">
+      select * from hopework where member_id = #{memberId}
+   </select>
+   
+   <select id="internView" resultMap="internViewMap">
+      select * from intern where member_id = #{memberId}
+   </select>
+   <resultMap type="intern" id="internViewMap">
+		<result column="interndivision" property="interndivisionArr" typeHandler="strArrTypeHandler"/>
+		<result column="socialinst" property="socialinstArr" typeHandler="strArrTypeHandler"/>
+		<result column="internstartdate" property="internstartdateArr" typeHandler="strArrTypeHandler"/>
+		<result column="internenddate" property="internenddateArr" typeHandler="strArrTypeHandler"/>
+		<result column="internstartdate" property="internstartdateArr" typeHandler="strArrTypeHandler"/>
+		<result column="interntextarea" property="interntextareaArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+   
+   <select id="languageView" resultMap="languageViewMap">
+      select * from language where member_id = #{memberId}
+   </select>
+   <resultMap type="language" id="languageViewMap">
+		<result column="languagedivision" property="languagedivisionArr" typeHandler="strArrTypeHandler"/>
+		<result column="languagename" property="languagenameArr" typeHandler="strArrTypeHandler"/>
+		<result column="selftext" property="selftextArr" typeHandler="strArrTypeHandler"/>
+		<result column="speakingdivision" property="speakingdivisionArr" typeHandler="strArrTypeHandler"/>
+		<result column="examname" property="examnameArr" typeHandler="strArrTypeHandler"/>
+		<result column="selfexam" property="selfexamArr" typeHandler="strArrTypeHandler"/>
+		<result column="examscore" property="examscoreArr" typeHandler="strArrTypeHandler"/>
+		<result column="examdate" property="examdateArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
+   <select id="learnView" resultMap="learnViewMap">
+      select * from learn where member_id = #{memberId}
+   </select>
+   <resultMap type="learn" id="learnViewMap">
+		<result column="learntitle" property="learntitleArr" typeHandler="strArrTypeHandler"/>
+		<result column="learnagency" property="learnagencyArr" typeHandler="strArrTypeHandler"/>
+		<result column="learnstartdate" property="learnstartdateArr" typeHandler="strArrTypeHandler"/>
+		<result column="learnenddate" property="learnenddateArr" typeHandler="strArrTypeHandler"/>
+		<result column="learntextarea" property="learntextareaArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+   
+   <select id="overseasView" resultMap="overseasViewMap">
+      select * from overseas where member_id = #{memberId}
+   </select>
+   <resultMap type="overseas" id="overseasViewMap">
+		<result column="country" property="countryArr" typeHandler="strArrTypeHandler"/>
+		<result column="overseasstartdate" property="overseasstartdateArr" typeHandler="strArrTypeHandler"/>
+		<result column="overseasenddate" property="overseasenddateArr" typeHandler="strArrTypeHandler"/>
+		<result column="overseastxtarea" property="overseastxtareaArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
+   <select id="portFolioView" resultType="portfolio">
+      select * from portfolio where member_id = #{memberId}
+   </select>
+   
+   <select id="preferenceView" resultMap="preferenceViewMap">
+      select * from preference where member_id = #{memberId}
+   </select>
+   <resultMap type="preference" id="preferenceViewMap">
+		<result column="prefercheck" property="prefercheck" typeHandler="strArrTypeHandler"/>
+		<result column="disoderselect" property="disoderselectArr" typeHandler="strArrTypeHandler"/>
+		<result column="militaryselect" property="militaryselectArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
+   <select id="profileView" resultType="profile">
+      select * from profile where member_id = #{memberId}
+   </select>
+
+
+	<select id="educationView" resultMap="educationViewMap" parameterType="string">
+		select * from education where member_id = #{memberId}
 	</select>
-	<resultMap type="map" id="certificateMap"></resultMap>
-	<insert id="insertAward" parameterType="hashmap">
-		insert into award(awardName,awardAgency,awardDate,awardTextarea,member_id) values
-			(#{award.awardName},#{award.awardAgency},#{award.awardDate},#{award.awardTextarea},#{memberIdHide})		
-	</insert>
-	<insert id="insertCareer" parameterType="hashmap">
-		insert into career(corpName,department,hiredDate,retiredDate,buttonWorking,jobposition,job,income,description,member_id)
-		values(#{career.corpName},#{career.department},#{career.hiredDate},#{career.retiredDate},#{career.buttonWorking,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
-		,#{career.jobposition},#{career.job},#{career.income},#{career.description},#{memberIdHide})
-	</insert>
-	<insert id="insertCertificate" parameterType="hashmap">
-		insert into certification(certName,certPublisher,certDate,member_id) 
-		values(#{certificate.certName},#{certificate.certPublisher},#{certificate.certDate},#{memberIdHide})
-	</insert>
-	<insert id="insertHopework" parameterType="hashmap">
-		insert into hopework(jobType,wantPay,visitDetermine,hopePlace,hopeDuty,member_id)
-		values(#{hopework.jobType},#{hopework.wantPay},#{hopework.visitDetermine,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler}
-		,#{hopework.hopePlace},#{hopework.hopeDuty},#{memberIdHide})
-	</insert>
-	<insert id="insertIntern" parameterType="hashmap">
-		insert into intern(internDivision,socialInst,internstartDate,internendDate,internTextarea,member_id)
-		values(#{intern.internDivision},#{intern.socialInst},#{intern.internstartDate},#{intern.internendDate},#{intern.internTextarea},#{memberIdHide})
-	</insert>
-	<insert id="insertLanguage" parameterType="hashmap">
-		insert into language(languageDivision,languageName,selfText,speakingDivision,examName,selfExam,examscore,examDate,member_id)
-		values(#{language.languageDivision},#{language.languageName},#{language.selfText},#{language.speakingDivision},
-		#{language.examName},#{language.selfExam},#{language.examscore},#{language.examDate},#{memberIdHide})
-	</insert>
-	<insert id="insertLearn" parameterType="hashmap">
-		insert into learn(learnTitle,learnAgency,learnstartDate,learnendDate,learnTextarea,member_id)
-		values(#{learn.learnTitle},#{learn.learnAgency},#{learn.learnstartDate},#{learn.learnendDate},#{learn.learnTextarea},#{memberIdHide})
-	</insert>
-	<insert id="insertOverseas" parameterType="hashmap">
-		insert into overseas(country,overseasstartDate,overseasendDate,overseasTextarea,member_id)
-		values(#{overseas.country},#{overseas.overseasstartDate},#{overseas.overseasendDate},#{overseas.overseasTextarea},#{memberIdHide})
-	</insert>
-	<insert id="insertPreference" parameterType="hashmap">
-		insert into preference(preferCheck,disoderselect,militaryselect,member_id)
-		values(#{preference.preferCheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{preference.disoderselect},#{preference.militaryselect},#{memberIdHide})
-	</insert>
-	<insert id="insertProfile" parameterType="hashmap">
-		insert into profile(userResumeTitle,name,birth,gender,email,phone,address,member_id)
-		values(#{profile.userResumeTitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{memberIdHide})
-	</insert>
-	<insert id="insertEducation" parameterType="hashmap">
-		insert into education(nonhigh,graduaction,schoolName,highgraduationDate,highgraduationState,admissionDate,graduationDate,graducationstate,transfer,major,score,totalscore,degree
-		,otherDepartSel,secmajor,otherDepartText,member_id) values(#{education.nonHigh,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
-		#{education.graduaction},#{education.schoolName},#{education.highgraduationDate},#{education.highgraduationState},#{education.admissionDate},#{education.graduationDate},
-		#{education.graducationstate},#{education.transfer,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{education.major},#{education.score},#{education.totalscore},
-		#{education.degree},#{education.otherDepartSel},#{education.secmajor},#{education.otherDepartText},#{memberIdHide})
-	</insert>
-	<insert id="insertPortFolio" parameterType="hashmap">
-		insert into PORTFOLIO values(#{pf.url},#{pf.pOriginalFileNameTest},#{pf.pRenamedFileName},#{memberIdHide},seq_pf_no.nextval)
-	</insert>
+	<resultMap type="education" id="educationViewMap">
+		<result column="graduaction" property="graduactionArr" typeHandler="strArrTypeHandler"/>
+		<result column="schoolname" property="schoolnameArr" typeHandler="strArrTypeHandler"/>
+		<result column="highgraduationdate" property="highgraduationdateArr" typeHandler="strArrTypeHandler"/>
+		<result column="highgraduationstate" property="highgraduationstateArr" typeHandler="strArrTypeHandler"/>
+		<result column="admissiondate" property="admissiondateArr" typeHandler="strArrTypeHandler"/>
+		<result column="graduationdate" property="graduationdateArr" typeHandler="strArrTypeHandler"/>
+		<result column="graducationstate" property="graducationstateArr" typeHandler="strArrTypeHandler"/>
+		<result column="transfer" property="transfer" typeHandler="strArrTypeHandler"/>
+		<result column="major" property="majorArr" typeHandler="strArrTypeHandler"/>
+		<result column="score" property="scoreArr" typeHandler="strArrTypeHandler"/>
+		<result column="totalscore" property="totalscoreArr" typeHandler="strArrTypeHandler"/>
+		<result column="degree" property="degreeArr" typeHandler="strArrTypeHandler"/>
+		<result column="otherdepartsel" property="otherdepartselArr" typeHandler="strArrTypeHandler"/>
+		<result column="secmajor" property="secmajorArr" typeHandler="strArrTypeHandler"/>
+		<result column="otherdeparttext" property="otherdeparttextArr" typeHandler="strArrTypeHandler"/>
+	</resultMap>
+	
 </mapper>

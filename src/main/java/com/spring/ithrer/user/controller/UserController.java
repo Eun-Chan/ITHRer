@@ -217,7 +217,7 @@ public class UserController {
 			// 로그인 한 유저 세션에 넣기
 			HttpSession session = req.getSession();
 			
-			session.setMaxInactiveInterval(60*10);
+			session.setMaxInactiveInterval(60*1000);
 			session.setAttribute("member", member);
 			
 			test.put("result" , "true");

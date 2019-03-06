@@ -49,6 +49,7 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
 import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 import net.sf.json.JSONArray;
@@ -505,8 +506,8 @@ public class IndexController {
 	   //해당 회사에 아이디로 지원한 적이 있는지 검사하는 쿼리
 	   int count = indexService.selectCountCompanyApplication(map);
 	 
-	   
 	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
+	   
 	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
 	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
 	   
@@ -530,17 +531,20 @@ public class IndexController {
 	   if(req.getSession().getAttribute("member")!=null) {
 			  Member member = (Member) req.getSession().getAttribute("member");
 			  memberId = member.getMemberId();
-		 }
+	   }
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("memberId", memberId);
 	   map.put("recNo", rbcNo);
 	   
 	   Recruitment rc = indexService.selectOneRecruitment(map);
+	   Profile pf = indexService.selectOneProfile(memberId);
+	   
    
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	   
 	   List<PortFolio> portFolio = indexService.selectListPortFolio(memberId);
 	   
+	   mav.addObject("pf", pf);
 	   mav.addObject("portFolio", portFolio);
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
@@ -614,6 +618,11 @@ public class IndexController {
    @RequestMapping(value= "/index/uploadPortfolio.ithrer", method=RequestMethod.POST)
    @ResponseBody
    public void uploadPortfolio(MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
+	   String memberId = "";
+	   if(req.getSession().getAttribute("member")!=null) {
+			  Member member = (Member) req.getSession().getAttribute("member");
+			  memberId = member.getMemberId();
+	   }
 	   res.setCharacterEncoding("utf-8");
 	   //1.파일업로드 (업로드할 경로 찾기)
 	   Iterator<String> itr = req.getFileNames();
@@ -648,17 +657,20 @@ public class IndexController {
 			e1.printStackTrace();
 		}
 	   	String path = (String)img_path.getBody();
+	   	String url = path.substring(path.indexOf("_")+1);
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
 		/* 되는걸로 하세요 */
 		//pf.setPOriginalFileName(o_fileName);
-		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
-		pf.setUrl(path);
-		
+		pf.setUrl(url);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberId", memberId);
+		map.put("pf", pf);
 		//2. 포트폴리오 테이블에 인서트
-		int result = indexService.insertPortFolio(pf);
+		int result = indexService.insertPortFolio(map);
+		
 		Gson gson = new Gson();
 		if(result == 1) {			
 			try {
@@ -753,7 +765,9 @@ public class IndexController {
    //스크랩한 공고 보여주는 창
    @RequestMapping("/index/favoriteRecruitment.ithrer")
    public ModelAndView favoriteRecruitment(@RequestParam("memberId") String memberId,ModelAndView mav,HttpServletRequest request) throws ParseException {
-	  if(memberId == null) {
+	  System.out.println("memberId="+memberId);
+	   
+	   if(memberId == null) {
 		  memberId ="";
 	  }
 	   Date sysdate = new Date();
@@ -784,10 +798,15 @@ public class IndexController {
 		   
 	   }
 	   //카테고리를 가져온후 중복제거
-	   List<String>  categoryLists = new ArrayList<String>(); 		   
-	   for(int i = 0 ; i<categoryList.size() ; i++) {
-		   if(!categoryLists.contains(categoryList.get(i))) {
-			   categoryLists.add(categoryList.get(i));
+	   List<String>  categoryLists = new ArrayList<String>();
+	   if(categoryList.isEmpty()) {
+		   categoryLists.add("");
+	   }
+	   else {		   
+		   for(int i = 0 ; i<categoryList.size() ; i++) {
+			   if(!categoryLists.contains(categoryList.get(i))) {
+				   categoryLists.add(categoryList.get(i));
+			   }
 		   }
 	   }
 	  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

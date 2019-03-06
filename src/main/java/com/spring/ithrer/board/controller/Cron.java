@@ -10,7 +10,15 @@ public class Cron {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-
+	/*
+     * 5초 마다 실행
+     */
+	/*
+    @Scheduled(fixedDelay=5000)
+    public void init() {
+        System.out.println("init");
+    }
+    */
 
     /**
      * 매일 22시에 수행

@@ -39,6 +39,7 @@ public class Company implements Serializable {
 	private String delFlag;
 	private String password;
 	private String compEmail;
+	private String logoS3;
 	
 	// 추가적으로 필요한 정보 담을 필드 (쿼리에서 생성한 것)
 	private String doe;

@@ -31,6 +31,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.service.CompanyService;
+import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
@@ -39,6 +40,19 @@ import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
+import com.spring.ithrer.resume.model.service.ResumeService;
+import com.spring.ithrer.resume.model.vo.Award;
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Certification;
+import com.spring.ithrer.resume.model.vo.Education;
+import com.spring.ithrer.resume.model.vo.Hopework;
+import com.spring.ithrer.resume.model.vo.Intern;
+import com.spring.ithrer.resume.model.vo.Language;
+import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Overseas;
+import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Preference;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
@@ -50,6 +64,8 @@ public class CompanyController {
 	
 	@Autowired
 	CompanyService companyService;
+	@Autowired
+	ResumeService resumeService;
 	
 	@GetMapping("/info.ithrer")
 	public ModelAndView info(@RequestParam("compId") String compId, ModelAndView mav) {
@@ -268,8 +284,35 @@ public class CompanyController {
 
 		Member member = companyService.selectApplicant(map); 
 		
+		// 이력서 가져오기
+		Education education = resumeService.educationView(memberId);
+		logger.debug("에듀케이션 | "+education);
+		Profile profile = resumeService.profileView(memberId);
+	    Award award = resumeService.awardView(memberId);
+	    Career career = resumeService.careerView(memberId);
+	    Certification certificate = resumeService.certificateView(memberId);
+	    Hopework hopework = resumeService.hopeworkView(memberId);
+	    Intern intern = resumeService.internView(memberId);
+	    Language language = resumeService.languageView(memberId);
+	    Learn learn = resumeService.learnView(memberId);
+	    Overseas overseas = resumeService.overseasView(memberId);
+	    PortFolio portFolio = resumeService.portFolioView(memberId);
+	    Preference preference = resumeService.preferenceView(memberId);
+	    
+	    mav.addObject("profile",profile);
+	    mav.addObject("award",award);
+	    mav.addObject("career",career);
+	    mav.addObject("certificate",certificate);
+	    mav.addObject("hopework",hopework);
+	    mav.addObject("intern",intern);
+	    mav.addObject("language",language);
+	    mav.addObject("learn",learn);
+	    mav.addObject("overseas",overseas);
+	    mav.addObject("portFolio",portFolio);
+	    mav.addObject("preference",preference);
+	    mav.addObject("education",education);
 		
-		mav.addObject("member",member);
+		mav.addObject("member2",member);
 		mav.setViewName("company/viewApplicant");
 		
 		return mav;
@@ -423,13 +466,15 @@ public class CompanyController {
 					 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
 					 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
 					 @RequestParam(defaultValue="", value="payCondition") String payCondition,
+					 @RequestParam(defaultValue="", value="salaryType") String salaryType,
 					 @RequestParam(defaultValue="", value="welfare") String welfare,
 					 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
-					 @RequestParam(defaultValue="", value="closingDate") String closingDate,
+					 @RequestParam(defaultValue="SYSDATE", value="closingDate") String closingDate,
 					 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
 					 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
 					 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
-					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml)
+					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
+					 @RequestParam(defaultValue="", value="workDay") String workDay)
 	{
 		System.out.println("테스트시작");
 		/*frm1*/
@@ -483,17 +528,20 @@ public class CompanyController {
 		rect.setCertificate(result_certificate);
 		rect.setComputerLiteracy(result_computerLiteracy);
 		rect.setEmploymentPreference(result_employmentPreference);
-		if(result_genderCut.equals("무관")) result_genderCut = "";
+		if(result_genderCut.equals("무관")) result_genderCut = " ";
 		else if(result_genderCut.equals("남자")) result_genderCut = "M";
 		else if(result_genderCut.equals("여자")) result_genderCut = "F";
+		System.out.println("넣고있는 성별값 : " + result_genderCut);
 		rect.setGenderCut(result_genderCut);
 		rect.setEtcQualificationRequirement(result_etcQualificationRequirement);
 		
 		/* frm3 */
 		nearbyStation.replace("- ", "/");
 		rect.setNearbyStation(nearbyStation);
+		rect.setSalaryType(salaryType);
 		rect.setPayCondition(payCondition+"만원");
 		rect.setWelfare(welfare.replaceAll("\\p{Z}", ""));
+		rect.setWorkDay(workDay);
 
 		/* frm4 */
 		rect.setOpeningDate(openingDate);
@@ -515,11 +563,32 @@ public class CompanyController {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("recruitmentNo", recruitmentNo);
 		paramMap.put("compId", compId);
-		List<Member> applicantList = companyService.selectAppList(paramMap);
+		List<Member> applicantList = companyService.selectAppList(recruitmentNo);
+		logger.debug("지원자 리스트 | "+applicantList);
+		
+		for(int i=0; i<applicantList.size(); i++) {
+			if(applicantList.get(i).getEducation() != null) {
+				// 최종 학교이름 추출
+				String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
+				applicantList.get(i).getEducation().setSchoolname(schoolName[schoolName.length-1]);
+				
+				// 최종 학점 추출
+				String[] score = applicantList.get(i).getEducation().getScore().split(",");
+				applicantList.get(i).getEducation().setScore(score[score.length-1]);
+				
+				// 최종 학점 만점 추출
+				String[] totalScore = applicantList.get(i).getEducation().getTotalscore().split(",");
+				applicantList.get(i).getEducation().setTotalscore(totalScore[totalScore.length-1]);
+			}
+			
+			if(applicantList.get(i).getCareer() != null) {
+				
+			}
+		}
+		
 		
 		// 해당 채용공고 가져오기
 		Recruitment recruitment = companyService.selectRecruitmentOne(recruitmentNo);
-		
 		// 해당 채용공고를 제외한 마감되지 않은 채용공고리스트 가져오기
 		List<Recruitment> rcrtList = companyService.selectRcrtListNotThis(paramMap);
 		
@@ -560,6 +629,27 @@ public class CompanyController {
 		map.put("result", resultStr);
 		
 		return map;
+	}
+	
+	/**
+	 * @박광준
+	 * 채용공고등록 - 페이지 로드 시 필요한 데이터 로드 (지역코드 정보)
+	 */
+	@GetMapping("/recruitmentLoadLocation.ithrer")
+	@ResponseBody
+	public void recruitmentLoadLocation(HttpServletResponse response, HttpServletRequest request) {
+		logger.debug("채용공고등록 페이지에 필요한 정보를 로드합니다. - 지역코드");
+		int param = Integer.parseInt(request.getParameter("targetLocation"));
+		List<Area> locationList = companyService.selectLocationcodeList(param);
+		
+		try {
+			response.setContentType("application/json; charset=utf-8");
+			new Gson().toJson(locationList, response.getWriter());
+		} catch (JsonIOException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

@@ -15,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +25,7 @@ import com.amazonaws.util.IOUtils;
 import com.spring.ithrer.charged.model.service.ChargedService;
 import com.spring.ithrer.common.util.S3Util;
 import com.spring.ithrer.common.util.UploadFileUtils;
+import com.spring.ithrer.company.model.service.CompanyService;
 
 @RestController
 public class ChargedController {
@@ -37,6 +37,8 @@ public class ChargedController {
 	
 	@Autowired
 	ChargedService chargedService;
+	@Autowired
+	CompanyService companyService;
 	
 	@RequestMapping(value="/charedService.ithrer")
 	public ModelAndView chargedService(ModelAndView mav) {
@@ -85,6 +87,10 @@ public class ChargedController {
 			result = chargedService.updateFileName(no, path);
 			
 		}
+		else if("images/compLogo".equals(directory.trim())) {
+			logger.debug("image/compLogo");
+			result = companyService.updateCompanyLogo(path, compId);
+		}
 		
 		if(path!=null) {
 
@@ -109,6 +115,10 @@ public class ChargedController {
 		if(directory.equals("banner")) {
 			inputDirectory = "images/banner";
 		}
+		else if(directory.equals("compLogo")) {
+			inputDirectory = "images/compLogo";
+		}
+		
 //		else if(directory.equals("certificate")) {
 //			inputDirectory = "almom/certificate";
 //		}else {

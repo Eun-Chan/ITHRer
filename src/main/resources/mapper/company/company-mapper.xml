@@ -136,7 +136,7 @@
 	
 	<!-- 기업공고 등록하기 -->
 	<insert id="insertRecruitment" parameterType="Recruitment">
-		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation}, '',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference}, #{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'','서울시 강남구', #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate}, #{closingDate}, 101010, #{applicantAgeEnd}, #{genderCut}, #{certificate}, #{major}, 'WORK_DAY주1일','N',#{certificate},#{foreLang},#{summernoteHtml})
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},'WORK_DAY주1일','N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},'101010',#{genderCut})
 	</insert>
 	
 	<!-- 지하철노선도-구분 가져오기 -->
@@ -188,4 +188,58 @@
 		update recruitment set end='Y' where recruitment_no=#{recruitmentNo}
 	</update>
 	
+	<!-- 기업 로고 s3 주소로 등록 -->
+	<update id="updateCompanyLogo" parameterType="map">
+		update company set logo_s3=#{path} where comp_id=#{compId}
+	</update>
+	
+	<!-- 채용공고에 지원한 지원자 리스트 가져오기 -->
+	<select id="selectAppList" resultMap="ApplicantList" parameterType="_int">
+		select 
+			(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
+			(select count(*) from favorites where comp_id=ca.comp_Id and member_id=ca.member_id and select_no=1) count,
+            m.member_id,
+			m.member_name,
+			m.gender,
+			ca.cu_resdate,
+            ca.recruitment_no,
+            ca.comp_id,
+			e.schoolname,
+			e.score,
+			e.totalscore,
+			c.corpname,
+			h.wantpay
+		from
+			member m
+				left join education e on m.member_id=e.member_id
+				left join career c on m.member_id=c.member_id
+				left join hopework h on m.member_id=h.member_id
+                left join companyapplication ca on m.member_id=ca.member_id
+		where ca.recruitment_no=#{recruitmentNo}
+	</select>
+	<resultMap type="member" id="ApplicantList">
+		<id column="member_id" property="memberId"/>
+		<result column="member_name" property="memberName"/>
+      	<result column="age" property="age"/>
+      	<result column="gender" property="gender"/>
+ 		<association javaType="ca" property="ca">
+			<result column="cu_resdate" property="cuResdate"/>
+		</association>
+ 		<association javaType="education" property="education">
+			<result column="schoolname" property="schoolname"/>
+			<result column="score" property="score"/>
+			<result column="totalscore" property="totalscore"/>
+		</association>
+ 		<association javaType="career" property="career">
+			<result column="corpname" property="corpname"/>
+		</association>
+ 		<association javaType="hopework" property="hopework">
+			<result column="wantpay" property="wantpay"/>
+		</association>
+	</resultMap>
+	
+	<!-- 지역정보 가져오기 -->
+	<select id="selectLocationcodeList" parameterType="_int" resultType="area">
+		SELECT LOCATION_CODE, LOCATION_NAME FROM AREA WHERE LOCATION_TOTAL_CODE = #{param}
+	</select>
 </mapper>

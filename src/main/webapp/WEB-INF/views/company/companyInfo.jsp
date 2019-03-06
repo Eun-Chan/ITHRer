@@ -529,31 +529,41 @@ function inputNumberFormat(obj) {
 $("#company-info-submit").on("click",function(){
 	
 	var formData = new FormData();
+	var directory = 'images/compLogo';
+	var compId = "${companyLoggedIn.compId}";
 	formData.append("upFile",$("input#logo")[0].files[0]);
+	formData.append("directory",directory);
+	formData.append("compId",compId);
+	
 	$.ajax({
-		url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+		url: "${pageContext.request.contextPath}/fileUpload.ithrer",
 		contentType: false,
-		cache: false,
 		processData: false,
-		type: "put",
+		data: formData, 
+		type: "post",
 		success: function(data){
-			alert(data.msg);
+			alert(data);
+			
+			if(data == '1'){
+				$.ajax({
+					url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+					type: "put",
+					success: function(data){
+						alert(data.msg);
+					},
+					error: function(){
+						console.log("기업정보 수정 ajax error!");
+					}
+				});
+			}
+			
 		},
 		error: function(){
 			console.log("기업정보 수정 ajax error!");
 		}
 	});
 	
-	$.ajax({
-		url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
-		type: "put",
-		success: function(data){
-			alert(data.msg);
-		},
-		error: function(){
-			console.log("기업정보 수정 ajax error!");
-		}
-	});
+	
 	
 });
 
