@@ -22,7 +22,6 @@ import com.spring.ithrer.resume.model.vo.Profile;
 
 @Repository
 public class ResumeDaoImpl implements ResumeDao {
-
 	@Autowired
 	SqlSessionTemplate sqlSession;
 
@@ -154,5 +153,6 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public int insertLetter(Map<String, Object> letterMap) {
 		return sqlSession.insert("resume.insertLetter",letterMap);
-	}
+	} 
+
 }

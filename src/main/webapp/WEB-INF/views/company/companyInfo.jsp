@@ -66,7 +66,6 @@ div.border-top.border-bottom{
 			<div class="row">
 				<div class="col-sm-4">
 					<label for="">로고</label>
-					
 					<div class="custom-file">
 						<input type="file" name="logo" class="custom-file-input" id="logo">
 						<label class="custom-file-label" for="customFile"></label>
@@ -529,16 +528,42 @@ function inputNumberFormat(obj) {
 /* 기업정보 수정 버튼 */
 $("#company-info-submit").on("click",function(){
 	
+	var formData = new FormData();
+	var directory = 'images/compLogo';
+	var compId = "${companyLoggedIn.compId}";
+	formData.append("upFile",$("input#logo")[0].files[0]);
+	formData.append("directory",directory);
+	formData.append("compId",compId);
+	
 	$.ajax({
-		url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
-		type: "put",
+		url: "${pageContext.request.contextPath}/fileUpload.ithrer",
+		contentType: false,
+		processData: false,
+		data: formData, 
+		type: "post",
 		success: function(data){
-			alert(data.msg);
+			alert(data);
+			
+			if(data == '1'){
+				$.ajax({
+					url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+					type: "put",
+					success: function(data){
+						alert(data.msg);
+					},
+					error: function(){
+						console.log("기업정보 수정 ajax error!");
+					}
+				});
+			}
+			
 		},
 		error: function(){
 			console.log("기업정보 수정 ajax error!");
 		}
 	});
+	
+	
 	
 });
 

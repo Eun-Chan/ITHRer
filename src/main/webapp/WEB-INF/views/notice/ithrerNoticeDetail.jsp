@@ -161,7 +161,10 @@
 	</div>
 	<div class="col-sm-4" style="border-left:1px solid #dde2eb;">
 		<div style="text-align: center;">
-			<img src="${pageContext.request.contextPath }/resources/images/google.svg" alt="" width="150px;" height="80px;" style="position: relative; top: 10px;"/>
+		<%-- 	<img src="${pageContext.request.contextPath }/resources/images/google.svg" alt="" width="150px;" height="80px;" style="position: relative; top: 10px;"/> --%>
+			<c:if test="${not empty com.logoS3 }">
+				<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${com.logoS3 }&directory=compLogo" alt="기업로고" width="150px;" height="80px;" style="position: relative; top: 10px;"/>
+			</c:if>
 		</div>
 	</div>
 	<div class="col-sm-8">
@@ -213,9 +216,7 @@
 		<h1>채용정보</h1>
 	</div>
 	<div class="row main">
-		여기에 채용정보가 들어가 보리기이이이
-		이이이이꾸요이이이잇
-		아아아아앙아아아아아
+		${ rc.summernoteHtml}
 	</div>
 	<div class="DetailHeader">
 		<h1>접수기간/방법</h1>
@@ -271,7 +272,7 @@
 					모집인원
 				</div>
 				<div>
-					<em>00명</em>
+					<em>${rc.recruitmentPersonnel }명</em>
 				</div>
 			</div>
 		</div>

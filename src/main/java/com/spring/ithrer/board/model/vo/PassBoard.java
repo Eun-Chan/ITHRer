@@ -9,16 +9,13 @@ public class PassBoard {
 	private String passBoardContent;
 	private Date passBoardDate;
 	private int passBoardReadCount;
-//	private char del_flag;
-//	private int fileCount;
-//	private List<Attachment> files;
-	
+
 	public PassBoard() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
-	
 	public PassBoard(int passBoardNo, String passBoardTitle, String passBoardWriter, String passBoardContent,
-			Date passBoardDate, int readCount) {
+			Date passBoardDate, int passBoardReadCount) {
 		super();
 		this.passBoardNo = passBoardNo;
 		this.passBoardTitle = passBoardTitle;
@@ -27,7 +24,6 @@ public class PassBoard {
 		this.passBoardDate = passBoardDate;
 		this.passBoardReadCount = passBoardReadCount;
 	}
-
 	public int getPassBoardNo() {
 		return passBoardNo;
 	}
@@ -61,16 +57,15 @@ public class PassBoard {
 	public int getPassBoardReadCount() {
 		return passBoardReadCount;
 	}
-
 	public void setPassBoardReadCount(int passBoardReadCount) {
 		this.passBoardReadCount = passBoardReadCount;
 	}
 	@Override
 	public String toString() {
 		return "PassBoard [passBoardNo=" + passBoardNo + ", passBoardTitle=" + passBoardTitle + ", passBoardWriter="
-				+ passBoardWriter + ", passBoardContent=" + passBoardContent + ", passBoardDate=" + passBoardDate
-				+ ", passBoardReadCount=" + passBoardReadCount + "]";
+			+ passBoardWriter + ", passBoardContent=" + passBoardContent + ", passBoardDate=" + passBoardDate
+			+ ", passBoardReadCount=" + passBoardReadCount + "]";
 	}
-
+	
 		
 }

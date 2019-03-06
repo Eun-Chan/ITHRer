@@ -16,6 +16,7 @@ table tr.table-info:hover{cursor:pointer; color: #a8bdff;}
 .table > tbody > tr > td {text-align: center;}
 .table > tbody > tr > #title {text-align: left;}
 </style>
+
 <script>
 function fn_goBoardInsert(){
 	location.href = "${pageContext.request.contextPath}/board/passBoardInsert";
@@ -44,9 +45,9 @@ $(function(){
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach items="${list}" var="b"> 
+			<c:forEach items="${list}" var="b" varStatus="vs"> 
 			<tr no="${b.PASSBOARDNO}" class="table-info">
-				<td>${b.PASSBOARDNO}</td>
+				<td>${vs.count}</td>
 				<td id="title">${b.PASSBOARDTITLE}</td>
 				<td>${b.PASSBOARDWRITER}</td>
 				<td><fmt:formatDate value="${b.PASSBOARDDATE}" type="date"/></td>

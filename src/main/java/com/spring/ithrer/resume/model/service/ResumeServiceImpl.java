@@ -182,6 +182,4 @@ public class ResumeServiceImpl implements ResumeService {
 		int result = resumeDao.insertLetter(letterMap);
 		return result;
 	}
-
-
 }

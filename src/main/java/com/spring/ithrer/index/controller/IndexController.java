@@ -49,6 +49,7 @@ import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.index.model.service.IndexService;
 import com.spring.ithrer.resume.model.vo.PortFolio;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 import net.sf.json.JSONArray;
@@ -123,6 +124,11 @@ public class IndexController {
       //공고 끝나는 날짜 가져오기
       
       //오늘날짜 가져오기
+      
+      //배너광고 s3에서 가져올 수 있도록 등록된 주소를 가져오는 부분
+      List<Map<String, String>> bannerList = indexService.selectListCharged();
+      
+      mav.addObject("bannerList", bannerList);
       mav.addObject("rcList", rcList);
       mav.addObject("rc", rc);
       mav.addObject("topRc", topRc);
@@ -244,8 +250,10 @@ public class IndexController {
 		   age = 0;
 	   }
 	   String gender = request.getParameter("gender");
+	   System.out.println("민우"+gender);
 	   String subway = request.getParameter("subway");
 	   String licence = request.getParameter("licence");
+	   String language = request.getParameter("language");
 	   String[] major = request.getParameterValues("major");
 	   String[] position = request.getParameterValues("position");
 	   String[] preference = request.getParameterValues("preference");
@@ -288,6 +296,7 @@ public class IndexController {
 	   map.put("gender", gender);
 	   map.put("subway", subway);
 	   map.put("licence", licence);
+	   map.put("language", language);
 	   map.put("major", major2);
 	   map.put("position", position2);
 	   map.put("preference", preference2);
@@ -295,7 +304,7 @@ public class IndexController {
 	   map.put("work_day", work_day2);
 	   map.put("welfare", welfare2);
 	   
-	   //logger.debug("map: "+map);
+	   logger.debug("map: "+map);
 	   
 	   int ithrerNumPerPage = 5;
 	   int ithrerCPage;
@@ -331,8 +340,9 @@ public class IndexController {
 	    if(gender == null) {gender = "";}
 	    if(subway == null) {subway = "";}
 	    if(licence == null) {licence = "";}
+	    if(language == null) {language = "";}
 	    
-	    ithrerParam = "&salary="+salary+"&age="+age+"&gender="+gender+"&subway="+subway+"&licence="+licence;
+	    ithrerParam = "&salary="+salary+"&age="+age+"&gender="+gender+"&subway="+subway+"&licence="+licence+"&language="+language;
 	    
 	    if(major == null) {major = new String[] {""};}
 	    if(preference == null) {preference  = new String[] {""};}
@@ -496,8 +506,8 @@ public class IndexController {
 	   //해당 회사에 아이디로 지원한 적이 있는지 검사하는 쿼리
 	   int count = indexService.selectCountCompanyApplication(map);
 	 
-	   
 	   List<Member> list = indexService.selectStatistics(rc.getRecruitmentNo());
+	   
 	   rc.setOpeningDate(rc.getOpeningDate().substring(0, 10));
 	   rc.setClosingDate(rc.getClosingDate().substring(0, 10));
 	   
@@ -521,17 +531,20 @@ public class IndexController {
 	   if(req.getSession().getAttribute("member")!=null) {
 			  Member member = (Member) req.getSession().getAttribute("member");
 			  memberId = member.getMemberId();
-		 }
+	   }
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("memberId", memberId);
 	   map.put("recNo", rbcNo);
 	   
 	   Recruitment rc = indexService.selectOneRecruitment(map);
+	   Profile pf = indexService.selectOneProfile(memberId);
+	   
    
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	   
 	   List<PortFolio> portFolio = indexService.selectListPortFolio(memberId);
 	   
+	   mav.addObject("pf", pf);
 	   mav.addObject("portFolio", portFolio);
 	   mav.addObject("rc", rc);
 	   mav.addObject("com", com);
@@ -605,6 +618,11 @@ public class IndexController {
    @RequestMapping(value= "/index/uploadPortfolio.ithrer", method=RequestMethod.POST)
    @ResponseBody
    public void uploadPortfolio(MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
+	   String memberId = "";
+	   if(req.getSession().getAttribute("member")!=null) {
+			  Member member = (Member) req.getSession().getAttribute("member");
+			  memberId = member.getMemberId();
+	   }
 	   res.setCharacterEncoding("utf-8");
 	   //1.파일업로드 (업로드할 경로 찾기)
 	   Iterator<String> itr = req.getFileNames();
@@ -639,17 +657,20 @@ public class IndexController {
 			e1.printStackTrace();
 		}
 	   	String path = (String)img_path.getBody();
+	   	String url = path.substring(path.indexOf("_")+1);
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
 		/* 되는걸로 하세요 */
 		//pf.setPOriginalFileName(o_fileName);
-		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
-		pf.setUrl(path);
-		
+		pf.setUrl(url);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("memberId", memberId);
+		map.put("pf", pf);
 		//2. 포트폴리오 테이블에 인서트
-		int result = indexService.insertPortFolio(pf);
+		int result = indexService.insertPortFolio(map);
+		
 		Gson gson = new Gson();
 		if(result == 1) {			
 			try {
@@ -744,6 +765,11 @@ public class IndexController {
    //스크랩한 공고 보여주는 창
    @RequestMapping("/index/favoriteRecruitment.ithrer")
    public ModelAndView favoriteRecruitment(@RequestParam("memberId") String memberId,ModelAndView mav,HttpServletRequest request) throws ParseException {
+	  System.out.println("memberId="+memberId);
+	   
+	   if(memberId == null) {
+		  memberId ="";
+	  }
 	   Date sysdate = new Date();
 	   int cPage = 0;
 	   try {
@@ -766,12 +792,21 @@ public class IndexController {
 	   List<String>  categoryList = new ArrayList<String>(); 		   
 	   for(int i = 0 ; i<favorites.size(); i++) {
 		   categoryList.add(favorites.get(i).getCategory());
+		   String closingDate = favorites.get(i).getClosingDate();
+		   String date2 = closingDate.substring(0,10);
+		   favorites.get(i).setClosingDate(date2);
+		   
 	   }
 	   //카테고리를 가져온후 중복제거
-	   List<String>  categoryLists = new ArrayList<String>(); 		   
-	   for(int i = 0 ; i<categoryList.size() ; i++) {
-		   if(!categoryLists.contains(categoryList.get(i))) {
-			   categoryLists.add(categoryList.get(i));
+	   List<String>  categoryLists = new ArrayList<String>();
+	   if(categoryList.isEmpty()) {
+		   categoryLists.add("");
+	   }
+	   else {		   
+		   for(int i = 0 ; i<categoryList.size() ; i++) {
+			   if(!categoryLists.contains(categoryList.get(i))) {
+				   categoryLists.add(categoryList.get(i));
+			   }
 		   }
 	   }
 	  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -784,6 +819,7 @@ public class IndexController {
 	   map.put("array",categoryLists);
 	   map.put("memberId", memberId);
 	   List<Recruitment> recommendationRecruitmentList = indexService.selectListRecommendRecruitmentList(map);
+	   
 	   
 	   for(int i = 0 ; i<recommendationRecruitmentList.size() ; i++) {
 	     	  date = format.parse(recommendationRecruitmentList.get(i).getClosingDate());    	  
@@ -832,5 +868,32 @@ public class IndexController {
 	   
 	   mav.setViewName("notice/favoriteRecruitment");
 	   return mav;
+   }
+   
+   @RequestMapping("/index/deleteFavorite.ithrer")
+   public void deleteFavorite(HttpServletResponse res , @RequestParam("test") String [] test,HttpServletRequest req) {
+	   Member member = (Member)req.getSession().getAttribute("member");
+	   Map<String, Object> map = new HashMap<String, Object>();
+	  List<Integer> arr = new ArrayList<Integer>();
+	   int a = 0 ;
+	   for(int i = 0 ; i<test.length; i++) {
+		   System.out.println(test.length);
+		   System.out.println(test[i]);
+		   a = Integer.parseInt(test[i]);
+		   arr.add(a);
+	   }
+	   map.put("memberId", member.getMemberId());
+	   map.put("param", arr);
+	   int result = indexService.deleteFavoritesList(map);
+	   Gson gson = new Gson();
+	   try {
+		gson.toJson(result,res.getWriter());
+	} catch (JsonIOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
 } 

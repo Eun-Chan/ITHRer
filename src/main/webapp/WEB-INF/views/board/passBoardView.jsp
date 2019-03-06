@@ -54,6 +54,12 @@ function fn_goBoardDelete(){
 		location.href = "${pageContext.request.contextPath}/board/passBoardList";
 	}
 }
+function fn_goBoardUpdate(){
+$(function(){
+		var passBoardNo = $("#passNo").text();
+		location.href = "${pageContext.request.contextPath}/board/passBoardMoveUpdate?passBoardNo="+passBoardNo;
+	});
+}
 </script>
 
 <!-- 부트스트랩관련 라이브러리 -->
@@ -72,7 +78,7 @@ function fn_goBoardDelete(){
 	<table id="" class="table table-bordered">
 		<tr class="table-primary">
 			<th>번호</th>
-			<td>${passBoard.passBoardNo}</td>
+			<td id="passNo">${passBoard.passBoardNo}</td>
 			<th>작성자</th>
 			<td id="userId">${passBoard.passBoardWriter}</td>
 			<th>조회수</th>
@@ -89,7 +95,7 @@ function fn_goBoardDelete(){
 	</table>
 		<tr>
             <td colspan="6" class="text-center">
-			  <input type="button" class="btn btn-warning" value="수정하기" onclick="">          
+			  <input type="button" class="btn btn-warning" value="수정하기" onclick="fn_goBoardUpdate();">          
 			  <input type="button" class="btn btn-danger" value="삭제하기" onclick="fn_goBoardDelete();">
 			  <input type="button" class="btn btn-primary" value="목록보기" onclick="location.href='passBoardList'">
             </td>

@@ -43,61 +43,17 @@ import com.spring.ithrer.resume.model.vo.Profile;
 
 @Controller
 public class ResumeController {
-	Logger logger = LoggerFactory.getLogger(getClass());
-	
-	@Autowired
-	ResumeService resumeService;
+   Logger logger = LoggerFactory.getLogger(getClass());
+   
+   @Autowired
+   ResumeService resumeService;
 
-	/* 이력서가기 */
-	@RequestMapping(value="/resume/resume")
-	public ModelAndView resumeView(ModelAndView mav) {
-		mav.setViewName("resume/resume");
-		return mav;
-	}
-
-	/* 내이력서가기 */
-	@RequestMapping(value="/resume/resumeView")
-	public ModelAndView myResumeView(ModelAndView mav, @RequestParam("memberId") String memberId) {
-		logger.info("memberId="+memberId);
-		Award award = resumeService.awardView(memberId);
-		logger.info("award="+award);
-		Career career = resumeService.careerView(memberId);
-		logger.info("career="+career);
-		Certification certification = resumeService.certificateView(memberId);
-		logger.info("certification="+certification);
-		Hopework hopework = resumeService.hopeworkView(memberId);
-		logger.info("hopework="+hopework);
-		Intern intern = resumeService.internView(memberId);
-		logger.info("intern="+intern);
-		Language language = resumeService.languageView(memberId);
-		logger.info("language="+language);
-		Learn learn = resumeService.learnView(memberId);
-		logger.info("learn="+learn);
-		Overseas overseas = resumeService.overseasView(memberId);
-		logger.info("overseas="+overseas);
-		PortFolio portFolio = resumeService.portFolioView(memberId);
-		logger.info("portFolio="+portFolio);
-		Preference preference = resumeService.preferenceView(memberId);
-		logger.info("preference="+preference);
-		Profile profile = resumeService.profileView(memberId);
-		logger.info("profile="+profile);
-		Education education = resumeService.educationView(memberId);
-		logger.info("education="+education);
-		mav.addObject("award",award);
-		mav.addObject("career",career);
-		mav.addObject("certification",certification);
-		mav.addObject("hopework",hopework);
-		mav.addObject("intern",intern);
-		mav.addObject("language",language);
-		mav.addObject("learn",learn);
-		mav.addObject("overseas",overseas);
-		mav.addObject("portFolio",portFolio);
-		mav.addObject("preference",preference);
-		mav.addObject("profile",profile);
-		mav.addObject("education",education);
-		mav.setViewName("/resume/resumeView");
-		return mav;
-	}
+   /* 이력서가기 */
+   @RequestMapping(value="/resume/resume")
+   public ModelAndView resumeView(ModelAndView mav) {
+      mav.setViewName("resume/resume");
+      return mav;
+   }
 	/* 자격증db에서 자격증명찾기 */
 	@RequestMapping(value="/resume/certificateList.ithrer")
 	@ResponseBody
@@ -238,4 +194,37 @@ public class ResumeController {
 		mav.setViewName("redirect:/");
 		return mav;	
 	}
+
+   /* 내이력서가기 */
+   @RequestMapping(value="/resume/resumeView")
+   public ModelAndView myResumeView(ModelAndView mav, @RequestParam("memberId") String memberId) {
+      logger.info("memberId="+memberId);
+      Award award = resumeService.awardView(memberId);
+      logger.info("award="+award);
+      Career career = resumeService.careerView(memberId);
+      logger.info("career="+career);
+      Certification certificate = resumeService.certificateView(memberId);
+      logger.info("certificate="+certificate);
+      Hopework hopework = resumeService.hopeworkView(memberId);
+      logger.info("hopework="+hopework);
+      Intern intern = resumeService.internView(memberId);
+      logger.info("intern="+intern);
+      Language language = resumeService.languageView(memberId);
+      logger.info("language="+language);
+      Learn learn = resumeService.learnView(memberId);
+      logger.info("learn="+learn);
+      Overseas overseas = resumeService.overseasView(memberId);
+      logger.info("overseas="+overseas);
+      PortFolio portFolio = resumeService.portFolioView(memberId);
+      logger.info("portFolio="+portFolio);
+      Preference preference = resumeService.preferenceView(memberId);
+      logger.info("preference="+preference);
+      Profile profile = resumeService.profileView(memberId);
+      logger.info("profile="+profile);
+      Education education = resumeService.educationView(memberId);
+      logger.info("education="+education);
+      mav.setViewName("/resume/resumeView");
+      return mav;
+   }
 }
+
