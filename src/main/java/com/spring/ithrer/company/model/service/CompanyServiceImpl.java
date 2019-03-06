@@ -1,6 +1,5 @@
 package com.spring.ithrer.company.model.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -328,20 +327,8 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Member> selectAppList(Map<String, Object> paramMap) {
-		
-		List<String> applicantIdList = companyDao.selectApplicantIdList((int)paramMap.get("recruitmentNo"));
-		
-		List<Member> applicantList = new ArrayList<>();
-		
-//		if(applicantIdList != null) {
-//			for(int i=0; i<applicantIdList.size(); i++) {
-//				Member applicant = companyDao.selectApplicantWithAllInfo(paramMap);
-//				applicantList.add(applicant);
-//			}
-//		}
-		
-		return applicantList;
+	public List<Member> selectAppList(int recruitmentNo) {
+		return companyDao.selectAppList(recruitmentNo);
 	}
 
 	@Override
@@ -362,6 +349,14 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public int updateRcrtEnd(int recruitmentNo) {
 		return companyDao.updateRcrtEnd(recruitmentNo);
+	}
+
+	@Override
+	public int updateCompanyLogo(String path, String compId) {
+		Map<String, String> map = new HashMap<>();
+		map.put("path", path);
+		map.put("compId", compId);
+		return companyDao.updateCompanyLogo(map);
 	}
 
 }

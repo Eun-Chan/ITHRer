@@ -66,4 +66,8 @@ public interface CompanyDao {
 
 	int updateRcrtEnd(int recruitmentNo);
 
+	int updateCompanyLogo(Map<String, String> map);
+
+	List<Member> selectAppList(int recruitmentNo);
+
 }
