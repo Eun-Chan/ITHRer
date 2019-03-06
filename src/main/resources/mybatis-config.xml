@@ -22,12 +22,18 @@
 		<typeAlias type="com.spring.ithrer.company.model.vo.Location" alias="location"/>
 		<typeAlias type="com.spring.ithrer.board.model.vo.AnonyBoard" alias="anonyboard"/>
 		<typeAlias type="com.spring.ithrer.common.model.vo.Favorites" alias="favorites"/>
+
+		<typeAlias type="com.spring.ithrer.company.model.vo.Job" alias="job"/>
+		<typeAlias type="com.spring.ithrer.company.model.vo.Position" alias="position"/>
+		<typeAlias type="com.spring.ithrer.company.model.vo.Computerabllity" alias="computerabllity"/>
+		<typeAlias type="com.spring.ithrer.company.model.vo.SubwayStation" alias="subwaystation"/>
+
 		<typeAlias type="com.spring.ithrer.common.typehandler.StringArrayTypeHandler" alias="strArrTypeHandler"/>
 		<typeAlias type="com.spring.ithrer.board.model.vo.PassBoard" alias="passboard"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.PortFolio" alias="portfolio"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Award" alias="award"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Career" alias="career"/>
-		<typeAlias type="com.spring.ithrer.resume.model.vo.Certificate" alias="certificate"/>
+		<typeAlias type="com.spring.ithrer.resume.model.vo.Certification" alias="certification"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Hopework" alias="hopework"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Intern" alias="intern"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Language" alias="language"/>

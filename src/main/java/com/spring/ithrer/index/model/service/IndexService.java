@@ -15,56 +15,54 @@ import com.spring.ithrer.user.model.vo.Member;
 public interface IndexService {
 
 
-	Company selectOneCompany(String compId);
+   Company selectOneCompany(String compId);
 
-	List<Member> selectStatistics(int recruitmentNo);
+   List<Member> selectStatistics(int recruitmentNo);
 
-	Recruitment selectOneRecruitment(Map<String, Object> map);
+   Recruitment selectOneRecruitment(Map<String, Object> map);
 
-	int insertLocation(Map<String, Object> map);
+   int insertLocation(Map<String, Object> map);
 
-	List<Recruitment> selectListRecruitment(String memberId);
+   List<Recruitment> selectListRecruitment(String memberId);
 
-	Favorites selectOneFavorites(Map<String, Object> map);
+   Favorites selectOneFavorites(Map<String, Object> map);
 
-	int insertFavorites(Map<String, Object> map);
+   int insertFavorites(Map<String, Object> map);
 
-	int deleteFavorites(Map<String, Object> map);
+   int deleteFavorites(Map<String, Object> map);
 
 	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map, int ithrerNumPerPage, int ithrerCPage);
 	
 	int insertPortFolio(Map<String, Object> map);
 
-	int updateMember(Map<String, Object> param);
 
-	int insertCompanyApplication(Map<String, Object> map);
+   int updateMember(Map<String, Object> param);
 
-	int selectCountCompanyApplication(Map<String, Object> map);
+   int insertCompanyApplication(Map<String, Object> map);
 
-	List<Recruitment> selectTopListRecruitment(String memberId);
+   int selectCountCompanyApplication(Map<String, Object> map);
 
-	List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
+   List<Recruitment> selectTopListRecruitment(String memberId);
 
-	List<PortFolio> selectListPortFolio(String memberId);
+   List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
 
-	int deletePortFolio(int pfNo);
+   List<PortFolio> selectListPortFolio(String memberId);
 
-	List<Recruitment> selectListRandomRecruitment(String memberId);
+   int deletePortFolio(int pfNo);
 
-	int selectCountFavorite(String memberId);
+   List<Recruitment> selectListRandomRecruitment(String memberId);
 
-	List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage);
+   int selectCountFavorite(String memberId);
 
-	List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map);
+   List<Favorites> selectListFavorites(String memberId, int cPage, int numPerPage);
 
-
-	int deleteFavoritesList(Map<String, Object> map);
-
-	List<Map<String, String>> selectListCharged();
-
-	Profile selectOneProfile(String memberId);
+   List<Recruitment> selectListRecommendRecruitmentList(Map<String, Object> map);
 
 
+   int deleteFavoritesList(Map<String, Object> map);
 
+   List<Map<String, String>> selectListCharged();
+
+   Profile selectOneProfile(String memberId);
 
 }

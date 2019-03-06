@@ -38,7 +38,9 @@ div.border-top.border-bottom{
 	<div id="company-info-container" class="container my-3 shadow rounded border border-primary text-center">
 		<div class="row d-flex flex-wrap align-items-center">
 			<div class="col">
-				<img src="${pageContext.request.contextPath }/resources/images/tempLogo.png" alt="기업로고"/>
+				<c:if test="${not empty companyMap.company.logoS3 }">
+					<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${companyMap.company.logoS3 }&directory=compLogo" alt="기업로고" width="300px"/>
+				</c:if>
 			</div>
 		</div>
 		<div class="row my-1">
@@ -349,7 +351,7 @@ $(".fav-add-btn").on("click",function(){
 		url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId="+$this.attr("mi")+"&recruitmentNo=${rcrtEndList[0].recruitmentNo}",
 		type: "post",
 		success: function(data){
-			
+			console.log(data);
 			if(data.newCount == 1){
 				var favList = new Array();
 				for(var i=0; i<data.favoriteAppList.length; i++){
@@ -372,9 +374,26 @@ $(".fav-add-btn").on("click",function(){
 				
 				$("#fav-app-no").text("("+data.favoriteAppList.length+"명)");
 				
-				if($this.attr("del")=="del"){
-					$this.parents("div.row").remove();
+				for(var i=0; i<data.favoriteAppList.length; i++){
+					if(data.favoriteAppList[i].memberId == $this.attr("mi")){
+						var html = '<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">';
+						html += '<div class="col">';
+						html += '<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">';
+						html += data.favoriteAppList[i].memberId;
+						html += '</a>';
+						html += '</div>';
+						html += '<div class="col">';
+						html += '</div>';
+						html += '<div class="col">';
+						html += '</div>';
+						html += '<div class="col">';
+						html += '<button del="del" mi="'+data.favoriteAppList[i].memberId+'" class="btn btn-danger btn-sm fav-delete-btn">관심인재 해제</button>'
+						html += '</div>';
+						html += '</div>';
+						$("div#person-bookmark-tab").append(html);
+					}
 				}
+				
 			}
 			
 			
@@ -393,6 +412,7 @@ $(".fav-delete-btn").on("click",function(){
 	if(!confirm("정말로 해제하시겠습니까?")) return;
 	
 	var $this = $(this);
+	
 	
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/favorite?memberId="+$this.attr("mi")+"&compId=${companyLoggedIn.compId}",
@@ -420,9 +440,7 @@ $(".fav-delete-btn").on("click",function(){
 				
 				$("#fav-app-no").text("("+data.favoriteAppList.length+"명)");
 				
-				if($this.attr("del")=="del"){
-					$this.parents("div.row").remove();
-				}
+				$("div#person-bookmark-tab button[mi="+$this.attr("mi")+"]").parents("div.row").remove();
 			}
 			
 			

@@ -30,6 +30,7 @@ var age = "";
 var gender = "";
 var subway = "";
 var licence = "";
+var language = "";
 var major = new Array();
 var position = new Array();
 var preference = new Array();
@@ -91,13 +92,17 @@ $("#detail_licence").on("focusout", function(){
 	$("#add_licence").html(licence);
 });
 
+$("#detail_language").on("change",function(){
+	language = $("#detail_language").val();
+	$("#add_language").html(language);
+});
+
 //$("input[name=major]").on("focusout", function(){
 $(document).on("focusout","input[name=major]",function(){
 	//동적으로 생성되는 부분에도 이벤트핸들러를 등록하기 위해서는 document에 이벤트를 담는다.	
 	
 	if(major.indexOf($(this).val()) == -1 && $(this).val()!=""){
 		
-		major = new Array();
 		major.push($(this).val());
 	}
 	
@@ -230,8 +235,8 @@ $("#btn-search-notice").on("click", function(){
 	console.log("gender = ",gender);
 	console.log("subway = ",subway);
 	console.log("licence = ",licence);
+	console.log("language = ",language);
 	console.log("major = ",major);
-	console.log(major);
 	console.log("position = ",position);
 	console.log("preference = ",preference);
 	console.log("emp_type = ",emp_type);
@@ -239,7 +244,7 @@ $("#btn-search-notice").on("click", function(){
 	console.log("welfare = ", welfare);
 	
 	location.href = "${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord="+searchKeyWord+"&location="+locationCode
-				  + "&salary="+salary+ "&age="+age + "&gender="+gender + "&subway="+subway + "&licence="+licence + "&major="+major
+				  + "&salary="+salary+ "&age="+age + "&gender="+gender + "&subway="+subway + "&licence="+licence + "&language="+language +"&major="+major
 				  + "&position="+position+ "&preference="+preference+ "&emp_type="+emp_type+ "&work_day="+work_day+"&welfare="+welfare;
 	
 });
@@ -1522,9 +1527,19 @@ function del_line(event, check){
 			</div>
 			<hr />
 			<div id="licence-area">
-				<h2>자격증ㆍ어학</h2>
-				<input type="text" id="detail_licence" class="form-control form-control-sm col-md-4" placeholder="자격증 또는 외국어 시험 이름을 입력하세요" />				
+				<h2>자격증</h2>
+				<input type="text" id="detail_licence" class="form-control form-control-sm col-md-4" placeholder="자격증 이름을 입력하세요" />				
 			</div>
+			<div id="language-area">
+				<h2>우대 외국어</h2>
+				<select class="form-control form-control-sm col-md-4" id="detail_language">
+                     <option name="fore-lang1" value="" selected disabled hidden>선택</option>
+                     <option name="fore-lang2" value="영어">영어</option>
+                     <option name="fore-lang3" value="일본어">일본어</option>
+                     <option name="fore-lang4" value="중국어">중국어</option>
+                 </select>				
+			</div>
+			<hr />
 			<div id="major-area">
 				<h2>전공</h2>
 				<div class="major_add_del">
@@ -1538,55 +1553,55 @@ function del_line(event, check){
 				<div class="position_add_del">
 					<select id="detail_position" name="position" class="form-control form-control-sm col-md-4">
 					  <option value="" selected disabled hidden>선택</option>
-					  <option value="직급.인턴/수습">[직급]인턴/수습</option>
-					  <option value="직급.사원">[직급]사원</option>
-					  <option value="직급.주임">[직급]주임</option>
-					  <option value="직급.계장">[직급]계장</option>
-					  <option value="직급.대리">[직급]대리</option>
-					  <option value="직급.과장">[직급]과장</option>
-					  <option value="직급.차장">[직급]차장</option>
-					  <option value="직급.부장">[직급]부장</option>
-					  <option value="직급.감사">[직급]감사</option>
-					  <option value="직급.이사">[직급]이사</option>
-					  <option value="직급.상무">[직급]상무</option>
-					  <option value="직급.전무">[직급]전무</option>
-					  <option value="직급.부사장">[직급]부사장</option>
-					  <option value="직급.사장">[직급]사장</option>
-					  <option value="직급.회장">[직급]회장</option>
-					  <option value="직급.전문직">[직급]전문직</option>
-					  <option value="직급.IR 책임자">[직급]IR 책임자</option>
-					  <option value="직급.연구원">[직급]연구원</option>
-					  <option value="직급.주임연구원">[직급]주임연구원</option>
-					  <option value="직급.선임연구원">[직급]선임연구원</option>
-					  <option value="직급.책임연구원">[직급]책임연구원</option>
-					  <option value="직급.수석연구원">[직급]수석연구원</option>
-					  <option value="직급.연구소장">[직급]연구소장</option>
-					  <option value="직급.프리랜서">[직급]프리랜서</option>
-					  <option value="직급.CTO">[직급]CTO</option>
-					  <option value="직급.CEO">[직급]CEO</option>
-					  <option value="직급.COO">[직급]COO</option>
-					  <option value="직책.팀원">[직책]팀원</option>
-					  <option value="직책.총무">[직책]총무</option>
-					  <option value="직책.부팀장">[직책]부팀장</option>
-					  <option value="직책.실장">[직책]실장</option>
-					  <option value="직책.팀장">[직책]팀장</option>
-					  <option value="직책.파트장">[직책]파트장</option>
-					  <option value="직책.지점장">[직책]지점장</option>
-					  <option value="직책.공장장">[직책]공장장</option>
-					  <option value="직책.지사장">[직책]지사장</option>
-					  <option value="직책.그룹장">[직책]그룹장</option>
-					  <option value="직책.센터장">[직책]센터장</option>
-					  <option value="직책.본부장">[직책]본부장</option>
-					  <option value="직책.사업부장">[직책]사업부장</option>
-					  <option value="직책.국장">[직책]국장</option>
-					  <option value="직책.원장">[직책]원장</option>
-					  <option value="직책.매니저">[직책]매니저</option>
-					  <option value="직책.지배인">[직책]지배인</option>
-					  <option value="직책.총지배인">[직책]총지배인</option>
-					  <option value="직책.고문">[직책]고문</option>
-					  <option value="직책.소장">[직책]소장</option>
-					  <option value="직책.관장">[직책]관장</option>
-					  <option value="직책.이사장">[직책]이사장</option>
+					  <option value="인턴/수습">[직급]인턴/수습</option>
+					  <option value="사원">[직급]사원</option>
+					  <option value="주임">[직급]주임</option>
+					  <option value="계장">[직급]계장</option>
+					  <option value="대리">[직급]대리</option>
+					  <option value="과장">[직급]과장</option>
+					  <option value="차장">[직급]차장</option>
+					  <option value="부장">[직급]부장</option>
+					  <option value="감사">[직급]감사</option>
+					  <option value="이사">[직급]이사</option>
+					  <option value="상무">[직급]상무</option>
+					  <option value="전무">[직급]전무</option>
+					  <option value="부사장">[직급]부사장</option>
+					  <option value="사장">[직급]사장</option>
+					  <option value="회장">[직급]회장</option>
+					  <option value="전문직">[직급]전문직</option>
+					  <option value="IR 책임자">[직급]IR 책임자</option>
+					  <option value="연구원">[직급]연구원</option>
+					  <option value="주임연구원">[직급]주임연구원</option>
+					  <option value="선임연구원">[직급]선임연구원</option>
+					  <option value="책임연구원">[직급]책임연구원</option>
+					  <option value="수석연구원">[직급]수석연구원</option>
+					  <option value="연구소장">[직급]연구소장</option>
+					  <option value="프리랜서">[직급]프리랜서</option>
+					  <option value="CTO">[직급]CTO</option>
+					  <option value="CEO">[직급]CEO</option>
+					  <option value="COO">[직급]COO</option>
+					  <option value="팀원">[직책]팀원</option>
+					  <option value="총무">[직책]총무</option>
+					  <option value="부팀장">[직책]부팀장</option>
+					  <option value="실장">[직책]실장</option>
+					  <option value="팀장">[직책]팀장</option>
+					  <option value="파트장">[직책]파트장</option>
+					  <option value="지점장">[직책]지점장</option>
+					  <option value="공장장">[직책]공장장</option>
+					  <option value="지사장">[직책]지사장</option>
+					  <option value="그룹장">[직책]그룹장</option>
+					  <option value="센터장">[직책]센터장</option>
+					  <option value="본부장">[직책]본부장</option>
+					  <option value="사업부장">[직책]사업부장</option>
+					  <option value="국장">[직책]국장</option>
+					  <option value="원장">[직책]원장</option>
+					  <option value="매니저">[직책]매니저</option>
+					  <option value="지배인">[직책]지배인</option>
+					  <option value="총지배인">[직책]총지배인</option>
+					  <option value="고문">[직책]고문</option>
+					  <option value="소장">[직책]소장</option>
+					  <option value="관장">[직책]관장</option>
+					  <option value="이사장">[직책]이사장</option>
 					</select>
 					<button id="btn_add_position" class="btn btn-outline-dark btn_add_minus" onclick="add_line(event,2);"><i class="far fa-plus-square"></i></button>
 					<button id="btn_minus_position" class="btn_add_minus btn btn-outline-dark" onclick="del_line(event,2);"><i class="far fa-minus-square"></i></button>
@@ -1864,6 +1879,7 @@ function del_line(event, check){
 				<span class="add_keyword" id="add_gender"></span>
 				<span class="add_keyword" id="add_subway"></span>
 				<span class="add_keyword" id="add_licence"></span>
+				<span class="add_keyword" id="add_language"></span>
 				<span class="add_keyword" id="add_major"></span>
 				<span class="add_keyword" id="add_position"></span>
 				<span class="add_keyword" id="add_preference"></span>

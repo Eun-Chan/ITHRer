@@ -18,9 +18,9 @@ public class Hopework implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String jobType;
-	private String wantPay;
-	private String[] visitDetermine;
-	private String hopePlace;
-	private String hopeDuty;
+	private String jobtype;
+	private String wantpay;
+	private String[] visitdetermine;
+	private String hopeplace;
+	private String hopeputy;
 }	

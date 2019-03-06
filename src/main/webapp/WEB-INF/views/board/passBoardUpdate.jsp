@@ -13,53 +13,18 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="합소서 게시판" name="pageTitle"/>
 </jsp:include>
-	<style>
-		div#board-container{width:1000px; margin:0 auto; text-align:center;}
-		div#board-container{margin-top:40px;}		
-	</style>
-<script>
+<style>
+div#board-container{width:1000px; margin:0 auto; text-align:center;}
+div#board-container{margin-top:40px;}		
+	
+#board-container {width: 70%; margin: 0 auto; padding-top: 3%;}
+.table > thead > tr > th {text-align: center;}
+.table > tbody > tr > td {text-align: center;}
+.table > tbody > tr > #title {text-align: left;}
+</style>
+		
+</style>
 
-function fn_goBoardDelete(){
-	var memberId = "<%=member.getMemberId()%>"
-	var passBoardWriter = $("#writer").val();
-	
-/* 	console.log(memberId);
-	console.log(passBoardWriter); */
-	
-	if(memberId==passBoardWriter){
-		$.ajax({
-			url: "${pageContext.request.contextPath}/board/passBoardDelete?passBoardNo=${passBoard.passBoardNo}",
-		  	success : function(data){
-		  		console.log(data);
-			if(data==0){
-				alert("게시글 삭제 실패.");
-				location.href = "${pageContext.request.contextPath}/board/passBoardList";
-			}
-			else if(data==1){
-				alert("게시글 삭제에 성공하였습니다.");
-				location.href = "${pageContext.request.contextPath}/board/passBoardList";
-			}
-			},
-			error: function(){
-				console.log("ajax에러 발생");
-			}
-		});
-  	}
-	else if(memberId!=passBoardWriter){
-		alert("게시글은 본인이 작성한 글만 삭제 가능합니다.");
-	}
-	else if(memberId.length==0){
-		console.log("여기오냐");
-		alert("게시글 삭제 실패. 로그인후 이용해주세요.");
-		location.href = "${pageContext.request.contextPath}/board/passBoardList";
-	}
-}
-function fn_goBoardUpdate(){
-$(function(){
-		var passBoardNo = $("#passNo").text();
-		location.href = "${pageContext.request.contextPath}/board/passBoardMoveUpdate?passBoardNo="+passBoardNo;
-	});
-}
 </script>
 
 <!-- 부트스트랩관련 라이브러리 -->
@@ -74,34 +39,36 @@ $(function(){
 </head>
 <section id="board-container" class="container">
 	
-	 <div id="board-container" class="table table-responsive">
+	<form  id="form"  method="post" action="${pageContext.request.contextPath}/board/passBoardUpdate.ithrer" >
+ 	<div id="board-container" class="table table-responsive">
 	<table id="" class="table table-bordered">
 		<tr class="table-primary">
 			<th>번호</th>
-			<td id="passNo">${passBoard.passBoardNo}</td>
+			<%-- <td>${passBoard.passBoardNo}</td> --%>
+			<td><input type="text" class="form-control" name="passBoardNo" value="${passBoard.passBoardNo}" readonly required></td>
 			<th>작성자</th>
-			<td id="userId">${passBoard.passBoardWriter}</td>
+			<td><input type="text" class="form-control" name="passBoardWriter" value="${member.memberId}" readonly required></td>
 			<th>조회수</th>
-			<td>${passBoard.passBoardReadCount}</td>
+			<%-- <td>${passBoard.passBoardReadCount}</td> --%>
+			<td><input type="text" class="form-control" name="passBoardReadCount" value="${passBoard.passBoardReadCount}" readonly required></td>
 		</tr>
 		<tr class="table-primary">	
 			<th>제목</th>
-			<td colspan="6">${passBoard.passBoardTitle}</td>
+			<td colspan="6"><input type="text" class="form-control" name="passBoardTitle"  id="passBoardTitle" value="${passBoard.passBoardTitle}" required></td>
 		</tr>	
 		<tr>	
 			<th class="table-primary">작성내용</th>
-			<td colspan="6" >${passBoard.passBoardContent}</td>
+			<td colspan="6" ><textarea class="form-control" cols="10" rows="15" name="passBoardContent">${passBoard.passBoardContent}</textarea></td>
 		</tr>
 	</table>
+
 		<tr>
             <td colspan="6" class="text-center">
-			  <input type="button" class="btn btn-warning" value="수정하기" onclick="fn_goBoardUpdate();">          
-			  <input type="button" class="btn btn-danger" value="삭제하기" onclick="fn_goBoardDelete();">
+			  <input type="submit" class="btn btn-warning" value="저장">      
 			  <input type="button" class="btn btn-primary" value="목록보기" onclick="location.href='passBoardList'">
             </td>
         </tr>
 		</div>
-		<input type="hidden" id="writer" value="${passBoard.passBoardWriter}" />
-
- 	 </section>
+	</form>
+ </section>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

@@ -18,7 +18,7 @@ public class Preference implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String[] preferCheck;
+	private String[] prefercheck;
 	private String disoderselect;
 	private String militaryselect;
 }

@@ -49,6 +49,15 @@ public class Recruitment implements Serializable {
 	private String welfare; //복리후생
 	private String summernoteHtml; //서머노트 데이터
 	
+	//광준추가
+	private String computerLiteracy; //컴퓨터활용능력
+	private String major; //전공계열
+	private String foreLang; //외국어
+	private String certificate; //자격증 (DB에는 있는데 VO에 추가가 안되어있었음)
+	private int applicantAgeStart; //나이 시작
+	private int applicantAgeEnd; //나이 끝
+	private String genderCut; //성별제한
+
 	//서브쿼리용 copmName
 	private String compName;
 	

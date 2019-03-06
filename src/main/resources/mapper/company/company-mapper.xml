@@ -109,6 +109,46 @@
 		select * from favorites where comp_id=#{compId}
 	</select>
 	
+	<!-- 모집직종 정보1 가져오기 -->
+	<select id="selectJobList" resultType="Job">
+		SELECT DISTINCT JOB1 FROM JOB
+	</select>
+	
+	<!-- 모집직종 정보2 가져오기 -->
+	<select id="selectJobList2" resultType="Job">
+		SELECT DISTINCT * FROM JOB
+	</select>
+	
+	<!-- 모집직급/직책 정보 가져오기 -->
+	<select id="selectPositionList" resultType="Position">
+		SELECT * FROM POSITION
+	</select>
+	
+	<!-- 컴퓨터활용정보-1 가져오기 -->
+	<select id="selectComputerAbllityList" resultType="ComputerAbllity">
+		SELECT DISTINCT DIVISION FROM COMPUTERABLLITY
+	</select>
+	
+	<!-- 컴퓨터활용정보-2 가져오기 -->
+	<select id="selectComputerAbllityList2" resultType="ComputerAbllity">
+		SELECT * FROM COMPUTERABLLITY
+	</select>
+	
+	<!-- 기업공고 등록하기 -->
+	<insert id="insertRecruitment" parameterType="Recruitment">
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation}, '',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference}, #{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'','서울시 강남구', #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate}, #{closingDate}, 101010, #{applicantAgeEnd}, #{genderCut}, #{certificate}, #{major}, 'WORK_DAY주1일','N',#{certificate},#{foreLang},#{summernoteHtml})
+	</insert>
+	
+	<!-- 지하철노선도-구분 가져오기 -->
+	<select id="selectSubwayStation" resultType="SubwayStation">
+		SELECT DISTINCT LINE_NAME FROM SUBWAYSTATION
+	</select>
+	
+	<!-- 지하철노선도-역이름 가져오기 -->
+	<select id="selectSubwayStationAll" resultType="SubwayStation">
+		SELECT * FROM SUBWAYSTATION
+	</select>
+
 	<!-- 채용정보 리스트 가져오기 -->
 	<select id="selectRcrtList" parameterType="string" resultType="recruitment">
 		select 
@@ -147,5 +187,55 @@
 	<update id="updateRcrtEnd" parameterType="_int">
 		update recruitment set end='Y' where recruitment_no=#{recruitmentNo}
 	</update>
+	
+	<!-- 기업 로고 s3 주소로 등록 -->
+	<update id="updateCompanyLogo" parameterType="map">
+		update company set logo_s3=#{path} where comp_id=#{compId}
+	</update>
+	
+	<!-- 채용공고에 지원한 지원자 리스트 가져오기 -->
+	<select id="selectAppList" resultMap="ApplicantList" parameterType="_int">
+		select 
+			(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
+			(select count(*) from favorites where comp_id=ca.comp_Id and member_id=ca.member_id and select_no=1) count,
+            m.member_id,
+			m.member_name,
+			m.gender,
+			ca.cu_resdate,
+            ca.recruitment_no,
+            ca.comp_id,
+			e.schoolname,
+			e.score,
+			e.totalscore,
+			c.corpname,
+			h.wantpay
+		from
+			member m
+				left join education e on m.member_id=e.member_id
+				left join career c on m.member_id=c.member_id
+				left join hopework h on m.member_id=h.member_id
+                left join companyapplication ca on m.member_id=ca.member_id
+		where ca.recruitment_no=#{recruitmentNo}
+	</select>
+	<resultMap type="member" id="ApplicantList">
+		<id column="member_id" property="memberId"/>
+		<result column="member_name" property="memberName"/>
+      	<result column="age" property="age"/>
+      	<result column="gender" property="gender"/>
+ 		<association javaType="ca" property="ca">
+			<result column="cu_resdate" property="cuResdate"/>
+		</association>
+ 		<association javaType="education" property="education">
+			<result column="schoolname" property="schoolname"/>
+			<result column="score" property="score"/>
+			<result column="totalscore" property="totalscore"/>
+		</association>
+ 		<association javaType="career" property="career">
+			<result column="corpname" property="corpname"/>
+		</association>
+ 		<association javaType="hopework" property="hopework">
+			<result column="wantpay" property="wantpay"/>
+		</association>
+	</resultMap>
 	
 </mapper>

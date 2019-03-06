@@ -253,6 +253,7 @@ public class IndexController {
 	   System.out.println("민우"+gender);
 	   String subway = request.getParameter("subway");
 	   String licence = request.getParameter("licence");
+	   String language = request.getParameter("language");
 	   String[] major = request.getParameterValues("major");
 	   String[] position = request.getParameterValues("position");
 	   String[] preference = request.getParameterValues("preference");
@@ -295,6 +296,7 @@ public class IndexController {
 	   map.put("gender", gender);
 	   map.put("subway", subway);
 	   map.put("licence", licence);
+	   map.put("language", language);
 	   map.put("major", major2);
 	   map.put("position", position2);
 	   map.put("preference", preference2);
@@ -302,7 +304,7 @@ public class IndexController {
 	   map.put("work_day", work_day2);
 	   map.put("welfare", welfare2);
 	   
-	   //logger.debug("map: "+map);
+	   logger.debug("map: "+map);
 	   
 	   int ithrerNumPerPage = 5;
 	   int ithrerCPage;
@@ -338,8 +340,9 @@ public class IndexController {
 	    if(gender == null) {gender = "";}
 	    if(subway == null) {subway = "";}
 	    if(licence == null) {licence = "";}
+	    if(language == null) {language = "";}
 	    
-	    ithrerParam = "&salary="+salary+"&age="+age+"&gender="+gender+"&subway="+subway+"&licence="+licence;
+	    ithrerParam = "&salary="+salary+"&age="+age+"&gender="+gender+"&subway="+subway+"&licence="+licence+"&language="+language;
 	    
 	    if(major == null) {major = new String[] {""};}
 	    if(preference == null) {preference  = new String[] {""};}

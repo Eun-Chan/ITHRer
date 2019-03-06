@@ -5,10 +5,15 @@ import java.util.Map;
 
 import com.spring.ithrer.common.model.vo.Favorites;
 import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
+import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
+import com.spring.ithrer.company.model.vo.Position;
+
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
+import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.user.model.vo.Member;
 
 public interface CompanyService {
@@ -46,10 +51,26 @@ public interface CompanyService {
 	int insertFavorite(Map<String, Object> map);
 
 	List<Favorites> selectFavoriteAppList(String compId);
+	
+	List<Job> selectJobList();
+
+	List<Position> selectPositionList();
+
+	List<Job> selectJobList2();
+
+	List<Computerabllity> selectComputerAbllity();
+
+	List<Computerabllity> selectComputerAbllity2();
+
+	int insertRecruitment(Recruitment rect);
+
+	List<SubwayStation> selectSubwayStation();
+
+	List<SubwayStation> selectSubwayStationAll();
 
 	List<Recruitment> selectRcrtList(String compId);
 
-	List<Member> selectAppList(Map<String, Object> paramMap);
+	List<Member> selectAppList(int recruitmentNo);
 
 	Recruitment selectRecruitmentOne(int recruitmentNo);
 
@@ -58,5 +79,7 @@ public interface CompanyService {
 	List<Recruitment> selectRcrtEndList(String compId);
 
 	int updateRcrtEnd(int recruitmentNo);
+
+	int updateCompanyLogo(String path, String compId);
 
 }

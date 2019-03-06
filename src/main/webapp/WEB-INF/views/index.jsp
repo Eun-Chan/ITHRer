@@ -1179,7 +1179,9 @@
           </div>
           <c:forEach items="${bannerList}" var="banner">
 	          <div class="carousel-item">
-	            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	          	<a href="${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord=${banner.COMP_NAME}&location=">
+	            	<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
+	            </a>
 	            <div class="carousel-caption">
 	            
 	            </div>   
