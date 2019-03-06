@@ -27,6 +27,7 @@
 		<typeAlias type="com.spring.ithrer.company.model.vo.Position" alias="position"/>
 		<typeAlias type="com.spring.ithrer.company.model.vo.Computerabllity" alias="computerabllity"/>
 		<typeAlias type="com.spring.ithrer.company.model.vo.SubwayStation" alias="subwaystation"/>
+		<typeAlias type="com.spring.ithrer.company.model.vo.Area" alias="area"/>
 
 		<typeAlias type="com.spring.ithrer.common.typehandler.StringArrayTypeHandler" alias="strArrTypeHandler"/>
 		<typeAlias type="com.spring.ithrer.board.model.vo.PassBoard" alias="passboard"/>

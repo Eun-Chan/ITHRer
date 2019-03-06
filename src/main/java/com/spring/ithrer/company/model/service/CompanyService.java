@@ -4,13 +4,13 @@ import java.util.List;
 import java.util.Map;
 
 import com.spring.ithrer.common.model.vo.Favorites;
+import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
 import com.spring.ithrer.company.model.vo.Position;
-
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
@@ -81,5 +81,7 @@ public interface CompanyService {
 	int updateRcrtEnd(int recruitmentNo);
 
 	int updateCompanyLogo(String path, String compId);
+	
+	List<Area> selectLocationcodeList(int param);
 
 }

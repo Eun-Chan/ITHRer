@@ -136,7 +136,7 @@
 	
 	<!-- 기업공고 등록하기 -->
 	<insert id="insertRecruitment" parameterType="Recruitment">
-		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation}, '',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference}, #{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'','서울시 강남구', #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate}, #{closingDate}, 101010, #{applicantAgeEnd}, #{genderCut}, #{certificate}, #{major}, 'WORK_DAY주1일','N',#{certificate},#{foreLang},#{summernoteHtml})
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},'WORK_DAY주1일','N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},'101010',#{genderCut})
 	</insert>
 	
 	<!-- 지하철노선도-구분 가져오기 -->
@@ -238,4 +238,8 @@
 		</association>
 	</resultMap>
 	
+	<!-- 지역정보 가져오기 -->
+	<select id="selectLocationcodeList" parameterType="_int" resultType="area">
+		SELECT LOCATION_CODE, LOCATION_NAME FROM AREA WHERE LOCATION_TOTAL_CODE = #{param}
+	</select>
 </mapper>

@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.ithrer.common.model.vo.Favorites;
+import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.company.model.vo.Computerabllity;
 import com.spring.ithrer.company.model.vo.HRManager;
 import com.spring.ithrer.company.model.vo.Job;
 import com.spring.ithrer.company.model.vo.Location;
-
 import com.spring.ithrer.company.model.vo.Position;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
@@ -208,6 +208,11 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public List<Member> selectAppList(int recruitmentNo) {
 		return sqlSession.selectList("company.selectAppList",recruitmentNo);
+	}
+	
+	@Override
+	public List<Area> selectLocationcodeList(int param) {
+		return sqlSession.selectList("company.selectLocationcodeList",param);
 	}
 
 }
