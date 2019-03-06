@@ -286,7 +286,6 @@ public class CompanyController {
 		
 		// 이력서 가져오기
 		Education education = resumeService.educationView(memberId);
-		logger.debug("에듀케이션 | "+education);
 		Profile profile = resumeService.profileView(memberId);
 	    Award award = resumeService.awardView(memberId);
 	    Career career = resumeService.careerView(memberId);

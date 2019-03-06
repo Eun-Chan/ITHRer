@@ -92,10 +92,47 @@ div.border-top.border-bottom{
 		</div>
 		
 		<h1>${profile.userResumeTitle }</h1>
+		${award }
+		<br />
+		${career }
+		<br />
+		${certification }
+		<br />
 		${education }
+		<br />
+		${hopework }
+		<br />
+		${intern }
+		<br />
+		${language }
+		<br />
+		${learn }
+		<br />
+		${overseas }
+		<br />
+		${portfolio }
+		<br />
+		${preference }
+		<br />
+		${profile }
+				
 		<div id="education-info-container" class="container my-5">
 			<h3>학력</h3>
-			<span>최종학력 | (예시) 대학교 4년 졸업예정</span>
+			<span>
+				최종학력 
+				최종학력이 고등학교 졸
+				<c:if test="${not empty education.highgraduationstateArr[0] }">
+					${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
+					<c:if test="${education.graducationstateArr[fn:length(education.graducationstateArr)-1] eq 'graduated' 
+								and education.graduactionArr[fn:length(education.graduactionArr)-1] eq 'graduate'} ">
+					대학원 졸업
+					</c:if>
+				</c:if>
+				<c:if test="${empty education.highgraduationstateArr[0] }">
+				${education.highgraduationstateArr[0] }
+				</c:if>
+				 | (예시) 대학교 4년 졸업예정
+			</span>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					재학기간
@@ -104,7 +141,7 @@ div.border-top.border-bottom{
 					구분
 				</div>
 				<div class="col">
-					학교명(소재지)
+					학교명
 				</div>
 				<div class="col">
 					전공
@@ -113,6 +150,27 @@ div.border-top.border-bottom{
 					학점
 				</div>
 			</div>
+			<c:forEach var="i" begin="0" end="${fn:length(education.graduactionArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${education.admissiondateArr[i] } ~ ${education.graduationdateArr[i] }
+					</div>
+					<div class="col">
+						${education.graduactionArr[i] }
+					</div>
+					<div class="col">
+						${education.schoolnameArr[i] }
+					</div>
+					<div class="col">
+						${education.majorArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${i != 0 }">
+						${education.scoreArr[i] }/${education.totalscoreArr[i-1] }
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 		
 		<div id="career-info-container" class="container my-5">
