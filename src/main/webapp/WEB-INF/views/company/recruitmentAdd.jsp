@@ -2244,7 +2244,7 @@ $(document).ready(function(){
       $.ajax({
         data: form_data,
         type: "POST",
-        url: '${pageContext.request.contextPath}/fileUpload.ithrer',
+        url: '${pageContext.request.contextPath}/fileUploadSummernote.ithrer',
         cache: false,
         processData: false,
         contentType: false,
@@ -2255,6 +2255,9 @@ $(document).ready(function(){
         	console.log("이미지 전송 성공!!!!!!");
         		$('#summernote').summernote('insertImage', url);
 	        $('#imageBoard > ul').append('<li><img src="'+ url +'" width="480" height="auto"/></li>');
+        },
+        error: function(){
+        	console.log("이미지 전송 ajax 실패");
         }
       });
     }
