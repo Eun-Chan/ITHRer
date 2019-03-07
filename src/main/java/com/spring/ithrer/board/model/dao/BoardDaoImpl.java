@@ -161,4 +161,8 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.delete("anonyboard.autoDelete");
 	}
 	
+	@Override
+	public int passBoardUpdate(PassBoard passBoard) {
+		return sqlSession.update("passboard.passBoardUpdate", passBoard);
+	}
 }

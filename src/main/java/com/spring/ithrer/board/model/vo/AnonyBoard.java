@@ -51,18 +51,6 @@ public class AnonyBoard {
 	public void setAnonyBoardReadCount(int anonyBoardReadCount) {
 		this.anonyBoardReadCount = anonyBoardReadCount;
 	}
-	//	public int getFileCount() {
-//		return fileCount;
-//	}
-//	public void setFileCount(int fileCount) {
-//		this.fileCount = fileCount;
-//	}
-//	public List<Attachment> getFiles() {
-//		return files;
-//	}
-//	public void setFiles(List<Attachment> files) {
-//		this.files = files;
-//	}
 	public String getAnonyBoardPassword() {
 		return anonyBoardPassword;
 	}

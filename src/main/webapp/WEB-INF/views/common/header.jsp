@@ -52,7 +52,6 @@
 	    apiURL += "&state=" + state;
 	    session.setAttribute("state", state);
 	// 네이버 로그인 끝
-	System.out.println("확인 = "+request.getContextPath()+"/user/naverLoginCallback.ithrer");
 %>
 
 <!DOCTYPE html>
@@ -113,8 +112,6 @@
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판(임시)</a></li>    
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
 			    </ul>
-			    
-			    
 			    <c:if test="${empty member and empty companyLoggedIn }">
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
@@ -139,7 +136,7 @@
 					  <div class="dropdown-menu">
 					    <a class="dropdown-item" href="#">이력서 관리</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
-					    <a class="dropdown-item" href="#">회원정보 수정</a>
+					    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
 					  </div>
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
@@ -250,6 +247,24 @@
 	/* 네이버 로그인 새창 띄우기용 */
 	function naverPopup(){
 		window.open("<%=apiURL%>","_blank","width=300, height=300;"); 
+	}
+	/* 네이버 로그인 새창에서 access token 받아와서 로그인 처리 */
+	function naverLogin(accessToken){
+		$.ajax({
+    		url : "${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken="+accessToken,
+    		//data : {naverAccessToken: accessToken},
+    		type : "POST",
+    		success : function(data){
+    			console.log(data);
+   				// 네이버 로그인후 새로고침	
+   				if(data.result == 'true')
+    				location.reload();
+   				else if(data == 'false'){
+   					$("#login-help").text("이미 아이디가 접속중입니다!");
+					$("#login-help").addClass("text-danger");
+   				}
+    		}
+    	});
 	}
 
 	/* 카카오톡 api 로그인 */

@@ -22,6 +22,7 @@ $(function(){
 	          return;
 	      }
 	      if($(e.target).hasClass("loc-detail")){
+	    	  console.log("여기에요");
 	    	  $(".location-hide").addClass("on");
 	          return;
 	      }
