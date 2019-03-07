@@ -328,6 +328,7 @@ public class UserController {
 				member.setEmail(kakaoEmail);
 			}
 		}
+		map.put("result","true");
 		
 		// 카카오톡 유저 정보 세션에 담기
 		// 로그인 한 유저 세션에 넣기
@@ -661,6 +662,14 @@ public class UserController {
 		logger.debug("memberId = "+memberId);
 		logger.debug("memberName = "+memberName);
 		logger.debug("email = "+email);
+		System.out.println("memberId = "+memberId);
+		System.out.println("memberName = "+memberName);
+		System.out.println("email = "+email);
+		
+		res.put("memberId" , memberId);
+		res.put("memberName" , memberName);
+		res.put("email" , email);
+		res.put("result" ,"true");
 		
 		return res;
 	}

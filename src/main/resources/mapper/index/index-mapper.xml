@@ -166,19 +166,20 @@
 	</select>
 	
 	<!-- 스크랩한 카테고리 기반으로 채용공고 리스트 가져오기 -->
-	<select id="selectListRecommendRecruitmentList" parameterType="map" resultType="recruitment">
-		select t.* from (select r.*,(select comp_name from company where comp_id = r.comp_id)compName,
-		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = r.recruitment_no) favoritesCount ,
-				(select count(*) count from companyapplication where recruitment_no=r.recruitment_no  and member_id = #{memberId}) applyCount 
-		from company c  join recruitment r
-		on c.comp_id = r.comp_id
-		where c.category in
-		<foreach collection="array" item="item" open="(" close=")" separator=",">
-				#{item}
-		</foreach> 
-		and r.end = 'N' 
-		order by DBMS_RANDOM.VALUE)t where rownum <![CDATA[<]]> 5
-	</select>
+   <select id="selectListRecommendRecruitmentList" parameterType="map" resultType="recruitment">
+      select t.* from (select r.*,(select comp_name from company where comp_id = r.comp_id)compName,
+      (select count(*) from favorites where member_id = #{memberId} and recruitment_no = r.recruitment_no) favoritesCount ,
+            (select count(*) count from companyapplication where recruitment_no=r.recruitment_no  and member_id = #{memberId}) applyCount 
+      from company c  join recruitment r
+      on c.comp_id = r.comp_id
+      where c.category in
+      <foreach collection="array" item="item" open="(" close=")" separator=",">
+            #{item}
+      </foreach> 
+      and r.end = 'N' 
+      order by DBMS_RANDOM.VALUE)t where rownum <![CDATA[<]]> 5
+   </select>
+   
 	<!-- 체크박스 클릭한 스크랩 공고 삭제 -->
 	<delete id="deleteFavoritesList" parameterType="map">
 		delete from favorites where member_id = #{memberId} and recruitment_no  

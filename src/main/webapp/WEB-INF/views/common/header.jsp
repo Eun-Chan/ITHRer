@@ -205,7 +205,8 @@
 				  				<!-- 카카오로그인 -->
 				  				<img src="${pageContext.request.contextPath }/resources/images/kakao_login.png" class="rounded-circle" onclick="kakaoLogin()" width="50px">
 				  				<!-- 페이스북로그인 -->
-				  				<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+<!--  				  			<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false" onlogin="facebookLogin()"></div>  -->
+								<%-- <img src="${pageContext.request.contextPath }/resources/images/facebook.png" class="rounded-circle" onclick="facebookLogin()" width="50px"/> --%>
 				  				<!-- 네이버로그인 -->
 				  				<img height="35" src="http://static.nid.naver.com/oauth/small_g_in.PNG" onclick="naverPopup();" style="cursor: pointer;"/>
 				  			</div>
@@ -300,9 +301,9 @@
     		type : "POST",
     		success : function(data){
    				// 카카오톡 로그인후 새로고침	
-   				if(data == 'true')
+   				if(data.result == 'true')
     				location.reload();
-   				else if(data == 'false'){
+   				else if(data.result == 'false'){
    					$("#login-help").text("이미 아이디가 접속중입니다!");
 					$("#login-help").addClass("text-danger");
    				}
@@ -385,45 +386,76 @@
 	})
 	
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 페이스북 로그인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-	window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '1894308784031760',
-	      cookie     : true,
-	      xfbml      : true,
-	      version    : 'v3.2'
-	    });
-      
-    	FB.AppEvents.logPageView();   
-      
- 	};
+	/* function facebookLogin() {
+		window.fbAsyncInit = function() {
+		    FB.init({
+		      appId      : '1894308784031760',
+		      cookie     : true,
+		      xfbml      : true,
+		      version    : 'v3.2'
+		    });
+	      
+		     FB.getLoginStatus(function(response) {
+		        statusChangeCallback(response);
+		    }); 
+	 	};
+	 	
+	 	(function(d, s, id){
+	 	     var js, fjs = d.getElementsByTagName(s)[0];
+	 	     if (d.getElementById(id)) {return;}
+	 	     js = d.createElement(s); js.id = id;
+	 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
+	 	     fjs.parentNode.insertBefore(js, fjs);
+	 	   }(document, 'script', 'facebook-jssdk'));
+	 	
+	 	function checkLoginState() {
+	        FB.getLoginStatus(function(response) {
+	            statusChangeCallback(response);
+	          });
+	    }
+	  	
+	 	function statusChangeCallback(response) {
+	    	if (response.status === 'connected') {
+	         	//FB.AppEvents.logPageView();
+	         	testAPI();
+	    	}
+	    	else {
+	    		//FB.AppEvents.logPageView();
+	    		testAPI();
+	    	}
+	  	}
+	 	
+	 	function testAPI() {
+	 	    console.log('Welcome!  Fetching your information.... ');
+	 	    FB.api('/me', function(response) {
+	 	    	var memberId = response.id;
+	            var memberName = response.name;
+	            var email = response.email;
+	 	    	
+	            $.ajax({
+	                url: "${pageContext.request.contextPath}/user/facebookLogin.ithrer",
+	                method:"post",
+	                data: {memberId : memberId, memberName : memberName, email : email },
+	                success: function(data){
+	                if(data.result == "true"){
+	   				alert(data.memberId);
+	                }else{
+	                     alert("FaceBook 신규 회원 로그인성공");
+	                      window.location.href = "/spring";
+	                }
+	                
+	                },
+	                error:function(){
+	                    console.log("ajax요청 실패 에러!");
+	                }
+	             });
+	 	    });
+	 	  }
+	} */
  	
- 	(function(d, s, id){
- 	     var js, fjs = d.getElementsByTagName(s)[0];
- 	     if (d.getElementById(id)) {return;}
- 	     js = d.createElement(s); js.id = id;
- 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
- 	     fjs.parentNode.insertBefore(js, fjs);
- 	   }(document, 'script', 'facebook-jssdk'));
- 	
- 	function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-          });
-    }
-  	
- 	function statusChangeCallback(response) {
-    	if (response.status === 'connected') {
-         	FB.AppEvents.logPageView();
-         	testAPI();
-    	}
-    	else {
-    		FB.AppEvents.logPageView();
-    	}
-  	}
- 	
- 	function testAPI() {
+ 	/* function testAPI() {
         FB.api('/me?fields=id,name,email,gender',  function(response) {            
-       
+       		alert("ASD");
             var memberId = response.id;
             var memberName = response.name;
             var email = response.email;
@@ -437,9 +469,8 @@
              method:"post",
              data: {memberId : memberId, memberName : memberName, email : email },
              success: function(data){
-             if(data.fbisUsable == false){
-              alert("FaceBook 기존 회원 로그인성공");
-                 window.location.href = "/spring";
+             if(data.result == "true"){
+				alert(data.memberId);
              }else{
                   alert("FaceBook 신규 회원 로그인성공");
                    window.location.href = "/spring";
@@ -452,7 +483,7 @@
           });
 
      });
- 	}
+ 	} */
  	
 </script>
 	
