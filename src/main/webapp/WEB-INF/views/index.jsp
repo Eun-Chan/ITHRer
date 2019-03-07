@@ -1171,11 +1171,13 @@
           </ul>
          <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
+          	<a href="${pageContext.request.contextPath}/insertBanner.ithrer">
+            	<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
             <div class="carousel-caption">
-             <!--  <h3>Los Angeles</h3>
-              <p>We had such a great time in LA!</p> -->
+               <h3>배너신청</h3>
+              <p>클릭시 배너페이지 이동</p>
             </div>   
+            </a>
           </div>
           <c:forEach items="${bannerList}" var="banner">
 	          <div class="carousel-item">

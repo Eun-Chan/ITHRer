@@ -155,6 +155,12 @@ public class ChargedController {
 	
 	
 	
+	@RequestMapping("/insertBanner.ithrer")
+	public ModelAndView insertBanner(ModelAndView mav) {
+		
+		mav.setViewName("/chargedService/insertBanner");
+		return mav;
+	}
 	
 	
 }
