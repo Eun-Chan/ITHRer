@@ -4,10 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.amazonaws.util.IOUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.spring.ithrer.charged.model.service.ChargedService;
 import com.spring.ithrer.common.util.S3Util;
 import com.spring.ithrer.common.util.UploadFileUtils;
@@ -54,7 +58,7 @@ public class ChargedController {
 	@RequestMapping(value="/fileUpload.ithrer", produces="application/json")
 	public int fileUpload(ModelAndView mav, HttpServletRequest request,
 			@RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
-			@RequestParam(value="compId",required=false)String compId)  {
+			@RequestParam(value="compId",required=false)String compId, HttpServletResponse response)  {
 		
 		logger.info("originalName: " + upFiles.getOriginalFilename());
 		logger.info("directory: " + directory);
@@ -96,7 +100,6 @@ public class ChargedController {
 
 		}
 		
-		//mav.setViewName("redirect:/fileUpload.ithrer");
 		
 		return result;
 	}
@@ -118,14 +121,6 @@ public class ChargedController {
 		else if(directory.equals("compLogo")) {
 			inputDirectory = "images/compLogo";
 		}
-		
-//		else if(directory.equals("certificate")) {
-//			inputDirectory = "almom/certificate";
-//		}else {
-//			inputDirectory = "almom/coverImage";
-//		}
-
-
 
 		try {
 			HttpHeaders headers = new HttpHeaders();
@@ -154,13 +149,54 @@ public class ChargedController {
 	}
 	
 	
-	
+	/**
+	 * @박광준
+	 * 파일업로드 (서머노트용)
+	 * 업로드 순간에 패스정보가 필요하기에 부득이하게 중복으로 생성..
+	 */
+	@RequestMapping(value="/fileUploadSummernote.ithrer", produces="application/json")
+	public void fileUploadSummernote(ModelAndView mav, HttpServletRequest request,
+			@RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
+			@RequestParam(value="compId",required=false)String compId, HttpServletResponse response)  {
+		
+		logger.info("originalName: " + upFiles.getOriginalFilename());
+		logger.info("directory: " + directory);
+		logger.info("originalName: " + upFiles.getOriginalFilename());
+		
+		String uploadpath = directory;
+		
+
+		ResponseEntity<String> img_path = null;
+		try {
+			img_path = new ResponseEntity<>(
+					UploadFileUtils.uploadFile(uploadpath, upFiles.getOriginalFilename(), upFiles.getBytes()),
+					HttpStatus.CREATED);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String path = (String) img_path.getBody();
+		logger.info("path : "+path);
+
+		List<String> result = new ArrayList<>();
+		result.add(path);
+		
+		response.setContentType("application/json; charset=utf-8");
+		try {
+			new Gson().toJson(result, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	/*
+	 * 배너 등록을 위한 페이지 이동
+	 */
 	@RequestMapping("/insertBanner.ithrer")
 	public ModelAndView insertBanner(ModelAndView mav) {
 		
 		mav.setViewName("/chargedService/insertBanner");
 		return mav;
 	}
-	
-	
 }
