@@ -82,12 +82,12 @@
 	</select>
 	
 	<!-- 지원자 정보 가져오기 -->
-	<select id="selectApplicant" parameterType="map" resultType="member">
+	<select id="selectApplicant" parameterType="map" resultType="profile">
 		select 
-		m.*,
+		p.*,
 		(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
 		(select count(*) from favorites where comp_id=#{compId} and member_id=#{memberId} and select_no=1) count
-		from member m where member_id=#{memberId}
+		from profile p where member_id=#{memberId}
 	</select>
 	
 	<!-- 관심인재 삭제 -->

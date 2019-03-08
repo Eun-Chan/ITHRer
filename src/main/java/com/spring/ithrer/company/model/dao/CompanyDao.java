@@ -15,6 +15,7 @@ import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 public interface CompanyDao {
@@ -49,7 +50,7 @@ public interface CompanyDao {
 
 	List<CompanyApplication> selectCompanyAppList(String compId);
 
-	Member selectApplicant(Map<String, Object> map);
+	Profile selectApplicant(Map<String, Object> map);
 
 	int deleteFavorite(Map<String, Object> map);
 

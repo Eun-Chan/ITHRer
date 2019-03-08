@@ -159,7 +159,10 @@
 	</resultMap>
 	
    <select id="profileView" resultType="profile">
-      select * from profile where member_id = #{memberId}
+      select *, 
+		(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
+		(select count(*) from favorites where comp_id=#{compId} and member_id=#{memberId} and select_no=1) count
+	  from profile where member_id = #{memberId}
    </select>
 
 
