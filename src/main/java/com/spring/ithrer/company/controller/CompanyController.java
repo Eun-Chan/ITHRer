@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
+import com.spring.ithrer.common.util.UploadFileUtils;
 import com.spring.ithrer.company.model.service.CompanyService;
 import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
@@ -649,5 +653,7 @@ public class CompanyController {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

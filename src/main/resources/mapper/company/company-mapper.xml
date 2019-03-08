@@ -136,7 +136,7 @@
 	
 	<!-- 기업공고 등록하기 -->
 	<insert id="insertRecruitment" parameterType="Recruitment">
-		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},'WORK_DAY주1일','N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},'101010',#{genderCut})
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},'WORK_DAY주1일','N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},#{locationCode},#{genderCut})
 	</insert>
 	
 	<!-- 지하철노선도-구분 가져오기 -->
