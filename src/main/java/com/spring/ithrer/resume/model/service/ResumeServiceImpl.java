@@ -15,6 +15,7 @@ import com.spring.ithrer.resume.model.vo.Hopework;
 import com.spring.ithrer.resume.model.vo.Intern;
 import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Letter;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
@@ -28,8 +29,8 @@ public class ResumeServiceImpl implements ResumeService {
 	ResumeDao resumeDao;
 
 	@Override
-	public List<Map<String, String>> certificateList(String certName) {
-		List<Map<String,String>> list = resumeDao.certificateList(certName);
+	public List<Map<String, String>> certificateList(String certname) {
+		List<Map<String,String>> list = resumeDao.certificateList(certname);
 		return list;
 	}
 
@@ -119,8 +120,8 @@ public class ResumeServiceImpl implements ResumeService {
 
 	@Override
 	public Certification certificateView(String memberId) {
-		Certification certificate = resumeDao.certificateView(memberId);
-		return certificate;
+		Certification certification = resumeDao.certificateView(memberId);
+		return certification;
 	}
 
 	@Override
@@ -181,5 +182,11 @@ public class ResumeServiceImpl implements ResumeService {
 	public int insertLetter(Map<String, Object> letterMap) {
 		int result = resumeDao.insertLetter(letterMap);
 		return result;
+	}
+
+	@Override
+	public Letter letterView(String memberId) {
+		Letter letter = resumeDao.letterView(memberId);
+		return letter;
 	}
 }

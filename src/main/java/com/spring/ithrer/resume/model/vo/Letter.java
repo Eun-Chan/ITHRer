@@ -17,6 +17,8 @@ public class Letter implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String letterText;
-	private String letterArea;
+	private String lettertext;
+	private String[] lettertextArr;
+	private String letterarea;
+	private String[] letterareaArr;
 }

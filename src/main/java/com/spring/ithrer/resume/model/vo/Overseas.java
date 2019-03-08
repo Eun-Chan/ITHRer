@@ -24,7 +24,7 @@ public class Overseas implements Serializable{
 	private String[] overseasstartdateArr;
 	private String overseasenddate;
 	private String[] overseasenddateArr;
-	private String overseastxtarea;
-	private String[] overseastxtareaArr;
+	private String overseastextarea;
+	private String[] overseastextareaArr;
 	
 }

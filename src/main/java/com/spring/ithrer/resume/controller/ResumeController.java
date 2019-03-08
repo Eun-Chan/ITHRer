@@ -57,8 +57,8 @@ public class ResumeController {
 	/* 자격증db에서 자격증명찾기 */
 	@RequestMapping(value="/resume/certificateList.ithrer")
 	@ResponseBody
-	public List<Map<String,String>> certificateList(@RequestParam("certName") String certName) {
-		List<Map<String,String>> list = resumeService.certificateList(certName);
+	public List<Map<String,String>> certificateList(@RequestParam("certname") String certname) {
+		List<Map<String,String>> list = resumeService.certificateList(certname);
 		return list;
 	}
 
@@ -191,7 +191,7 @@ public class ResumeController {
 			e1.printStackTrace();
 		}
 		
-		mav.setViewName("redirect:/");
+		mav.setViewName("index");
 		return mav;	
 	}
 
@@ -203,8 +203,8 @@ public class ResumeController {
       logger.info("award="+award);
       Career career = resumeService.careerView(memberId);
       logger.info("career="+career);
-      Certification certificate = resumeService.certificateView(memberId);
-      logger.info("certificate="+certificate);
+      Certification certification = resumeService.certificateView(memberId);
+      logger.info("certification="+certification);
       Hopework hopework = resumeService.hopeworkView(memberId);
       logger.info("hopework="+hopework);
       Intern intern = resumeService.internView(memberId);
@@ -223,6 +223,76 @@ public class ResumeController {
       logger.info("profile="+profile);
       Education education = resumeService.educationView(memberId);
       logger.info("education="+education);
+      Letter letter = resumeService.letterView(memberId);
+      logger.info("letter="+letter);
+      mav.addObject("award", award);
+      mav.addObject("career", career);
+      mav.addObject("certification", certification);
+      mav.addObject("education", education);
+      mav.addObject("hopework", hopework);
+      mav.addObject("intern", intern);
+      mav.addObject("language", language);
+      mav.addObject("learn", learn);
+      mav.addObject("letter", letter);
+      mav.addObject("overseas", overseas);
+      mav.addObject("portFolio", portFolio);
+      mav.addObject("preference", preference);
+      mav.addObject("profile", profile);
+      try {
+    	  int awardcnt = award.getAwardnameArr().length;
+    	  mav.addObject("awardcnt", awardcnt);   
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int carrercnt = career.getCorpnameArr().length;
+    	  mav.addObject("carrercnt", carrercnt);   
+    	  System.out.println("carrercnt="+carrercnt);
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int certificationcnt = certification.getCertnameArr().length;
+    	  mav.addObject("certificationcnt", certificationcnt);   
+    	  System.out.println("certificationcnt="+certificationcnt);
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int interncnt = intern.getInterndivisionArr().length;
+    	  mav.addObject("interncnt", interncnt);   
+    	  System.out.println("interncnt="+interncnt);
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int learncnt = learn.getLearntitleArr().length;
+    	  mav.addObject("learncnt", learncnt);   
+    	  System.out.println("learncnt="+learncnt);
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int lettercnt = letter.getLettertextArr().length;
+    	  mav.addObject("lettercnt", lettercnt);   
+    	  System.out.println("lettercnt="+lettercnt);
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int overseascnt = overseas.getCountryArr().length;
+    	  mav.addObject("overseascnt", overseascnt);   
+    	  System.out.println("overseascnt="+overseascnt);
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  String portFoliorename = portFolio.getPRenamedFileName();
+    	  mav.addObject("portFoliorename", portFoliorename);   
+    	  System.out.println("portFoliocon="+portFoliorename);    	  
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
       mav.setViewName("/resume/resumeView");
       return mav;
    }

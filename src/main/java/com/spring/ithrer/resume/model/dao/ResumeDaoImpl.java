@@ -15,6 +15,7 @@ import com.spring.ithrer.resume.model.vo.Hopework;
 import com.spring.ithrer.resume.model.vo.Intern;
 import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Letter;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
@@ -26,8 +27,8 @@ public class ResumeDaoImpl implements ResumeDao {
 	SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Map<String, String>> certificateList(String certName) {
-		return sqlSession.selectList("resume.certificateList",certName);
+	public List<Map<String, String>> certificateList(String certname) {
+		return sqlSession.selectList("resume.certificateList",certname);
 	}
 
 	@Override
@@ -153,6 +154,11 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public int insertLetter(Map<String, Object> letterMap) {
 		return sqlSession.insert("resume.insertLetter",letterMap);
+	}
+
+	@Override
+	public Letter letterView(String memberId) {
+		return sqlSession.selectOne("resume.letterView",memberId);
 	} 
 
 }

@@ -11,6 +11,7 @@ import com.spring.ithrer.resume.model.vo.Hopework;
 import com.spring.ithrer.resume.model.vo.Intern;
 import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Letter;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
@@ -18,7 +19,7 @@ import com.spring.ithrer.resume.model.vo.Profile;
 
 public interface ResumeDao {
 
-   List<Map<String, String>> certificateList(String certName);
+   List<Map<String, String>> certificateList(String certname);
 
    int insertAward(Map<String, Object> awardMap);
 
@@ -69,5 +70,7 @@ public interface ResumeDao {
 	Education educationView(String memberId);
 
 	int insertLetter(Map<String, Object> letterMap);
+
+	Letter letterView(String memberId);
 
 }
