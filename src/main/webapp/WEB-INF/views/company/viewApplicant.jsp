@@ -59,14 +59,14 @@ div.border-top.border-bottom{
 						<div class="col">
 							<h6>
 								<img src="${pageContext.request.contextPath }/resources/images/birth.svg" alt="birth icon" width="30px" class="mr-3"/>
-								<span id="member-birth"></span>년 (${member2.age }세)
+								<span id="member-birth"></span>년 (${profile.age }세)
 							</h6>
-							<h6><img src="${pageContext.request.contextPath }/resources/images/phone.svg" alt="phone icon" width="30px" class="mr-3"/> ${member2.phone }</h6>
-							<h6><img src="${pageContext.request.contextPath }/resources/images/address.svg" alt="address icon" width="30px" class="mr-3"/> ${member2.address }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/phone.svg" alt="phone icon" width="30px" class="mr-3"/> ${profile.phone }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/address.svg" alt="address icon" width="30px" class="mr-3"/> ${profile.address }</h6>
 						</div>
 						<div class="col">
-							<h6><img src="${pageContext.request.contextPath }/resources/images/gender.svg" alt="gender icon" width="30px" class="mr-3"/> ${member2.gender }</h6>
-							<h6><img src="${pageContext.request.contextPath }/resources/images/email.svg" alt="email icon" width="30px" class="mr-3"/> ${member2.email }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/gender.svg" alt="gender icon" width="30px" class="mr-3"/> ${profile.gender }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/email.svg" alt="email icon" width="30px" class="mr-3"/> ${profile.email }</h6>
 						</div>
 					</div>
 				</div>
@@ -92,10 +92,47 @@ div.border-top.border-bottom{
 		</div>
 		
 		<h1>${profile.userResumeTitle }</h1>
+		${award }
+		<br />
+		${career }
+		<br />
+		${certification }
+		<br />
 		${education }
+		<br />
+		${hopework }
+		<br />
+		${intern }
+		<br />
+		${language }
+		<br />
+		${learn }
+		<br />
+		${overseas }
+		<br />
+		${portfolio }
+		<br />
+		${preference }
+		<br />
+		${profile }
+				
 		<div id="education-info-container" class="container my-5">
 			<h3>학력</h3>
-			<span>최종학력 | (예시) 대학교 4년 졸업예정</span>
+			<span>
+				최종학력 
+				최종학력이 고등학교 졸
+				<c:if test="${not empty education.highgraduationstateArr[0] }">
+					${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
+					<c:if test="${education.graducationstateArr[fn:length(education.graducationstateArr)-1] eq 'graduated' 
+								and education.graduactionArr[fn:length(education.graduactionArr)-1] eq 'graduate'} ">
+					대학원 졸업
+					</c:if>
+				</c:if>
+				<c:if test="${empty education.highgraduationstateArr[0] }">
+				${education.highgraduationstateArr[0] }
+				</c:if>
+				 | (예시) 대학교 4년 졸업예정
+			</span>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					재학기간
@@ -104,7 +141,7 @@ div.border-top.border-bottom{
 					구분
 				</div>
 				<div class="col">
-					학교명(소재지)
+					학교명
 				</div>
 				<div class="col">
 					전공
@@ -113,6 +150,28 @@ div.border-top.border-bottom{
 					학점
 				</div>
 			</div>
+			${fn:length(education.graduactionArr) }
+			<c:forEach var="i" begin="0" end="${fn:length(education.graduactionArr) }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${education.admissiondateArr[i] } ~ ${education.graduationdateArr[i] }
+					</div>
+					<div class="col">
+						${education.graduactionArr[i] }
+					</div>
+					<div class="col">
+						${education.schoolnameArr[i] }
+					</div>
+					<div class="col">
+						${education.majorArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${i != 0 }">
+						${education.scoreArr[i] }/${education.totalscoreArr[i-1] }
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
 		
 		<div id="career-info-container" class="container my-5">
@@ -206,11 +265,11 @@ div.border-top.border-bottom{
 
 <script>
 	// 생년월일 잘라서 년도만 보여주기
-	var birth = "${member2.birth}".substr(0,4);
+	var birth = "${profile.birth}".substr(0,4);
 	$("span#member-birth").text(birth);
 
 	// 페이지 로딩 후 관심인재 버튼 이미지 보여줄 것 정하기
-	if(${member2.count} == 0){
+	if(${profile.count} == 0){
 		$("img#bookmarkon").removeClass("visible-on").addClass("visible-off");
 		$("img#bookmarkoff").removeClass("visible-off").addClass("visible-on");
 	}
@@ -220,12 +279,12 @@ div.border-top.border-bottom{
 	}
 
 	// 관심인재 버튼(별모양) 클릭 이벤트
-	var count = ${member2.count};
+	var count = ${profile.count};
 	$("div.clearfix img").on("click",function(){
 		
 		if(count == 1){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${member2.memberId}&recruitmentNo=${recruitmentNo}",
+				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${profile.memberId}&recruitmentNo=${recruitmentNo}",
 				type: "delete",
 				success: function(data){
 					var newCount = data.newCount;
@@ -247,7 +306,7 @@ div.border-top.border-bottom{
 		}
 		else if(count == 0){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${member2.memberId}&recruitmentNo=${recruitmentNo}",
+				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${profile.memberId}&recruitmentNo=${recruitmentNo}",
 				type: "post",
 				success: function(data){
 					var newCount = data.newCount;

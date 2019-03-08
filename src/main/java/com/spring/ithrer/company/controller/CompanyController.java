@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
+import com.spring.ithrer.common.util.UploadFileUtils;
 import com.spring.ithrer.company.model.service.CompanyService;
 import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
@@ -177,14 +181,14 @@ public class CompanyController {
 		// 홀수 인덱스에 아이디가 담김
 		String[] splitStr = applicantCookieVal.split("\\|");
 		
-		List<Member> readAppList = new ArrayList<>();
+		List<Profile> readAppList = new ArrayList<>();
 		for(int i=0; i<splitStr.length; i++) {
 			if(i%2 == 0) continue;
 			
 			Map<String,Object> map2 = new HashMap<>();
 			map2.put("memberId", splitStr[i]);
 			map2.put("compId", compId);
-			Member member = companyService.selectApplicant(map2);
+			Profile member = companyService.selectApplicant(map2);
 			readAppList.add(member);
 		}
 		
@@ -219,10 +223,6 @@ public class CompanyController {
 	public ModelAndView viewApplicant(ModelAndView mav, @RequestParam("compId") String compId, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("memberId") String memberId
 									, HttpServletRequest req, HttpServletResponse res) {
 		
-		logger.debug("compId = "+compId);
-		
-		// recruitmentNo 임시로 넘겨주기
-		mav.addObject("recruitmentNo",recruitmentNo);
 		
 		// 쿠키 관련
 		// 오늘 본 지원자 쿠키 생성
@@ -282,12 +282,11 @@ public class CompanyController {
 		map.put("memberId", memberId);
 		map.put("compId", compId);
 
-		Member member = companyService.selectApplicant(map); 
+		//Member profile = companyService.selectApplicant(map); 
 		
 		// 이력서 가져오기
 		Education education = resumeService.educationView(memberId);
-		logger.debug("에듀케이션 | "+education);
-		Profile profile = resumeService.profileView(memberId);
+		Profile profile = companyService.selectApplicant(map);
 	    Award award = resumeService.awardView(memberId);
 	    Career career = resumeService.careerView(memberId);
 	    Certification certificate = resumeService.certificateView(memberId);
@@ -298,8 +297,10 @@ public class CompanyController {
 	    Overseas overseas = resumeService.overseasView(memberId);
 	    PortFolio portFolio = resumeService.portFolioView(memberId);
 	    Preference preference = resumeService.preferenceView(memberId);
+
 	    
 	    mav.addObject("profile",profile);
+	    //mav.addObject("profile",profile);
 	    mav.addObject("award",award);
 	    mav.addObject("career",career);
 	    mav.addObject("certificate",certificate);
@@ -312,7 +313,8 @@ public class CompanyController {
 	    mav.addObject("preference",preference);
 	    mav.addObject("education",education);
 		
-		mav.addObject("member2",member);
+	    mav.addObject("recruitmentNo",recruitmentNo);
+		
 		mav.setViewName("company/viewApplicant");
 		
 		return mav;
@@ -651,5 +653,7 @@ public class CompanyController {
 			e.printStackTrace();
 		}
 	}
+	
+	
 	
 }

@@ -19,7 +19,6 @@
 	background-color: #b89dff;
 	color: white;
 	margin-top: 200px;
-	cursor: pointer;
 	display: block;
 	float: left;
 	position: fixed;
@@ -40,7 +39,10 @@
 	margin-left : 22px;
 	margin-bottom : 5px;
 }
-a[name=hovercheck] span:hover{
+a[name=hovercheck] span {
+	cursor: pointer;
+}
+a[name=hovercheck] span:hover {
 	color : darkgreen;
 }
 </style>

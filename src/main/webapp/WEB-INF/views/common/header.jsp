@@ -140,7 +140,7 @@
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
 					  <div class="dropdown-menu">
-					    <a class="dropdown-item" href="#">이력서 관리</a>
+					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
 					    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
 					  </div>
