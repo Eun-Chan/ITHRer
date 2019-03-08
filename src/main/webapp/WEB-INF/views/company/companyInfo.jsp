@@ -64,12 +64,18 @@ div.border-top.border-bottom{
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-sm-4">
+				<div class="col">
 					<label for="">로고</label>
 					<div class="custom-file">
 						<input type="file" name="logo" class="custom-file-input" id="logo">
 						<label class="custom-file-label" for="customFile"></label>
 					</div>
+				</div>
+				<div id="logo-box" class="col">
+					현재 로고
+					<c:if test="${not empty companyMap.company.logoS3 }">
+					<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${companyMap.company.logoS3 }&directory=compLogo" alt="기업로고" width="100px"/>
+					</c:if>
 				</div>
 			</div>
 			<div class="row">
@@ -523,47 +529,67 @@ function inputNumberFormat(obj) {
     obj.value = comma(uncomma(obj.value));
 }
 
-
+// 파일 업로드했을 경우 파일이름 보여주기
+$("[name=logo]").on("change",function(){
+	var fileName = $(this).prop("files")[0].name;
+	$(this).next(".custom-file-label").html(fileName);
+});
 
 /* 기업정보 수정 버튼 */
 $("#company-info-submit").on("click",function(){
 	
-	var formData = new FormData();
-	var directory = 'images/compLogo';
-	var compId = "${companyLoggedIn.compId}";
-	formData.append("upFile",$("input#logo")[0].files[0]);
-	formData.append("directory",directory);
-	formData.append("compId",compId);
-	
-	$.ajax({
-		url: "${pageContext.request.contextPath}/fileUpload.ithrer",
-		contentType: false,
-		processData: false,
-		data: formData, 
-		type: "post",
-		success: function(data){
-			alert(data);
-			
-			if(data == '1'){
-				$.ajax({
-					url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
-					type: "put",
-					success: function(data){
-						alert(data.msg);
-					},
-					error: function(){
-						console.log("기업정보 수정 ajax error!");
-					}
-				});
+	if($("input#logo")[0].files[0] == null){
+		$.ajax({
+			url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+			type: "put",
+			success: function(data){
+				alert(data.msg);
+			},
+			error: function(){
+				console.log("기업정보 수정 ajax error!");
 			}
-			
-		},
-		error: function(){
-			console.log("기업정보 수정 ajax error!");
-		}
-	});
-	
-	
+		});
+	}
+	else{
+		var formData = new FormData();
+		var directory = 'images/compLogo';
+		var compId = "${companyLoggedIn.compId}";
+		formData.append("upFile",$("input#logo")[0].files[0]);
+		formData.append("directory",directory);
+		formData.append("compId",compId);
+		
+		
+		
+		$.ajax({
+			url: "${pageContext.request.contextPath}/fileUpload.ithrer",
+			contentType: false,
+			processData: false,
+			data: formData, 
+			type: "post",
+			success: function(data){
+				if(data == '1'){
+					$.ajax({
+						url: "${pageContext.request.contextPath}/company/info?"+$("#company-info-form").serialize(),
+						type: "put",
+						success: function(data){
+							alert(data.msg);
+							console.log(data);
+							$("div#logo-box img").prop("src","${pageContext.request.contextPath}/displayFile.ithrer?fileName="+data.company.logoS3+"&directory=compLogo");
+							
+							
+						},
+						error: function(){
+							console.log("기업정보 수정 ajax error!");
+						}
+					});
+				}
+				
+			},
+			error: function(){
+				console.log("기업로고 S3 업로드 ajax error!");
+			}
+		});
+	}
 	
 });
 
