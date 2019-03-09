@@ -345,8 +345,6 @@ public class ResumeController {
       mav.setViewName("/resume/resumeView");
       return mav;
    }
-   
-   
    @RequestMapping(value="/uploadMemberPhoto.ithrer", produces="application/json")
    @ResponseBody
 	public void fileUpload(ModelAndView mav, HttpServletRequest request,
@@ -378,7 +376,5 @@ public class ResumeController {
 		new Gson().toJson(path,response.getWriter());
 		
 	}
-   
-   
 }
 
