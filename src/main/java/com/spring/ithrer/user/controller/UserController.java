@@ -188,7 +188,8 @@ public class UserController {
 		map.put("password" , memberPassword);
 		
 		Member member = userService.memberCheck(map);
-		
+		logger.debug("member = "+member);
+		System.out.println("member = "+member);
 		Map<String,String> test = new HashMap<String, String>();
 		if(member != null) {
 			// 비밀번호가 맞는지 확인
@@ -221,6 +222,7 @@ public class UserController {
 			session.setAttribute("member", member);
 			
 			test.put("result" , "true");
+			
 		}
 		else {
 			System.out.println("로긴 실패");
@@ -402,8 +404,6 @@ public class UserController {
 		Member mem = userService.memberIdView(member);
 		
 		// 1. 사용자의 이메일로 아이디 보내기
-		// 인증번호 생성
-		authNum = getAuthNum();
 		// 보낼 이메일 주소		
 		String to = memberEmail;
 		
@@ -450,6 +450,35 @@ public class UserController {
 		
 	}
 	
+	/**
+	 * 기업회원 비밀번호 찾기 시 이메일 인증
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/findPasswordEmailAuth2" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> findPasswordEmailAuth2(Company company) throws Exception{
+		Map<String,String> result = new HashMap<>();
+		company.setLicenseNo(company.getLicenseNo()+ "  ");
+		// 0. Company 의 아이디, 이름 , 사업자 번호 , 이메일이 맞는지 확인
+		Company com = userService.findPasswordEmailAuth2(company);
+		
+		// 조회 성공! => 이메일로 인증번호 보내주기
+		if(com != null ) {
+			result.put("result", "true");
+			authNum = getAuthNum();
+			emailSend(com.getCompEmail(), "인증번호 = "+String.valueOf(authNum), "ITHRer 비밀번호 찾기 인증번호");
+			result.put("authNum" , String.valueOf(authNum));
+		}
+		// 조회 실패 => 정보가 없으므로 location.reload
+		else {
+			result.put("rresult", "false");
+		}
+		return result;
+	}
+	
+	/**
+	 * 개인회원 비밀번호 변경하러 가기 view 이동
+	 */
 	@RequestMapping(value="/user/memberPasswordUpdateGoing" , method=RequestMethod.POST)
 	public ModelAndView memberPasswordUpdateGoing(Member member , ModelAndView mav) {
 		mav.addObject("member", member);
@@ -457,6 +486,19 @@ public class UserController {
 		mav.setViewName("user/memberUpdatePwd");
 		
 		return mav;
+	}
+	
+	/**
+	 * 기업회원 비밀번호 변경하러 가기 view 이동
+	 */
+	@RequestMapping(value="/user/companyPasswordUpdateGoing" , method=RequestMethod.POST)
+	public ModelAndView companyPasswordUpdateGoing(Company company , ModelAndView mav) {
+		mav.addObject("company", company);
+		
+		mav.setViewName("user/companyUpdatePwd");
+		
+		return mav;
+		
 	}
 	
 	/**
@@ -540,16 +582,30 @@ public class UserController {
 	
 	/**
 	 * 기업회원 아이디 찾기
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/user/findCompanyId" , method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> findCompanyId(Company company){
+	public Map<String, String> findCompanyId(Company company) throws Exception{
 		Map<String,String> result = new HashMap<>();
-		result.put("result", "true");
 		
-		// 0. 입력 값 확인
-		logger.debug("compName = "+company.getCompName());
-		logger.debug("licenseNo = "+company.getLicenseNo());
+		logger.debug("company = "+company);
+		company.setLicenseNo(company.getLicenseNo()+"  ");
+		Company com = userService.findCompanyId(company);
+		logger.debug("com = "+com);
+		if(com != null) {
+			result.put("result", "true");
+			// 기업아이디 이메일로 전송			
+			// 1. 사용자의 이메일로 아이디 보내기
+			// 보낼 이메일 주소		
+			String to = com.getCompEmail();
+			
+			// 아이디 이메일로 보내주기
+			emailSend(to, "회원 아이디 = "+com.getCompId(), "ITHRer 아이디 조회 결과 입니다.");
+		}
+		else {
+			result.put("result", "false");
+		}
 		
 		return result;
 	}
@@ -578,6 +634,29 @@ public class UserController {
 	}
 	
 	/**
+	 * 기업회원 비밀번호 변경
+	 */
+	@RequestMapping(value="/user/companyPasswordUpdate" , method=RequestMethod.POST)
+	public ModelAndView companyPasswordUpdate(ModelAndView mav, Company company) {
+		logger.debug("암호화 하기 전 : " +company.getPassword());
+		String tmp = company.getPassword();
+		company.setPassword(bcryptPasswordEncoder.encode(tmp));
+		logger.debug("암호화 후 : "+company.getPassword());
+		
+		int result = userService.companyPasswordUpdate(company);
+		
+		if(result > 0) {
+			logger.debug("비밀번호 변경 성공!");
+		}
+		else {
+			logger.debug("비밀번호 변경 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
+		return mav;
+	}
+	
+	/**
 	 * 이메일 보내기
 	 */
 	public void emailSend(String to , String text, String subject) throws Exception {
@@ -593,7 +672,7 @@ public class UserController {
 	/*
 	 * 로그아웃 
 	 */
-	@RequestMapping("/member/memberLogout.do")
+	@RequestMapping("/member/memberLogout.ithrer")
 	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
 		
 		req.getSession().removeAttribute("member");

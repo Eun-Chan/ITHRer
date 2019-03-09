@@ -343,11 +343,18 @@
 		}
 	});
 	
-	/* 핸드폰 번호 숫자만 입력만 가능 */
+	/* 개인회원 핸드폰 번호 숫자만 입력만 가능 */
 	$("#tel").on("keyup", function() {
 		$(this).val($(this).val().replace(/[^0-9]/g,""));
 	});
-	
+	/* 사업자 번호 숫자만 입력 가능 */
+	$("#tel2").on("keyup", function() {
+		$(this).val($(this).val().replace(/[^0-9]/g,""));
+	});
+	/* 기업회원 핸드폰 번호 숫자만 입력 가능 */
+	$("#licenseNo").on("keyup", function() {
+		$(this).val($(this).val().replace(/[^0-9]/g,""));
+	});
 	/* 이메일 유효성 검사 */
 	$("#MemberEmail").keyup(function(e){
 		var memberEmail = $("#MemberEmail").val().trim();
@@ -625,7 +632,7 @@
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업 회원가입 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 	
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 사업자 번호 조회 시작ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
-	$("#licenseNo").keyup(function(e){
+	/* $("#licenseNo").keyup(function(e){
 		var licenseNo = $("#licenseNo").val().trim();
 		$.ajax({
 			crossOrigin: true,
@@ -638,7 +645,7 @@
 				alert(data);
 			}
 		});
-	});
+	}); */
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 사업자 번호 조회 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 	
 	function goHome(){

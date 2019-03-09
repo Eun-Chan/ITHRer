@@ -141,7 +141,7 @@
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
 				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
-				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 		</ul>
 			 	</c:if>
 			 </div>
@@ -207,6 +207,16 @@
 				  				<!-- 네이버로그인 -->
 				  				<img height="35" src="http://static.nid.naver.com/oauth/small_g_in.PNG" onclick="naverPopup();" style="cursor: pointer;"/>
 				  			</div>
+				  			<br />
+				  			<div class="form-group">
+				  				<p class="font-italic text-info">ITHRer 플친</p>
+				  				<a href="javascript:void addPlusFriend()">
+  									<img src="${pageContext.request.contextPath }/resources/images/plusFriend.png" width="50px"/>
+								</a>
+								<a href="javascript:void plusFriendChat()">
+								  <img src="${pageContext.request.contextPath }/resources/images/chatbot.png" width="50px"/>
+								</a>								
+				  			</div>
 						</form>	
 					</div>
                     <div class="tab-pane container fade" id="company">
@@ -244,6 +254,22 @@
 </div> <!-- modal fade 끝 -->
 
 <script>
+  	//<![CDATA[
+    function addPlusFriend() {
+      Kakao.PlusFriend.addFriend({
+        plusFriendId: '_jFIej' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+      });
+    }
+ 	 //]]>
+  	
+  	//<![CDATA[
+    function plusFriendChat() {
+      Kakao.PlusFriend.chat({
+        plusFriendId: '_jFIej' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+      });
+    }
+  	//]]>
+  
 	/* 네이버 로그인 새창 띄우기용 */
 	function naverPopup(){
 		window.open("<%=apiURL%>","_blank","width=300, height=300;"); 
@@ -371,7 +397,6 @@
 		var companyPassword = $("#companyPassword").val().trim();
 		var companySaveId = $("#companySaveId").is(":checked");
 		
-		alert(companyPassword);
 		if(companyId == 0 || companyPassword == 0){
 			$("#login-help2").text("아이디 혹은 비밀번호를 입력해 주시길 바랍니다.");
 			$("#login-help2").addClass("text-danger");

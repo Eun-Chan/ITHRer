@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.ithrer.board.model.vo.AnonyBoard;
+import com.spring.ithrer.board.model.vo.PassBoard;
 import com.spring.ithrer.chatbot.model.service.ChatbotService;
 import com.spring.ithrer.chatbot.model.vo.ContextControl;
 import com.spring.ithrer.chatbot.model.vo.ContextValue;
@@ -102,6 +103,69 @@ public class ChatbotController {
 		simpleText.setText(result);
 		return simpleText;
 	}
+	
+	/**
+	 * 익명 게시판  
+	 */
+	@RequestMapping(value="/unknown")
+	public SimpleText unknown() {
+		SimpleText simpleText = new SimpleText();
+		// 최신 익명 게시판 5개 받아오기
+		List<AnonyBoard> boards = chatbotService.selectBoardList();
+			
+		String result = "";
+		// 5개 정보 쫘악 뿌리기
+		if(!boards.isEmpty()) {
+			for(int i = 0 ; i < boards.size(); i++) {
+				AnonyBoard board = boards.get(i);
+				result += String.valueOf(i+1)+"\n"
+						+ "제목 : " + board.getAnonyBoardTitle() + "\n"
+						+ "작성자 : " + board.getAnonyBoardWriter() + "\n"
+						+ "작성일 : " + board.getAnonyBoardDate() + "\n"
+						+ "조회수 : " + board.getAnonyBoardReadCount() + "\n"
+						+ "ㅡㅡㅡㅡㅡ내용ㅡㅡㅡㅡㅡ\n"
+						+ board.getAnonyBoardContent()+"\n\n";
+				}
+				simpleText.setText(result);
+		}
+			// 익명 게시판이 empty 일 때
+		else {
+			simpleText.setText("익명 게시판 정보가 없습니다.");
+		}
+		return simpleText;
+	}
+	
+	
+	/**
+	 * 합소서 게시판
+	 */
+	@RequestMapping(value="/introduction")
+	public SimpleText introduction() {
+		SimpleText simpleText = new SimpleText();
+		// 최신 합소서 게시판 5개 받아오기
+		List<PassBoard> boards = chatbotService.selectPassBoardList();
+		
+		String result = "";
+		// 5개 정보 쫘악 뿌리기
+		if(!boards.isEmpty()) {
+			for(int i = 0 ; i < boards.size(); i++) {
+				PassBoard board = boards.get(i);
+				result += String.valueOf(i+1)+"\n"
+						+ "제목 : " + board.getPassBoardTitle() + "\n"
+						+ "작성자 : " + board.getPassBoardWriter() + "\n"
+						+ "작성일 : " + board.getPassBoardDate() + "\n"
+						+ "조회수 : " + board.getPassBoardReadCount() + "\n"
+						+ "-----내용-----\n"
+						+ board.getPassBoardContent()+"\n\n";
+			}
+			simpleText.setText(result);
+		}
+		else {
+			simpleText.setText("합소서 게시판 정보가 없습니다.");
+		}
+		return simpleText;
+	}
+	
 	/**
 	 * 버튼 메뉴
 	 */
