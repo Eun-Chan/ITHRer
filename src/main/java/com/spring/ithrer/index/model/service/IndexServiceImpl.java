@@ -143,6 +143,16 @@ public class IndexServiceImpl implements IndexService{
       return indexDao.selectOneProfile(memberId);
    }
 
+@Override
+public Recruitment selectOneRecruitmentEndCheck(int recruitmentNo) {
+	return indexDao.selectOneRecruitmentEndCheck(recruitmentNo);
+}
+
+@Override
+public int updateProfile(Map<String, Object> param) {
+	return indexDao.updateProfile(param);
+}
+
 
 }
 
