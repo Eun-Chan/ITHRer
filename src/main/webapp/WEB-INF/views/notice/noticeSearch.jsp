@@ -343,7 +343,7 @@ function del_line(event, check){
                <label for="locationKeyWord" class="placeholder">
                   	지역 선택
                </label>
-               <button id="locationKeyWord" class="locationKeyWord">
+               <button id="locationKeyWord" class="locationKeyWord"  style="width:117%;">
                   <span class="locationKeyWordSelected"></span>
                </button>
                <div class="location-hide">
@@ -1468,7 +1468,7 @@ function del_line(event, check){
                </div>
             </div>
 			<button class="bar-button" id="btn-detail-search"><span>상세조회</span></button>
-			<button type ="button"class="bar-button" id="btn-search-notice" style="left: 913px;">
+			<button type ="button"class="bar-button" id="btn-search-notice" style="left: 908px;">
 				<span>
 					검색
 				</span>
@@ -1923,7 +1923,7 @@ function del_line(event, check){
 	<ui class="list-group">
 		<c:forEach items="${jobList}" var="job">
 		<li class="list-group-item list-group-item-action">
-			<div><a href="${pageContext.request.contextPath}/index/notice.ithrer?id=${job.id}">${job.name}</a></div>
+			<div><a target="_blank" href="${pageContext.request.contextPath}/index/notice.ithrer?id=${job.id}">${job.name}</a></div>
 			<p class="detail1"><span>${job.title}</span><span class="badge badge-danger"><script>timestamp(${job.expiration})</script></span></p>
 			<p class="detail2"><span>${job.exLevel}</span><span>${job.level}</span><span>${job.jobType}</span><span>${job.location}</span></p>
 		</li>

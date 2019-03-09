@@ -45,7 +45,7 @@
 	
 	<select id="selectListSearchIthrer" parameterType="map" resultType="map">
 		select * from recruitment join area using(location_code) join company c using(comp_id) 
-			where (upper(recruitment_title) like upper('%'||#{searchKeyword}||'%') or upper(comp_name) like upper('%'||#{searchKeyword}||'%')) and closing_date >= sysdate
+			where (upper(recruitment_title) like upper('%'||#{searchKeyword}||'%') or upper(comp_name) like upper('%'||#{searchKeyword}||'%')) and closing_date >= sysdate and end = 'N'
 		<if test="locationCode != null and locationCode[0] != '' and locationCode[0] != 'null'" >
 			and (
 			<foreach collection="locationCode" item="item" open="(" close=")" separator="or"> 

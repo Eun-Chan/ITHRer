@@ -1176,7 +1176,7 @@
             	<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
             <div class="carousel-caption" style="bottom:-5px;">
                <h3>배너신청</h3>
-              <p>클릭시 배너페이지 이동</p>
+              <p style="color:red; font-weight: bold;">클릭시 배너페이지 이동</p>
             </div>   
             </a>
           </div>
