@@ -58,7 +58,7 @@ public class ChargedController {
 	@RequestMapping(value="/fileUpload.ithrer", produces="application/json")
 	public int fileUpload(ModelAndView mav, HttpServletRequest request,
 			@RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
-			@RequestParam(value="compId",required=false)String compId, HttpServletResponse response)  {
+			@RequestParam(value="compId",required=false) String compId, HttpServletResponse response)  {
 		
 		logger.info("originalName: " + upFiles.getOriginalFilename());
 		logger.info("directory: " + directory);
@@ -96,6 +96,7 @@ public class ChargedController {
 			result = companyService.updateCompanyLogo(path, compId);
 		}
 		
+		
 		if(path!=null) {
 
 		}
@@ -121,6 +122,9 @@ public class ChargedController {
 		}
 		else if(directory.equals("compLogo")) {
 			inputDirectory = "images/compLogo";
+		}
+		else if(directory.equals("memberPhoto")) {
+			inputDirectory = "images/memberPhoto";
 		}
 		
 		
