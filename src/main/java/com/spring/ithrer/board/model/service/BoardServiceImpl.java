@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.spring.ithrer.board.model.dao.BoardDao;
 import com.spring.ithrer.board.model.vo.AnonyBoard;
 import com.spring.ithrer.board.model.vo.PassBoard;
+import com.spring.ithrer.board.model.vo.PassBoardComment;
 
 @Service
 public class BoardServiceImpl implements BoardService{
@@ -97,6 +98,16 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int passBoardUpdate(PassBoard passBoard) {
 		return boardDao.passBoardUpdate(passBoard);
+	}
+
+	@Override
+	public int passBoardAddComment(PassBoardComment comment) {
+		return boardDao.passBoardAddComment(comment);
+	}
+
+	@Override
+	public List<PassBoardComment> passBoardCommentList(int passBoardNo) {
+		return boardDao.passBoardCommentList(passBoardNo);
 	}
 
 	

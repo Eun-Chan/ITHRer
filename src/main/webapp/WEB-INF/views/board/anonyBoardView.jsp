@@ -12,7 +12,8 @@
 </jsp:include>
 	<style>
 		div#board-container{width:1000px; margin:0 auto; text-align:center;}
-		div#board-container{margin-top:40px;}		
+		div#board-container{margin-top:40px;}
+		#content-area{height:300px;}	
 	</style>
 <script>
  function fn_goBoardDelete(){
@@ -71,7 +72,7 @@
 			<th>제목</th>
 			<td colspan="6">${anonyBoard.anonyBoardTitle}</td>
 		</tr>	
-		<tr>	
+		<tr id="content-area">	
 			<th class="table-primary">작성내용</th>
 			<td colspan="6" >${anonyBoard.anonyBoardContent}</td>
 		</tr>

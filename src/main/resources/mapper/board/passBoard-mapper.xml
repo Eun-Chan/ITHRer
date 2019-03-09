@@ -55,4 +55,15 @@
         where passBoardNo = #{passBoardNo}
     </update>
 
+	<insert id="passBoardAddComment" parameterType="com.spring.ithrer.board.model.vo.PassBoardComment">
+		<!-- insert into pbComment (pbCommentNo, pbCommentContent, passBoardNo)values(seq_pbCommentNo.nextval,#{pbCommentContent},#{passBoardNo}) -->
+		insert into passBoardComment (pbCommentNo, pbCommentLevel, pbCommentWriter, pbCommentContent, pbBoardRef, pbCommentRef, pbCommentDate) 
+								values(seq_pbCommentNo.nextval, #{pbCommentLevel} , #{pbCommentWriter}, #{pbCommentContent}, #{pbBoardRef}, #{pbCommentRef}, default)
+	</insert>
+	<select id="passBoardCommentList" resultType="com.spring.ithrer.board.model.vo.PassBoardComment" parameterType="com.spring.ithrer.board.model.vo.PassBoardComment" >
+<!-- 	<select id="passBoardCommentList" resultMap="passboardmap" parameterType="list"> -->
+		<!-- select * from passBoardComment order by pbCommentNo -->
+		select * from passBoardComment where pbBoardRef= #{pbBoardRef} start with pbCommentLevel = 1 connect by prior pbCommentNo = pbCommentRef order siblings by pbCommentNo
+	</select>
+ 		<!-- <resultMap id="passBoardCommentList" type="passboardmap"> </resultMap> -->
 </mapper>

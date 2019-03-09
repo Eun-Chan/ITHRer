@@ -14,18 +14,18 @@
 function validate(){
 	var title = $("[name=anonyBoardTitle]").val();
 	var content = $("[name=anonyBoardContent]").val();
+	var password = $("[name=anonyBoardPassword]").val();
 		if(title.trim().length==0){
-			alert("제목을 입력하세요");
+			alert("제목을 입력해주세요.");
 				return false;
 		}	
 		else if(content.trim().length==0){
-			alert("내용을 입력하세요");
+			alert("내용을 입력해주세요.");
 				return false;
 		}
-		else{
-/* 			console.log("여기 오긴 오냐 시부럴");
-			location.href = "anonyBoardList"; */
-				return true;
+		else if(password.trim().length==0){
+			alert("비밀번호를 입력해주세요.")
+				return false;
 		}
 }
 /* $(function(){
