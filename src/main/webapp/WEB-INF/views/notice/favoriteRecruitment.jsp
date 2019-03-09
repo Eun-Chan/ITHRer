@@ -150,7 +150,7 @@
 			</div>
 			<c:if test="${not empty favorites}">
 				<c:forEach items="${favorites }" var="favorite">
-				<div class="row favoriteContent" onclick="moveDetail(${favorite.recruitmentNo})">
+				<div class="row favoriteContent" onclick="moveDetail('${favorite.recruitmentNo}','${favorite.compId }')">
 					<ul class="col-sm-2" style="padding-left:15px;">
 						<li><input type="checkbox" name="recruitmentNo" value=${favorite.recruitmentNo } class="checkbox"  /></li>
 					</ul>
@@ -183,7 +183,7 @@
 		<ul>
 			<c:forEach items="${rcList }" var="RecommendList"> 
 				<li class="BannerOpen open">
-					<div class="content" onclick="moveDetail('${RecommendList.recruitmentNo}');">
+					<div class="content" onclick="moveDetail('${RecommendList.recruitmentNo}','${RecommendList.compId }');">
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${RecommendList.compName }</strong>
 	                  <span class="recruitTitle">${RecommendList.recruitmentTitle }</span>
 	                  <div class="endDate">D-${RecommendList.endTime }</div>
@@ -205,12 +205,11 @@
 	</div>
 </div>
 <script>
-function moveDetail(no){
+function moveDetail(no,compId){
 	   var no = no;
-		
-	   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no);
+		var compId = compId;
+	   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no+"&compId="+compId);
 	}
-	
 //스크랩한 공고
 $(".star").on("click",function(){
 	var recNo = $(this).siblings(".hiddenRecruitNo").val();

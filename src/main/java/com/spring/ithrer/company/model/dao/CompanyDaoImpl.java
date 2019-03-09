@@ -20,6 +20,7 @@ import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
 import com.spring.ithrer.index.model.vo.CompanyApplication;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Repository
@@ -106,7 +107,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public Member selectApplicant(Map<String, Object> map) {
+	public Profile selectApplicant(Map<String, Object> map) {
 		return sqlSession.selectOne("company.selectApplicant",map);
 	}
 
@@ -206,7 +207,7 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Member> selectAppList(int recruitmentNo) {
+	public List<Profile> selectAppList(int recruitmentNo) {
 		return sqlSession.selectList("company.selectAppList",recruitmentNo);
 	}
 	
@@ -218,6 +219,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	@Override
 	public Recruitment joinRecruitment(int no) {
 		return sqlSession.selectOne("company.joinRecruitment", no);
+	}
+	@Override
+	public void updateCARead(Map<String, Object> map) {
+		sqlSession.update("company.updateCARead",map);
 	}
 
 }

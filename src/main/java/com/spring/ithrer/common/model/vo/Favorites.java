@@ -2,6 +2,9 @@ package com.spring.ithrer.common.model.vo;
 
 import java.io.Serializable;
 
+import com.spring.ithrer.resume.model.vo.Career;
+import com.spring.ithrer.resume.model.vo.Profile;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,6 +33,10 @@ public class Favorites implements Serializable {
 	//필요한 채용정보 데이터 가져오기
 	private String recruitmentTitle;
 	private String closingDate;
+	
+	// 조인용 필드
+	private Career career;
+	private Profile profile;
 
 }
 

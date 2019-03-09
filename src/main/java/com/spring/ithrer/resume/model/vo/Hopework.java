@@ -22,5 +22,5 @@ public class Hopework implements Serializable{
 	private String wantpay;
 	private String[] visitdetermine;
 	private String hopeplace;
-	private String hopeputy;
+	private String hopeduty;
 }	

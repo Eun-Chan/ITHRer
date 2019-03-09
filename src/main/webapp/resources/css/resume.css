@@ -295,20 +295,20 @@ h3{
 #formLanguage2 input {
 	width : 200px;
 }
-#formLanguage input[name=selfText] {
+#formLanguage input[name=selftext] {
 	display : none;
 }
-#formLanguage select[name=examName] {
+#formLanguage select[name=examname] {
 	width : 200px;
 	display : none;
 }
-#formLanguage input[name=selfExam] {
+#formLanguage input[name=selfexam] {
 	display : none;
 }
 #formLanguage input[name=examscore] {
 	display : none;
 }
-#formLanguage input[name=examDate] {
+#formLanguage input[name=examdate] {
 	display : none;
 }
 #buttonLanguage {

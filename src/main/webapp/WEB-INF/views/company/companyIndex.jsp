@@ -97,9 +97,6 @@ div.border-top.border-bottom{
 			<li class="nav-item">
 				<a class="nav-link" data-toggle="tab" href="#recruitment-end-tab">마감(<span id="rcrt-end-no">${rcrtEndList.size() }건</span>)</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" data-toggle="tab" href="#recruitment-all-tab">전체(${rcrtList.size()+rcrtEndList.size() }건)</a>
-			</li>
 		</ul>
 
 		<!-- Tab panes -->
@@ -109,8 +106,6 @@ div.border-top.border-bottom{
 					<div class="col-sm-5">공고 제목</div>
 					<div class="col">공고 관리</div>
 					<div class="col">지원자 관리</div>
-					<div class="col">지원자 통계</div>
-					<div class="col">이용상품</div>
 				</div>
 				<c:forEach var="rcrt" items="${rcrtList}">
 					<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">
@@ -129,13 +124,6 @@ div.border-top.border-bottom{
 							</a>
 							 (미열람 ${rcrt.notReadCount }명)
 						</div>
-						<div class="col">
-							<button class="btn btn-dark btn-sm rcrt-appview-btn">보기</button>
-						</div>
-						<div class="col">
-							없음<br />
-							<button class="btn btn-success btn-sm">유료서비스 신청</button>
-						</div>
 					</div>
 				</c:forEach>
 			</div>
@@ -144,8 +132,6 @@ div.border-top.border-bottom{
 					<div class="col-sm-5">공고 제목</div>
 					<div class="col">공고 관리</div>
 					<div class="col">지원자 관리</div>
-					<div class="col">지원자 통계</div>
-					<div class="col">이용상품</div>
 				</div>
 				<c:forEach var="rcrtEnd" items="${rcrtEndList}">
 					<div class="row d-flex flex-wrap align-items-center py-2 border-bottom end-del">
@@ -163,18 +149,8 @@ div.border-top.border-bottom{
 							</a>
 							 (미열람 ${rcrt.notReadCount }명)
 						</div>
-						<div class="col">
-							<button class="btn btn-dark btn-sm rcrt-appview-btn">보기</button>
-						</div>
-						<div class="col">
-							없음<br />
-							<button class="btn btn-success btn-sm">유료서비스 신청</button>
-						</div>
 					</div>
 				</c:forEach>
-			</div>
-			<div id="recruitment-all-tab" class="container tab-pane fade"><br>
-				<h3>진행 중/마감된 채용정보 모두 보여주면 댐</h3>
 			</div>
 		</div>
 	</div>
@@ -206,14 +182,14 @@ div.border-top.border-bottom{
 					<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">
 						<div class="col">
 							<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=2&memberId=${applicant.memberId}">
-								${applicant.memberId }
+								${applicant.name}/${applicant.age }세/${applicant.gender }
 							</a>
 						</div>
 						<div class="col">
-							
+							${applicant.userresumetitle}
 						</div>
 						<div class="col">
-							
+							${applicant.career.workingPeriod }
 						</div>
 						<div class="col">
 							<button mi="${applicant.memberId }" class="btn btn-primary btn-sm fav-add-btn">관심인재 등록</button>
@@ -236,14 +212,14 @@ div.border-top.border-bottom{
 					<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">
 						<div class="col">
 							<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">
-								${favorite.memberId}
+								${favorite.profile.name }/${favorite.profile.age }세/${favorite.profile.gender }
 							</a>
 						</div>
 						<div class="col">
-							
+							${favorite.profile.userresumetitle }
 						</div>
 						<div class="col">
-							
+							${favorite.career.workingPeriod }
 						</div>
 						<div class="col">
 							<button del="del" mi="${favorite.memberId }" class="btn btn-danger btn-sm fav-delete-btn">관심인재 해제</button>
@@ -255,7 +231,6 @@ div.border-top.border-bottom{
 		</div>
 	
 	</div>
-	
 	
 
 
@@ -281,7 +256,7 @@ for(var i=0; i<$favBtn.length; i++){
 		$favBtn.eq((i+1)).removeClass("visible-on").addClass("visible-off");
 	}
 }
-//end 페이지 로딩 후 관심인재 등록/해제 버튼 이미지 보여줄 것 정하기 
+//end
 
 // 인재검색 버튼
 $("button#app-search").on("click",function(){

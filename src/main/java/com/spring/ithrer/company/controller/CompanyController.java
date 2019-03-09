@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.model.vo.Favorites;
-import com.spring.ithrer.common.util.UploadFileUtils;
 import com.spring.ithrer.company.model.service.CompanyService;
 import com.spring.ithrer.company.model.vo.Area;
 import com.spring.ithrer.company.model.vo.Company;
@@ -53,11 +49,11 @@ import com.spring.ithrer.resume.model.vo.Hopework;
 import com.spring.ithrer.resume.model.vo.Intern;
 import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Letter;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
-import com.spring.ithrer.user.model.vo.Member;
 
 @RestController
 @RequestMapping("/company")
@@ -181,14 +177,14 @@ public class CompanyController {
 		// 홀수 인덱스에 아이디가 담김
 		String[] splitStr = applicantCookieVal.split("\\|");
 		
-		List<Member> readAppList = new ArrayList<>();
+		List<Profile> readAppList = new ArrayList<>();
 		for(int i=0; i<splitStr.length; i++) {
 			if(i%2 == 0) continue;
 			
 			Map<String,Object> map2 = new HashMap<>();
 			map2.put("memberId", splitStr[i]);
 			map2.put("compId", compId);
-			Member member = companyService.selectApplicant(map2);
+			Profile member = companyService.selectApplicant(map2);
 			readAppList.add(member);
 		}
 		
@@ -197,6 +193,86 @@ public class CompanyController {
 		
 		// 마감된 채용공고 리스트 가져오기
 		List<Recruitment> rcrtEndList = companyService.selectRcrtEndList(compId);
+		logger.debug("레드"+readAppList);
+		for(int i=0; i<readAppList.size(); i++) {
+			if(readAppList.get(i).getCareer() != null && readAppList.get(i).getCareer().getHireddate() != null && readAppList.get(i).getCareer().getRetireddate() != null) {
+				
+				// 총 경력 계산
+				String[] hireddateArr = readAppList.get(i).getCareer().getHireddate().split(",");
+				String[] retireddateArr = readAppList.get(i).getCareer().getRetireddate().split(",");
+				
+				String workingPeriod = "";
+				int intWorkingPeriod = 0;
+				for(int j=0; j<hireddateArr.length; j++) {
+					String[] hiredDate = hireddateArr[j].split("\\.");
+					Calendar hiredDateCal = new GregorianCalendar();
+					hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
+					
+					String[] retiredDate = retireddateArr[j].split("\\.");
+					Calendar retiredDateCal = new GregorianCalendar();
+					retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
+					
+					Calendar result = Calendar.getInstance();
+					result.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
+					
+					intWorkingPeriod += (int)(result.getTimeInMillis()/1000/60/60/24/30);
+					logger.debug(j+"커리어"+intWorkingPeriod);
+					logger.debug(j+"커리어"+(int)result.getTimeInMillis());
+				}
+				if(intWorkingPeriod >= 12) {
+					int year = intWorkingPeriod/12;
+					int month = intWorkingPeriod%12;
+					workingPeriod = year+"년 "+month+"개월";
+				}
+				else {
+					workingPeriod = intWorkingPeriod+"개월";
+				}
+				readAppList.get(i).getCareer().setWorkingPeriod(workingPeriod);
+				
+			}
+			
+		}
+		
+		for(int i=0; i<favoriteAppList.size(); i++) {
+			if(favoriteAppList.get(i).getCareer() != null && favoriteAppList.get(i).getCareer().getHireddate() != null && favoriteAppList.get(i).getCareer().getRetireddate() != null) {
+				
+				// 총 경력 계산
+				String[] hireddateArr = favoriteAppList.get(i).getCareer().getHireddate().split(",");
+				String[] retireddateArr = favoriteAppList.get(i).getCareer().getRetireddate().split(",");
+				
+				String workingPeriod = "";
+				int intWorkingPeriod = 0;
+				for(int j=0; j<hireddateArr.length; j++) {
+					String[] hiredDate = hireddateArr[j].split("\\.");
+					Calendar hiredDateCal = new GregorianCalendar();
+					hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
+					
+					String[] retiredDate = retireddateArr[j].split("\\.");
+					Calendar retiredDateCal = new GregorianCalendar();
+					retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
+					
+					Calendar result = Calendar.getInstance();
+					result.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
+					
+					intWorkingPeriod += (int)(result.getTimeInMillis()/1000/60/60/24/30);
+					logger.debug(j+"커리어"+intWorkingPeriod);
+					logger.debug(j+"커리어"+(int)result.getTimeInMillis());
+				}
+				if(intWorkingPeriod >= 12) {
+					int year = intWorkingPeriod/12;
+					int month = intWorkingPeriod%12;
+					workingPeriod = year+"년 "+month+"개월";
+				}
+				else {
+					workingPeriod = intWorkingPeriod+"개월";
+				}
+				favoriteAppList.get(i).getCareer().setWorkingPeriod(workingPeriod);
+				
+			}
+			
+		}
+		
+		
 		
 		mav.addObject("companyMap",companyMap);
 		mav.addObject("rcrtList",rcrtList);
@@ -222,11 +298,6 @@ public class CompanyController {
 	@RequestMapping("/viewApplicant.ithrer")
 	public ModelAndView viewApplicant(ModelAndView mav, @RequestParam("compId") String compId, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("memberId") String memberId
 									, HttpServletRequest req, HttpServletResponse res) {
-		
-		logger.debug("compId = "+compId);
-		
-		// recruitmentNo 임시로 넘겨주기
-		mav.addObject("recruitmentNo",recruitmentNo);
 		
 		// 쿠키 관련
 		// 오늘 본 지원자 쿠키 생성
@@ -286,15 +357,14 @@ public class CompanyController {
 		map.put("memberId", memberId);
 		map.put("compId", compId);
 
-		Member member = companyService.selectApplicant(map); 
+		//Member profile = companyService.selectApplicant(map); 
 		
 		// 이력서 가져오기
 		Education education = resumeService.educationView(memberId);
-		logger.debug("에듀케이션 | "+education);
-		Profile profile = resumeService.profileView(memberId);
+		Profile profile = companyService.selectApplicant(map);
 	    Award award = resumeService.awardView(memberId);
 	    Career career = resumeService.careerView(memberId);
-	    Certification certificate = resumeService.certificateView(memberId);
+	    Certification certification = resumeService.certificateView(memberId);
 	    Hopework hopework = resumeService.hopeworkView(memberId);
 	    Intern intern = resumeService.internView(memberId);
 	    Language language = resumeService.languageView(memberId);
@@ -302,11 +372,53 @@ public class CompanyController {
 	    Overseas overseas = resumeService.overseasView(memberId);
 	    PortFolio portFolio = resumeService.portFolioView(memberId);
 	    Preference preference = resumeService.preferenceView(memberId);
+	    Letter letter = resumeService.letterView(memberId);
+	    
+	    // 지원자 read = Y 로 바꾸기
+	    companyService.updateCARead(map);
+
+	    
+	    if(career != null) {
+			
+			// 총 경력 계산
+			String[] hireddateArr = career.getHireddateArr();
+			String[] retireddateArr = career.getRetireddateArr();
+			
+			String workingPeriod = "";
+			int intWorkingPeriod = 0;
+			for(int j=0; j<hireddateArr.length; j++) {
+				String[] hiredDate = hireddateArr[j].split("\\.");
+				Calendar hiredDateCal = new GregorianCalendar();
+				hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
+				
+				String[] retiredDate = retireddateArr[j].split("\\.");
+				Calendar retiredDateCal = new GregorianCalendar();
+				retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
+				
+				Calendar result2 = Calendar.getInstance();
+				result2.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
+				
+				intWorkingPeriod += (int)(result2.getTimeInMillis()/1000/60/60/24/30);
+				logger.debug(j+"커리어"+intWorkingPeriod);
+				logger.debug(j+"커리어"+(int)result2.getTimeInMillis());
+			}
+			if(intWorkingPeriod >= 12) {
+				int year2 = intWorkingPeriod/12;
+				int month2 = intWorkingPeriod%12;
+				workingPeriod = year2+"년 "+month2+"개월";
+			}
+			else {
+				workingPeriod = intWorkingPeriod+"개월";
+			}
+			career.setWorkingPeriod(workingPeriod);
+			logger.debug("워킹피리오드"+workingPeriod);
+		}
 	    
 	    mav.addObject("profile",profile);
+	    //mav.addObject("profile",profile);
 	    mav.addObject("award",award);
 	    mav.addObject("career",career);
-	    mav.addObject("certificate",certificate);
+	    mav.addObject("certification",certification);
 	    mav.addObject("hopework",hopework);
 	    mav.addObject("intern",intern);
 	    mav.addObject("language",language);
@@ -315,8 +427,10 @@ public class CompanyController {
 	    mav.addObject("portFolio",portFolio);
 	    mav.addObject("preference",preference);
 	    mav.addObject("education",education);
+	    mav.addObject("letter",letter);
 		
-		mav.addObject("member2",member);
+	    mav.addObject("recruitmentNo",recruitmentNo);
+		
 		mav.setViewName("company/viewApplicant");
 		
 		return mav;
@@ -579,27 +693,68 @@ public class CompanyController {
 		Map<String, Object> paramMap = new HashMap<>();
 		paramMap.put("recruitmentNo", recruitmentNo);
 		paramMap.put("compId", compId);
-		List<Member> applicantList = companyService.selectAppList(recruitmentNo);
+		List<Profile> applicantList = companyService.selectAppList(recruitmentNo);
+		
 		logger.debug("지원자 리스트 | "+applicantList);
 		
 		for(int i=0; i<applicantList.size(); i++) {
 			if(applicantList.get(i).getEducation() != null) {
+				
 				// 최종 학교이름 추출
-				String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
-				applicantList.get(i).getEducation().setSchoolname(schoolName[schoolName.length-1]);
+				if(applicantList.get(i).getEducation().getSchoolname() != null) {
+					String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
+					applicantList.get(i).getEducation().setSchoolname(schoolName[schoolName.length-1]);
+				}
 				
 				// 최종 학점 추출
-				String[] score = applicantList.get(i).getEducation().getScore().split(",");
-				applicantList.get(i).getEducation().setScore(score[score.length-1]);
+				if(applicantList.get(i).getEducation().getScore() != null) {
+					String[] score = applicantList.get(i).getEducation().getScore().split(",");
+					applicantList.get(i).getEducation().setScore(score[score.length-1]);
+				}
 				
 				// 최종 학점 만점 추출
-				String[] totalScore = applicantList.get(i).getEducation().getTotalscore().split(",");
-				applicantList.get(i).getEducation().setTotalscore(totalScore[totalScore.length-1]);
+				if(applicantList.get(i).getEducation().getTotalscore() != null) {
+					String[] totalScore = applicantList.get(i).getEducation().getTotalscore().split(",");
+					applicantList.get(i).getEducation().setTotalscore(totalScore[totalScore.length-1]);
+				}
 			}
-			
-			if(applicantList.get(i).getCareer() != null) {
+			if(applicantList.get(i).getCareer() != null && applicantList.get(i).getCareer().getHireddate() != null && applicantList.get(i).getCareer().getRetireddate() != null) {
+				
+				// 총 경력 계산
+				String[] hireddateArr = applicantList.get(i).getCareer().getHireddate().split(",");
+				String[] retireddateArr = applicantList.get(i).getCareer().getRetireddate().split(",");
+				
+				String workingPeriod = "";
+				int intWorkingPeriod = 0;
+				for(int j=0; j<hireddateArr.length; j++) {
+					String[] hiredDate = hireddateArr[j].split("\\.");
+					Calendar hiredDateCal = new GregorianCalendar();
+					hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
+					
+					String[] retiredDate = retireddateArr[j].split("\\.");
+					Calendar retiredDateCal = new GregorianCalendar();
+					retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
+					
+					Calendar result = Calendar.getInstance();
+					result.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
+					
+					intWorkingPeriod += (int)(result.getTimeInMillis()/1000/60/60/24/30);
+					logger.debug(j+"커리어"+intWorkingPeriod);
+					logger.debug(j+"커리어"+(int)result.getTimeInMillis());
+				}
+				if(intWorkingPeriod >= 12) {
+					int year = intWorkingPeriod/12;
+					int month = intWorkingPeriod%12;
+					workingPeriod = year+"년 "+month+"개월";
+				}
+				else {
+					workingPeriod = intWorkingPeriod+"개월";
+				}
+				applicantList.get(i).getCareer().setWorkingPeriod(workingPeriod);
 				
 			}
+			
+			
 		}
 		
 		
@@ -612,6 +767,7 @@ public class CompanyController {
 		logger.debug("rcrtList | "+rcrtList);
 		
 		mav.addObject("applicantList",applicantList);
+		logger.debug("앱"+applicantList);
 		mav.addObject("recruitment",recruitment);
 		mav.addObject("rcrtList",rcrtList);
 		

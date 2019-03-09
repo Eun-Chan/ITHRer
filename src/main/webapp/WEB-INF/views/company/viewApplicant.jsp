@@ -30,6 +30,11 @@ div#applicant-info-container{
 div.border-top.border-bottom{
 	border-width: 3px !important;
 }
+
+div#letter-box{
+	border-top: 3px solid !important;
+	border-bottom: 3px solid !important;
+}
 </style>
 
 <div id="all-container" class="container">
@@ -49,9 +54,9 @@ div.border-top.border-bottom{
 				</div>
 				<div class="col">
 					<div class="row">
-						<div class="col text-center">
+						<div class="col text-center pb-3">
 							<h2>
-								<span class="align-middle">${member.memberName }</span>
+								<span class="align-middle">${profile.name }</span>
 							</h2>
 						</div>
 					</div>
@@ -59,14 +64,14 @@ div.border-top.border-bottom{
 						<div class="col">
 							<h6>
 								<img src="${pageContext.request.contextPath }/resources/images/birth.svg" alt="birth icon" width="30px" class="mr-3"/>
-								<span id="member-birth"></span>년 (${member2.age }세)
+								<span id="member-birth"></span>년 (${profile.age }세)
 							</h6>
-							<h6><img src="${pageContext.request.contextPath }/resources/images/phone.svg" alt="phone icon" width="30px" class="mr-3"/> ${member2.phone }</h6>
-							<h6><img src="${pageContext.request.contextPath }/resources/images/address.svg" alt="address icon" width="30px" class="mr-3"/> ${member2.address }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/phone.svg" alt="phone icon" width="30px" class="mr-3"/> ${profile.phone }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/address.svg" alt="address icon" width="30px" class="mr-3"/> ${profile.address }</h6>
 						</div>
 						<div class="col">
-							<h6><img src="${pageContext.request.contextPath }/resources/images/gender.svg" alt="gender icon" width="30px" class="mr-3"/> ${member2.gender }</h6>
-							<h6><img src="${pageContext.request.contextPath }/resources/images/email.svg" alt="email icon" width="30px" class="mr-3"/> ${member2.email }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/gender.svg" alt="gender icon" width="30px" class="mr-3"/> ${profile.gender }</h6>
+							<h6><img src="${pageContext.request.contextPath }/resources/images/email.svg" alt="email icon" width="30px" class="mr-3"/> ${profile.email }</h6>
 						</div>
 					</div>
 				</div>
@@ -81,21 +86,42 @@ div.border-top.border-bottom{
 					<div class="col">포트폴리오</div>
 				</div>
 				<div class="row mb-2">
-					<div class="col">1</div>
-					<div class="col">2</div>
-					<div class="col">3</div>
-					<div class="col">4</div>
-					<div class="col">5</div>
+					<div class="col">
+						${education.graduactionArr[fn:length(education.graduactionArr)-1] }
+						<c:if test="${fn:length(education.graduactionArr) eq 1 }">
+						${education.highgraduationstateArr[0] }
+						</c:if>
+						<c:if test="${fn:length(education.graduactionArr) gt 1 }">
+						${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
+						</c:if>
+					</div>
+					<div class="col">
+						${career.workingPeriod }
+					</div>
+					<div class="col">${hopework.wantpay } 만원</div>
+					<div class="col">${hopework.jobtype }</div>
+					<div class="col">${hopework.hopeplace }</div>
 					<div class="col">6</div>
 				</div>
 			</div>
 		</div>
 		
-		<h1>${profile.userResumeTitle }</h1>
-		${education }
+		<h1>${profile.userresumetitle }</h1>
+				
+		<c:if test="${fn:length(education.graduactionArr) != 0 }">
 		<div id="education-info-container" class="container my-5">
 			<h3>학력</h3>
-			<span>최종학력 | (예시) 대학교 4년 졸업예정</span>
+			<span>
+				최종학력 
+				 | 
+				${education.graduactionArr[fn:length(education.graduactionArr)-1] }
+				<c:if test="${fn:length(education.graduactionArr) eq 1 }">
+				 ${education.highgraduationstateArr[0] }
+				</c:if>
+				<c:if test="${fn:length(education.graduactionArr) gt 1 }">
+				 ${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
+				</c:if>
+			</span>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					재학기간
@@ -104,7 +130,7 @@ div.border-top.border-bottom{
 					구분
 				</div>
 				<div class="col">
-					학교명(소재지)
+					학교명
 				</div>
 				<div class="col">
 					전공
@@ -113,11 +139,41 @@ div.border-top.border-bottom{
 					학점
 				</div>
 			</div>
+			<c:if test="${fn:length(education.graduactionArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(education.graduactionArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						<c:if test="${i == 0 }">
+						${education.highgraduationdateArr[0] } ~ ${education.highgraduationdateArr[0] + 3 }
+						</c:if>
+						<c:if test="${i != 0 }">
+						${education.admissiondateArr[i] } ~ ${education.graduationdateArr[i] }
+						</c:if>
+					</div>
+					<div class="col">
+						${education.graduactionArr[i] }
+					</div>
+					<div class="col">
+						${education.schoolnameArr[i] }
+					</div>
+					<div class="col">
+						${education.majorArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${i != 0 }">
+						${education.scoreArr[i] } / ${education.totalscoreArr[i-1] }
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
 		</div>
+		</c:if>
 		
+		<c:if test="${fn:length(career.corpnameArr) != 0 }">
 		<div id="career-info-container" class="container my-5">
 			<h3>경력</h3>
-			<span>총 *년 *개월</span>
+			<span>총 ${career.workingPeriod }</span>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					근무기간
@@ -126,17 +182,38 @@ div.border-top.border-bottom{
 					회사명
 				</div>
 				<div class="col">
-					부서/직급/연차
+					부서/직급
 				</div>
 				<div class="col">
-					지역/직종
+					설명
 				</div>
 				<div class="col">
 					연봉
 				</div>
 			</div>
+			<c:forEach var="i" begin="0" end="${fn:length(career.corpnameArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${career.hireddateArr[i] } ~ ${career.retireddateArr[i] }
+					</div>
+					<div class="col">
+						${career.corpnameArr[i] }
+					</div>
+					<div class="col">
+						${career.departmentArr[i] }/${career.jobpositionArr[i] }
+					</div>
+					<div class="col">
+						${career.descriptionArr[i] }
+					</div>
+					<div class="col">
+						${career.incomeArr[i] }
+					</div>
+				</div>
+			</c:forEach>
 		</div>
+		</c:if>
 		
+		<c:if test="${fn:length(intern.interndivisionArr) != 0 }">
 		<div id="activity-info-container" class="container my-5">
 			<h3>대외활동</h3>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
@@ -153,8 +230,26 @@ div.border-top.border-bottom{
 					내용
 				</div>
 			</div>
+			<c:forEach var="i" begin="0" end="${fn:length(intern.interndivisionArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${intern.internstartdateArr[i] } ~ ${intern.internenddateArr[i] }
+					</div>
+					<div class="col">
+						${intern.interndivisionArr[i] }
+					</div>
+					<div class="col">
+						${intern.socialinstArr[i] }
+					</div>
+					<div class="col">
+						${intern.interntextareaArr[i] }
+					</div>
+				</div>
+			</c:forEach>
 		</div>
+		</c:if>
 		
+		<c:if test="${fn:length(award.awardnameArr) != 0 or fn:length(certification.certnameArr) != 0 or fn:length(language.languagedivisionArr) != 0}">
 		<div id="etc-info-container" class="container my-5">
 			<h3>자격증/어학/수상내역</h3>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
@@ -174,43 +269,126 @@ div.border-top.border-bottom{
 					합격/점수
 				</div>
 			</div>
+			<c:if test="${fn:length(award.awardnameArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(award.awardnameArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${award.awarddateArr[i] }
+					</div>
+					<div class="col">
+						수상내역
+					</div>
+					<div class="col">
+						${award.awardnameArr[i] }
+					</div>
+					<div class="col">
+						${award.awardagencyArr[i] }
+					</div>
+					<div class="col">
+						-
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(certification.certnameArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(certification.certnameArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${certification.certdateArr[i] }
+					</div>
+					<div class="col">
+						자격증
+					</div>
+					<div class="col">
+						${certification.certnameArr[i] }
+					</div>
+					<div class="col">
+						${certification.certpublisherArr[i] }
+					</div>
+					<div class="col">
+						최종합격
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(language.languagedivisionArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(language.languagedivisionArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						<c:if test="${empty language.examdateArr[i] }">
+						-
+						</c:if>
+						<c:if test="${not empty language.examdateArr[i] }">
+						${language.examdateArr[i] }
+						</c:if>
+					</div>
+					<div class="col">
+						${language.languagedivisionArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${empty language.selfexamArr[i] }">
+						-
+						</c:if>
+						<c:if test="${not empty language.selfexamArr[i] }">
+						${language.selfexamArr[i] }
+						</c:if>
+					</div>
+					<div class="col">
+						${language.languagenameArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${empty language.examscoreArr[i] }">
+						${language.speakingdivisionArr[i] }
+						</c:if>
+						<c:if test="${not empty language.examscoreArr[i] }">
+						${language.examscoreArr[i] }
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
 		</div>
+		</c:if>
 	
+		<c:if test="${fn:length(preference.prefercheck) != 0 }">
 		<div id="preference-info-container" class="container my-5">
 			<h3>취업우대사항</h3>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
+				<c:forEach var="i" begin="0" end="${fn:length(preference.prefercheck)-1 }">
 				<div class="col">
-					결혼여부
+					${preference.prefercheck[i] }
+					<c:if test="${preference.prefercheck[i] eq '장애' }">
+					(${preference.disoderselectArr[0] })
+					</c:if>
+					<c:if test="${preference.prefercheck[i] eq '병역' }">
+					(${preference.militaryselectArr[0] })
+					</c:if>
 				</div>
-				<div class="col">
-					병역대상
-				</div>
+				</c:forEach>
 			</div>
 		</div>
+		</c:if>
 		
-		<div id="careerletter-info-container" class="container my-5">
-			<h3>경력기술서</h3>
-			<div class="container border">
-			내용
-			</div>
-		</div>
-		
+		<c:if test="${fn:length(letter.letterareaArr) != 0 }">
 		<div id="letter-info-container" class="container my-5">
 			<h3>자기소개서</h3>
-			<div class="container border">
-			내용
+			<div id="letter-box" class="container border">
+			<h2>${letter.lettertextArr[0] }</h2>
+			<br />
+			${letter.letterareaArr[0] }
 			</div>
 		</div>
+		</c:if>
 </div>
 </div>
 
 <script>
 	// 생년월일 잘라서 년도만 보여주기
-	var birth = "${member2.birth}".substr(0,4);
+	var birth = "${profile.birth}".substr(0,4);
 	$("span#member-birth").text(birth);
 
 	// 페이지 로딩 후 관심인재 버튼 이미지 보여줄 것 정하기
-	if(${member2.count} == 0){
+	if(${profile.count} == 0){
 		$("img#bookmarkon").removeClass("visible-on").addClass("visible-off");
 		$("img#bookmarkoff").removeClass("visible-off").addClass("visible-on");
 	}
@@ -220,12 +398,12 @@ div.border-top.border-bottom{
 	}
 
 	// 관심인재 버튼(별모양) 클릭 이벤트
-	var count = ${member2.count};
+	var count = ${profile.count};
 	$("div.clearfix img").on("click",function(){
 		
 		if(count == 1){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${member2.memberId}&recruitmentNo=${recruitmentNo}",
+				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${profile.memberId}&recruitmentNo=${recruitmentNo}",
 				type: "delete",
 				success: function(data){
 					var newCount = data.newCount;
@@ -247,7 +425,7 @@ div.border-top.border-bottom{
 		}
 		else if(count == 0){
 			$.ajax({
-				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${member2.memberId}&recruitmentNo=${recruitmentNo}",
+				url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId=${profile.memberId}&recruitmentNo=${recruitmentNo}",
 				type: "post",
 				success: function(data){
 					var newCount = data.newCount;
