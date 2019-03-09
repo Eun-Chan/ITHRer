@@ -1218,7 +1218,7 @@
 	         <ul style="list-style: none; padding-left: 20px;" id="lately" class="container tab-pane active">
 	         <c:forEach items="${rc }" var="list">
 	            <li class="recommend-open" >
-	               <div class="recommend-content" onclick="moveDetail('${list.recruitmentNo}');">
+	               <div class="recommend-content" onclick="moveDetail('${list.recruitmentNo}','${list.compId }');">
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${list.compName }</strong>
 	                  <span class="recruitTitle">${list.recruitmentTitle }</span>
 	                  <div class="endDate">D-${list.endTime }</div>
@@ -1245,7 +1245,7 @@
 	         <ul style="list-style: none; padding-left: 20px;" id="popularity" class="container tab-pane fade">
 	          <c:forEach items="${topRc }" var="toplist">
 	            <li class="recommend-open" >
-	               <div class="recommend-content" onclick="moveDetail('${toplist.recruitmentNo}');">
+	               <div class="recommend-content" onclick="moveDetail('${toplist.recruitmentNo}','${toplist.compId }');">
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${toplist.compName }</strong>
 	                  <span class="recruitTitle">${toplist.recruitmentTitle }</span>
 	                  <div class="endDate">D-${toplist.endTime }</div>
@@ -1281,7 +1281,7 @@
       <ul id ="list-open">
          <c:forEach items="${rcList }" var="recuritmentlist">
 	            <li class="open" >
-	               <div class="content" onclick="moveDetail('${recuritmentlist.recruitmentNo}');">
+	               <div class="content" onclick="moveDetail('${recuritmentlist.recruitmentNo}',${recruitmentlist.compId });">
 	                  <strong style="font-family: 'SungDongGothic', sans-serif; font-weight:900; font-size: 1.25em">${recuritmentlist.compName }</strong>
 	                  <span class="recruitTitle">${recuritmentlist.recruitmentTitle }</span>
 	                  <div class="endDate">D-${recuritmentlist.endTime }</div>
@@ -1340,10 +1340,10 @@ function moveCrwaling(id){
    console.log("id?? = ",id);
    window.open("${pageContext.request.contextPath}/index/notice.ithrer?id="+id, "채용정보", "width=1200px, height=800px");
 };
-function moveDetail(no){
+function moveDetail(no,compId){
    var no = no;
-	
-   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no);
+	var compId = compId;
+   window.open("${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="+no+"&compId="+compId);
 }
 
 $("#btn-search-notice").on("click", function(){

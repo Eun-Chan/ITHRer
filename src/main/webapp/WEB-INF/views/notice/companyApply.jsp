@@ -161,8 +161,8 @@
 				</c:if>
 				</div>
 				<div class="col-sm-12 row3">
-					<span class="memberEmail">이메일 : ${member.email }</span>
-					<span class="memberPhone">전화번호 : </span>	
+					<span class="memberEmail">이메일 : ${pf.email }</span>
+					<span class="memberPhone">전화번호 : ${pf.phone }</span>	
 					<button type="button" class="btn btn-info update" data-toggle="modal" data-target="#myModal">수정</button>		
 				</div>
 			</div>
@@ -192,7 +192,7 @@
 			<button type="button" class="btn btn-success applybutton">지원 하기</button>	
 			 <input type="hidden" name="memberId" value="${member.memberId }"/>
 		     <input type="hidden" name="recruitmentNo" value="${rc.recruitmentNo }" />
-		     <input type="hidden" name="compName" value="${com.compName }" />
+		     <input type="hidden" name="compId" value="${com.compId }" />
 		</div>
 		<div id="myModal" class="modal">
 	     <div class="modal-dialog">
@@ -242,14 +242,14 @@
   		</div>
 <script>
 $(function(){
-	var phone1 = "${member.phone}".substr(0,3);
+/* 	var phone1 = "${member.phone}".substr(0,3);
 	var phone2 = "${member.phone}".substr(4,4);
 	var phone3 = "${member.phone}".substr(9);
-	var phone = phone1+"-"+phone2+"-"+phone3;
+	var phone = phone1+"-"+phone2+"-"+phone3; */
 	var email = "${member.email}".split("@");
 
 	
-	$(".memberPhone").append(phone);
+	/* $(".memberPhone").append(phone); */
 	$("input[name=phone2]").val(phone2);
 	$("input[name=phone3]").val(phone3);
 	$("input[name=email1]").val(email[0]);
@@ -326,11 +326,11 @@ $(".applybutton").on("click",function(){
 	}
 	var memberId =$("input[name=memberId]").val();
 	var recruitmentNo = $("input[name=recruitmentNo]").val();
-	var compName = $("input[name=compName]").val();
+	var compName = $("input[name=compId]").val();
 	var data = {
 			memberId:memberId,
 			recruitmentNo:recruitmentNo,
-			compName:compName
+			compId:compId
 	}
 	if(confirm("정말 지원하시겠습니까?")){
 		$.ajax({
@@ -341,6 +341,7 @@ $(".applybutton").on("click",function(){
 				if(data==1){
 					window.opener.location.reload();
 					window.close();
+					
 				}
 			}
 		});

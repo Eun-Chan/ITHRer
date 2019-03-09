@@ -13,18 +13,12 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Overseas implements Serializable{
-	/**
+public class Letter implements Serializable {/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String country;
-	private String[] countryArr;
-	private String overseasstartdate;
-	private String[] overseasstartdateArr;
-	private String overseasenddate;
-	private String[] overseasenddateArr;
-	private String overseastextarea;
-	private String[] overseastextareaArr;
-	
+	private String lettertext;
+	private String[] lettertextArr;
+	private String letterarea;
+	private String[] letterareaArr;
 }

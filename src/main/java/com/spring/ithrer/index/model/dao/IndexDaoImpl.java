@@ -152,5 +152,15 @@ public class IndexDaoImpl implements IndexDao{
       return sqlSession.selectOne("index.selectOneProfile", memberId);
    }
 
+@Override
+public Recruitment selectOneRecruitmentEndCheck(int recruitmentNo) {
+	return sqlSession.selectOne("index.selectOneRecruitmentEndCheck", recruitmentNo);
+}
+
+@Override
+public int updateProfile(Map<String, Object> param) {
+	return sqlSession.update("index.updateProfile", param);
+}
+
 }
 

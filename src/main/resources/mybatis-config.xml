@@ -43,6 +43,7 @@
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Preference" alias="preference"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Profile" alias="profile"/>
 		<typeAlias type="com.spring.ithrer.resume.model.vo.Education" alias="education"/>
+		<typeAlias type="com.spring.ithrer.resume.model.vo.Letter" alias="letter"/>
 
 	</typeAliases>
 

@@ -20,6 +20,7 @@ import com.spring.ithrer.company.model.vo.Position;
 import com.spring.ithrer.company.model.vo.Recruitment;
 import com.spring.ithrer.company.model.vo.Sales;
 import com.spring.ithrer.company.model.vo.SubwayStation;
+import com.spring.ithrer.resume.model.vo.Profile;
 import com.spring.ithrer.user.model.vo.Member;
 
 @Service
@@ -144,6 +145,8 @@ public class CompanyServiceImpl implements CompanyService {
 		
 		if(result > 0) {
 			msg = "수정 성공!";
+			Company company2 = companyDao.selectCompanyOne(company.getCompId());
+			map.put("company",company2);
 		}
 		else {
 			msg = "수정 실패!";
@@ -307,7 +310,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public Member selectApplicant(Map<String, Object> map) {
+	public Profile selectApplicant(Map<String, Object> map) {
 		return companyDao.selectApplicant(map);
 	}
 

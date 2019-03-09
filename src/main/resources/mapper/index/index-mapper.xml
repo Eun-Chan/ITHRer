@@ -28,7 +28,7 @@
 	<select id="selectListRecruitment" resultType="recruitment" parameterType="string">
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount ,
-		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
+		(select count(*) count from companyapplication where comp_id=s.comp_id  and member_id =#{memberId}) applyCount 
 		from recruitment s where end = 'N' order by recruitment_no desc )t where rownum between 1 and 6
 	</select>
 	<select id="selectOneFavorites" parameterType="map" resultType="favorites">
@@ -134,16 +134,16 @@
 		update member set email = #{email}, phone =#{phone} where member_id=#{memberId}
 	</update>
 	<insert id="insertCompanyApplication" parameterType="map">
-		insert into companyapplication values(#{memberId},#{recruitmentNo},default,#{compId},seq_companyapplication_no.nextval,default,#{resumeNo})
+		insert into companyapplication values(#{memberId},#{recruitmentNo},default,#{compId},seq_companyapplication_no.nextval,default)
 	</insert>
 	<select id="selectCountCompanyApplication" parameterType="map" resultType="_int">
-		select count(*) count from companyapplication where recruitment_no=#{recNo} and member_id = #{memberId}
+		select count(*) count from companyapplication where comp_id=#{compId} and member_id = #{memberId}
 	</select>
 	<select id="selectTopListRecruitment" parameterType="string" resultType="recruitment">
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = s.recruitment_no) favoritesCount,
 		(select count(*) from companyapplication where recruitment_no = s.recruitment_no ) count ,
-		(select count(*) count from companyapplication where recruitment_no=s.recruitment_no  and member_id =#{memberId}) applyCount 
+		(select count(*) count from companyapplication where comp_id=s.comp_id  and member_id =#{memberId}) applyCount 
 		from recruitment s where end = 'N' order by count desc )t where rownum between 1 and 6
 	</select>
 	
@@ -174,7 +174,7 @@
 	<select id="selectListRecommendRecruitmentList" parameterType="map" resultType="recruitment">
 		select t.* from (select r.*,(select comp_name from company where comp_id = r.comp_id)compName,
 		(select count(*) from favorites where member_id = #{memberId} and recruitment_no = r.recruitment_no) favoritesCount ,
-				(select count(*) count from companyapplication where recruitment_no=r.recruitment_no  and member_id = #{memberId}) applyCount 
+				(select count(*) count from companyapplication where comp_id=r.comp_id  and member_id = #{memberId}) applyCount 
 		from company c  join recruitment r
 		on c.comp_id = r.comp_id
 		where c.category in
@@ -203,4 +203,12 @@
 	<select id="selectOneProfile" resultType="profile">
 		select * from profile where member_id =#{memberId} 
 	</select>
+	
+	<!-- END 체크 여부 -->
+	<select id="selectOneRecruitmentEndCheck" resultType="recruitment">
+		select * from recruitment where recruitment_no = #{recruitmentNo}
+	</select>
+	<update id="updateProfile" parameterType="map">
+		update profile set email = #{email}, phone =#{phone} where member_id=#{memberId}
+	</update>
 </mapper>

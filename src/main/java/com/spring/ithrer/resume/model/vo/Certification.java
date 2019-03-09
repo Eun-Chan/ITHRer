@@ -18,11 +18,11 @@ public class Certification implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String certName;
-	private String[] certNameArr;
-	private String certPublisher;
-	private String[] certPublisherArr;
-	private String certDate;
-	private String[] certDateArr;
+	private String certname;
+	private String[] certnameArr;
+	private String certpublisher;
+	private String[] certpublisherArr;
+	private String certdate;
+	private String[] certdateArr;
 
 }
