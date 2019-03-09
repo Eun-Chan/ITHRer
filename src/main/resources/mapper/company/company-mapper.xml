@@ -99,6 +99,7 @@
 		<result column="name" property="name"/>
 		<result column="birth" property="birth"/>
 		<result column="gender" property="gender"/>
+		<result column="photo" property="photo"/>
 		<result column="age" property="age"/>
 		<result column="count" property="count"/>
  		<association javaType="career" property="career">
@@ -148,6 +149,7 @@
 			<result column="birth" property="birth"/>
 			<result column="gender" property="gender"/>
 			<result column="age" property="age"/>
+			<result column="photo" property="photo"/>
 		</association>
 	</resultMap>
 	

@@ -194,7 +194,7 @@ public class ResumeController {
 			e1.printStackTrace();
 		}
 		
-		mav.setViewName("index");
+		mav.setViewName("redirect:/");
 		return mav;	
 	}
 
