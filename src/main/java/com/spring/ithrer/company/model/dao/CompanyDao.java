@@ -93,4 +93,6 @@ public interface CompanyDao {
 	
 	List<Area> selectLocationcodeList(int param);
 
+	Recruitment joinRecruitment(int no);
+
 }

@@ -215,4 +215,9 @@ public class CompanyDaoImpl implements CompanyDao {
 		return sqlSession.selectList("company.selectLocationcodeList",param);
 	}
 
+	@Override
+	public Recruitment joinRecruitment(int no) {
+		return sqlSession.selectOne("company.joinRecruitment", no);
+	}
+
 }

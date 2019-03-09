@@ -84,4 +84,6 @@ public interface CompanyService {
 	
 	List<Area> selectLocationcodeList(int param);
 
+	Recruitment joinRecruitment(int no);
+
 }
