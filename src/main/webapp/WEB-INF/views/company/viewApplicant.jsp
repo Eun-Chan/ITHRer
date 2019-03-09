@@ -91,7 +91,7 @@ div.border-top.border-bottom{
 			</div>
 		</div>
 		
-		<h1>${profile.userResumeTitle }</h1>
+		<h1>${profile.userresumetitle }</h1>
 		${award }
 		<br />
 		${career }

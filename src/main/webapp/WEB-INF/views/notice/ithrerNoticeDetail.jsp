@@ -193,8 +193,6 @@
 					<dd>${rc.payCondition }</dd>
 					<dt>지역</dt>
 					<dd>${rc.location }</dd>
-					<dt>근무시간</dt>
-					<dd>7시~10시</dd>
 				</dl>
 			</div>
 		</div>

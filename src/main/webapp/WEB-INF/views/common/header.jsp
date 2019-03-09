@@ -449,10 +449,7 @@
     		FB.AppEvents.logPageView();
     	}
   	}
- 	
- 	$(function(){
- 		console.log(${member.memberId});
- 	});
+ 
 </script>
 	
 	<section id="content">

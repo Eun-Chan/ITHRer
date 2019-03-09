@@ -171,7 +171,7 @@ iframe#iframe_content_0{
 .Ad2{
 	width: 200px;
     height: 400px;
-    border: 1px solid black;
+/*     border: 1px solid black; */
     display: inline-block;
     float: right;
     position: relative;

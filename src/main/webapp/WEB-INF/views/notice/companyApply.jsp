@@ -152,10 +152,10 @@
 					<strong>지원이력서</strong>
 				</div>
 				<div class="col-sm-12 row2">
-				<c:if test="${not empty pf.userResumeTitle }">
-					<span style="font-size: 0.9em; letter-spacing: 1px;" class="pfTitle">${pf.userResumeTitle }</span>
+				<c:if test="${not empty pf.userresumetitle }">
+					<span style="font-size: 0.9em; letter-spacing: 1px;" class="pfTitle">${pf.userresumetitle }</span>
 				</c:if>
-				<c:if test="${empty pf.userResumeTitle }">
+				<c:if test="${empty pf.userresumetitle }">
 					<span style="font-size: 0.9em; letter-spacing: 1px;" >이력서가 존재하지 않습니다 작성해주세요.</span>
 					<input type="button" value="작성하기" class="btn btn-info" style="float: right" id="profileInsert"/>
 				</c:if>
@@ -242,10 +242,10 @@
   		</div>
 <script>
 $(function(){
-/* 	var phone1 = "${member.phone}".substr(0,3);
+	var phone1 = "${member.phone}".substr(0,3);
 	var phone2 = "${member.phone}".substr(4,4);
 	var phone3 = "${member.phone}".substr(9);
-	var phone = phone1+"-"+phone2+"-"+phone3; */
+	/*var phone = phone1+"-"+phone2+"-"+phone3; */
 	var email = "${member.email}".split("@");
 
 	
@@ -326,7 +326,7 @@ $(".applybutton").on("click",function(){
 	}
 	var memberId =$("input[name=memberId]").val();
 	var recruitmentNo = $("input[name=recruitmentNo]").val();
-	var compName = $("input[name=compId]").val();
+	var compId = $("input[name=compId]").val();
 	var data = {
 			memberId:memberId,
 			recruitmentNo:recruitmentNo,
