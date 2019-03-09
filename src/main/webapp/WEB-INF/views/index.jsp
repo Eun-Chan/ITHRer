@@ -1169,17 +1169,20 @@
             <li data-target="#myCarousel" data-slide-to="1"></li>
             <li data-target="#myCarousel" data-slide-to="2"></li>
           </ul>
-         <div class="carousel-inner">
+          
+         <div class="carousel-inner">    
           <div class="carousel-item active">
           	<a href="${pageContext.request.contextPath}/insertBanner.ithrer">
             	<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=/공지사항.png&directory=banner" >
-            <div class="carousel-caption">
+            <div class="carousel-caption" style="bottom:-5px;">
                <h3>배너신청</h3>
               <p>클릭시 배너페이지 이동</p>
             </div>   
             </a>
           </div>
+                   
           <c:forEach items="${bannerList}" var="banner">
+          	
 	          <div class="carousel-item">
 	          	<a href="${pageContext.request.contextPath}/searchNotice.ithrer?searchKeyWord=${banner.COMP_NAME}&location=">
 	            	<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${banner.CS_FILE_NAME}&directory=banner" >
@@ -1188,7 +1191,6 @@
 	            
 	            </div>   
 	          </div>
-          
           </c:forEach>   
           </div>
         <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">

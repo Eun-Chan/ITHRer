@@ -30,5 +30,10 @@ public class ChargedDaoImpl implements ChargedDao {
 		return sqlSession.update("charged.updateFileName", map);
 		
 	}
+
+	@Override
+	public int insertBannerRequest(Map<String, Object> map) {
+		return sqlSession.insert("charged.insertBannerRequest", map);
+	}
 	
 }

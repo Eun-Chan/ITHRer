@@ -9,4 +9,6 @@ public interface ChargedDao {
 
 	int updateFileName(String no, String path);
 
+	int insertBannerRequest(Map<String, Object> map);
+
 }

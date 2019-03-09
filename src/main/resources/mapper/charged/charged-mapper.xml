@@ -4,11 +4,17 @@
 
 	<!-- 현재 결제 날짜가 남아있는 리시트 찾기 -->
 	<select id="selectListCharged" resultType="map">
-		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date]]>
+		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate <= cs_end_date]]>
 	</select>
 	
 	<!-- 배너광고 파일이름 s3루트 저장 -->
 	<update id="updateFileName" parameterType="map">
 		update chargedservice set cs_file_name = #{path} where cs_no = #{no}
 	</update>	
+	
+	<!-- 배너신청시 디비에 저장 -->
+	<insert id="insertBannerRequest">
+		insert into chargedService values(SEQ_CHARGED.nextval, #{compId}, #{bannerStartDate}, #{bannerStartDate}+7, 300000, '1', '')
+	</insert>
+	
 </mapper>
