@@ -82,13 +82,31 @@
 	</select>
 	
 	<!-- 지원자 정보 가져오기 -->
-	<select id="selectApplicant" parameterType="map" resultType="member">
+	<select id="selectApplicant" parameterType="map" resultMap="AppList">
 		select 
-		m.*,
-		(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
-		(select count(*) from favorites where comp_id=#{compId} and member_id=#{memberId} and select_no=1) count
-		from member m where member_id=#{memberId}
+			p.*,
+			(to_char(sysdate,'yyyy')-substr(p.birth,1,4))+1 as age,
+			(select count(*) from favorites where comp_id=#{compId} and member_id=#{memberId} and select_no=1) count,
+			c.hireddate,
+			c.retireddate
+		from profile p 
+			left join career c on p.member_id=c.member_id
+		where p.member_id=#{memberId}
 	</select>
+	<resultMap type="profile" id="AppList">
+		<id column="member_id" property="memberId"/>
+		<result column="userresumetitle" property="userresumetitle"/>
+		<result column="name" property="name"/>
+		<result column="birth" property="birth"/>
+		<result column="gender" property="gender"/>
+		<result column="photo" property="photo"/>
+		<result column="age" property="age"/>
+		<result column="count" property="count"/>
+ 		<association javaType="career" property="career">
+			<result column="hireddate" property="hireddate"/>
+			<result column="retireddate" property="retireddate"/>
+		</association>
+	</resultMap>
 	
 	<!-- 관심인재 삭제 -->
 	<delete id="deleteFavorite" parameterType="map">
@@ -105,9 +123,35 @@
 	</insert>
 	
 	<!-- 관심인재 리스트 가져오기 -->
-	<select id="selectFavoriteAppList" parameterType="string" resultType="favorites">
-		select * from favorites where comp_id=#{compId}
+	<select id="selectFavoriteAppList" parameterType="string" resultMap="FavoriteList">
+		select 
+			distinct f.member_id,
+			c.*,
+			p.*,
+			(to_char(sysdate,'yyyy')-substr(p.birth,1,4))+1 age
+		from favorites f
+			left join career c on f.member_id=c.member_id 
+			left join profile p on f.member_id=p.member_id
+		where f.comp_id=#{compId}
 	</select>
+	<resultMap type="favorites" id="FavoriteList">
+		<id column="favorite_no" property="favoriteNo"/>
+		<result column="select_no" property="selectNo"/>
+		<result column="comp_id" property="compId"/>
+		<result column="member_id" property="memberId"/>
+ 		<association javaType="career" property="career">
+			<result column="hireddate" property="hireddate"/>
+			<result column="retireddate" property="retireddate"/>
+		</association>
+ 		<association javaType="profile" property="profile">
+			<result column="userresumetitle" property="userresumetitle"/>
+			<result column="name" property="name"/>
+			<result column="birth" property="birth"/>
+			<result column="gender" property="gender"/>
+			<result column="age" property="age"/>
+			<result column="photo" property="photo"/>
+		</association>
+	</resultMap>
 	
 	<!-- 모집직종 정보1 가져오기 -->
 	<select id="selectJobList" resultType="Job">
@@ -136,7 +180,7 @@
 	
 	<!-- 기업공고 등록하기 -->
 	<insert id="insertRecruitment" parameterType="Recruitment">
-		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},'WORK_DAY주1일','N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},#{locationCode},#{genderCut})
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, #{compId},#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},#{workDay},'N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},#{locationCode},#{genderCut})
 	</insert>
 	
 	<!-- 지하철노선도-구분 가져오기 -->
@@ -198,32 +242,35 @@
 		select 
 			(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
 			(select count(*) from favorites where comp_id=ca.comp_Id and member_id=ca.member_id and select_no=1) count,
-            m.member_id,
-			m.member_name,
-			m.gender,
+            p.member_id,
+			p.name,
+			p.gender,
+			ca.read,
 			ca.cu_resdate,
             ca.recruitment_no,
             ca.comp_id,
 			e.schoolname,
 			e.score,
 			e.totalscore,
-			c.corpname,
+			c.hireddate,
+			c.retireddate,
 			h.wantpay
 		from
-			member m
-				left join education e on m.member_id=e.member_id
-				left join career c on m.member_id=c.member_id
-				left join hopework h on m.member_id=h.member_id
-                left join companyapplication ca on m.member_id=ca.member_id
+			profile p
+				left join education e on p.member_id=e.member_id
+				left join career c on p.member_id=c.member_id
+				left join hopework h on p.member_id=h.member_id
+                left join companyapplication ca on p.member_id=ca.member_id
 		where ca.recruitment_no=#{recruitmentNo}
 	</select>
-	<resultMap type="member" id="ApplicantList">
+	<resultMap type="profile" id="ApplicantList">
 		<id column="member_id" property="memberId"/>
-		<result column="member_name" property="memberName"/>
+		<result column="name" property="name"/>
       	<result column="age" property="age"/>
       	<result column="gender" property="gender"/>
  		<association javaType="ca" property="ca">
 			<result column="cu_resdate" property="cuResdate"/>
+			<result column="read" property="read"/>
 		</association>
  		<association javaType="education" property="education">
 			<result column="schoolname" property="schoolname"/>
@@ -231,7 +278,8 @@
 			<result column="totalscore" property="totalscore"/>
 		</association>
  		<association javaType="career" property="career">
-			<result column="corpname" property="corpname"/>
+			<result column="hireddate" property="hireddate"/>
+			<result column="retireddate" property="retireddate"/>
 		</association>
  		<association javaType="hopework" property="hopework">
 			<result column="wantpay" property="wantpay"/>
@@ -242,4 +290,15 @@
 	<select id="selectLocationcodeList" parameterType="_int" resultType="area">
 		SELECT LOCATION_CODE, LOCATION_NAME FROM AREA WHERE LOCATION_TOTAL_CODE = #{param}
 	</select>
+	
+	<!-- 조회한 채용공고 정보 가져오기 -->
+	<select id="joinRecruitment" parameterType="_int" resultType="recruitment">
+		SELECT * FROM RECRUITMENT WHERE RECRUITMENT_NO = #{RECRUITMENT_NO}
+	</select>
+
+	<!-- 지원자 상세보기 하면 read = Y 로 업데이트 -->
+	<update id="updateCARead" parameterType="map">
+		update companyapplication set read = 'Y' where comp_id=#{compId} and member_id=#{memberId}
+	</update>
+
 </mapper>

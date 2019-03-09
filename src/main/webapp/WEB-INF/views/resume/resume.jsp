@@ -24,6 +24,10 @@
 <div id="profileTotal" class="wrap-container">
 	<h3>인적사항</h3>
 	<div id="profileWrap">
+		<div>
+			<input type="file" id="memberPhoto"  />
+			<input type="hidden" name="photo" />
+		</div>
 		<div id="formProfile1" class="input-group-prepend">
 			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value="${member.memberName}" readonly/>
 			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)"/>
@@ -538,6 +542,38 @@ var fotFrmcount = 0;
 var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
+
+/* 회원 사진 넣기 */
+$("input#memberPhoto").on("change",function(){
+	var $this = $(this);
+	var fileName = $(this).prop("files")[0].name;
+	
+	var formData = new FormData();
+	var directory = 'images/memberPhoto';
+	
+	formData.append("upFile",$this[0].files[0]);
+	formData.append("directory",directory);
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/uploadMemberPhoto.ithrer",
+		contentType: false,
+		processData: false,
+		data: formData, 
+		type: "post",
+		success: function(data){
+			console.log(data);
+			
+			html = '<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName='+data+'&directory=memberPhoto" alt="회원사진" width="150px"/>';
+			$("input:hidden[name=photo]").val(data);
+			$this.parent().append(html);
+			
+		},
+		error: function(){
+			console.log("회원사진 S3 업로드 ajax error!");
+		}
+	});
+});
+
 /* 영어 막기*/
 function validateText(event) {
 	var code = event.keyCode;

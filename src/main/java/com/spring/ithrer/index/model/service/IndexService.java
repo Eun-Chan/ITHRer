@@ -65,4 +65,8 @@ public interface IndexService {
 
    Profile selectOneProfile(String memberId);
 
+	Recruitment selectOneRecruitmentEndCheck(int recruitmentNo);
+	
+	int updateProfile(Map<String, Object> param);
+
 }

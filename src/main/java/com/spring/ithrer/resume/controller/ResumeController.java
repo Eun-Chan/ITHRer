@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.util.UploadFileUtils;
 import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.resume.model.service.ResumeService;
@@ -191,7 +194,7 @@ public class ResumeController {
 			e1.printStackTrace();
 		}
 		
-		mav.setViewName("index");
+		mav.setViewName("redirect:/");
 		return mav;	
 	}
 
@@ -342,5 +345,40 @@ public class ResumeController {
       mav.setViewName("/resume/resumeView");
       return mav;
    }
+   
+   
+   @RequestMapping(value="/uploadMemberPhoto.ithrer", produces="application/json")
+   @ResponseBody
+	public void fileUpload(ModelAndView mav, HttpServletRequest request,
+			@RequestParam(name="upFile", required=false) MultipartFile upFiles,@RequestParam("directory") String directory,
+			HttpServletResponse response) throws JsonIOException, IOException  {
+		
+		logger.info("originalName: " + upFiles.getOriginalFilename());
+		logger.info("directory: " + directory);
+		logger.info("originalName: " + upFiles.getOriginalFilename());
+		//uploadpath 예시 : "images/banner"
+		String uploadpath = directory;
+		
+
+		ResponseEntity<String> img_path = null;
+		try {
+			img_path = new ResponseEntity<>(
+					UploadFileUtils.uploadFile(uploadpath, upFiles.getOriginalFilename(), upFiles.getBytes()),
+					HttpStatus.CREATED);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		String path = (String) img_path.getBody();
+		logger.info("path : "+path);
+		
+		response.setContentType("application/json; charset=utf-8");
+		
+		new Gson().toJson(path,response.getWriter());
+		
+	}
+   
+   
 }
 

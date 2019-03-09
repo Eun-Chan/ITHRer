@@ -71,7 +71,7 @@ $(function(){
 	
 	<form action="" method="post" enctype="multipart/form-data" id="frm-charged">
 		<div id="charged-company">
-		<h4 style="color:navy;">유료 서비스 기간이 남은 회사</h4>
+		<h4 style="color:navy;">현재 신청된 배너 현황</h4>
 			<div class="form-check form-check-inline">
 			<table class="table table-hover" style="width:1000px;">
 				<tr>
@@ -95,7 +95,12 @@ $(function(){
 							<span>${formattedDateEnd}</span>
 						</td>
 						<td>
-							<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${one.CS_FILE_NAME}&directory=banner" width="200px"/>
+							<c:if test="${!empty one.CS_FILE_NAME}">
+								<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${one.CS_FILE_NAME}&directory=banner" width="200px"/>
+							</c:if>
+							<c:if test="${empty one.CS_FILE_NAME}">
+								<h5 style="color:#4835d6">배너를 등록해 주세요!</h5>
+							</c:if>
 						</td>
 					</tr>	
 			</c:forEach>
