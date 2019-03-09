@@ -1343,7 +1343,7 @@ function recruitmentSend()
 	frm3hiddenInput();
 	frm4hiddenInput();
 	frm5hiddenInput();
-	alert("정상적으로 등록되었습니다.");
+	alert("정상적으로 수정되었습니다.");
 	$("#updateFrm").submit();
 }
 /* 기타정보 */
@@ -1427,14 +1427,13 @@ function frm3hiddenInput()
     result_workLocation = result_workLocation.substr(0, result_workLocation.length -1);
     
     console.log("근무지역(이름) : "+result_workLocationName);
-    console.log("근무지역(코드) : "+result_workLocation);
     $("#frm3-0").val(result_workLocationName);
 	$("#frm3-1").val(result_workLocation);
 	
 	/* ============= 인근전철역 ============= */
 	var result_subway = $("#subway-code-result-Div").text();
-	console.log("인근전철역 : "+result_subway);
-	$("#frm3-2").val(result_subway);
+	console.log("인근전철역 : "+result_subway.trim());
+	$("#frm3-2").val(result_subway.trim());
 	
 	/* ============= 급여조건 ============= */
 	var result_salaryDiv = $("#salary-select option:selected").text();
@@ -1445,8 +1444,8 @@ function frm3hiddenInput()
 	
 	/* ============= 복리후생 ============= */
 	var result_benefits = $("#input-Benefits").val();
-	console.log("복리후생:"+result_benefits);
-	$("#frm3-4").val(result_benefits);
+	console.log("복리후생:"+result_benefits.trim());
+	$("#frm3-4").val(result_benefits.trim());
 	
 	/* ============= 근무시간 ============= */
 	var result_workDay = "";
@@ -1514,7 +1513,7 @@ function frm2hiddenInput()
 	$("#frm2-8").val(result_gender);
 	
 	/* ============= 기타자격요건 ============= */
-	var result_other = $("#otherRequirement").text();
+	var result_other = $("#otherRequirement").val();
 	console.log("기타자격요건 : "+result_other);
 	$("#frm2-9").val(result_other);
 }
@@ -1597,8 +1596,8 @@ function frm1hiddenInput()
 	
 	/* ============= 모집직급/직책 ============= */
 	var result_jobGrade = $("#job-code-result-Div").text();
-	console.log("모집직급/직책 : " + result_jobGrade);
-	$("#frm1-7").val(result_jobGrade);
+	console.log("모집직급/직책 : " + result_jobGrade.trim());
+	$("#frm1-7").val(result_jobGrade.trim());
 	
 }
 //변수시작(qustntlwkr)
@@ -1658,7 +1657,7 @@ function reset_workLocation()
 /* 지역정보를 1차적으로 입력 */
 function input_workLocation()
 {
-	if(!frm3_0changed)
+	/* if(!frm3_0changed)
 	{
 		if(confirm("변경 시 입력된 정보가 초기화됩니다."))
 		{
@@ -1668,14 +1667,14 @@ function input_workLocation()
 		}	
 	}
 	else
-	{
+	{ */
 		var result_text1 = $("#location-select-1 option:selected").text();
 		var result_text2 = $("#location-select-2 option:selected").text();
 		var result_val = $("#location-select-2 option:selected").val();
 		
 		$("#workLocation-select-result").append("<li value='"+result_val+"'>"+result_text1+" "+result_text2+"</li>");
 		$("#workLocation-code-result-Div").show();	
-	}
+	//}
 }
 /* 근무지역 1차 선택 시 2차 선택지 출력 */
 $("#location-select-1").on("change", function(){
@@ -1699,6 +1698,39 @@ $("#location-select-1").on("change", function(){
 	    }
 	});
 });
+function selectLocation(result_frm3_0)
+{
+		var targetLocation = $("#location-select-1 option:selected").val();
+		$("#location-select-2 option").remove();
+		$.ajax({
+			url: "${pageContext.request.contextPath}/company/recruitmentLoadLocation.ithrer?targetLocation="+targetLocation,
+			dataType: "json",
+			Type: "get",
+			success: function(data)
+			{
+				console.log(data);
+				for(var i in data)
+				{
+					$("#location-select-2").append("<option value='"+data[i].locationCode+"'>"+data[i].locationName+"</option>");		
+				}
+				var location2_Option = $("#location-select-2 option");
+				for(var i in location2_Option)
+				{
+					if(location2_Option[i].innerText == null) break;
+					if(result_frm3_0.includes(location2_Option[i].innerText))
+					{
+						$(location2_Option[i]).attr("selected","selected");
+					}
+				}
+				input_workLocation();
+			},
+			error: function () 
+			{
+		        console.log("페이지 데이터 로드 실패_ajax");
+		    }
+		});
+
+}
 /* 컴퓨터활용능력 값이 변경 시 - 직접입력 */
 $("#computer-ability").on("change", function(){
  	var selected = $("#computer-ability option:selected").text();
@@ -1778,19 +1810,20 @@ function subwayInput()
 			frm3_2changed = true;
 			$("#subway-code-result-Div").hide();
 		}
-		else
-		{
-			var category1 = $("#train-select option:selected").text();
-			var category2 = $("#station-select option:selected").text();
-
-			var check = category1+","+category2;
-			console.log(check);
-			if($("#subway-select-result li:contains('"+check+"')").text())	alert("중복된 항목입니다.");
-			else $("#subway-select-result").append("<li style='list-style:none;'> - "+category1+","+category2+"</li>");
-			firstInputSubway = false;
-			$("#subway-code-result-Div").show();	
-		}
 	}
+	else
+	{
+		var category1 = $("#train-select option:selected").text();
+		var category2 = $("#station-select option:selected").text();
+
+		var check = category1+","+category2;
+		console.log(check);
+		if($("#subway-select-result li:contains('"+check+"')").text())	alert("중복된 항목입니다.");
+		else $("#subway-select-result").append("<li style='list-style:none;'> - "+category1+","+category2+"</li>");
+		firstInputSubway = false;
+		$("#subway-code-result-Div").show();	
+	}
+	
 }
 /* 지하철 라인 선택 시 하위 목록 출력 */
 $(document).on("change", "#train-select", function(){
@@ -1826,8 +1859,9 @@ $("#age-cut").on("click", function(){
 function preferenceResultAdd()
 {
 	var result_preference = $("#preference-select-result").text().trim();
+	console.log("result_preference"+result_preference);
 	$("#preference-select-result2").text("");
-	$("#preference-select-result2").append(result_preference);
+	$("#preference-code-result-Div").append(result_preference);
 	$("#preference-popup-background").hide();
 }
 /* 우대사항 체크 */
@@ -2566,9 +2600,24 @@ $(document).ready(function(){
 	var result_frm3_0 = "<%=rect.getLocation().replaceAll(" ",":")%>";
 	if(result_frm3_0 != 'null')
 	{
-		$("#workLocation-code-result-Div").show();
-		$("#workLocation-select-result").append(result_frm3_0);
 		console.log("근무지역명:"+result_frm3_0);
+		result_frm3_0_Arr = new Array(result_frm3_0.split(":"));
+		console.log(result_frm3_0_Arr);
+		var location1_Option = $("#location-select-1 option");
+		
+		for(var i in location1_Option)
+		{
+			if(location1_Option[i].innerText == null) break;
+			if(result_frm3_0.includes(location1_Option[i].innerText))
+			{
+				$(location1_Option[i]).attr("selected","selected");
+				selectLocation(result_frm3_0);
+			}
+		}
+		
+		
+		
+		
 	}	
 	//frm3-1 : 근무코드 - pass
 	//frm3-2 : 인근전철역
