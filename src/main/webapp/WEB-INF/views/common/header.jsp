@@ -105,36 +105,42 @@
 		  	</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
-
-				<ul class="navbar-nav mr-auto">	     
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume">이력서</a></li>		
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판(임시)</a></li>    
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
-			    </ul>
+				<c:if test="${(empty member and empty companyLoggedIn ) or member.memberId ne 'ithreradmin'  }">
+					<ul class="navbar-nav mr-auto">	     
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume.ithrer">이력서</a></li>		
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판</a></li>    
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
+				    </ul>
+			    </c:if>
+			    <c:if test="${member!=null and member.memberId eq 'ithreradmin' }">
+			    	<ul class="navbar-nav mr-auto">	     
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/charedService.ithrer">배너관리</a></li>		
+				    </ul>
+			    </c:if>
 			    <c:if test="${empty member and empty companyLoggedIn }">
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
 						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
-		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer">공고등록 테스트</a></li>
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty companyLoggedIn }">
 					<ul class="navbar-nav">
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/index.ithrer?compId=${companyLoggedIn.compId }">기업홈</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${companyLoggedIn.compId }">기업정보관리</a></li>
+		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer?compId=${companyLoggedIn.compId }">채용공고 등록</a></li>
 		        	</ul>
 		        	<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/company/logout.ithrer'">로그아웃</button>
 			 	</c:if>
-			 	<c:if test="${member != null }">
+			 	<c:if test="${member != null and member.memberId ne 'ithreradmin'}">
 			 		<ul class="navbar-nav">
 			 		<div class="dropdown headerMember">
 					  <button type="button" data-toggle="dropdown" class="headerMemberTitle">
-					   ${member.memberName }님
+					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
 					  <div class="dropdown-menu">
-					    <a class="dropdown-item" href="#">이력서 관리</a>
+					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
 					    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
 					  </div>
@@ -143,6 +149,14 @@
 				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 		</ul>
+			 	</c:if>
+			 	<c:if test="${member != null and member.memberId eq 'ithreradmin' }">
+			 	<ul class="navbar-nav">
+			 			<span class="headerMemberTitle" style="padding: 8px;">
+					   		${member.memberName }님
+					   </span>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+			 	</ul>
 			 	</c:if>
 			 </div>
 		</nav>
@@ -424,107 +438,7 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
-	
-	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 페이스북 로그인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-	/* function facebookLogin() {
-		window.fbAsyncInit = function() {
-		    FB.init({
-		      appId      : '1894308784031760',
-		      cookie     : true,
-		      xfbml      : true,
-		      version    : 'v3.2'
-		    });
-	      
-		     FB.getLoginStatus(function(response) {
-		        statusChangeCallback(response);
-		    }); 
-	 	};
-	 	
-	 	(function(d, s, id){
-	 	     var js, fjs = d.getElementsByTagName(s)[0];
-	 	     if (d.getElementById(id)) {return;}
-	 	     js = d.createElement(s); js.id = id;
-	 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
-	 	     fjs.parentNode.insertBefore(js, fjs);
-	 	   }(document, 'script', 'facebook-jssdk'));
-	 	
-	 	function checkLoginState() {
-	        FB.getLoginStatus(function(response) {
-	            statusChangeCallback(response);
-	          });
-	    }
-	  	
-	 	function statusChangeCallback(response) {
-	    	if (response.status === 'connected') {
-	         	//FB.AppEvents.logPageView();
-	         	testAPI();
-	    	}
-	    	else {
-	    		//FB.AppEvents.logPageView();
-	    		testAPI();
-	    	}
-	  	}
-	 	
-	 	function testAPI() {
-	 	    console.log('Welcome!  Fetching your information.... ');
-	 	    FB.api('/me', function(response) {
-	 	    	var memberId = response.id;
-	            var memberName = response.name;
-	            var email = response.email;
-	 	    	
-	            $.ajax({
-	                url: "${pageContext.request.contextPath}/user/facebookLogin.ithrer",
-	                method:"post",
-	                data: {memberId : memberId, memberName : memberName, email : email },
-	                success: function(data){
-	                if(data.result == "true"){
-	   				alert(data.memberId);
-	                }else{
-	                     alert("FaceBook 신규 회원 로그인성공");
-	                      window.location.href = "/spring";
-	                }
-	                
-	                },
-	                error:function(){
-	                    console.log("ajax요청 실패 에러!");
-	                }
-	             });
-	 	    });
-	 	  }
-	} */
- 	
- 	/* function testAPI() {
-        FB.api('/me?fields=id,name,email,gender',  function(response) {            
-       		alert("ASD");
-            var memberId = response.id;
-            var memberName = response.name;
-            var email = response.email;
-
-			console.log(memberId);
-			console.log(memberName);
-			console.log(email);
-			
-       $.ajax({
-             url: "${pageContext.request.contextPath}/user/facebookLogin.ithrer",
-             method:"post",
-             data: {memberId : memberId, memberName : memberName, email : email },
-             success: function(data){
-             if(data.result == "true"){
-				alert(data.memberId);
-             }else{
-                  alert("FaceBook 신규 회원 로그인성공");
-                   window.location.href = "/spring";
-             }
-             
-             },
-             error:function(){
-                 console.log("ajax요청 실패 에러!");
-             }
-          });
-
-     });
- 	} */
- 	
+	 
 </script>
 	
 	<section id="content">

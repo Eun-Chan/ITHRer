@@ -20,6 +20,20 @@
 	    </property>
  	</bean>
 	
+	<!-- 첨부 메일 테스트 -->
+    <!-- <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+	    <property name="host" value="smtp.gmail.com" />
+	    <property name="port" value="587" />
+	    <property name="username" value="mwk7151@gmail.com" />
+	    <property name="password" value="qhalzhddl0312$" />
+	    <property name="javaMailProperties">
+	    <props>
+	      <prop key="mail.smtp.auth">true</prop>
+	      <prop key="mail.smtp.starttls.enable">true</prop>
+	    </props>
+	    </property>
+ 	</bean> -->
+	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- #6.1. myBatis(JDBC)설정 연결 설정하기 -->
     <bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">

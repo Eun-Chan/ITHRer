@@ -485,7 +485,7 @@ public class IndexController {
    
    //우리 채용정보 
    @GetMapping("/index/ithrerNotice.ithrer")
-   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav , HttpServletRequest req) {
+   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav , HttpServletRequest req,@RequestParam(name="compId", defaultValue="") String compId) {
 	   String memberId = "";
 		   if(req.getSession().getAttribute("member")!=null) {
 			  Member member = (Member) req.getSession().getAttribute("member");
@@ -494,10 +494,10 @@ public class IndexController {
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("memberId", memberId);
 	   map.put("recNo", recruitmentNo);
+	   map.put("compId",compId);
 	   
 	   Recruitment rc = indexService.selectOneRecruitment(map);
 	   System.out.println(rc);
-	   
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	   String date = com.getDateOfEstablishment();
 	   System.out.println("substring전 : "+date);
@@ -683,8 +683,6 @@ public class IndexController {
 				e.printStackTrace();
 			}
 		}
-	   
-	   
    }
    
    //맴버 전화번호 , 이메일 수정
@@ -696,6 +694,8 @@ public class IndexController {
 	   if(result==1) {
 		   HttpSession session = req.getSession(true);
 		   Member member = (Member)session.getAttribute("member");
+		   Profile pf = indexService.selectOneProfile(member.getMemberId());
+		   int pfResult = indexService.updateProfile(param);
 		   member.setEmail((String)param.get("email"));
 		   member.setPhone((String)param.get("phone"));
 		   session.setAttribute("member", member);
@@ -717,14 +717,13 @@ public class IndexController {
    //이력서 제출
    @RequestMapping("/index/resumeSubmit.ithrer")
    public void resumeSubmit(@RequestParam("memberId")String memberId,
-		   @RequestParam("compName") String compName,
+		   @RequestParam("compId") String compId,
 		   @RequestParam("recruitmentNo") int recruitmentNo,
 		   HttpServletResponse res) {
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("memberId", memberId);
-	   map.put("compName", compName);
+	   map.put("compId", compId);
 	   map.put("recruitmentNo", recruitmentNo);
-	   map.put("resumeNo", 1);
 	   int result = indexService.insertCompanyApplication(map);
 	   Gson gson = new Gson();
 	   if(result==1) {
@@ -895,5 +894,13 @@ public class IndexController {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
+   }
+   
+   //에러페이지 실험
+   @RequestMapping("/index/error.ithrer")
+   public ModelAndView errorPage(ModelAndView mav) {
+	   
+	   mav.setViewName("common/error");
+	   return mav;
    }
 } 

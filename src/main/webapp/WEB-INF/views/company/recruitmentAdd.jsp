@@ -27,6 +27,10 @@ html
 	
 }
 </style>
+<%
+	String compId = request.getParameter("compId");	
+%>
+
 <!-- 모집직종팝업 -->
 <div id="recruit-popup-background" class="popup-background">
 	<div id="recruit-popup" class="popup">
@@ -1129,10 +1133,10 @@ html
 				<div class="time-container">
 					<ul class="inlineblock-select" style="display: inline;">
 						<li>
-							<input type="text" id="input-term-start" class="input-textBox" placeholder="yy/mm/dd"/>
+							<input type="date" id="input-term-start" class="input-textBox" placeholder="yy/mm/dd"/>
 						</li>
 						<li>
-							<input type="text" id="input-term-end" class="input-textBox" placeholder="yy/mm/dd"/>
+							<input type="date" id="input-term-end" class="input-textBox" placeholder="yy/mm/dd"/>
 						</li>
 						<!-- 시 -->
 						<!-- <li>
@@ -1162,7 +1166,7 @@ html
 			<td colspan="5" class="input-content">
 				<!-- 자사시스템 이용 -->
 				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox howCon' id="how-contact-0" value="1" checked><label for='how-contact-1'>ITHRER 채용 시스템</label> 
+					<input type='checkbox' class='ipt-chkBox howCon' id="how-contact-0" value="1" ><label for='how-contact-1'>ITHRER 채용 시스템</label> 
 				</div>
 				<!-- 일반 이용 -->
 				<div class="how-contact">
@@ -1183,7 +1187,7 @@ html
 			<td colspan="5" class="input-content">
 				<!-- 자사시스템 이용 -->
 				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox appForm' id="frm-contact-0" value="1" checked><label for='frm-contact-1'>ITHRER 이력서</label> 
+					<input type='checkbox' class='ipt-chkBox appForm' id="frm-contact-0" value="1" ><label for='frm-contact-1'>ITHRER 이력서</label> 
 				</div>
 				<!-- 일반 이용 -->
 				<div class="frm-contact">
@@ -1287,9 +1291,9 @@ html
 	<input type="hidden" name="etcQualificationRequirement" id="frm2-9"/>
 	
 	<!-- 근무지역 정보(지역명)를 저장하기 위한 히든태그 -->
-	<input type="hidden" name="locationCode" id="frm3-0" />
+	<input type="hidden" name="location" id="frm3-0" />
 	<!-- 근무지역 정보(지역코드)를 저장하기 위한 히든태그 -->
-	<input type="hidden" name="location" id="frm3-1" />
+	<input type="hidden" name="locationCode" id="frm3-1" />
 	<!-- 인근전철역 정보를 저장하기 위한 히든태그 -->
 	<input type="hidden" name="nearbyStation" id="frm3-2" />
 	<!-- 급여조건 구분 정보를 저장하기 위한 히든태그 -->
@@ -1313,6 +1317,9 @@ html
 	<input type="hidden" name="recruitmentStage" id="frm4-5" />
 	<!-- 서머노트 정보를 저장하기 위한 히든태그 -->
 	<input type="hidden" name="summernoteHtml" id="frm4-6" />
+	
+	<!-- 회사아이디 정보 -->
+	<input type="hidden" name="compId" id="frm5-1" />
 </form>
 <!-- 푸터 -->
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
@@ -1329,10 +1336,16 @@ function recruitmentSend()
 	frm2hiddenInput();
 	frm3hiddenInput();
 	frm4hiddenInput();
-	//summernoteInputImage();
+	frm5hiddenInput();
+	alert("정상적으로 등록되었습니다.");
 	$("#testFrm").submit();
 }
-
+/* 기타정보 */
+function frm5hiddenInput()
+{
+	console.log("기업아이디:"+"<%=compId%>");
+	$("#frm5-1").val("<%=compId%>");
+}
 /* 접수기간 및 방법 */
 function frm4hiddenInput()
 {
@@ -1373,7 +1386,7 @@ function frm4hiddenInput()
 	$("#frm4-4").val(result_form);
 	
 	/* ============= 전형단계 ============= */
-	var result_process = "서류전형/";
+	var result_process = "서류전형-";
 	var processCnt = $("#process-td select").length;
 	for(var i=1; i<=processCnt; i++)
 	{
@@ -2244,7 +2257,7 @@ $(document).ready(function(){
       $.ajax({
         data: form_data,
         type: "POST",
-        url: '${pageContext.request.contextPath}/fileUpload.ithrer',
+        url: '${pageContext.request.contextPath}/fileUploadSummernote.ithrer',
         cache: false,
         processData: false,
         contentType: false,
@@ -2253,8 +2266,11 @@ $(document).ready(function(){
         success: function(url) {
         	console.log(url);
         	console.log("이미지 전송 성공!!!!!!");
-        		$('#summernote').summernote('insertImage', url);
-	        $('#imageBoard > ul').append('<li><img src="'+ url +'" width="480" height="auto"/></li>');
+        	$(el).summernote('editor.insertImage', url);
+            $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+        },
+        error: function(){
+        	console.log("이미지 전송 ajax 실패");
         }
       });
     }
@@ -2266,8 +2282,11 @@ $(document).ready(function(){
 		fontNames: ['fontA',  'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
 		callbacks: {
 			// 이미지 업로드시 사용될 콜백함수
-			onImageUpload: function(files){
-				sendFile(files[0]);
+			onImageUpload: function(files, editor, welEditable){
+				for(var i = files.length -1; i>=0; i--)
+				{
+					sendFile(files[i], this);				
+				}
 			}
 		}
 	});
@@ -2479,7 +2498,11 @@ ul.inlineblock-select li
 /* 접수기간 */
 #input-term-start, #input-term-end
 {
-	width: 100px;
+	width: 150px;
+}
+#input-term-end
+{
+	margin-left: 30px;
 }
 .time-container
 {

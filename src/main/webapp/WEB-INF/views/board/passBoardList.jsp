@@ -24,7 +24,7 @@ function fn_goBoardInsert(){
 $(function(){
 	$("tr[no]").on("click",function(){
 		var passBoardNo = $(this).attr("no");
-		location.href = "${pageContext.request.contextPath}/board/passBoardView.do?no="+passBoardNo;
+		location.href = "${pageContext.request.contextPath}/board/passBoardView?no="+passBoardNo;
 	});
 });
 </script>

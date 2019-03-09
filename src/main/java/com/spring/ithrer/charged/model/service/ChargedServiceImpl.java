@@ -25,5 +25,10 @@ public class ChargedServiceImpl implements ChargedService {
 		return chargedDao.updateFileName(no, path);
 		
 	}
+
+	@Override
+	public int insertBannerRequest(Map<String, Object> map) {
+		return chargedDao.insertBannerRequest(map);
+	}
 	
 }

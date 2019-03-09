@@ -11,6 +11,7 @@ import com.spring.ithrer.resume.model.vo.Hopework;
 import com.spring.ithrer.resume.model.vo.Intern;
 import com.spring.ithrer.resume.model.vo.Language;
 import com.spring.ithrer.resume.model.vo.Learn;
+import com.spring.ithrer.resume.model.vo.Letter;
 import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
@@ -18,7 +19,7 @@ import com.spring.ithrer.resume.model.vo.Profile;
 
 public interface ResumeService {
 
-   List<Map<String, String>> certificateList(String certName);
+   List<Map<String, String>> certificateList(String certname);
 
    int insertAward(Map<String, Object> awardMap);
 
@@ -44,29 +45,35 @@ public interface ResumeService {
 
    int insertPortFolio(Map<String, Object> portFolioMap);
 
-   Award awardView(String memberId);
+	Award awardView(String memberId);
 
-   Career careerView(String memberId);
+	Career careerView(String memberId);
 
-   Certification certificateView(String memberId);
+	Certification certificateView(String memberId);
 
-   Hopework hopeworkView(String memberId);
+	Hopework hopeworkView(String memberId);
 
-   Intern internView(String memberId);
+	Intern internView(String memberId);
 
-   Language languageView(String memberId);
+	Language languageView(String memberId);
 
-   Learn learnView(String memberId);
+	Learn learnView(String memberId);
 
-   Overseas overseasView(String memberId);
+	Overseas overseasView(String memberId);
 
-   PortFolio portFolioView(String memberId);
+	PortFolio portFolioView(String memberId);
 
-   Preference preferenceView(String memberId);
+	Preference preferenceView(String memberId);
 
-   Profile profileView(String memberId);
+	Profile profileView(String memberId);
 
-   Education educationView(String memberId);
+	Education educationView(String memberId);
+
+	int insertLetter(Map<String, Object> letterMap);
+
+	Letter letterView(String memberId);
+
+
 
 
 }

@@ -17,6 +17,12 @@ div#all-container{
 div.border-top.border-bottom{
 	border-width: 3px !important;
 }
+
+/* 이력서 읽은 지원자는 뿌옇게 처리 */
+div[read=Y]{
+	opacity: 0.4;
+}
+
 </style>
 
 <div id="all-container" class="container my-4">
@@ -39,6 +45,7 @@ div.border-top.border-bottom{
 	<div id="applicant-list-container" class="container my-2">
 	
 	<div class="row rounded border-top border-bottom border-primary text-center py-3 font-weight-bold d-flex flex-wrap align-items-center">
+		<div class="col-sm-2">사진</div>
 		<div class="col">지원자</div>
 		<div class="col">학교</div>
 		<div class="col">전공/학점</div>
@@ -47,18 +54,36 @@ div.border-top.border-bottom{
 		<div class="col">지원일</div>
 	</div>
 	<c:forEach var="app" items="${applicantList }">
-	<div class="row rounded border-top border-bottom border-primary text-center py-3 font-weight-bold d-flex flex-wrap align-items-center">
-		<div class="col">
-			<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=2&memberId=${app.memberId}">
-			${app.memberName }(${app.gender }, ${app.age })
+	<div read="${app.ca.read }" class="row rounded border-bottom border-primary text-center py-3 d-flex flex-wrap align-items-center">
+		<div class="col-sm-2">
+			<c:if test="${empty app.profile.photo }">
+			<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />
+			</c:if>
+			<c:if test="${not empty app.profile.photo }">
+			<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${app.profile.photo }&directory=memberPhoto" alt="회원사진" width="50px"/>
+			</c:if>
+		</div>
+		<div class="col font-weight-bold">
+			<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyLoggedIn.compId }&recruitmentNo=2&memberId=${app.memberId}">
+			${app.name }(${app.gender }, ${app.age })
 			</a>
 		</div>
 		<div class="col">${app.education.schoolname }</div>
-		<div class="col">${app.education.score }/${app.education.totalscore }</div>
 		<div class="col">
-		<c:if test="${empty app.career }">
-		신입
-		</c:if>
+			<c:if test="${not empty app.education.score }">
+			${app.education.score }/${app.education.totalscore }
+			</c:if>
+			<c:if test="${empty app.education.score }">
+			-
+			</c:if>
+		</div>
+		<div class="col">
+			<c:if test="${empty app.career }">
+			신입
+			</c:if>
+			<c:if test="${not empty app.career }">
+			${app.career.workingPeriod }
+			</c:if>
 		</div>
 		<div class="col">${app.hopework.wantpay }</div>
 		<div class="col">${app.ca.cuResdate }</div>
@@ -78,6 +103,9 @@ $("select#recruitment-list").on("change",function(){
 		location.href="${pageContext.request.contextPath }/company/viewApplicantList.ithrer?recruitmentNo="+$val+"&compId=${companyLoggedIn.compId}";
 	}
 });
+
+
+
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

@@ -46,6 +46,6 @@ public class Education implements Serializable{
 	private String secmajor;
 	private String[] secmajorArr;
 	private String otherdeparttext;	
-	private String[] otherdeparttextArr;	
-	
+	private String[] otherdeparttextArr;		
 }
+

@@ -163,7 +163,7 @@
 		<div style="text-align: center;">
 		<%-- 	<img src="${pageContext.request.contextPath }/resources/images/google.svg" alt="" width="150px;" height="80px;" style="position: relative; top: 10px;"/> --%>
 			<c:if test="${not empty com.logoS3 }">
-				<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${com.logoS3 }&directory=compLogo" alt="기업로고" width="150px;" height="80px;" style="position: relative; top: 10px;"/>
+				<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${com.logoS3 }&directory=compLogo" alt="기업로고"  height="150px;" style="position: relative; top: 10px;"/>
 			</c:if>
 		</div>
 	</div>
@@ -193,8 +193,6 @@
 					<dd>${rc.payCondition }</dd>
 					<dt>지역</dt>
 					<dd>${rc.location }</dd>
-					<dt>근무시간</dt>
-					<dd>7시~10시</dd>
 				</dl>
 			</div>
 		</div>
