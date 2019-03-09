@@ -398,7 +398,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Member> selectAppList(int recruitmentNo) {
+	public List<Profile> selectAppList(int recruitmentNo) {
 		return companyDao.selectAppList(recruitmentNo);
 	}
 
@@ -433,6 +433,11 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<Area> selectLocationcodeList(int param) {
 		return companyDao.selectLocationcodeList(param);
+	}
+
+	@Override
+	public void updateCARead(Map<String, Object> map) {
+		companyDao.updateCARead(map);
 	}
 
 }

@@ -207,13 +207,18 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
-	public List<Member> selectAppList(int recruitmentNo) {
+	public List<Profile> selectAppList(int recruitmentNo) {
 		return sqlSession.selectList("company.selectAppList",recruitmentNo);
 	}
 	
 	@Override
 	public List<Area> selectLocationcodeList(int param) {
 		return sqlSession.selectList("company.selectLocationcodeList",param);
+	}
+
+	@Override
+	public void updateCARead(Map<String, Object> map) {
+		sqlSession.update("company.updateCARead",map);
 	}
 
 }
