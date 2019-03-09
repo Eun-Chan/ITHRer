@@ -30,6 +30,11 @@ div#applicant-info-container{
 div.border-top.border-bottom{
 	border-width: 3px !important;
 }
+
+div#letter-box{
+	border-top: 3px solid !important;
+	border-bottom: 3px solid !important;
+}
 </style>
 
 <div id="all-container" class="container">
@@ -49,9 +54,9 @@ div.border-top.border-bottom{
 				</div>
 				<div class="col">
 					<div class="row">
-						<div class="col text-center">
+						<div class="col text-center pb-3">
 							<h2>
-								<span class="align-middle">${member.memberName }</span>
+								<span class="align-middle">${profile.name }</span>
 							</h2>
 						</div>
 					</div>
@@ -81,57 +86,41 @@ div.border-top.border-bottom{
 					<div class="col">포트폴리오</div>
 				</div>
 				<div class="row mb-2">
-					<div class="col">1</div>
-					<div class="col">2</div>
-					<div class="col">3</div>
-					<div class="col">4</div>
-					<div class="col">5</div>
+					<div class="col">
+						${education.graduactionArr[fn:length(education.graduactionArr)-1] }
+						<c:if test="${fn:length(education.graduactionArr) eq 1 }">
+						${education.highgraduationstateArr[0] }
+						</c:if>
+						<c:if test="${fn:length(education.graduactionArr) gt 1 }">
+						${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
+						</c:if>
+					</div>
+					<div class="col">
+						${career.workingPeriod }
+					</div>
+					<div class="col">${hopework.wantpay } 만원</div>
+					<div class="col">${hopework.jobtype }</div>
+					<div class="col">${hopework.hopeplace }</div>
 					<div class="col">6</div>
 				</div>
 			</div>
 		</div>
 		
-		<h1>${profile.userResumeTitle }</h1>
-		${award }
-		<br />
-		${career }
-		<br />
-		${certification }
-		<br />
-		${education }
-		<br />
-		${hopework }
-		<br />
-		${intern }
-		<br />
-		${language }
-		<br />
-		${learn }
-		<br />
-		${overseas }
-		<br />
-		${portfolio }
-		<br />
-		${preference }
-		<br />
-		${profile }
+		<h1>${profile.userresumetitle }</h1>
 				
+		<c:if test="${fn:length(education.graduactionArr) != 0 }">
 		<div id="education-info-container" class="container my-5">
 			<h3>학력</h3>
 			<span>
 				최종학력 
-				최종학력이 고등학교 졸
-				<c:if test="${not empty education.highgraduationstateArr[0] }">
-					${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
-					<c:if test="${education.graducationstateArr[fn:length(education.graducationstateArr)-1] eq 'graduated' 
-								and education.graduactionArr[fn:length(education.graduactionArr)-1] eq 'graduate'} ">
-					대학원 졸업
-					</c:if>
+				 | 
+				${education.graduactionArr[fn:length(education.graduactionArr)-1] }
+				<c:if test="${fn:length(education.graduactionArr) eq 1 }">
+				 ${education.highgraduationstateArr[0] }
 				</c:if>
-				<c:if test="${empty education.highgraduationstateArr[0] }">
-				${education.highgraduationstateArr[0] }
+				<c:if test="${fn:length(education.graduactionArr) gt 1 }">
+				 ${education.graducationstateArr[fn:length(education.graducationstateArr)-1] }
 				</c:if>
-				 | (예시) 대학교 4년 졸업예정
 			</span>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
@@ -150,11 +139,16 @@ div.border-top.border-bottom{
 					학점
 				</div>
 			</div>
-			${fn:length(education.graduactionArr) }
-			<c:forEach var="i" begin="0" end="${fn:length(education.graduactionArr) }">
+			<c:if test="${fn:length(education.graduactionArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(education.graduactionArr)-1 }">
 				<div class="row py-2 border-bottom">
 					<div class="col">
+						<c:if test="${i == 0 }">
+						${education.highgraduationdateArr[0] } ~ ${education.highgraduationdateArr[0] + 3 }
+						</c:if>
+						<c:if test="${i != 0 }">
 						${education.admissiondateArr[i] } ~ ${education.graduationdateArr[i] }
+						</c:if>
 					</div>
 					<div class="col">
 						${education.graduactionArr[i] }
@@ -167,16 +161,19 @@ div.border-top.border-bottom{
 					</div>
 					<div class="col">
 						<c:if test="${i != 0 }">
-						${education.scoreArr[i] }/${education.totalscoreArr[i-1] }
+						${education.scoreArr[i] } / ${education.totalscoreArr[i-1] }
 						</c:if>
 					</div>
 				</div>
 			</c:forEach>
+			</c:if>
 		</div>
+		</c:if>
 		
+		<c:if test="${fn:length(career.corpnameArr) != 0 }">
 		<div id="career-info-container" class="container my-5">
 			<h3>경력</h3>
-			<span>총 *년 *개월</span>
+			<span>총 ${career.workingPeriod }</span>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
 				<div class="col">
 					근무기간
@@ -185,17 +182,38 @@ div.border-top.border-bottom{
 					회사명
 				</div>
 				<div class="col">
-					부서/직급/연차
+					부서/직급
 				</div>
 				<div class="col">
-					지역/직종
+					설명
 				</div>
 				<div class="col">
 					연봉
 				</div>
 			</div>
+			<c:forEach var="i" begin="0" end="${fn:length(career.corpnameArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${career.hireddateArr[i] } ~ ${career.retireddateArr[i] }
+					</div>
+					<div class="col">
+						${career.corpnameArr[i] }
+					</div>
+					<div class="col">
+						${career.departmentArr[i] }/${career.jobpositionArr[i] }
+					</div>
+					<div class="col">
+						${career.descriptionArr[i] }
+					</div>
+					<div class="col">
+						${career.incomeArr[i] }
+					</div>
+				</div>
+			</c:forEach>
 		</div>
+		</c:if>
 		
+		<c:if test="${fn:length(intern.interndivisionArr) != 0 }">
 		<div id="activity-info-container" class="container my-5">
 			<h3>대외활동</h3>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
@@ -212,8 +230,26 @@ div.border-top.border-bottom{
 					내용
 				</div>
 			</div>
+			<c:forEach var="i" begin="0" end="${fn:length(intern.interndivisionArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${intern.internstartdateArr[i] } ~ ${intern.internenddateArr[i] }
+					</div>
+					<div class="col">
+						${intern.interndivisionArr[i] }
+					</div>
+					<div class="col">
+						${intern.socialinstArr[i] }
+					</div>
+					<div class="col">
+						${intern.interntextareaArr[i] }
+					</div>
+				</div>
+			</c:forEach>
 		</div>
+		</c:if>
 		
+		<c:if test="${fn:length(award.awardnameArr) != 0 or fn:length(certification.certnameArr) != 0 or fn:length(language.languagedivisionArr) != 0}">
 		<div id="etc-info-container" class="container my-5">
 			<h3>자격증/어학/수상내역</h3>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
@@ -233,33 +269,116 @@ div.border-top.border-bottom{
 					합격/점수
 				</div>
 			</div>
+			<c:if test="${fn:length(award.awardnameArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(award.awardnameArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${award.awarddateArr[i] }
+					</div>
+					<div class="col">
+						수상내역
+					</div>
+					<div class="col">
+						${award.awardnameArr[i] }
+					</div>
+					<div class="col">
+						${award.awardagencyArr[i] }
+					</div>
+					<div class="col">
+						-
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(certification.certnameArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(certification.certnameArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						${certification.certdateArr[i] }
+					</div>
+					<div class="col">
+						자격증
+					</div>
+					<div class="col">
+						${certification.certnameArr[i] }
+					</div>
+					<div class="col">
+						${certification.certpublisherArr[i] }
+					</div>
+					<div class="col">
+						최종합격
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
+			<c:if test="${fn:length(language.languagedivisionArr) != 0 }">
+			<c:forEach var="i" begin="0" end="${fn:length(language.languagedivisionArr)-1 }">
+				<div class="row py-2 border-bottom">
+					<div class="col">
+						<c:if test="${empty language.examdateArr[i] }">
+						-
+						</c:if>
+						<c:if test="${not empty language.examdateArr[i] }">
+						${language.examdateArr[i] }
+						</c:if>
+					</div>
+					<div class="col">
+						${language.languagedivisionArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${empty language.selfexamArr[i] }">
+						-
+						</c:if>
+						<c:if test="${not empty language.selfexamArr[i] }">
+						${language.selfexamArr[i] }
+						</c:if>
+					</div>
+					<div class="col">
+						${language.languagenameArr[i] }
+					</div>
+					<div class="col">
+						<c:if test="${empty language.examscoreArr[i] }">
+						${language.speakingdivisionArr[i] }
+						</c:if>
+						<c:if test="${not empty language.examscoreArr[i] }">
+						${language.examscoreArr[i] }
+						</c:if>
+					</div>
+				</div>
+			</c:forEach>
+			</c:if>
 		</div>
+		</c:if>
 	
+		<c:if test="${fn:length(preference.prefercheck) != 0 }">
 		<div id="preference-info-container" class="container my-5">
 			<h3>취업우대사항</h3>
 			<div class="row py-3 mt-3 rounded border-top border-bottom font-weight-bold">
+				<c:forEach var="i" begin="0" end="${fn:length(preference.prefercheck)-1 }">
 				<div class="col">
-					결혼여부
+					${preference.prefercheck[i] }
+					<c:if test="${preference.prefercheck[i] eq '장애' }">
+					(${preference.disoderselectArr[0] })
+					</c:if>
+					<c:if test="${preference.prefercheck[i] eq '병역' }">
+					(${preference.militaryselectArr[0] })
+					</c:if>
 				</div>
-				<div class="col">
-					병역대상
-				</div>
+				</c:forEach>
 			</div>
 		</div>
+		</c:if>
 		
-		<div id="careerletter-info-container" class="container my-5">
-			<h3>경력기술서</h3>
-			<div class="container border">
-			내용
-			</div>
-		</div>
-		
+		<c:if test="${fn:length(letter.letterareaArr) != 0 }">
 		<div id="letter-info-container" class="container my-5">
 			<h3>자기소개서</h3>
-			<div class="container border">
-			내용
+			<div id="letter-box" class="container border">
+			<h2>${letter.lettertextArr[0] }</h2>
+			<br />
+			${letter.letterareaArr[0] }
 			</div>
 		</div>
+		</c:if>
 </div>
 </div>
 

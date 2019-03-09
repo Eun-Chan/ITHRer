@@ -152,10 +152,10 @@
 					<strong>지원이력서</strong>
 				</div>
 				<div class="col-sm-12 row2">
-				<c:if test="${not empty pf.userResumeTitle }">
-					<span style="font-size: 0.9em; letter-spacing: 1px;" class="pfTitle">${pf.userResumeTitle }</span>
+				<c:if test="${not empty pf.userresumetitle }">
+					<span style="font-size: 0.9em; letter-spacing: 1px;" class="pfTitle">${pf.userresumetitle }</span>
 				</c:if>
-				<c:if test="${empty pf.userResumeTitle }">
+				<c:if test="${empty pf.userresumetitle }">
 					<span style="font-size: 0.9em; letter-spacing: 1px;" >이력서가 존재하지 않습니다 작성해주세요.</span>
 					<input type="button" value="작성하기" class="btn btn-info" style="float: right" id="profileInsert"/>
 				</c:if>
