@@ -180,7 +180,7 @@
 	
 	<!-- 기업공고 등록하기 -->
 	<insert id="insertRecruitment" parameterType="Recruitment">
-		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, 'wkdtjsdnd',#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},'WORK_DAY주1일','N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},#{locationCode},#{genderCut})
+		INSERT INTO RECRUITMENT VALUES(SEQ_RECRT_NO.NEXTVAL, #{compId},#{recruitmentTitle},#{employmentType},#{typeOfOccupation},'',#{asignedTask},#{recruitmentPersonnel},#{position},#{department},'',#{career},#{education},#{etcQualificationRequirement},#{employmentPreference},#{applicantAgeStart},'','',#{applicationMethod}, #{applicationForm}, #{recruitmentStage},'',#{location}, #{payCondition}, #{nearbyStation}, #{welfare}, 0, #{openingDate},#{closingDate},#{applicantAgeEnd},#{certificate}, #{major},#{workDay},'N','현재컬럼삭제예정',#{foreLang},#{summernoteHtml},#{salaryType},#{locationCode},#{genderCut})
 	</insert>
 	
 	<!-- 지하철노선도-구분 가져오기 -->
@@ -291,8 +291,14 @@
 		SELECT LOCATION_CODE, LOCATION_NAME FROM AREA WHERE LOCATION_TOTAL_CODE = #{param}
 	</select>
 	
+	<!-- 조회한 채용공고 정보 가져오기 -->
+	<select id="joinRecruitment" parameterType="_int" resultType="recruitment">
+		SELECT * FROM RECRUITMENT WHERE RECRUITMENT_NO = #{RECRUITMENT_NO}
+	</select>
+
 	<!-- 지원자 상세보기 하면 read = Y 로 업데이트 -->
 	<update id="updateCARead" parameterType="map">
 		update companyapplication set read = 'Y' where comp_id=#{compId} and member_id=#{memberId}
 	</update>
+
 </mapper>

@@ -94,6 +94,8 @@ public interface CompanyDao {
 	
 	List<Area> selectLocationcodeList(int param);
 
+	Recruitment joinRecruitment(int no);
+
 	void updateCARead(Map<String, Object> map);
 
 }

@@ -217,6 +217,10 @@ public class CompanyDaoImpl implements CompanyDao {
 	}
 
 	@Override
+	public Recruitment joinRecruitment(int no) {
+		return sqlSession.selectOne("company.joinRecruitment", no);
+	}
+	@Override
 	public void updateCARead(Map<String, Object> map) {
 		sqlSession.update("company.updateCARead",map);
 	}

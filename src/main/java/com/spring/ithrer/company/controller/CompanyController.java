@@ -565,7 +565,8 @@ public class CompanyController {
 	 * 테스트용
 	 */
 	@RequestMapping("/testSend")
-	public void test(@RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
+	public ModelAndView test(ModelAndView mav,
+					 @RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
 					 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
 					 @RequestParam(defaultValue="", value="career") String career,
 					 @RequestParam(defaultValue="", value="employment_type") String employment_type,
@@ -592,9 +593,11 @@ public class CompanyController {
 					 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
 					 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
 					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
-					 @RequestParam(defaultValue="", value="workDay") String workDay)
+					 @RequestParam(defaultValue="", value="workDay") String workDay,
+					 @RequestParam(defaultValue="", value="compId") String compId,
+					 @RequestParam(defaultValue="", value="locationCode") String locationCode,
+					 @RequestParam(defaultValue="", value="location") String location)
 	{
-		System.out.println("테스트시작");
 		/*frm1*/
 		String result_recruitmentTitle = recruitmentTitle;
 		String result_typeOfOccupation = typeOfOccupation.replaceAll("\\p{Z}", "");
@@ -655,6 +658,8 @@ public class CompanyController {
 		
 		/* frm3 */
 		nearbyStation.replace("- ", "/");
+		rect.setLocation(location);
+		rect.setLocationCode(locationCode);
 		rect.setNearbyStation(nearbyStation);
 		rect.setSalaryType(salaryType);
 		rect.setPayCondition(payCondition+"만원");
@@ -669,9 +674,16 @@ public class CompanyController {
 		rect.setRecruitmentStage(recruitmentStage);
 		rect.setSummernoteHtml(summernoteHtml);
 		
+		/* frm5 */
+		rect.setCompId(compId);
+		
 		int insertResult = companyService.insertRecruitment(rect);
 		System.out.println("rect:"+rect);
 		System.out.println(insertResult);
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
 	}
 	
 	@GetMapping("/viewApplicantList.ithrer")
@@ -812,6 +824,90 @@ public class CompanyController {
 		}
 	}
 	
+	/**
+	 * @박광준
+	 * 채용공고 - 수정버튼 클릭 시 페이지 연결 (페이지 정보 로드)
+	 */
+	@RequestMapping("/joinRecruitment")
+	@ResponseBody
+	public ModelAndView joinRecruitment(@RequestParam("no") int no, ModelAndView mav) {
+		Recruitment loadRecruitmentInfo = companyService.joinRecruitment(no);
+		mav.addObject("rect",loadRecruitmentInfo);
+		mav.setViewName("company/recruitmentUpdate");
+		return mav;
+	}
 	
+	/**
+	 * @박광준
+	 * 채용공고 Update
+	 */
+	@RequestMapping("/updateSend")
+	public ModelAndView updateSend(ModelAndView mav,
+			 @RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
+			 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
+			 @RequestParam(defaultValue="", value="career") String career,
+			 @RequestParam(defaultValue="", value="employment_type") String employment_type,
+			 @RequestParam(defaultValue="0", value="recruitmentPersonnel") int recruitmentPersonnel,
+			 @RequestParam(defaultValue="", value="asignedTask") String asignedTask,
+			 @RequestParam(defaultValue="", value="resultDepartment") String resultDepartment,
+			 @RequestParam(defaultValue="", value="jobGrade") String jobGrade,
+			 @RequestParam(defaultValue="", value="education") String education,
+			 @RequestParam(defaultValue="", value="major") String major,
+			 @RequestParam(defaultValue="", value="foreLang") String foreLang,
+			 @RequestParam(defaultValue="", value="certificate") String certificate,
+			 @RequestParam(defaultValue="", value="computerLiteracy") String computerLiteracy,
+			 @RequestParam(defaultValue="", value="employmentPreference") String employmentPreference,
+			 @RequestParam(defaultValue="", value="applicantAge") String applicantAge,
+			 @RequestParam(defaultValue="", value="genderCut") String genderCut,
+			 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
+			 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
+			 @RequestParam(defaultValue="", value="payCondition") String payCondition,
+			 @RequestParam(defaultValue="", value="salaryType") String salaryType,
+			 @RequestParam(defaultValue="", value="welfare") String welfare,
+			 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
+			 @RequestParam(defaultValue="SYSDATE", value="closingDate") String closingDate,
+			 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
+			 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
+			 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
+			 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
+			 @RequestParam(defaultValue="", value="workDay") String workDay,
+			 @RequestParam(defaultValue="", value="compId") String compId,
+			 @RequestParam(defaultValue="", value="locationCode") String locationCode,
+			 @RequestParam(defaultValue="", value="location") String location,
+			 @RequestParam(defaultValue="", value="recruitmentNo") String recruitmentNo) {
+		System.out.println("recruitmentTitle"+recruitmentTitle);
+		System.out.println("typeOfOccupation"+typeOfOccupation);
+		System.out.println("career"+career);
+		System.out.println("employment_type"+employment_type);
+		System.out.println("recruitmentPersonnel"+recruitmentPersonnel);
+		System.out.println("asignedTask"+asignedTask);
+		System.out.println("resultDepartment"+resultDepartment);
+		System.out.println("jobGrade"+jobGrade);
+		System.out.println("education"+education);
+		System.out.println("major"+major);
+		System.out.println("foreLang"+foreLang);
+		System.out.println("certificate"+certificate);
+		System.out.println("computerLiteracy"+computerLiteracy);
+		System.out.println("employmentPreference"+employmentPreference);
+		System.out.println("applicantAge"+applicantAge);
+		System.out.println("genderCut"+genderCut);
+		System.out.println("etcQualificationRequirement"+etcQualificationRequirement);
+		System.out.println("nearbyStation"+nearbyStation);
+		System.out.println("payCondition"+payCondition);
+		System.out.println("salaryType"+salaryType);
+		System.out.println("welfare"+welfare);
+		System.out.println("openingDate"+openingDate);
+		System.out.println("closingDate"+closingDate);
+		System.out.println("applicationMethod"+applicationMethod);
+		System.out.println("applicationForm"+applicationForm);
+		System.out.println("recruitmentStage"+recruitmentStage);
+		System.out.println("summernoteHtml"+summernoteHtml);
+		System.out.println("workDay"+workDay);
+		System.out.println("compId"+compId);
+		System.out.println("locationCode"+locationCode);
+		System.out.println("location"+location);
+		System.out.println("recruitmentNo"+recruitmentNo);
+		return mav;
+	}
 	
 }
