@@ -683,8 +683,6 @@ public class IndexController {
 				e.printStackTrace();
 			}
 		}
-	   
-	   
    }
    
    //맴버 전화번호 , 이메일 수정

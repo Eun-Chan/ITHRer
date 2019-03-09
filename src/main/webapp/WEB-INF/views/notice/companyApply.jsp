@@ -242,10 +242,10 @@
   		</div>
 <script>
 $(function(){
-/* 	var phone1 = "${member.phone}".substr(0,3);
+	var phone1 = "${member.phone}".substr(0,3);
 	var phone2 = "${member.phone}".substr(4,4);
 	var phone3 = "${member.phone}".substr(9);
-	var phone = phone1+"-"+phone2+"-"+phone3; */
+	/*var phone = phone1+"-"+phone2+"-"+phone3; */
 	var email = "${member.email}".split("@");
 
 	
@@ -326,7 +326,7 @@ $(".applybutton").on("click",function(){
 	}
 	var memberId =$("input[name=memberId]").val();
 	var recruitmentNo = $("input[name=recruitmentNo]").val();
-	var compName = $("input[name=compId]").val();
+	var compId = $("input[name=compId]").val();
 	var data = {
 			memberId:memberId,
 			recruitmentNo:recruitmentNo,

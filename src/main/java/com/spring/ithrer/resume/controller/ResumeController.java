@@ -52,7 +52,7 @@ public class ResumeController {
    ResumeService resumeService;
 
    /* 이력서가기 */
-   @RequestMapping(value="/resume/resume")
+   @RequestMapping(value="/resume/resume.ithrer")
    public ModelAndView resumeView(ModelAndView mav) {
       mav.setViewName("resume/resume");
       return mav;
@@ -194,12 +194,12 @@ public class ResumeController {
 			e1.printStackTrace();
 		}
 		
-		mav.setViewName("index");
+		mav.setViewName("redirect:/");
 		return mav;	
 	}
 
    /* 내이력서가기 */
-   @RequestMapping(value="/resume/resumeView")
+   @RequestMapping(value="/resume/resumeView.ithrer")
    public ModelAndView myResumeView(ModelAndView mav, @RequestParam("memberId") String memberId) {
       logger.info("memberId="+memberId);
       Award award = resumeService.awardView(memberId);
@@ -296,11 +296,55 @@ public class ResumeController {
       } catch(NullPointerException e1) {
     	  e1.printStackTrace();
       }
+      try {
+    	  int languagecnt = language.getLanguagedivisionArr().length;
+    	  mav.addObject("languagecnt", languagecnt);  
+    	  System.out.println("languagecnt="+languagecnt);    	   	    	  	  
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int ablitycnt = language.getSpeakingdivisionArr().length;
+    	  mav.addObject("ablitycnt", ablitycnt);   
+    	  System.out.println("ablitycnt="+ablitycnt);  
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int examcnt = language.getExamnameArr().length;
+    	  mav.addObject("examcnt", examcnt);   
+    	  System.out.println("examcnt="+examcnt);    
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int educationcnt = education.getGraduactionArr().length;
+    	  mav.addObject("educationcnt", educationcnt);      	   
+    	  System.out.println("educationcnt="+educationcnt);    	  
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int hschoolcnt = education.getHighgraduationdateArr().length;
+    	  mav.addObject("hschoolcnt", hschoolcnt);      
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int uschoolcnt = education.getGraducationstateArr().length;
+    	  mav.addObject("uschoolcnt", uschoolcnt);        
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
+      try {
+    	  int gschoolcnt = education.getDegreeArr().length;
+    	  mav.addObject("gschoolcnt", gschoolcnt);       
+      } catch(NullPointerException e1) {
+    	  e1.printStackTrace();
+      }
       mav.setViewName("/resume/resumeView");
       return mav;
    }
-   
-   
    @RequestMapping(value="/uploadMemberPhoto.ithrer", produces="application/json")
    @ResponseBody
 	public void fileUpload(ModelAndView mav, HttpServletRequest request,
@@ -332,7 +376,5 @@ public class ResumeController {
 		new Gson().toJson(path,response.getWriter());
 		
 	}
-   
-   
 }
 

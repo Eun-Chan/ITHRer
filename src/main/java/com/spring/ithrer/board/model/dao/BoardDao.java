@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.spring.ithrer.board.model.vo.AnonyBoard;
 import com.spring.ithrer.board.model.vo.PassBoard;
+import com.spring.ithrer.board.model.vo.PassBoardComment;
 
 public interface BoardDao {
 	//익명게시판 리스트 / 글정보 하나보기 / 총 리스트 갯수 / 익명-글쓰기
@@ -48,6 +49,11 @@ public interface BoardDao {
 
 	
 	int passBoardUpdate(PassBoard passBoard);
+
+	//댓글
+	int passBoardAddComment(PassBoardComment comment);
+
+	List<PassBoardComment> passBoardCommentList(int passBoardNo);
 
 	
 }

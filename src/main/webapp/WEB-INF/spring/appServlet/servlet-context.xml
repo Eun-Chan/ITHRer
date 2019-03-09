@@ -79,21 +79,45 @@
     <beans:bean id="companyCheckInterceptor" class="com.spring.ithrer.common.interceptor.CompanyCheckInterceptor"/>
 	 <interceptors>
     	<interceptor>
-    	<mapping path="/info.ithrer"/>
-    	<mapping path="/index.ithrer"/>
-    	<mapping path="/recruitmentAdd"/>
+    	<mapping path="/company/info.ithrer"/>
+    	<mapping path="/company/index.ithrer"/>
+    	<mapping path="/company/recruitmentAdd"/>
     	<beans:ref bean="companyCheckInterceptor"/>
     	</interceptor>
     </interceptors>
     
-    <!-- 관심인제 인터셉터 -->
+    <!-- 관심인제 한명 -->
     <beans:bean id="applicantCheckInterceptor" class="com.spring.ithrer.common.interceptor.ApplicantCheckInterceptor"/>
 	 <interceptors>
     	<interceptor>
-    	<mapping path="/info.ithrer"/>
-    	<mapping path="/index.ithrer"/>
-    	<mapping path="/recruitmentAdd"/>
+    	<mapping path="/company/viewApplicant.ithrer"/>
     	<beans:ref bean="applicantCheckInterceptor"/>
+    	</interceptor>
+    </interceptors>
+
+    <!-- 관심인제 리스트 -->
+    <beans:bean id="applicantListCheckInterceptor" class="com.spring.ithrer.common.interceptor.ApplicantListCheckInterceptor"/>
+	 <interceptors>
+    	<interceptor>
+    	<mapping path="/company/viewApplicantList.ithrer"/>
+    	<beans:ref bean="applicantListCheckInterceptor"/>
+    	</interceptor>
+    </interceptors>
+
+    <!-- 관심인제 리스트 -->
+    <beans:bean id="BannerAdminCheckInterceptor" class="com.spring.ithrer.common.interceptor.BannerAdminCheckInterceptor"/>
+	 <interceptors>
+    	<interceptor>
+    	<mapping path="/charedService.ithrer"/>
+    	<beans:ref bean="BannerAdminCheckInterceptor"/>
+    	</interceptor>
+    </interceptors>
+    
+    <beans:bean id="passBoardUpdateCheckInterceptor" class="com.spring.ithrer.common.interceptor.passBoardUpdateCheckInterceptor"/>
+	 <interceptors>
+    	<interceptor>
+    	<mapping path="/board/passBoardMoveUpdate"/>
+    	<beans:ref bean="passBoardUpdateCheckInterceptor"/>
     	</interceptor>
     </interceptors>
 </beans:beans>

@@ -173,19 +173,28 @@ div.border-top.border-bottom{
 		<div class="tab-content">
 			<div id="today-inqury-tab" class="container tab-pane active text-center"><br />
 				<div class="row py-3 rounded border-top border-bottom font-weight-bold">
+					<div class="col-sm-2">사진</div>
 					<div class="col">이름/나이/성별</div>
-					<div class="col">이력서 제목</div>
+					<div class="col-sm-5">이력서 제목</div>
 					<div class="col">경력</div>
 					<div class="col">관리</div>
 				</div>
 				<c:forEach var="applicant" items="${readAppList }">
 					<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">
+						<div class="col-sm-2">
+							<c:if test="${empty applicant.photo }">
+							<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />
+							</c:if>
+							<c:if test="${not empty applicant.photo }">
+							<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${applicant.photo }&directory=memberPhoto" alt="회원사진" width="50px"/>
+							</c:if>
+						</div>
 						<div class="col">
 							<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=2&memberId=${applicant.memberId}">
 								${applicant.name}/${applicant.age }세/${applicant.gender }
 							</a>
 						</div>
-						<div class="col">
+						<div class="col-sm-5">
 							${applicant.userresumetitle}
 						</div>
 						<div class="col">
@@ -203,19 +212,28 @@ div.border-top.border-bottom{
 			</div>
 			<div id="person-bookmark-tab" class="container tab-pane fade text-center"><br>
 				<div class="row py-3 rounded border-top border-bottom font-weight-bold">
+					<div class="col-sm-2">사진</div>
 					<div class="col">이름/나이/성별</div>
-					<div class="col">이력서 제목</div>
+					<div class="col-sm-5">이력서 제목</div>
 					<div class="col">경력</div>
 					<div class="col">관리</div>
 				</div>
 				<c:forEach var="favorite" items="${favoriteAppList }">
 					<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">
+						<div class="col-sm-2">
+							<c:if test="${empty favorite.profile.photo }">
+							<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />
+							</c:if>
+							<c:if test="${not empty favorite.profile.photo }">
+							<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${favorite.profile.photo }&directory=memberPhoto" alt="회원사진" width="50px"/>
+							</c:if>
+						</div>
 						<div class="col">
 							<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">
 								${favorite.profile.name }/${favorite.profile.age }세/${favorite.profile.gender }
 							</a>
 						</div>
-						<div class="col">
+						<div class="col-sm-5">
 							${favorite.profile.userresumetitle }
 						</div>
 						<div class="col">

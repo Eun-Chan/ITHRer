@@ -5,18 +5,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.user.model.vo.Member;
 
-public class CompanyCheckInterceptor extends HandlerInterceptorAdapter {
+public class BannerAdminCheckInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("인터셉터로 들어옴??");
-		Company com = (Company)request.getSession().getAttribute("companyLoggedIn");
-		if(com == null || !com.getCompId().equals(request.getParameter("compId"))) {
+		Member member = (Member)request.getSession().getAttribute("member");
+		
+		if(member == null || !member.getMemberId().equals("ithreradmin")) {
 			request.setAttribute("loc", "/");
-			request.setAttribute("msg", "잘못된 요청입니다.");
+			request.setAttribute("msg", "관리자가 아닙니다.");
 			request.getRequestDispatcher("/WEB-INF/views/board/msg.jsp").forward(request, response);
 			return false;
 		}
@@ -24,4 +24,5 @@ public class CompanyCheckInterceptor extends HandlerInterceptorAdapter {
 		return super.preHandle(request, response, handler);
 	}
 
+	
 }

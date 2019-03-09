@@ -26,6 +26,7 @@ public class Profile implements Serializable{
 	private String email;
 	private String phone;
 	private String address;
+	private String photo;
 	private String memberId;
 	
 	// 지원한 회사 join용 필드

@@ -26,8 +26,8 @@
 	<h3>인적사항</h3>
 	<div id="profileWrap">
 		<div id="formProfile1" class="input-group-prepend">
-			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value = "${profile.name}" readonly/>
-			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)" value = "${profile.birth}" readonly/>
+			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value="${member.memberName}" readonly/>
+			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)" value = "${profile.birth}"/>
 			<select id="gender" name="gender" class="custom-select">
 				<option value="" disabled selected>성별</option>
 			 	<option value="남" ${profile.gender == '남  '?'selected="selected"':"" } disabled>남</option>								
@@ -57,7 +57,7 @@
 	<div id="educationWrap">
 		<div id="formEducation">
 			<div id="deleteBox">
-				<button type="button" id="deleteEdu" onclick="deleteTwice(event);">
+				<button type="button" name="deleteEdu" onclick="deleteTwice(event);">
 					<span aria-hidden="true">X</span>
 				</button>
 			</div>
@@ -66,30 +66,30 @@
 					<li>
 						<select id="graduaction0" name = "graduaction" class="custom-select">
 							<option value="" disabled selected>학교구분</option>
-							<option value="고등학교">고등학교</option>
-							<option value="대학교2년제">대학(2,3년)</option>
-							<option value="대학교4년제">대학교(4년)</option>			
-							<option value="대학원">대학원</option>			
+							<option value="고등학교" ${education.graduactionArr[0] == '고등학교'?'selected="selected"':"" }>고등학교</option>
+							<option value="대학교2년제" ${education.graduactionArr[0] == '대학교2년제'?'selected="selected"':"" }>대학(2,3년)</option>
+							<option value="대학교4년제" ${education.graduactionArr[0] == '대학교4년제'?'selected="selected"':"" }>대학교(4년)</option>			
+							<option value="대학원" ${education.graduactionArr[0] == '대학원'?'selected="selected"':"" }>대학원</option>			
 						</select>
 					</li>
 					<li>
-						<input type="text" name="schoolname" id="schoolname0" class="form-control" placeholder="학교명" value="${education.schoolname}"/>						
+						<input type="text" name="schoolname" id="schoolname0" class="form-control" placeholder="학교명" value="${education.schoolnameArr[0]}"/>						
 					</li>
 				</ul>
 				<div name="searchHidden" id="searchHidden0"></div>
 			</div>
 			<div id="formEducation3" class="input-group-prepend">
 				<ul>
-					<li><input type="text" name="admissiondate" id="admissiondate0" class="form-control" placeholder="입학년월"/></li>
-					<li><input type="text" name="graduationdate" id="graduationdate0" class="form-control" placeholder="졸업년월"/></li>
+					<li><input type="text" name="admissiondate" id="admissiondate0" class="form-control" placeholder="입학년월" value="${education.admissiondateArr[0]}"/></li>
+					<li><input type="text" name="graduationdate" id="graduationdate0" class="form-control" placeholder="졸업년월" value="${education.graduationdateArr[0]}"/></li>
 					<li>
 						<select name="graducationstate" id="graducationstate0" class="custom-select">
 							<option value="" disabled selected>졸업상태</option>
-							<option value="졸업">졸업</option>
-							<option value="수료">수료</option>
-							<option value="졸업예정">졸업예정</option>
-							<option value="휴학">휴학</option>
-							<option value="중퇴">중퇴</option>
+							<option value="졸업" ${education.graducationstateArr[0] == '졸업'?'selected="selected"':"" }>졸업</option>
+							<option value="수료" ${education.graducationstateArr[0] == '수료'?'selected="selected"':"" }>수료</option>
+							<option value="졸업예정" ${education.graducationstateArr[0] == '졸업예정'?'selected="selected"':"" }>졸업예정</option>
+							<option value="휴학" ${education.graducationstateArr[0] == '휴학'?'selected="selected"':"" }>휴학</option>
+							<option value="중퇴" ${education.graducationstateArr[0] == '중퇴'?'selected="selected"':"" }>중퇴</option>
 						</select> 
 					</li>
 					<li>
@@ -100,23 +100,23 @@
 			</div>
 			<div id="formEducation4" class="input-group-prepend">
 				<ul>
-					<li><input type="text" class="form-control" name="major" id="major0" placeholder="전공명"/></li>
-					<li><input type="text" class="form-control" name="score" id="score0" placeholder="학점"/></li>
+					<li><input type="text" class="form-control" name="major" id="major0" placeholder="전공명" value="${education.majorArr[0]}"/></li>
+					<li><input type="text" class="form-control" name="score" id="score0" placeholder="학점" value="${education.scoreArr[0]}"/></li>
 					<li>
 						<select name="totalscore" id="totalscore0" class="custom-select">
 							<option value="" disabled selected>총점</option>
-							<option value="4.5">4.5</option>
-							<option value="4.3">4.3</option>
-							<option value="4.0">4.0</option>
-							<option value="100">100</option>
+							<option value="4.5" ${education.totalscoreArr[0] == '4.5'?'selected="selected"':"" }>4.5</option>
+							<option value="4.3" ${education.totalscoreArr[0] == '4.3'?'selected="selected"':"" }>4.3</option>
+							<option value="4.0" ${education.totalscoreArr[0] == '4.0'?'selected="selected"':"" }>4.0</option>
+							<option value="100" ${education.totalscoreArr[0] == '100'?'selected="selected"':"" }>100</option>
 						</select>
 					</li>
 					<li>
 						<select name="degree"id="degree0" class="custom-select eduDegree">
 							<option value="" disabled selected>학위</option>
-							<option value="석사">석사</option>
-							<option value="박사">박사</option>
-							<option value="석박사">석박사</option>
+							<option value="석사" ${education.degreeArr[0] == '석사'?'selected="selected"':"" }>석사</option>
+							<option value="박사" ${education.degreeArr[0] == '박사'?'selected="selected"':"" }>박사</option>
+							<option value="석박사" ${education.degreeArr[0] == '석박사'?'selected="selected"':"" }>석박사</option>
 						</select> 
 					</li>
 				</ul>
@@ -128,33 +128,33 @@
 					<li>
 						<select name="otherdepartsel" id="otherdepartsel0" class="custom-select">
 							<option value="" disabled selected>전공선택</option>
-							<option value="부전공">부전공</option>
-							<option value="복수전공">복수전공</option>
-							<option value="이중전공">이중전공</option>
+							<option value="부전공" ${education.otherdepartselArr[0] == '부전공'?'selected="selected"':"" }>부전공</option>
+							<option value="복수전공" ${education.otherdepartselArr[0] == '복수전공'?'selected="selected"':"" }>복수전공</option>
+							<option value="이중전공" ${education.otherdepartselArr[0] == '이중전공'?'selected="selected"':"" }>이중전공</option>
 						</select>
 					</li>
 					<li>
-						<input type="text" name="secmajor" id="secmajor0" class="form-control" placeholder="전공명"/>
+						<input type="text" name="secmajor" id="secmajor0" class="form-control" placeholder="전공명" value="${education.secmajorArr[0]}"/>
 					</li>
 				</ul>
 				<ul>
 					<li>
-						<textarea name="otherdeparttext" id="otherdeparttext0" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품"></textarea>
+						<textarea name="otherdeparttext" id="otherdeparttext0" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품">${education.otherdeparttextArr[0]}</textarea>
 					</li>
 				</ul>
 			</div>
 			<div id="formEducation2" class="input-group-prepend">
 				<ul>
-					<li><input type="text" name="highgraduationdate" id="highgraduationdate0" class="form-control" placeholder="졸업년도"/></li>
+					<li><input type="text" name="highgraduationdate" id="highgraduationdate0" class="form-control" placeholder="졸업년도" value="${education.highgraduationdateArr[0]}"/></li>
 					<li>
 						<select name="highgraduationstate" id="highgraduationstate0" class="custom-select">
 							<option value="" disabled selected>졸업상태</option>
-							<option value="졸업">졸업</option>
-							<option value="졸업예정">졸업예정</option>
+							<option value="졸업" ${education.highgraduationstateArr[0] == '졸업'?'selected="selected"':"" }>졸업</option>
+							<option value="졸업예정" ${education.highgraduationstateArr[0] == '졸업예정'?'selected="selected"':"" }>졸업예정</option>
 						</select> 
 					</li>
 					<li>
-						<input type="checkbox" name="ged" id="ged0" aria-label="Checkbox for following text input" value="ged"/>&nbsp;대입검정고시
+						<input type="checkbox" name="ged" id="ged0" aria-label="Checkbox for following text input" value="ged" ${education.schoolnameArr[0] == "대입검정고시"?'checked':''}/>&nbsp;대입검정고시
 					</li>
 				</ul>	
 			</div>
@@ -345,40 +345,40 @@
 	<div id="languageWrap">
 		<div id="formLanguage" class="input-group-prepend">
 			<div id="deleteBox">
-				<button type="button" id="deleteLanguage" onclick="deleteTwice(event);">
+				<button type="button" name="deleteLanguage" onclick="deleteTwice(event);">
 					<span aria-hidden="true">X</span>
 				</button>
 			</div>
 			<div id="formLanguage1" class="input-group-prepend">
 				<select name="languagedivision" id="languagedivision0" class="custom-select">
 					<option value="" disabled selected>구분</option>
-					<option value="회화능력">회화능력</option>
-					<option value="공인시험">공인시험</option>
+					<option value="회화능력" ${language.languagedivisionArr[0] == '회화능력'?'selected="selected"':"" }>회화능력</option>
+					<option value="공인시험" ${language.languagedivisionArr[0] == '공인시험'?'selected="selected"':"" }>공인시험</option>
 				</select>
 				<select name="languagename" id="languagename0" class="custom-select language-select">
 					<option value="" disabled selected>외국어명</option>
-					<option value="영어">영어</option>
-					<option value="일본어">일본어</option>
-					<option value="중국어">중국어</option>
-					<option value="직접입력">직접입력</option>
+					<option value="영어" ${language.languagenameArr[0] == '영어'?'selected="selected"':"" }>영어</option>
+					<option value="일본어" ${language.languagenameArr[0] == '일본어'?'selected="selected"':"" }>일본어</option>
+					<option value="중국어" ${language.languagenameArr[0] == '중국어'?'selected="selected"':"" }>중국어</option>
+					<option value="직접입력" ${language.languagenameArr[0] == '직접입력'?'selected="selected"':"" }>직접입력</option>
 				</select>
-				<input type="text" name="selftext" id="selftext0" class="form-control"/>
+				<input type="text" name="selftext" id="selftext0" class="form-control" value="${language.selftextArr[0]}"/>
 				<select name="speakingdivision" id="speakingdivision0" class="custom-select">
 					<option value="" disabled selected>회화능력</option>
-					<option value="일산회화가능">일상회화 가능</option>
-					<option value="비즈니스회화가능">비즈니스 회화가능</option>
-					<option value="원어민수준">원어민 수준</option>
+					<option value="일상회화가능" ${language.speakingdivisionArr[0] == '일상회화가능'?'selected="selected"':"" }>일상회화 가능</option>
+					<option value="비즈니스회화가능" ${language.speakingdivisionArr[0] == '비즈니스회화가능'?'selected="selected"':"" }>비즈니스 회화가능</option>
+					<option value="원어민수준" ${language.speakingdivisionArr[0] == '원어민수준'?'selected="selected"':"" }>원어민 수준</option>
 				</select>
 			</div>
 			<div id="formLanguage2" class="input-group-prepend">
 				<select name="examname" id="examname0" class="custom-select">
 					<option value="" disabled selected>공인시험</option>
-					<option value="기타">기타</option>
-					<option value="직접입력">직접입력</option>
+					<option value="기타" ${language.examnameArr[0] == '기타'?'selected="selected"':"" }>기타</option>
+					<option value="직접입력" ${language.examnameArr[0] == '직접입력'?'selected="selected"':"" }>직접입력</option>
 				</select>
-				<input type="text" name="selfexam" id="selfexam0" class="form-control"/>
-				<input type="text" name="examscore" id="examscore0" class="form-control" placeholder="급수/점수"/>
-				<input type="text" name="examdate" id="examdate0" class="form-control" placeholder="취득년월(예.1991.01)"/>
+				<input type="text" name="selfexam" id="selfexam0" class="form-control" value="${language.selfexamArr[0]}"/>
+				<input type="text" name="examscore" id="examscore0" class="form-control" placeholder="급수/점수" value="${language.examscoreArr[0]}"/>
+				<input type="text" name="examdate" id="examdate0" class="form-control" placeholder="취득년월(예.1991.01)" value="${language.examdateArr[0]}"/>
 			</div>
 		</div>
 	</div>
@@ -417,23 +417,23 @@
 			<div id="divCheckbox">
 				<ul>
 					<li>
-						<input type="checkbox" name="prefercheck" id="veteran" aria-label="Checkbox for following text input" value="보훈대상"/>
+						<input type="checkbox" name="prefercheck" id="veteran" aria-label="Checkbox for following text input" value="보훈대상" ${preference.prefercheck[0] == "보훈대상"?'checked':''}/>
 						<label for="veteran">보훈대상</label>
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="protected" aria-label="Checkbox for following text input" value="취업보호대상"/>
+						<input type="checkbox" name="prefercheck" id="protected" aria-label="Checkbox for following text input" value="취업보호대상" ${preference.prefercheck[1] == "취업보호대상"?'checked':''}/>
 						<label for="protected">취업보호 대상</label>
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="subsidy" aria-label="Checkbox for following text input" value="고용지원금대상"/>
+						<input type="checkbox" name="prefercheck" id="subsidy" aria-label="Checkbox for following text input" value="고용지원금대상" ${preference.prefercheck[2] == "고용지원금대상"?'checked':''}/>
 						<label for="subsidy">고용지원금 대상</label>	
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="disorder" aria-label="Checkbox for following text input" value="장애"/>
+						<input type="checkbox" name="prefercheck" id="disorder" aria-label="Checkbox for following text input" value="장애" ${preference.prefercheck[3] == "장애"?'checked':''}/>
 						<label for="disorder">장애</label>
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="military" aria-label="Checkbox for following text input" value="병역"/>
+						<input type="checkbox" name="prefercheck" id="military" aria-label="Checkbox for following text input" value="병역" ${preference.prefercheck[4] == "병역"?'checked':''}/>
 						<label for="military">병역</label>
 					</li>
 				</ul>
@@ -444,22 +444,22 @@
 				장애 :
 				<select name="disoderselect" id="disoderselect" class="custom-select">
 					<option value="" disabled selected>장애 등급</option>
-					<option value="1급">1급</option>
-					<option value="2급">2급</option>
-					<option value="3급">3급</option>
-					<option value="4급">4급</option>
-					<option value="5급">5급</option>
-					<option value="6급">6급</option>						
+					<option value="1급" ${preference.disoderselectArr[0] == '1급'?'selected="selected"':"" }>1급</option>
+					<option value="2급" ${preference.disoderselectArr[0] == '2급'?'selected="selected"':"" }>2급</option>
+					<option value="3급" ${preference.disoderselectArr[0] == '3급'?'selected="selected"':"" }>3급</option>
+					<option value="4급" ${preference.disoderselectArr[0] == '4급'?'selected="selected"':"" }>4급</option>
+					<option value="5급" ${preference.disoderselectArr[0] == '5급'?'selected="selected"':"" }>5급</option>
+					<option value="6급" ${preference.disoderselectArr[0] == '6급'?'selected="selected"':"" }>6급</option>						
 				</select>
 			</div>
 			<div id="prefermilitary" class="input-group-prepend">
 				병역 : 
 				<select name="militaryselect" id="militaryselect" class="custom-select">
 					<option value="" disabled selected>병역</option>
-					<option value="군필">군필</option>
-					<option value="미필">미필</option>
-					<option value="면제">면제</option>
-					<option value="해당없음">해당없음</option>
+					<option value="군필" ${preference.militaryselectArr[0] == '군필'?'selected="selected"':"" }>군필</option>
+					<option value="미필" ${preference.militaryselectArr[0] == '미필'?'selected="selected"':"" }>미필</option>
+					<option value="면제" ${preference.militaryselectArr[0] == '면제'?'selected="selected"':"" }>면제</option>
+					<option value="해당없음" ${preference.militaryselectArr[0] == '해당없음'?'selected="selected"':"" }>해당없음</option>
 				</select>
 			</div>
 		</div>
@@ -689,17 +689,88 @@ $(document).on("change","input[name=ged]",function() {
 	}
 });
 /* 값들어온만큼 append시키기 */
-var eduStr = "${education.graduaction}";
-var eduArr = eduStr.split(',');
-for(var eduFrmcount=1;eduFrmcount<=eduArr.length-1;eduFrmcount++) {
-	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+var eduexist = "${education}";
+console.log(eduexist);
+if(eduexist != '') {
+	$("#educationTotal").show();
+	var educationcnt = "${educationcnt}";
+	var hschoolcnt = "${hschoolcnt}";
+	var uschoolcnt = "${uschoolcnt}";
+	var gschoolcnt = "${gschoolcnt}";
+	var nhighArr = new Array();
+	<c:forEach items="${education.nonHigh}" var="nhigh" varStatus="nh">
+		nhighArr['${nh.index}'] = '${nhigh}';
+	</c:forEach>
+	var schoolgraArr = new Array();
+	<c:forEach items="${education.graduactionArr}" var="sgraducation" varStatus="sg">
+		schoolgraArr['${sg.index}'] = '${sgraducation}';
+	</c:forEach>
+	var schoolnameArr = new Array();
+	<c:forEach items="${education.schoolnameArr}" var="sname" varStatus="sn">
+		schoolnameArr['${sn.index}'] = '${sname}';
+	</c:forEach>	
+	var hgradudateArr = new Array();
+	<c:forEach items="${education.highgraduationdateArr}" var="hgradudate" varStatus="hgd">
+		hgradudateArr['${hgd.index}'] = '${hgradudate}';
+	</c:forEach>	
+	var hgradustateArr = new Array();
+	<c:forEach items="${education.highgraduationstateArr}" var="hgradustate" varStatus="hgs">
+		hgradustateArr['${hgs.index}'] = '${hgradustate}';
+	</c:forEach>	
+	var adateArr = new Array();
+	<c:forEach items="${education.admissiondateArr}" var="adate" varStatus="ad">
+		adateArr['${ad.index}'] = '${adate}';
+	</c:forEach>	
+	var gdateArr = new Array();
+	<c:forEach items="${education.graduationdateArr}" var="gdate" varStatus="gd">
+		gdateArr['${gd.index}'] = '${gdate}';
+	</c:forEach>	
+	var gstateArr = new Array();
+	<c:forEach items="${education.graducationstateArr}" var="gstate" varStatus="gs">
+		gstateArr['${gs.index}'] = '${gstate}';
+	</c:forEach>	
+	var tArr = new Array();
+	<c:forEach items="${education.transfer}" var="tfer" varStatus="tf">
+		tArr['${tf.index}'] = '${tfer}';
+	</c:forEach>	
+	var majorArr = new Array();
+	<c:forEach items="${education.majorArr}" var="major" varStatus="mn">
+		majorArr['${mn.index}'] = '${major}';
+	</c:forEach>	
+	var scoreArr = new Array();
+	<c:forEach items="${education.scoreArr}" var="score" varStatus="sc">
+		scoreArr['${sc.index}'] = '${score}';
+	</c:forEach>	
+	var tscoreArr = new Array();
+	<c:forEach items="${education.totalscoreArr}" var="tscore" varStatus="tsc">
+		tscoreArr['${tsc.index}'] = '${tscore}';
+	</c:forEach>	
+	var dArr = new Array();
+	<c:forEach items="${education.degreeArr}" var="degree" varStatus="dg">
+		dArr['${dg.index}'] = '${degree}';
+	</c:forEach>	
+	var odselArr = new Array();
+	<c:forEach items="${education.otherdepartselArr}" var="odsel" varStatus="ods">
+		odselArr['${ods.index}'] = '${odsel}';
+	</c:forEach>	
+	var smajorArr = new Array();
+	<c:forEach items="${education.secmajorArr}" var="omajor" varStatus="omn">
+		smajorArr['${omn.index}'] = '${omajor}';
+	</c:forEach>	
+	var odtextArr = new Array();
+	<c:forEach items="${education.otherdeparttextArr}" var="odtext" varStatus="odt">
+		odtextArr['${odt.index}'] = '${odtext}';
+	</c:forEach>	
+}
+for(var eduFrmcount=1;eduFrmcount<educationcnt;eduFrmcount++) {
+	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" name="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="고등학교">고등학교</option><option value="대학교2년제">대학(2,3년)</option><option value="대학교4년제">대학교(4년)</option><option value="대학원">대학원</option></select></li>';
 	html += '<li><input type="text" name="schoolname" id="schoolname'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li><div name="searchHidden" id="searchHidden'+eduFrmcount+'"></div></ul></div>';
 	html += '<div id="formEducation3" class="input-group-prepend"><ul><li><input type="text" name="admissiondate" id="admissiondate'+eduFrmcount+'" class="form-control" placeholder="입학년월"/></li>';
 	html += '<li><input type="text" name="graduationdate" id="graduationdate'+eduFrmcount+'" class="form-control" placeholder="졸업년월"/></li>';
 	html += '<li><select name="graducationstate" id="graducationstate'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option><option value="졸업">졸업</option>';
-	html += '<option value="수료">수료</option>	<option value="졸업예정">졸업예정</option><option value="휴학">휴학</option><option value="중퇴">중퇴</option></select></li>';
+	html += '<option value="수료">수료</option><option value="졸업예정">졸업예정</option><option value="휴학">휴학</option><option value="중퇴">중퇴</option></select></li>';
 	html += '<li><input type="checkbox" name="transfer" id="transfer'+eduFrmcount+'" aria-label="Checkbox for following text input" value="편입"/>&nbsp;편입</li></ul></div>';
 	html += '<div id="formEducation4" class="input-group-prepend"><ul><li><input type="text" class="form-control" name="major" id="major'+eduFrmcount+'" placeholder="전공명"/></li>';
 	html += '<li><input type="text" class="form-control" name="score" id="score'+eduFrmcount+'" placeholder="학점"/></li>	<li><select name="totalscore" id="totalscore'+eduFrmcount+'" class="custom-select">';
@@ -715,17 +786,176 @@ for(var eduFrmcount=1;eduFrmcount<=eduArr.length-1;eduFrmcount++) {
 	html += '<li><input type="checkbox" name="ged" id="ged'+eduFrmcount+'" aria-label="Checkbox for following text input" value="ged"/>&nbsp;대입검정고시</li></ul></div></div>';
 	$('#educationWrap').append(html);
 };
-
+/* if문 view처리 노가다 */
+if(schoolgraArr[0] == '고등학교'){
+		$("#formEducation2").show();
+		$("#highgraduationdate0").show();
+		$("#highgraduationstate0").show();
+		$("#ged0").show();
+		$("#totalscore0").val('');
+		$("#degree0").val('');
+		$("#graducationstate0").val('');
+		$("#otherdepartsel0").val('');
+		$("#transfer0").val('');
+}
+else if(schoolgraArr[0] == '대학교2년제' || schoolgraArr[0] == '대학교4년제') {
+		$("#formEducation3").show();
+		$("#formEducation4").show();
+		$("#formEducation5").show();
+		$("#admissiondate0").show();
+		$("#graduationdate0").show();
+		$("#graducationstate0").show();
+		$("#transfer0").show();
+		$("#major0").show();
+		$("#score0").show();
+		$("#totalscore0").show();
+		$("#otherDepartment0").show();
+		$("#senierProject0").show();
+		$("#degree0").val('');
+		$("#highgraduationstate0").val('');
+		$("#formEducation5 ul").show();
+}
+else if(schoolgraArr[0] == '대학원') {
+		$("#formEducation3").show();
+		$("#formEducation4").show();
+		$("#formEducation5").show();
+		$("#admissiondate0").show();
+		$("#graduationdate0").show();
+		$("#graducationstate0").show();
+		$("#transfer0").show();
+		$("#major0").show();
+		$("#score0").show();
+		$("#totalscore0").show();
+		$("#degree0").show();
+		$("#otherDepartment0").show();
+		$("#senierProject0").show();
+		$("#highgraduationstate0").val('');
+		$("#formEducation5 ul").show();
+}
+else {
+	
+}
+if(nhighArr[0] == '고졸') {
+	console.log("왔냐?");
+	$('#educationWrap').hide();
+}
+var hcnt = 0;
+var ucnt = 0;
+var gcnt = 0;
+var tscoreval0 = $("#totalscore0").val();
+var gstateval0 = $("#graducationstate0").val();
+var degreeval0 = $("#degree0").val();
+var odselval0 = $("#otherdepartsel0").val();
+var transval0 = $("#transfer0").val();
+var hgstateval0 = $("#highgraduationstate0").val();
+for(var eduFrmcount = 1;eduFrmcount<educationcnt;eduFrmcount++){	
+	var placecheck2 = $("#graduaction"+eduFrmcount).parent().parent().parent().parent().find("#formEducation2");
+	var placecheck3 = $("#graduaction"+eduFrmcount).parent().parent().parent().parent().find("#formEducation3");
+	var placecheck4 = $("#graduaction"+eduFrmcount).parent().parent().parent().parent().find("#formEducation4");
+	var placecheck5 = $("#graduaction"+eduFrmcount).parent().parent().parent().parent().find("#formEducation5");
+	var transfercheck = $("#transfer"+eduFrmcount).val();
+	$("#graduaction"+eduFrmcount).val(schoolgraArr[eduFrmcount]);
+	$("#schoolname"+eduFrmcount).val(schoolnameArr[eduFrmcount]);
+	if(schoolgraArr[eduFrmcount] == '고등학교') {
+		placecheck2.show();
+		$("#highgraduationdate"+eduFrmcount).val(hgradudateArr[eduFrmcount]);
+		if(hgstateval0 != null) {
+			++hcnt;
+		}
+		$("#highgraduationstate"+eduFrmcount).val(hgradustateArr[hcnt]);
+	}
+	else if(schoolgraArr[eduFrmcount] == '대학교2년제' || schoolgraArr[eduFrmcount] == '대학교4년제') {
+		console.log("나대학");
+		console.log(eduFrmcount);
+		$("#admissiondate"+eduFrmcount).val(adateArr[eduFrmcount]);
+		$("#graduationdate"+eduFrmcount).val(gdateArr[eduFrmcount]);
+		$("#major"+eduFrmcount).val(majorArr[eduFrmcount]);
+		$("#score"+eduFrmcount).val(scoreArr[eduFrmcount]);
+		$("#secmajor"+eduFrmcount).val(smajorArr[eduFrmcount]);
+		$("#otherdeparttext"+eduFrmcount).val(odtextArr[eduFrmcount]);
+		if(tscoreval0 != null && gstateval0 != null && odselval0 != null && transfer0 != null) {
+			++ucnt;
+		}
+		$("#totalscore"+eduFrmcount).val(tscoreArr[ucnt]);
+		$("#graducationstate"+eduFrmcount).val(gstateArr[ucnt]);
+		$("#otherdepartsel"+eduFrmcount).val(odselArr[ucnt]);
+		$("#transfer"+eduFrmcount).val(tArr[ucnt]);
+		if(transfercheck == '편입') {
+			$("#transfer"+eduFrmcount).prop("checked",true);			
+		}
+		ucnt++;
+		var odtextexist = $("#otherdeparttext"+eduFrmcount).val();
+		var odselexist = $("#otherdepartsel"+eduFrmcount).val();
+		var smajorexist = $("#secmajor"+eduFrmcount).val();
+		var odtextpcheck = $("#otherdeparttext"+eduFrmcount).parent().parent();	
+		var odselcheck = $("#otherdepartsel"+eduFrmcount).parent().parent();	
+		placecheck3.show();
+		placecheck4.show();
+		placecheck5.show();
+		if(odtextexist != '') {
+			console.log("야왔냐?");
+			odtextpcheck.show();
+		}
+		if(odselexist != '' || smajorexist != '') {
+			console.log("여기도왔냐?");
+			odselcheck.show();
+		}
+		$("#degree"+eduFrmcount).hide();
+	}
+	else {
+		console.log("나대학원");
+		console.log(eduFrmcount);
+		$("#admissiondate"+eduFrmcount).val(adateArr[eduFrmcount]);
+		$("#graduationdate"+eduFrmcount).val(gdateArr[eduFrmcount]);
+		$("#major"+eduFrmcount).val(majorArr[eduFrmcount]);
+		$("#score"+eduFrmcount).val(scoreArr[eduFrmcount]);
+		$("#secmajor"+eduFrmcount).val(smajorArr[eduFrmcount]);
+		$("#otherdeparttext"+eduFrmcount).val(odtextArr[eduFrmcount]);
+		if(tscoreval0 != null && gstateval0 != null && odselval0 != null && transfer0 != null) {
+			++ucnt;
+		}
+		$("#totalscore"+eduFrmcount).val(tscoreArr[ucnt]);
+		$("#graducationstate"+eduFrmcount).val(gstateArr[ucnt]);
+		$("#otherdepartsel"+eduFrmcount).val(odselArr[ucnt]);
+		$("#transfer"+eduFrmcount).val(tArr[ucnt]);
+		if(transfercheck == '편입') {
+			$("#transfer"+eduFrmcount).prop("checked",true);			
+		}
+		ucnt++;
+		if(degreeval0 != null) {
+			++gcnt;
+		}
+		$("#degree"+eduFrmcount).val(dArr[gcnt]);
+		gcnt++;
+		var odtextexist = $("#otherdeparttext"+eduFrmcount).val();
+		var odselexist = $("#otherdepartsel"+eduFrmcount).val();
+		var smajorexist = $("#secmajor"+eduFrmcount).val();
+		var odtextpcheck = $("#otherdeparttext"+eduFrmcount).parent().parent();	
+		var odselcheck = $("#otherdepartsel"+eduFrmcount).parent().parent();	
+		placecheck3.show();
+		placecheck4.show();
+		placecheck5.show();
+		if(odtextexist != '') {
+			console.log("야왔냐?");
+			odtextpcheck.show();
+		}
+		if(odselexist != '' || smajorexist != '') {
+			console.log("여기도왔냐?");
+			odselcheck.show();
+		}
+	}
+}
+var eduFrmcount = educationcnt;
 $("#addEducation").on("click",function() {
 	var eduFrmcount = eduArr.length;
-	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" name="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="고등학교">고등학교</option><option value="대학교2년제">대학(2,3년)</option><option value="대학교4년제">대학교(4년)</option><option value="대학원">대학원</option></select></li>';
 	html += '<li><input type="text" name="schoolname" id="schoolname'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li><div name="searchHidden" id="searchHidden'+eduFrmcount+'"></div></ul></div>';
 	html += '<div id="formEducation3" class="input-group-prepend"><ul><li><input type="text" name="admissiondate" id="admissiondate'+eduFrmcount+'" class="form-control" placeholder="입학년월"/></li>';
 	html += '<li><input type="text" name="graduationdate" id="graduationdate'+eduFrmcount+'" class="form-control" placeholder="졸업년월"/></li>';
 	html += '<li><select name="graducationstate" id="graducationstate'+eduFrmcount+'" class="custom-select"><option value="" disabled selected>졸업상태</option><option value="졸업">졸업</option>';
-	html += '<option value="수료">수료</option>	<option value="졸업예정">졸업예정</option><option value="휴학">휴학</option><option value="중퇴">중퇴</option></select></li>';
+	html += '<option value="수료">수료</option><option value="졸업예정">졸업예정</option><option value="휴학">휴학</option><option value="중퇴">중퇴</option></select></li>';
 	html += '<li><input type="checkbox" name="transfer" id="transfer'+eduFrmcount+'" aria-label="Checkbox for following text input" value="편입"/>&nbsp;편입</li></ul></div>';
 	html += '<div id="formEducation4" class="input-group-prepend"><ul><li><input type="text" class="form-control" name="major" id="major'+eduFrmcount+'" placeholder="전공명"/></li>';
 	html += '<li><input type="text" class="form-control" name="score" id="score'+eduFrmcount+'" placeholder="학점"/></li>	<li><select name="totalscore" id="totalscore'+eduFrmcount+'" class="custom-select">';
@@ -743,11 +973,9 @@ $("#addEducation").on("click",function() {
 	eduFrmcount++;
 });
 $(document).on("click","button[name=otherDepartment]",function() {
-	console.log("좀오지?");
 	$(this).parent().children().eq(2).toggle();
 });
 $(document).on("click","button[name=senierProject]",function() {
-	console.log("좀와주세요");
 	$(this).parent().children().eq(3).toggle();
 });
 $(document).on("click", "textarea[name=otherdeparttext]", function() {
@@ -1048,7 +1276,6 @@ $("#addAward").on("click",function() {
 	html += '<div id="formAward2" class="input-group-prepend"><ul><li>수여내용 :</li><li><textarea name="awardtextarea" class="form-control" aria-label="With textarea" id="awardtextarea'+AwardFrmcount+'" placeholder="수여 내용 및 결과를 자세히 입력해주세요."></textarea></li></ul></div></div>';
 	$('#awardWrap').append(html);
 	AwardFrmcount++;
-	console.log(AwardFrmcount);
 });
 $(document).on("click", "textarea[name=awardtextarea]", function() {
 	$(this).css("height","100px");
@@ -1103,19 +1330,142 @@ $(document).on("mouseout", "textarea[name=overseastextarea]", function() {
 	$(this).css("height","75px");
 });
 /* 어학 */
+var languageexist = "${language}";
+if(languageexist != '') {
+	$("#languageTotal").show();
+	var languagecnt = "${languagecnt}";
+	var ablitycnt = "${ablitycnt}";
+	var examcnt = "${examcnt}";
+	var landiArr = new Array();
+	<c:forEach items="${language.languagedivisionArr}" var="ldivision" varStatus="ld">
+		landiArr['${ld.index}'] = '${ldivision}';
+	</c:forEach>
+	var lanameArr = new Array();
+	<c:forEach items="${language.languagenameArr}" var="lname" varStatus="ln">
+		lanameArr['${ln.index}'] = '${lname}';
+	</c:forEach>
+	var ltextArr = new Array();
+	<c:forEach items="${language.selftextArr}" var="ltext" varStatus="lte">
+		ltextArr['${lte.index}'] = '${ltext}';
+	</c:forEach>
+	var spdiArr = new Array();
+	<c:forEach items="${language.speakingdivisionArr}" var="sdivision" varStatus="sd">
+		spdiArr['${sd.index}'] = '${sdivision}';
+	</c:forEach>
+	var enameArr = new Array();
+	<c:forEach items="${language.examnameArr}" var="ename" varStatus="en">
+		enameArr['${en.index}'] = '${ename}';
+	</c:forEach>
+	var sexamArr = new Array();
+	<c:forEach items="${language.selfexamArr}" var="sexam" varStatus="se">
+		sexamArr['${se.index}'] = '${sexam}';
+	</c:forEach>
+	var escoreArr = new Array();
+	<c:forEach items="${language.examscoreArr}" var="escore" varStatus="es">
+		escoreArr['${es.index}'] = '${escore}';
+	</c:forEach>
+	var edateArr = new Array();
+	<c:forEach items="${language.examdateArr}" var="edate" varStatus="ed">
+		edateArr['${ed.index}'] = '${edate}';
+	</c:forEach>
+	for(var langFrmcount=1;langFrmcount<languagecnt;langFrmcount++) {
+		var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" name="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+		html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select">';
+		html += '<option value="" disabled selected>구분</option><option value="회화능력">회화능력</option>';
+		html += '<option value="공인시험">공인시험</option></select>';
+		html += '<select name="languagename" id="languagename'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
+		html += '<option value="영어">영어</option><option value="일본어">일본어</option><option value="중국어">중국어</option><option value="직접입력">직접입력</option></select>';
+		html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/><select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select">';
+		html += '<option value="" disabled selected>회화능력</option><option value="일상회화가능">일상회화 가능</option><option value="비즈니스회화가능">비즈니스 회화가능</option>';
+		html += '<option value="원어민수준">원어민 수준</option></select></div>';
+		html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select">';
+		html += '<option value="" disabled selected>공인시험</option><option value="기타">기타</option><option value="직접입력">직접입력</option></select>';
+		html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/><input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
+		html += '<input type="text" name="examdate" id="examdate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
+		$('#languageWrap').append(html);
+	}
+};
+var acnt = 0;
+var ecnt = 0;
+for(var langFrmcount = 1;langFrmcount<languagecnt;langFrmcount++) {
+	if(landiArr[langFrmcount] == '회화능력') {
+		$("#languagedivision"+langFrmcount).val(landiArr[langFrmcount]);
+		$("#languagename"+langFrmcount).val(lanameArr[langFrmcount]);
+		if(landiArr[0] =='회화능력') {
+			if(ablitycnt <=languagecnt) {
+				++acnt;
+			}			
+			$("#speakingdivision"+langFrmcount).val(spdiArr[acnt]);	
+		}
+		else {
+			$("#speakingdivision"+langFrmcount).val(spdiArr[acnt]);	
+			acnt++;
+		}
+	}
+	if(lanameArr[langFrmcount] == '직접입력') {
+		$("#selftext"+langFrmcount).show();
+		$("#selftext"+langFrmcount).val(ltextArr[langFrmcount]);
+	}
+	if(landiArr[langFrmcount] == '공인시험') {
+		if(enameArr[ecnt] == '직접입력') {
+			$("#selfexam"+langFrmcount).show();
+			$("#selfexam"+langFrmcount).val(sexamArr[langFrmcount]);
+		}
+		$("#languagedivision"+langFrmcount).val(landiArr[langFrmcount]);
+		$("#languagename"+langFrmcount).val(lanameArr[langFrmcount]);
+		$("#examscore"+langFrmcount).val(escoreArr[langFrmcount]);
+		$("#examdate"+langFrmcount).val(edateArr[langFrmcount]);
+		$("#speakingdivision"+langFrmcount).hide();
+		$("#formLanguage2").show();
+		$("#examname"+langFrmcount).show();
+		$("#examscore"+langFrmcount).show();
+		$("#examdate"+langFrmcount).show();
+		if(landiArr[0] == '공인시험') {
+			if(examcnt <=languagecnt) {
+				++ecnt;
+			}
+			$("#examname"+langFrmcount).val(enameArr[ecnt]);
+		}
+		else {
+			$("#examname"+langFrmcount).val(enameArr[ecnt]);
+			ecnt++;
+		}
+	}	
+}
+/* 어학 view뿌리기 if문 */
+if(landiArr[0] == '회화능력') {
+	if(lanameArr[0] == '직접입력') {
+		$("#selftext0").show();
+	}
+}
+if(landiArr[0] == '공인시험') {
+	$("#formLanguage2").show();
+	$("#speakingdivision0").hide();
+	$("#examname0").show();
+	$("#examscore0").show();
+	$("#examdate0").show();
+	if(lanameArr[0] == '직접입력') {
+		$("#selftext0").show();
+	}
+	if(enameArr[0] == '직접입력') {
+		$("#selfexam0").show();
+	}
+}
+
+var langFrmcount = languagecnt;
 $("#addLanguage").on("click",function() {
-	var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" id="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
-	html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select"><option value="" disabled selected>구분</option>';
-	html += '<option value="회화능력">회화능력</option><option value="공인시험">공인시험</option></select>';
+	var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" name="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+	html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>구분</option><option value="회화능력">회화능력</option>';
+	html += '<option value="공인시험">공인시험</option></select>';
 	html += '<select name="languagename" id="languagename'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
 	html += '<option value="영어">영어</option><option value="일본어">일본어</option><option value="중국어">중국어</option><option value="직접입력">직접입력</option></select>';
-	html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/>';
-	html += '<select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select"><option value="" disabled selected>회화능력</option><option value="일산회화가능">일상회화 가능</option>';
-	html += '<option value="비즈니스회화가능">비즈니스 회화가능</option><option value="원어민수준">원어민 수준</option></select></div>';
-	html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select"><option value="" disabled selected>공인시험</option>';
-	html += '<option value="기타">기타</option><option value="직접입력">직접입력</option></select>';
-	html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/>';
-	html += '<input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
+	html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/><select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>회화능력</option><option value="일상회화가능">일상회화 가능</option><option value="비즈니스회화가능">비즈니스 회화가능</option>';
+	html += '<option value="원어민수준">원어민 수준</option></select></div>';
+	html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>공인시험</option><option value="기타">기타</option><option value="직접입력">직접입력</option></select>';
+	html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/><input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
 	html += '<input type="text" name="examdate" id="examdate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
 	$('#languageWrap').append(html);
 	langFrmcount++;
@@ -1165,10 +1515,8 @@ $(document).on("change", ".language-select" , function(){
 var portexist = "${portFolio}";
 var portexisturl = "${portFolio.url}";
 var portexistrename = "${portFoliorename}";
-console.log(portexist);
-console.log(portexisturl);
 
-if(portexist != '') {
+if(portexisturl != '' || portexistrename != '') {
 	$("#potfolioTotal").show();
 	if(portexisturl !='') {
 		var html = '<ul><li><select name="potselect" class="custom-select"><option value="" disabled selected>구분</option>';
@@ -1207,6 +1555,20 @@ $("#addFile").on("click",function() {
 	fotFilecount++;
 });
 /* 취업우대 */
+var preferexist = "${preference}";
+if(preferexist != '') {
+	$("#preferenceTotal").show();
+	var preferArr = new Array();
+	<c:forEach items="${preference.prefercheck}" var="prefer" varStatus="p">
+		preferArr['${p.index}'] = '${prefer}';
+	</c:forEach>
+	if(preferArr[3] == '장애'){
+		$('#preferdisorder').show();
+	}
+	if(preferArr[4] == '병역'){
+		$('#prefermilitary').show();
+	}
+}
 $("#disorder").change(function() {
 	if($(this).prop('checked')) {
 		$('#preferdisorder').show();
@@ -1256,12 +1618,10 @@ $("#addLetter").on("click",function() {
 /* 항목삭제버튼바로 윗단계 */
 function deleteone(event) {
 	var clicked = event.currentTarget.parentElement;//button을 가리키게 함
-	console.log(clicked);
 	clicked.remove();
 };
 function deleteTwice(event) {
 	var clicked = event.currentTarget.parentElement.parentElement;//button을 가리키게 함
-	console.log(clicked);
 	clicked.remove();
 }
 /* 필수사항체크 */

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.ithrer.board.model.vo.AnonyBoard;
 import com.spring.ithrer.board.model.vo.PassBoard;
+import com.spring.ithrer.board.model.vo.PassBoardComment;
 
 @Repository
 public class BoardDaoImpl implements BoardDao{
@@ -159,6 +160,16 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public int passBoardUpdate(PassBoard passBoard) {
 		return sqlSession.update("passboard.passBoardUpdate", passBoard);
+	}
+
+	@Override
+	public int passBoardAddComment(PassBoardComment comment) {
+		return sqlSession.insert("passboard.passBoardAddComment", comment);
+	}
+
+	@Override
+	public List<PassBoardComment> passBoardCommentList(int passBoardNo) {
+		return sqlSession.selectList("passboard.passBoardCommentList", passBoardNo);
 	}
 	
 	

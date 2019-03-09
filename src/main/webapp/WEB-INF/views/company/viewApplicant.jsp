@@ -50,7 +50,12 @@ div#letter-box{
 		<div id="applicant-info-container" class="container mt-3 shadow rounded border border-primary">
 			<div class="row mt-4">
 				<div class="col-sm-4 text-center my-auto">
-					<img src="${pageContext.request.contextPath }/resources/images/avatar.jpg" alt="temp image" width="150px"/>
+					<c:if test="${empty profile.photo }">
+					<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="150px" />
+					</c:if>
+					<c:if test="${not empty profile.photo }">
+					<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${profile.photo }&directory=memberPhoto" alt="회원사진" width="150px"/>
+					</c:if>
 				</div>
 				<div class="col">
 					<div class="row">
