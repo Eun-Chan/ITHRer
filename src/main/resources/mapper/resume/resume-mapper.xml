@@ -46,8 +46,8 @@
       values(#{preference.prefercheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{preference.disoderselect},#{preference.militaryselect},#{memberIdHide})
    </insert>
    <insert id="insertProfile" parameterType="hashmap">
-      insert into profile(userresumetitle,name,birth,gender,email,phone,address,member_id)
-      values(#{profile.userresumetitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{memberIdHide})
+      insert into profile(userresumetitle,name,birth,gender,email,phone,address,photo,member_id)
+      values(#{profile.userresumetitle},#{profile.name},#{profile.birth},#{profile.gender},#{profile.email},#{profile.phone},#{profile.address},#{profile.photo},#{memberIdHide})
    </insert>
    <insert id="insertEducation" parameterType="hashmap">
       insert into education(nonhigh,graduaction,schoolName,highgraduationDate,highgraduationState,admissionDate,graduationDate,graducationstate,transfer,major,score,totalscore,degree
@@ -161,10 +161,7 @@
 	</resultMap>
 	
    <select id="profileView" resultType="profile">
-      select *, 
-		(to_char(sysdate,'yyyy')-substr(birth,1,4))+1 age,
-		(select count(*) from favorites where comp_id=#{compId} and member_id=#{memberId} and select_no=1) count
-	  from profile where member_id = #{memberId}
+      select * from profile where member_id = #{memberId}
    </select>
 	
 	<select id="educationView" resultMap="educationViewMap" parameterType="string">

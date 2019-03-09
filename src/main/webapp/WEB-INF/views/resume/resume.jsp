@@ -24,6 +24,10 @@
 <div id="profileTotal" class="wrap-container">
 	<h3>인적사항</h3>
 	<div id="profileWrap">
+		<div>
+			<input type="file" id="memberPhoto"  />
+			<input type="hidden" name="photo" />
+		</div>
 		<div id="formProfile1" class="input-group-prepend">
 			<input type="text" id="name" name="name" class="form-control" placeholder="이름"/>
 			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)"/>
@@ -538,6 +542,38 @@ var fotFrmcount = 0;
 var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
+
+/* 회원 사진 넣기 */
+$("input#memberPhoto").on("change",function(){
+	var $this = $(this);
+	var fileName = $(this).prop("files")[0].name;
+	
+	var formData = new FormData();
+	var directory = 'images/memberPhoto';
+	
+	formData.append("upFile",$this[0].files[0]);
+	formData.append("directory",directory);
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/uploadMemberPhoto.ithrer",
+		contentType: false,
+		processData: false,
+		data: formData, 
+		type: "post",
+		success: function(data){
+			console.log(data);
+			
+			html = '<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName='+data+'&directory=memberPhoto" alt="회원사진" width="150px"/>';
+			$("input:hidden[name=photo]").val(data);
+			$this.parent().append(html);
+			
+		},
+		error: function(){
+			console.log("회원사진 S3 업로드 ajax error!");
+		}
+	});
+});
+
 /* 영어 막기*/
 function validateText(event) {
 	var code = event.keyCode;
@@ -843,22 +879,23 @@ $(document).on("mouseout", "textarea[name=overseastextarea]", function() {
 	$(this).css("height","75px");
 });
 /* 어학 */
+/* 어학 */
 $("#addLanguage").on("click",function() {
-	var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" id="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
-	html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select"><option value="" disabled selected>구분</option>';
-	html += '<option value="speakingAbility">회화능력</option><option value="standardExam">공인시험</option></select>';
-	html += '<select name="languagename" id="languagename'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
-	html += '<option value="english">영어</option><option value="japanese">일본어</option><option value="chinese">중국어</option><option value="selfSelect">직접입력</option></select>';
-	html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/>';
-	html += '<select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select"><option value="" disabled selected>회화능력</option><option value="good">일상회화 가능</option>';
-	html += '<option value="better">비즈니스 회화가능</option><option value="best">원어민 수준</option></select></div>';
-	html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select"><option value="" disabled selected>공인시험</option>';
-	html += '<option value="etc">기타</option><option value="selfExam">직접입력</option></select>';
-	html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/>';
-	html += '<input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
-	html += '<input type="text" name="examdate" id="examdate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
-	$('#languageWrap').append(html);
-	langFrmcount++;
+   var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" name="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+   html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select">';
+   html += '<option value="" disabled selected>구분</option><option value="회화능력">회화능력</option>';
+   html += '<option value="공인시험">공인시험</option></select>';
+   html += '<select name="languagename" id="languagename'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
+   html += '<option value="영어">영어</option><option value="일본어">일본어</option><option value="중국어">중국어</option><option value="직접입력">직접입력</option></select>';
+   html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/><select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select">';
+   html += '<option value="" disabled selected>회화능력</option><option value="일상회화가능">일상회화 가능</option><option value="비즈니스회화가능">비즈니스 회화가능</option>';
+   html += '<option value="원어민수준">원어민 수준</option></select></div>';
+   html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select">';
+   html += '<option value="" disabled selected>공인시험</option><option value="기타">기타</option><option value="직접입력">직접입력</option></select>';
+   html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/><input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
+   html += '<input type="text" name="examdate" id="examdate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
+   $('#languageWrap').append(html);
+   langFrmcount++;
 });
 $(document).on("change","select[name=languagedivision]",function(){
 	var state = $(this).val();

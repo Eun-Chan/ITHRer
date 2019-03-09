@@ -90,8 +90,12 @@ public interface CompanyDao {
 
 	int updateCompanyLogo(Map<String, String> map);
 
-	List<Member> selectAppList(int recruitmentNo);
+	List<Profile> selectAppList(int recruitmentNo);
 	
 	List<Area> selectLocationcodeList(int param);
+
+	Recruitment joinRecruitment(int no);
+
+	void updateCARead(Map<String, Object> map);
 
 }

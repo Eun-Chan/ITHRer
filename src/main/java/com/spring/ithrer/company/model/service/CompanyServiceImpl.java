@@ -398,7 +398,7 @@ public class CompanyServiceImpl implements CompanyService {
 	}
 
 	@Override
-	public List<Member> selectAppList(int recruitmentNo) {
+	public List<Profile> selectAppList(int recruitmentNo) {
 		return companyDao.selectAppList(recruitmentNo);
 	}
 
@@ -433,6 +433,20 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override
 	public List<Area> selectLocationcodeList(int param) {
 		return companyDao.selectLocationcodeList(param);
+	}
+
+	/**
+	 * @박광준
+	 * 채용공고 수정버튼 클릭 시 view 페이지에 필요한 정보를 로드
+	 */
+	@Override
+	public Recruitment joinRecruitment(int no) {
+		return companyDao.joinRecruitment(no);
+	}
+	
+	@Override
+	public void updateCARead(Map<String, Object> map) {
+		companyDao.updateCARead(map);
 	}
 
 }

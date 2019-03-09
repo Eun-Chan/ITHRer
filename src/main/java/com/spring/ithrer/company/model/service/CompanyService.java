@@ -71,7 +71,7 @@ public interface CompanyService {
 
 	List<Recruitment> selectRcrtList(String compId);
 
-	List<Member> selectAppList(int recruitmentNo);
+	List<Profile> selectAppList(int recruitmentNo);
 
 	Recruitment selectRecruitmentOne(int recruitmentNo);
 
@@ -84,5 +84,9 @@ public interface CompanyService {
 	int updateCompanyLogo(String path, String compId);
 	
 	List<Area> selectLocationcodeList(int param);
+
+	Recruitment joinRecruitment(int no);
+
+	void updateCARead(Map<String, Object> map);
 
 }

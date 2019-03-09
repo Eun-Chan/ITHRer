@@ -485,7 +485,7 @@ public class IndexController {
    
    //우리 채용정보 
    @GetMapping("/index/ithrerNotice.ithrer")
-   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav , HttpServletRequest req,@RequestParam("compId") String compId) {
+   public ModelAndView ithrerNoticeDetail(@RequestParam("no") int recruitmentNo,ModelAndView mav , HttpServletRequest req,@RequestParam(name="compId", defaultValue="") String compId) {
 	   String memberId = "";
 		   if(req.getSession().getAttribute("member")!=null) {
 			  Member member = (Member) req.getSession().getAttribute("member");

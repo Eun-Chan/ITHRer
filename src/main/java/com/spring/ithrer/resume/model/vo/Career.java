@@ -35,4 +35,7 @@ public class Career implements Serializable{
 	private String[] incomeArr;
 	private String description;
 	private String[] descriptionArr;
+	
+	// 총 경력 계산하기위한 필드
+	private String workingPeriod;
 }
