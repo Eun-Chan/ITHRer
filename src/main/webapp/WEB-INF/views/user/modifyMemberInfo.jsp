@@ -123,7 +123,7 @@ function memberLoginCheck(){
 var regEmail = /^[0-9a-zA-Z]([\-.\w]*[0-9a-zA-Z\-_+])*@([0-9a-zA-Z][\-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9}$/i;
 
 function goHome(){
-	location.href="/ithrer";
+	location.href="/ITHRer";
 }
 
 /* 핸드폰 번호 숫자만 입력만 가능 */
@@ -185,7 +185,7 @@ $("#btn-submit-modify").on("click", function(){
 
 function enterkey(){
 	if(window.event.keyCode == 13){
-		companyLoginCheck();
+		memberLoginCheck();
 	}
 }
 

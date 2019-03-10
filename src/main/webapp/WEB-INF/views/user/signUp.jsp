@@ -649,7 +649,7 @@
 	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 사업자 번호 조회 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
 	
 	function goHome(){
-		location.href="/ithrer"
+		location.href="/ITHRer"
 	}
 </script>
 </body>
