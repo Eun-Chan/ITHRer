@@ -12,8 +12,8 @@
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
 	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.ithrer" 
-	  encType="multipart/form-data">
-	 <!--   onsubmit = "return checkNull()" -->
+	  encType="multipart/form-data" onsubmit = "return checkNull()">
+	 
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" name="userresumetitle" id="userresumetitle" 

@@ -196,4 +196,98 @@
 		<result column="lettertext" property="lettertextArr" typeHandler="strArrTypeHandler"/>
 		<result column="letterarea" property="letterareaArr" typeHandler="strArrTypeHandler"/>
 	</resultMap>
+	
+	<update id="proUpdate" parameterType="hashmap">
+		update profile set birth = #{profile.birth},
+						   gender = #{profile.gender}, 
+						   email = #{profile.email}, 
+						   phone = #{profile.phone}, 
+						   address = #{profile.address}, 
+						   photo = #{profile.photo} where member_id = #{memberIdHide}
+	</update>
+	<update id="awardUpdate" parameterType="hashmap">
+		update award set awardname = #{award.awardname},
+						 awardagency = #{award.awardagency},
+						 awarddate = #{award.awarddate},
+						 awardtextarea = #{award.awardtextarea} where member_id = #{memberIdHide}
+	</update>
+	<update id="careerUpdate" parameterType="hashmap">
+		update career set corpname= #{career.corpname},
+						  department = #{career.department},
+						  hireddate = #{career.hireddate},
+						  retireddate = #{career.retireddate},
+						  buttonworking = #{career.buttonworking,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+						  jobposition = #{career.jobposition},
+						  job = #{career.job}, income = #{career.income}, 
+						  description = #{career.description} where member_id = #{memberIdHide}
+	</update>
+	<update id="certificateUpdate" parameterType="hashmap">
+		update certification set certname = #{certification.certname},
+								 certpublisher = #{certification.certpublisher},
+								 certdate = #{certification.certdate} where member_id = #{memberIdHide}
+	</update>
+	<update id="hopeworkUpdate" parameterType="hashmap">
+		update hopework set jobtype = #{hopework.jobtype},
+							wantpay = #{hopework.wantpay},
+							visitdetermine = #{hopework.visitdetermine,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+							hopeplace = #{hopework.hopeplace},
+							hopeduty = #{hopework.hopeduty} where member_id = #{memberIdHide}
+	</update>
+	<update id="internUpdate" parameterType="hashmap">
+		update intern set interndivision = #{intern.interndivision},
+						  socialinst = #{intern.socialinst},
+						  internstartdate = #{intern.internstartdate},
+						  internenddate = #{intern.internenddate},
+						  interntextarea = #{intern.interntextarea} where member_id = #{memberIdHide}
+	</update>
+	<update id="languageUpdate" parameterType="hashmap">
+		update language set languagedivision = #{language.languagedivision},
+							languagename = #{language.languagename},
+							selftext = #{language.selftext},
+							speakingdivision = #{language.speakingdivision},
+      						examname = #{language.examname},
+      						selfexam = #{language.selfexam},
+      						examscore = #{language.examscore},
+      						examdate = #{language.examdate} where member_id = #{memberIdHide}
+	</update>
+	<update id="learnUpdate" parameterType="hashmap">
+		update learn set learntitle = #{learn.learntitle},
+						 learnagency = #{learn.learnagency},
+						 learnstartdate = #{learn.learnstartdate},
+						 learnenddate = #{learn.learnenddate},
+						 learntextarea = #{learn.learntextarea} where member_id = #{memberIdHide}
+	</update>
+	<update id="overseasUpdate" parameterType="hashmap">
+		update overseas set country = #{overseas.country},
+							overseasstartdate = #{overseas.overseasstartdate},
+							overseasenddate = #{overseas.overseasenddate},
+							overseastextarea = #{overseas.overseastextarea} where member_id = #{memberIdHide}
+	</update>
+	<update id="preferenceUpdate" parameterType="hashmap">
+		update preference set prefercheck = #{preference.prefercheck,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+							  disoderselect = #{preference.disoderselect},
+							  militaryselect = #{preference.militaryselect} where member_id = #{memberIdHide}
+	</update>
+	<update id="educationUpdate" parameterType="hashmap">
+		update education set nonHigh = #{education.nonHigh,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+      						 graduaction = #{education.graduaction}, 
+      						 schoolname =#{education.schoolname},
+      						 highgraduationdate = #{education.highgraduationdate},
+      						 highgraduationstate = #{education.highgraduationstate},
+      						 admissiondate = #{education.admissiondate},
+      						 graduationdate = #{education.graduationdate},
+      						 graducationstate = #{education.graducationstate},
+      						 transfer = #{education.transfer,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},
+      						 major = #{education.major},
+      						 score = #{education.score},
+      						 totalscore = #{education.totalscore},
+      						 degree = #{education.degree},
+      						 otherdepartsel = #{education.otherdepartsel},
+      						 secmajor = #{education.secmajor},
+      						 otherdeparttext = #{education.otherdeparttext} where member_id = #{memberIdHide}
+	</update>
+	<update id="letterUpdate" parameterType="hashmap">
+		update letter set lettertext = #{letter.lettertext},
+						  letterarea = #{letter.letterarea} where member_id = #{memberIdHide}
+	</update>
 </mapper>
