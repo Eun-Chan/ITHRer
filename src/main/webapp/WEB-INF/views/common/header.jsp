@@ -105,7 +105,7 @@
 		  	</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
-				<c:if test="${(empty member and empty companyLoggedIn ) or member.memberId ne 'ithreradmin'  }">
+				<c:if test="${empty companyLoggedIn  and member.memberId ne 'ithreradmin'  }">
 					<ul class="navbar-nav mr-auto">	     
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume.ithrer">이력서</a></li>		
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
@@ -122,10 +122,11 @@
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty companyLoggedIn }">
+			 	 	<ul class="navbar-nav mr-auto">	     	
+				    </ul>
 					<ul class="navbar-nav">
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/index.ithrer?compId=${companyLoggedIn.compId }">기업홈</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${companyLoggedIn.compId }">기업정보관리</a></li>
@@ -142,7 +143,9 @@
 					  <div class="dropdown-menu">
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
-					    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
+					  	<c:if test="${not empty member.password }">
+					    	<a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
+					  	</c:if>					  
 					  </div>
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>

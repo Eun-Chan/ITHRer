@@ -100,14 +100,11 @@ public class IndexServiceImpl implements IndexService{
    }
 
    @Override
-   public List<PortFolio> selectListPortFolio(String memberId) {
-      return indexDao.selectListPortFolio(memberId);
+   public PortFolio selectOnePortFolio(String memberId) {
+      return indexDao.selectOnePortFolio(memberId);
    }
 
-   @Override
-   public int deletePortFolio(int pfNo) {
-      return indexDao.deletePortFolio(pfNo);
-   }
+
 
    @Override
    public List<Recruitment> selectListRandomRecruitment(String memberId) {
@@ -153,6 +150,16 @@ public int updateProfile(Map<String, Object> param) {
 	return indexDao.updateProfile(param);
 }
 
+@Override
+public int deletePortFolio(int pfNo) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public int deletePortFolio(String memberId) {
+	 return indexDao.deletePortFolio(memberId);
+}
 
 }
 

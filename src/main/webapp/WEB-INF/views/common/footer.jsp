@@ -16,6 +16,7 @@ footer{
 }
 </style>    
 </section>
+</div>
 	<footer>
 		<div class="row footer">
 				<div class="col-sm-4">

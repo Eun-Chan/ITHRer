@@ -51,7 +51,6 @@
 		padding: 10px 25px 15px 25px;
 		width: 100%;
     	margin: 0;
-    	cursor: pointer;
 	}
 	.faRe{
 		float: left;
@@ -130,6 +129,9 @@
 	    vertical-align: middle;
 	    padding-left: 215px;
 	}
+	.recruitmemtTitle{
+		cursor: pointer;
+	}
 </style>
 <body>
 <div class ="fareMain">
@@ -150,12 +152,12 @@
 			</div>
 			<c:if test="${not empty favorites}">
 				<c:forEach items="${favorites }" var="favorite">
-				<div class="row favoriteContent" onclick="moveDetail('${favorite.recruitmentNo}','${favorite.compId }')">
+				<div class="row favoriteContent">
 					<ul class="col-sm-2" style="padding-left:15px;">
 						<li><input type="checkbox" name="recruitmentNo" value=${favorite.recruitmentNo } class="checkbox"  /></li>
 					</ul>
 					<ul class="col-sm-8" style="text-align: center;">
-						<li><span style="font-size: 0.8em;">${favorite.recruitmentTitle }</span></li>
+						<li><span style="font-size: 0.8em;" class="recruitmemtTitle" onclick="moveDetail('${favorite.recruitmentNo}','${favorite.compId }')">${favorite.recruitmentTitle }</span></li>
 					</ul>
 					<ul class="col-sm-2" style="text-align: center;">
 						<li><span style="font-size: 0.8em;">${favorite.closingDate }</span></li>
@@ -237,10 +239,10 @@ $(".star").on("click",function(){
 		});		 
 	 }
 });
-$(".open").hover(function(){
-	   $(this).css("border","2px solid #ffb6c1");
+$(".recruitmemtTitle").hover(function(){
+	   $(this).css("color","#ffb6c1");
 		},function(){
-	   		$(this).css("border","2px solid #d6d6d6");
+	   		$(this).css("color","black");
 		}
 );
 $(".All").on("click",function(){
@@ -277,11 +279,6 @@ $(".favoriteDel").on("click",function(){
 	   });
     }
 });
-$(".favoriteContent").hover(function(){
-	   $(this).css("border","2px solid #ffb6c1");
-		},function(){
-	   		$(this).css("border","none");
-		}
-);
+
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
