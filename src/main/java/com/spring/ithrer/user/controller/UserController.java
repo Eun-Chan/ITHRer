@@ -592,7 +592,7 @@ public class UserController {
 	/*
 	 * 로그아웃 
 	 */
-	@RequestMapping("/member/memberLogout.do")
+	@RequestMapping("/member/memberLogout.ithrer")
 	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
 		
 		req.getSession().removeAttribute("member");

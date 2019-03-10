@@ -166,12 +166,11 @@ public class ResumeController {
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-	   	//String path = (String)img_path.getBody();
+	   	String path = (String)img_path.getBody();
 		PortFolio pf = new PortFolio();
 		pf.setPOriginalFileNameTest(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
-		//pf.setUrl(path);
-		pf.setUrl(portFolio.getUrl());
+		pf.setUrl(path);
 		Map<String,Object> portFolioMap = new HashMap<>();
 		portFolioMap.put("pf",pf);
 		portFolioMap.put("memberIdHide",memberIdHide);

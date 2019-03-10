@@ -542,8 +542,11 @@ public class IndexController {
    
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	   
-	   List<PortFolio> portFolio = indexService.selectListPortFolio(memberId);
-	   
+	   PortFolio portFolio = indexService.selectOnePortFolio(memberId);
+	   if(portFolio!=null) {
+		   String url = portFolio.getUrl();
+		   portFolio.setUrl(url.substring(url.indexOf("_")+1));		   
+	   }
 	   mav.addObject("pf", pf);
 	   mav.addObject("portFolio", portFolio);
 	   mav.addObject("rc", rc);
@@ -657,14 +660,14 @@ public class IndexController {
 			e1.printStackTrace();
 		}
 	   	String path = (String)img_path.getBody();
-	   	String url = path.substring(path.indexOf("_")+1);
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
+		String url = path.substring(path.indexOf("_")+1);
 		/* 되는걸로 하세요 */
 		//pf.setPOriginalFileName(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
-		pf.setUrl(url);
+		pf.setUrl(path);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberId", memberId);
 		map.put("pf", pf);
@@ -674,7 +677,7 @@ public class IndexController {
 		Gson gson = new Gson();
 		if(result == 1) {			
 			try {
-				gson.toJson(pf,res.getWriter());
+				gson.toJson(url,res.getWriter());
 			} catch (JsonIOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -740,9 +743,10 @@ public class IndexController {
    }
    //포트폴리오 삭제
    @RequestMapping("/index/deletePortFolio.ithrer")
-   public void deleteFolio(@RequestParam("pfNo") int pfNo,@RequestParam("url") String url,HttpServletResponse res) {
-	   int result = indexService.deletePortFolio(pfNo);
-	   url = "resume/portfolio"+url;
+   public void deleteFolio(@RequestParam("memberId") String memberId,HttpServletResponse res) {
+	   PortFolio portFolio = indexService.selectOnePortFolio(memberId);
+	   String url = "resume/portfolio"+portFolio.getUrl();
+	   int result = indexService.deletePortFolio(memberId);
 	   if(result>0) {
 		   S3Util s3 = new S3Util();
 		   for(int i = 0 ; i<s3.getBucketList().size(); i++) {
@@ -787,8 +791,11 @@ public class IndexController {
 	       
 	   int pageNo = startPage;
 	   
+	   //스크랩한 공고 가져오기
 	   List<Favorites> favorites = indexService.selectListFavorites(memberId,cPage,numPerPage);
+	  
 	   List<String>  categoryList = new ArrayList<String>(); 		   
+	   //스크랩한 공고를 올린 회사의 카테고리를 가져온다
 	   for(int i = 0 ; i<favorites.size(); i++) {
 		   categoryList.add(favorites.get(i).getCategory());
 		   String closingDate = favorites.get(i).getClosingDate();
@@ -808,18 +815,21 @@ public class IndexController {
 			   }
 		   }
 	   }
-	  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-     
-      String sysdate1 = format.format(sysdate);
-      Date sysdate2 = format.parse(sysdate1);
-      int endTime = 0;
-      Date date = null;
+	
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("array",categoryLists);
 	   map.put("memberId", memberId);
+	   //스크랩한 공고를 올린회사의 카테고리를 기준으로 랜덤으로 4가지 공고를 가져옴
 	   List<Recruitment> recommendationRecruitmentList = indexService.selectListRecommendRecruitmentList(map);
 	   
 	   
+	   
+	   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	     
+	      String sysdate1 = format.format(sysdate);
+	      Date sysdate2 = format.parse(sysdate1);
+	      int endTime = 0;
+	      Date date = null;
 	   for(int i = 0 ; i<recommendationRecruitmentList.size() ; i++) {
 	     	  date = format.parse(recommendationRecruitmentList.get(i).getClosingDate());    	  
 	    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
