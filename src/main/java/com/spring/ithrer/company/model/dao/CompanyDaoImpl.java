@@ -225,4 +225,9 @@ public class CompanyDaoImpl implements CompanyDao {
 		sqlSession.update("company.updateCARead",map);
 	}
 
+	@Override
+	public int updateRecruitment(Recruitment rect) {
+		return sqlSession.update("company.updateRecruitment", rect);
+	}
+
 }

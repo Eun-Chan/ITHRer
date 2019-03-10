@@ -54,5 +54,8 @@ public interface BoardDao {
 	//댓글
 	int passBoardAddComment(PassBoardComment comment);
 
-	List<PassBoardComment> passBoardCommentList(int passBoardNo);	
+	List<PassBoardComment> passBoardCommentList(int passBoardNo);
+
+	int passBoardDeleteComment(PassBoardComment comment);
+
 }

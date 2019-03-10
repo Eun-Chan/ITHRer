@@ -98,4 +98,6 @@ public interface CompanyDao {
 
 	void updateCARead(Map<String, Object> map);
 
+	int updateRecruitment(Recruitment rect);
+
 }

@@ -1211,7 +1211,7 @@ html
 			</th>
 			<td colspan="5" class="input-content" id="process-td">
 				<span>서류전형 ></span>
-				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-1">
+				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-0">
 					<option value="기능구분" selected>면접전형</option>
 					<option value="기능구분" >2차면접전형</option>
 					<option value="기능구분" >3차면접전형</option>
@@ -1220,7 +1220,7 @@ html
 					<option value="기능구분" >최종심사</option>
 				</select>
 				<span> > </span>
-				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-2">
+				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-1">
 					<option value="기능구분" >면접전형</option>
 					<option value="기능구분" >2차면접전형</option>
 					<option value="기능구분" >3차면접전형</option>
@@ -1343,7 +1343,7 @@ function recruitmentSend()
 	frm3hiddenInput();
 	frm4hiddenInput();
 	frm5hiddenInput();
-	alert("정상적으로 등록되었습니다.");
+	alert("정상적으로 수정되었습니다.");
 	$("#updateFrm").submit();
 }
 /* 기타정보 */
@@ -1395,10 +1395,10 @@ function frm4hiddenInput()
 	/* ============= 전형단계 ============= */
 	var result_process = "서류전형-";
 	var processCnt = $("#process-td select").length;
-	for(var i=1; i<=processCnt; i++)
+	for(var i=0; i<=processCnt; i++)
 	{
 		result_process += $("#processBox-"+i+" option:selected").text();
-		result_process += "-";
+		if(i != processCnt) result_process += "-";
 	}
 	result_process += "최종합격";
 	console.log("전형단계:"+result_process);
@@ -1427,14 +1427,13 @@ function frm3hiddenInput()
     result_workLocation = result_workLocation.substr(0, result_workLocation.length -1);
     
     console.log("근무지역(이름) : "+result_workLocationName);
-    console.log("근무지역(코드) : "+result_workLocation);
     $("#frm3-0").val(result_workLocationName);
 	$("#frm3-1").val(result_workLocation);
 	
 	/* ============= 인근전철역 ============= */
 	var result_subway = $("#subway-code-result-Div").text();
-	console.log("인근전철역 : "+result_subway);
-	$("#frm3-2").val(result_subway);
+	console.log("인근전철역 : "+result_subway.trim());
+	$("#frm3-2").val(result_subway.trim());
 	
 	/* ============= 급여조건 ============= */
 	var result_salaryDiv = $("#salary-select option:selected").text();
@@ -1445,8 +1444,8 @@ function frm3hiddenInput()
 	
 	/* ============= 복리후생 ============= */
 	var result_benefits = $("#input-Benefits").val();
-	console.log("복리후생:"+result_benefits);
-	$("#frm3-4").val(result_benefits);
+	console.log("복리후생:"+result_benefits.trim());
+	$("#frm3-4").val(result_benefits.trim());
 	
 	/* ============= 근무시간 ============= */
 	var result_workDay = "";
@@ -1514,7 +1513,7 @@ function frm2hiddenInput()
 	$("#frm2-8").val(result_gender);
 	
 	/* ============= 기타자격요건 ============= */
-	var result_other = $("#otherRequirement").text();
+	var result_other = $("#otherRequirement").val();
 	console.log("기타자격요건 : "+result_other);
 	$("#frm2-9").val(result_other);
 }
@@ -1597,8 +1596,8 @@ function frm1hiddenInput()
 	
 	/* ============= 모집직급/직책 ============= */
 	var result_jobGrade = $("#job-code-result-Div").text();
-	console.log("모집직급/직책 : " + result_jobGrade);
-	$("#frm1-7").val(result_jobGrade);
+	console.log("모집직급/직책 : " + result_jobGrade.trim());
+	$("#frm1-7").val(result_jobGrade.trim());
 	
 }
 //변수시작(qustntlwkr)
@@ -1658,7 +1657,7 @@ function reset_workLocation()
 /* 지역정보를 1차적으로 입력 */
 function input_workLocation()
 {
-	if(!frm3_0changed)
+	/* if(!frm3_0changed)
 	{
 		if(confirm("변경 시 입력된 정보가 초기화됩니다."))
 		{
@@ -1668,14 +1667,14 @@ function input_workLocation()
 		}	
 	}
 	else
-	{
+	{ */
 		var result_text1 = $("#location-select-1 option:selected").text();
 		var result_text2 = $("#location-select-2 option:selected").text();
 		var result_val = $("#location-select-2 option:selected").val();
 		
 		$("#workLocation-select-result").append("<li value='"+result_val+"'>"+result_text1+" "+result_text2+"</li>");
 		$("#workLocation-code-result-Div").show();	
-	}
+	//}
 }
 /* 근무지역 1차 선택 시 2차 선택지 출력 */
 $("#location-select-1").on("change", function(){
@@ -1699,6 +1698,39 @@ $("#location-select-1").on("change", function(){
 	    }
 	});
 });
+function selectLocation(result_frm3_0)
+{
+		var targetLocation = $("#location-select-1 option:selected").val();
+		$("#location-select-2 option").remove();
+		$.ajax({
+			url: "${pageContext.request.contextPath}/company/recruitmentLoadLocation.ithrer?targetLocation="+targetLocation,
+			dataType: "json",
+			Type: "get",
+			success: function(data)
+			{
+				console.log(data);
+				for(var i in data)
+				{
+					$("#location-select-2").append("<option value='"+data[i].locationCode+"'>"+data[i].locationName+"</option>");		
+				}
+				var location2_Option = $("#location-select-2 option");
+				for(var i in location2_Option)
+				{
+					if(location2_Option[i].innerText == null) break;
+					if(result_frm3_0.includes(location2_Option[i].innerText))
+					{
+						$(location2_Option[i]).attr("selected","selected");
+					}
+				}
+				input_workLocation();
+			},
+			error: function () 
+			{
+		        console.log("페이지 데이터 로드 실패_ajax");
+		    }
+		});
+
+}
 /* 컴퓨터활용능력 값이 변경 시 - 직접입력 */
 $("#computer-ability").on("change", function(){
  	var selected = $("#computer-ability option:selected").text();
@@ -1778,19 +1810,20 @@ function subwayInput()
 			frm3_2changed = true;
 			$("#subway-code-result-Div").hide();
 		}
-		else
-		{
-			var category1 = $("#train-select option:selected").text();
-			var category2 = $("#station-select option:selected").text();
-
-			var check = category1+","+category2;
-			console.log(check);
-			if($("#subway-select-result li:contains('"+check+"')").text())	alert("중복된 항목입니다.");
-			else $("#subway-select-result").append("<li style='list-style:none;'> - "+category1+","+category2+"</li>");
-			firstInputSubway = false;
-			$("#subway-code-result-Div").show();	
-		}
 	}
+	else
+	{
+		var category1 = $("#train-select option:selected").text();
+		var category2 = $("#station-select option:selected").text();
+
+		var check = category1+","+category2;
+		console.log(check);
+		if($("#subway-select-result li:contains('"+check+"')").text())	alert("중복된 항목입니다.");
+		else $("#subway-select-result").append("<li style='list-style:none;'> - "+category1+","+category2+"</li>");
+		firstInputSubway = false;
+		$("#subway-code-result-Div").show();	
+	}
+	
 }
 /* 지하철 라인 선택 시 하위 목록 출력 */
 $(document).on("change", "#train-select", function(){
@@ -1826,8 +1859,9 @@ $("#age-cut").on("click", function(){
 function preferenceResultAdd()
 {
 	var result_preference = $("#preference-select-result").text().trim();
+	console.log("result_preference"+result_preference);
 	$("#preference-select-result2").text("");
-	$("#preference-select-result2").append(result_preference);
+	$("#preference-code-result-Div").append(result_preference);
 	$("#preference-popup-background").hide();
 }
 /* 우대사항 체크 */
@@ -2088,9 +2122,9 @@ function addJob()
 /* 전형을 추가하는 함수 */
 function processAdd()
 {
-	var id_index = ($("#process-td select").length)+1;
+	var id_index = ($("#process-td select").length);
 	var html = "<span> > </span><select class='form-control formStyleChange inlineblock-select fore-select join-process' id='processBox-"+id_index+"'><option value='기능구분' >면접전형</option><option value='기능구분'>2차면접전형</option>	<option value='기능구분'>3차면접전형</option><option value='기능구분' selected>시험전형</option><option value='기능구분'>검사전형</option><option value='기능구분'>최종심사</option></select>";
-	if(id_index > 4) return;
+	if(id_index > 3) return;
 	else ($("#process-td select").last()).after(html);
 }
 /* 전공계열 입력 시 결과폼에 출력하는 함수 */
@@ -2313,6 +2347,7 @@ $("#Employ_Ty_Cd_select_1").on("click", function(){
 });
 /* 페이지 완전로딩 후 뷰 */
 $(document).ready(function(){
+	console.log(' dk\'dk ');
 	//페이지에 필요한 정보를 가져오는 AJAX
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/recruitmentAddLoad.ithrer",
@@ -2372,8 +2407,10 @@ $(document).ready(function(){
         success: function(url) {
         	console.log(url);
         	console.log("이미지 전송 성공!!!!!!");
+        	var html = "<img src="+"${pageContext.request.contextPath}/displayFile.ithrer?fileName="+url+"&directory=summernote"+" alt='채용공고' width='100px'/>";
+        	url = "${pageContext.request.contextPath}/displayFile.ithrer?fileName="+url+"&directory=summernote";
         	$(el).summernote('editor.insertImage', url);
-            $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+            $('#imageBoard > ul').append('<li>'+html+'</li>');
         },
         error: function(){
         	console.log("이미지 전송 ajax 실패");
@@ -2566,9 +2603,24 @@ $(document).ready(function(){
 	var result_frm3_0 = "<%=rect.getLocation().replaceAll(" ",":")%>";
 	if(result_frm3_0 != 'null')
 	{
-		$("#workLocation-code-result-Div").show();
-		$("#workLocation-select-result").append(result_frm3_0);
 		console.log("근무지역명:"+result_frm3_0);
+		result_frm3_0_Arr = new Array(result_frm3_0.split(":"));
+		console.log(result_frm3_0_Arr);
+		var location1_Option = $("#location-select-1 option");
+		
+		for(var i in location1_Option)
+		{
+			if(location1_Option[i].innerText == null) break;
+			if(result_frm3_0.includes(location1_Option[i].innerText))
+			{
+				$(location1_Option[i]).attr("selected","selected");
+				selectLocation(result_frm3_0);
+			}
+		}
+		
+		
+		
+		
 	}	
 	//frm3-1 : 근무코드 - pass
 	//frm3-2 : 인근전철역
@@ -2661,29 +2713,49 @@ $(document).ready(function(){
 	var result_frm4_5 = "<%=rect.getRecruitmentStage().replaceAll("-", "/")%>";
 	if(result_frm4_5 != 'null')
 	{
-		console.log("전형단계:"+result_frm4_5);
 		result_frm4_5 = result_frm4_5.substr(5);
 		result_frm4_5 = result_frm4_5.substr(0,result_frm4_5.length-5);
-
 		var result_frm4_5_Arr = new Array(result_frm4_5.split("/"));
-		var result_frm4_5_Arr_Cnt = result_frm4_5_Arr.length;
-		for(var i=0; i<result_frm4_5_Arr_Cnt; i++)
+		var result_frm4_5_Arr_Cnt = result_frm4_5_Arr[0].length;
+		console.log(result_frm4_5_Arr);
+		console.log(result_frm4_5_Arr_Cnt);
+		for(var i=2; i<result_frm4_5_Arr_Cnt; i++)
 		{
+			console.log("클릭");
 			processAdd();
 		}
 		console.log(result_frm4_5_Arr);
-		var frm4_5_selectCnt = $("#processBox-"+i+" option").length;
-		for(var i=1; i<=result_frm4_5_Arr_Cnt+2; i++)
+		var frm4_5_selectCnt = $("#processBox-1 option").length;
+		console.log("j길이"+frm4_5_selectCnt);
+		console.log("i길이"+result_frm4_5_Arr_Cnt);
+		for(var i=0; i<=result_frm4_5_Arr_Cnt; i++)
 		{
+			console.log(i+"번째 선택중");
 			for(var j=0; j<frm4_5_selectCnt; j++)
 			{
-				if($("#processBox-"+i).children().eq(i-1).text() == result_frm4_5_Arr[0][j])
+				console.log($("#processBox-"+i).children().eq(j).text() + " ::: " + result_frm4_5_Arr[0][i]);
+				console.log(($("#processBox-"+i).children().eq(j).text()));
+				console.log(result_frm4_5_Arr[0][i]);
+				if($("#processBox-"+i).children().eq(j).text() == result_frm4_5_Arr[0][i])
 				{
-					$("#processBox-"+i).children().eq(i-1).attr("selected","selected");
+					console.log("적용");
+					$("#processBox-"+i).children().eq(j).attr("selected","selected");
+					break;
 				}
 			}
 		}
 	}
+	//frm4-6 : 서머노트
+	
+	var result_frm4_6 = '<%=rect.getSummernoteHtml()%>';
+	if(result_frm4_6 != 'null')
+	{
+		console.log("summernote:"+result_frm4_6);
+		//$('#summernote').summernote('insertText', HTMLstring);
+		$(".note-editable").append(result_frm4_6);
+		//$('#imageBoard > ul').append('<li>'+result_frm4_6+'</li>');
+	}
+	
 });
 /* 경력 - 경력, 신입경력에서 연차무관을 선택할 경우 : 초기화 후 읽기전용 속성으로 변경 */
 var checked_irrelevant_crr = false;

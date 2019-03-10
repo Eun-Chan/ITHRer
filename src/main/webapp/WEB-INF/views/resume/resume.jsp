@@ -12,8 +12,8 @@
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
 	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.ithrer" 
-	  encType="multipart/form-data">
-	 <!--   onsubmit = "return checkNull()" -->
+	  encType="multipart/form-data" onsubmit = "return checkNull()">
+	 
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" name="userresumetitle" id="userresumetitle" 
@@ -529,6 +529,7 @@
 </div>
 </form>
 </div>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 var langFrmcount = 1;
 var OverseasFrmcount = 1;
@@ -543,6 +544,21 @@ var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
 
+/* 주소api */
+$("input#address").on("click",function(){
+	
+	var $this = $(this);
+	
+	new daum.Postcode({
+		oncomplete: function(data) {
+	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        console.log(data.address);
+	        console.log($this);
+	    	$this.val(data.address);
+	    }
+	}).open();
+});
 /* 회원 사진 넣기 */
 $("input#memberPhoto").on("change",function(){
 	var $this = $(this);

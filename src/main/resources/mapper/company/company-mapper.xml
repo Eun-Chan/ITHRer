@@ -300,5 +300,10 @@
 	<update id="updateCARead" parameterType="map">
 		update companyapplication set read = 'Y' where comp_id=#{compId} and member_id=#{memberId}
 	</update>
+	
+	<!-- 채용공고 업데이트 -->
+	<update id="updateRecruitment" parameterType="recruitment">
+		UPDATE RECRUITMENT SET RECRUITMENT_TITLE = #{recruitmentTitle}, EMPLOYMENT_TYPE=#{employmentType}, TYPE_OF_OCCUPATION=#{typeOfOccupation}, ASIGNED_TASK=#{asignedTask}, RECRUITMENT_PERSONNEL=#{recruitmentPersonnel}, POSITION=#{position}, DEPARTMENT=#{department}, CAREER=#{career}, EDUCATION=#{education}, ETC_QUALIFICATION_REQUIREMENT=#{etcQualificationRequirement}, EMPLOYMENT_PREFERENCE=#{employmentPreference}, APPLICANT_AGE_START=#{applicantAgeStart}, APPLICATION_METHOD=#{applicationMethod}, APPLICATION_FORM=#{applicationForm}, RECRUITMENT_STAGE=#{recruitmentStage}, LOCATION=#{location}, PAY_CONDITION=#{payCondition}, NEARBY_STATION=#{nearbyStation}, WELFARE=#{welfare}, OPENING_DATE=#{openingDate}, CLOSING_DATE=#{closingDate}, APPLICANT_AGE_END=#{applicantAgeEnd}, CERTIFICATE=#{certificate}, MAJOR=#{major}, WORK_DAY=#{workDay}, FORE_LANG=#{foreLang}, SUMMERNOTE_HTML=#{summernoteHtml}, SALARY_TYPE=#{salaryType}, LOCATION_CODE=#{locationCode}, GENDER_CUT=#{genderCut}  WHERE COMP_ID=#{compId} AND RECRUITMENT_NO = #{recruitmentNo}
+	</update>
 
 </mapper>

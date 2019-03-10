@@ -356,14 +356,20 @@ public class BoardController {
 
 	}
 	
-	
-	@RequestMapping("board/passBoardCommentList")
-	public void passBoardCommentList(int passBoardNo, HttpServletResponse response) {
+	@RequestMapping("board/passBoardDeleteComment.ithrer")
+	public ModelAndView passBoardDeleteComment(@RequestParam(value="pbBoardRef")int pbBoardRef,
+											   @RequestParam(value="pbCommentNo")int pbCommentNo ,
+											   PassBoardComment comment, ModelAndView mav) {
 		
-		List<PassBoardComment> list = boardService.passBoardCommentList(passBoardNo);
+		int result = 0;
+		result = boardService.passBoardDeleteComment(comment);
 		
-		System.out.println("Controller PassBoardCommentList ="+list);
-
+		PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
 		
+		mav.addObject("passBoard", passBoard);
+		mav.addObject("result", result);
+		mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		
+		return mav;
 	}
 }

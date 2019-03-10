@@ -50,7 +50,7 @@ $(function(){
 				<td>${vs.count}</td>
 				<td id="title">${b.PASSBOARDTITLE}</td>
 				<td>${b.PASSBOARDWRITER}</td>
-				<td><fmt:formatDate value="${b.PASSBOARDDATE}" type="date"/></td>
+				<td><fmt:formatDate value="${b.PASSBOARDDATE}" pattern="yy.MM.dd HH:mm:ss" type="date"/></td>
 				<td>${b.PASSBOARDREADCOUNT }</td>
 			</tr>
 			</c:forEach>

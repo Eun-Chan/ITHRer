@@ -672,7 +672,7 @@ public class CompanyController {
 		rect.setApplicationMethod(applicationMethod);
 		rect.setApplicationForm(applicationForm);
 		rect.setRecruitmentStage(recruitmentStage);
-		rect.setSummernoteHtml(summernoteHtml);
+		rect.setSummernoteHtml(summernoteHtml.replaceAll("'", "\'"));
 		
 		/* frm5 */
 		rect.setCompId(compId);
@@ -846,11 +846,11 @@ public class CompanyController {
 			 @RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
 			 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
 			 @RequestParam(defaultValue="", value="career") String career,
-			 @RequestParam(defaultValue="", value="employment_type") String employment_type,
+			 @RequestParam(defaultValue="", value="employment_type") String employmentType,
 			 @RequestParam(defaultValue="0", value="recruitmentPersonnel") int recruitmentPersonnel,
 			 @RequestParam(defaultValue="", value="asignedTask") String asignedTask,
-			 @RequestParam(defaultValue="", value="resultDepartment") String resultDepartment,
-			 @RequestParam(defaultValue="", value="jobGrade") String jobGrade,
+			 @RequestParam(defaultValue="", value="resultDepartment") String department,
+			 @RequestParam(defaultValue="", value="jobGrade") String position,
 			 @RequestParam(defaultValue="", value="education") String education,
 			 @RequestParam(defaultValue="", value="major") String major,
 			 @RequestParam(defaultValue="", value="foreLang") String foreLang,
@@ -874,39 +874,61 @@ public class CompanyController {
 			 @RequestParam(defaultValue="", value="compId") String compId,
 			 @RequestParam(defaultValue="", value="locationCode") String locationCode,
 			 @RequestParam(defaultValue="", value="location") String location,
-			 @RequestParam(defaultValue="", value="recruitmentNo") String recruitmentNo) {
-		System.out.println("recruitmentTitle"+recruitmentTitle);
-		System.out.println("typeOfOccupation"+typeOfOccupation);
-		System.out.println("career"+career);
-		System.out.println("employment_type"+employment_type);
-		System.out.println("recruitmentPersonnel"+recruitmentPersonnel);
-		System.out.println("asignedTask"+asignedTask);
-		System.out.println("resultDepartment"+resultDepartment);
-		System.out.println("jobGrade"+jobGrade);
-		System.out.println("education"+education);
-		System.out.println("major"+major);
-		System.out.println("foreLang"+foreLang);
-		System.out.println("certificate"+certificate);
-		System.out.println("computerLiteracy"+computerLiteracy);
-		System.out.println("employmentPreference"+employmentPreference);
-		System.out.println("applicantAge"+applicantAge);
-		System.out.println("genderCut"+genderCut);
-		System.out.println("etcQualificationRequirement"+etcQualificationRequirement);
-		System.out.println("nearbyStation"+nearbyStation);
-		System.out.println("payCondition"+payCondition);
-		System.out.println("salaryType"+salaryType);
-		System.out.println("welfare"+welfare);
-		System.out.println("openingDate"+openingDate);
-		System.out.println("closingDate"+closingDate);
-		System.out.println("applicationMethod"+applicationMethod);
-		System.out.println("applicationForm"+applicationForm);
-		System.out.println("recruitmentStage"+recruitmentStage);
-		System.out.println("summernoteHtml"+summernoteHtml);
-		System.out.println("workDay"+workDay);
-		System.out.println("compId"+compId);
-		System.out.println("locationCode"+locationCode);
-		System.out.println("location"+location);
-		System.out.println("recruitmentNo"+recruitmentNo);
+			 @RequestParam(defaultValue="", value="recruitmentNo") int recruitmentNo) {
+		
+		Recruitment rect = new Recruitment();
+		rect.setRecruitmentTitle(recruitmentTitle);
+		rect.setTypeOfOccupation(typeOfOccupation.replaceAll("\\p{Z}", ""));
+		rect.setCareer(career.replaceAll("\\p{Z}", ""));
+		rect.setEmploymentType(employmentType.replaceAll("\\p{Z}", ""));
+		rect.setRecruitmentPersonnel(recruitmentPersonnel);
+		rect.setAsignedTask(asignedTask);
+		rect.setDepartment(department);
+		String result_position = position.replaceAll("\\p{Z}", "");
+		rect.setPosition(result_position);
+		rect.setEducation(education);
+		rect.setMajor(major.replaceAll("\\p{Z}", ""));
+		rect.setForeLang(foreLang.replaceAll("\\p{Z}", ""));
+		rect.setCertificate(certificate);
+		rect.setComputerLiteracy(computerLiteracy.replaceAll("\\p{Z}", ""));
+		rect.setEmploymentPreference(employmentPreference.replaceAll("\\p{Z}", ""));
+		String[] resultAge = applicantAge.split("/");
+		if("연령제한".equals(resultAge[0]))
+		{
+			rect.setApplicantAgeStart(Integer.parseInt(resultAge[1]));
+			rect.setApplicantAgeEnd(Integer.parseInt(resultAge[2]));
+		}
+		else //연령제한이 아닐 경우
+		{
+			rect.setApplicantAgeStart(0);
+			rect.setApplicantAgeEnd(100);
+		}
+		if(genderCut.equals("무관")) genderCut = " ";
+		else if(genderCut.equals("남자")) genderCut = "M";
+		else if(genderCut.equals("여자")) genderCut = "F";
+		rect.setGenderCut(genderCut);
+		rect.setEtcQualificationRequirement(etcQualificationRequirement);
+		rect.setNearbyStation(nearbyStation.replace("- ", "/"));
+		rect.setPayCondition(payCondition+"만원");
+		rect.setSalaryType(salaryType);
+		rect.setWelfare(welfare.replaceAll("\\p{Z}", ""));
+		rect.setOpeningDate(openingDate);
+		rect.setClosingDate(closingDate);
+		rect.setApplicationMethod(applicationMethod);
+		rect.setApplicationForm(applicationForm);
+		rect.setRecruitmentStage(recruitmentStage);
+		rect.setSummernoteHtml(summernoteHtml.replaceAll("'", "\'"));
+		rect.setWorkDay(workDay);
+		rect.setCompId(compId);
+		rect.setLocationCode(locationCode);
+		rect.setLocation(location);
+		rect.setRecruitmentNo(recruitmentNo);
+		
+		int result = companyService.updateRecruitment(rect);
+		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+rect.getSummernoteHtml());
+		mav.addObject("compId", compId);
+		//mav.setViewName("redirect:index.ithrer");
+		
 		return mav;
 	}
 	
