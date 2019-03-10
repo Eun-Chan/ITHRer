@@ -52,7 +52,7 @@ $(function(){
 				<td>${vs.count}</td>
 				<td id="title">${b.ANONYBOARDTITLE}</td>
 				<td>${b.ANONYBOARDWRITER}</td>
-				<td><fmt:formatDate value="${b.ANONYBOARDDATE}" type="date"/></td>
+				<td><fmt:formatDate value="${b.ANONYBOARDDATE}" pattern="yy.MM.dd HH:mm:ss" type="date"/></td>
 				<td>${b.ANONYBOARDREADCOUNT }</td>
 			</tr>
 			</c:forEach>

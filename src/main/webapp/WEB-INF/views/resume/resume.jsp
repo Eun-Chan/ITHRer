@@ -12,8 +12,8 @@
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
 	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.ithrer" 
-	  encType="multipart/form-data">
-	 <!--   onsubmit = "return checkNull()" -->
+	  encType="multipart/form-data" onsubmit = "return checkNull()">
+	 
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
 	<input type="text" name="userresumetitle" id="userresumetitle" 
@@ -29,19 +29,19 @@
 			<input type="hidden" name="photo" />
 		</div>
 		<div id="formProfile1" class="input-group-prepend">
-			<input type="text" id="name" name="name" class="form-control" placeholder="이름"/>
+			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value="${member.memberName}" readonly/>
 			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)"/>
 			<select id="gender" name="gender" class="custom-select">
 				<option value="" disabled selected>성별</option>
 			  	<option value="남">남</option>
 			 	<option value="여">여</option>
 			</select>
-			<input type="email" id="email" name="email" class="form-control" placeholder="이메일"/>
+			<input type="email" id="email" name="email" class="form-control" placeholder="이메일" value="${member.email}"/>
 		</div>
 		<div id="formProfile2" class="input-group-prepend">
 			<input type="tel" id="phone" name="phone" class="form-control" 
 				   placeholder="전화번호(010-1234-5678)" maxlength="13"
-				   onkeydown="validateText(event)"/>
+				   onkeydown="validateText(event)" value="${member.phone}"/>
 			<input type="text" id="address" name="address" class="form-control" placeholder="주소"/>	
 		</div>		
 	</div>
@@ -59,7 +59,7 @@
 	<div id="educationWrap">
 		<div id="formEducation">
 			<div id="deleteBox">
-				<button type="button" id="deleteEdu" onclick="deleteTwice(event);">
+				<button type="button" name="deleteEdu" onclick="deleteTwice(event);">
 					<span aria-hidden="true">X</span>
 				</button>
 			</div>
@@ -340,7 +340,7 @@
 	<div id="languageWrap">
 		<div id="formLanguage" class="input-group-prepend">
 			<div id="deleteBox">
-				<button type="button" id="deleteLanguage" onclick="deleteTwice(event);">
+				<button type="button" name="deleteLanguage" onclick="deleteTwice(event);">
 					<span aria-hidden="true">X</span>
 				</button>
 			</div>
@@ -360,7 +360,7 @@
 				<input type="text" name="selftext" id="selftext0" class="form-control"/>
 				<select name="speakingdivision" id="speakingdivision0" class="custom-select">
 					<option value="" disabled selected>회화능력</option>
-					<option value="일산회화가능">일상회화 가능</option>
+					<option value="일상회화가능">일상회화 가능</option>
 					<option value="비즈니스회화가능">비즈니스 회화가능</option>
 					<option value="원어민수준">원어민 수준</option>
 				</select>
@@ -529,6 +529,7 @@
 </div>
 </form>
 </div>
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 var langFrmcount = 1;
 var OverseasFrmcount = 1;
@@ -543,6 +544,21 @@ var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
 
+/* 주소api */
+$("input#address").on("click",function(){
+	
+	var $this = $(this);
+	
+	new daum.Postcode({
+		oncomplete: function(data) {
+	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        console.log(data.address);
+	        console.log($this);
+	    	$this.val(data.address);
+	    }
+	}).open();
+});
 /* 회원 사진 넣기 */
 $("input#memberPhoto").on("change",function(){
 	var $this = $(this);
@@ -709,7 +725,7 @@ $(document).on("change","input[name=ged]",function() {
 });
 
 $("#addEducation").on("click",function() {
-	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" id="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" name="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="고등학교">고등학교</option><option value="대학교2년제">대학(2,3년)</option><option value="대학교4년제">대학교(4년)</option><option value="대학원">대학원</option></select></li>';
 	html += '<li><input type="text" name="schoolname" id="schoolname'+eduFrmcount+'" class="form-control" placeholder="학교명"/></li><div name="searchHidden" id="searchHidden'+eduFrmcount+'"></div></ul></div>';
@@ -879,23 +895,22 @@ $(document).on("mouseout", "textarea[name=overseastextarea]", function() {
 	$(this).css("height","75px");
 });
 /* 어학 */
-/* 어학 */
 $("#addLanguage").on("click",function() {
-   var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" name="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
-   html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select">';
-   html += '<option value="" disabled selected>구분</option><option value="회화능력">회화능력</option>';
-   html += '<option value="공인시험">공인시험</option></select>';
-   html += '<select name="languagename" id="languagename'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
-   html += '<option value="영어">영어</option><option value="일본어">일본어</option><option value="중국어">중국어</option><option value="직접입력">직접입력</option></select>';
-   html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/><select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select">';
-   html += '<option value="" disabled selected>회화능력</option><option value="일상회화가능">일상회화 가능</option><option value="비즈니스회화가능">비즈니스 회화가능</option>';
-   html += '<option value="원어민수준">원어민 수준</option></select></div>';
-   html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select">';
-   html += '<option value="" disabled selected>공인시험</option><option value="기타">기타</option><option value="직접입력">직접입력</option></select>';
-   html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/><input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
-   html += '<input type="text" name="examdate" id="examdate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
-   $('#languageWrap').append(html);
-   langFrmcount++;
+	var html = '<div id="formLanguage" class="input-group-prepend"><div id="deleteBox"><button type="button" name="deleteLanguage" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
+	html += '<div id="formLanguage1" class="input-group-prepend"><select name="languagedivision" id="languagedivision'+langFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>구분</option><option value="회화능력">회화능력</option>';
+	html += '<option value="공인시험">공인시험</option></select>';
+	html += '<select name="languagename" id="languagename'+langFrmcount+'" class="custom-select language-select"><option value="" disabled selected>외국어명</option>';
+	html += '<option value="영어">영어</option><option value="일본어">일본어</option><option value="중국어">중국어</option><option value="직접입력">직접입력</option></select>';
+	html += '<input type="text" name="selftext" id="selftext'+langFrmcount+'" class="form-control"/><select name="speakingdivision" id="speakingdivision'+langFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>회화능력</option><option value="일상회화가능">일상회화 가능</option><option value="비즈니스회화가능">비즈니스 회화가능</option>';
+	html += '<option value="원어민수준">원어민 수준</option></select></div>';
+	html += '<div id="formLanguage2" class="input-group-prepend"><select name="examname" id="examname'+langFrmcount+'" class="custom-select">';
+	html += '<option value="" disabled selected>공인시험</option><option value="기타">기타</option><option value="직접입력">직접입력</option></select>';
+	html += '<input type="text" name="selfexam" id="selfexam'+langFrmcount+'" class="form-control"/><input type="text" name="examscore" id="examscore'+langFrmcount+'" class="form-control" placeholder="급수/점수"/>';
+	html += '<input type="text" name="examdate" id="examdate'+langFrmcount+'" class="form-control" placeholder="취득년월(예.1991.01)"/></div></div>';
+	$('#languageWrap').append(html);
+	langFrmcount++;
 });
 $(document).on("change","select[name=languagedivision]",function(){
 	var state = $(this).val();
@@ -919,6 +934,7 @@ $(document).on("change","select[name=languagedivision]",function(){
 	}
 });
 $(document).on("change","select[name=examname]",function() {
+	console.log($(this));
 	var state = $(this).val();
 	if(state == "직접입력") {
 		$(this).parent().find("input[name=selfexam]").show();

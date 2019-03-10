@@ -73,6 +73,30 @@ public interface ResumeService {
 
 	Letter letterView(String memberId);
 
+	int proUpdate(Map<String, Object> profileMap);
+
+	int awardUpdate(Map<String, Object> awardMap);
+
+	int careerUpdate(Map<String, Object> careerMap);
+
+	int certificateUpdate(Map<String, Object> certificateMap);
+
+	int hopeworkUpdate(Map<String, Object> hopeworkMap);
+
+	int internUpdate(Map<String, Object> internMap);
+
+	int languageUpdate(Map<String, Object> languageMap);
+
+	int learnUpdate(Map<String, Object> learnMap);
+
+	int overseasUpdate(Map<String, Object> overseasMap);
+
+	int preferenceUpdate(Map<String, Object> preferenceMap);
+
+	int educationUpdate(Map<String, Object> educationMap);
+
+	int letterUpdate(Map<String, Object> letterMap);
+
 
 
 

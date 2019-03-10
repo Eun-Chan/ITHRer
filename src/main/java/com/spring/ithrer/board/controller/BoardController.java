@@ -20,6 +20,7 @@ import com.google.gson.JsonIOException;
 import com.spring.ithrer.board.model.service.BoardService;
 import com.spring.ithrer.board.model.vo.AnonyBoard;
 import com.spring.ithrer.board.model.vo.PassBoard;
+import com.spring.ithrer.board.model.vo.PassBoardComment;
 
 @Controller
 public class BoardController { 
@@ -146,13 +147,18 @@ public class BoardController {
 	 * 합소서 글 하나 상세보기 페이지
 	 */
 	@RequestMapping("/board/passBoardView")
-	public ModelAndView passBoardView(@RequestParam("no") int passBoardNo, ModelAndView mav) {
+	public ModelAndView passBoardView(@RequestParam("no") int passBoardNo,  ModelAndView mav) {
 //		logger.info("Controller : passBoardNo 전 ="+passBoardNo);
 		
 		PassBoard passBoard = new PassBoard();
 		
 		passBoard = boardService.passBoardSelectOne(passBoardNo);
 		
+		List<PassBoardComment> list = boardService.passBoardCommentList(passBoardNo);
+		
+		System.out.println("Controller PassBoardView ="+list);
+		
+		mav.addObject("list", list);
 		mav.addObject("passBoard", passBoard);
 		mav.setViewName("board/passBoardView");
 		
@@ -228,7 +234,7 @@ public class BoardController {
 		mav.addObject("totalContents", totalContents);
 		mav.addObject("cPage", cPage);
 		mav.addObject("numPerPage", numPerPage);
-		mav.setViewName("board/anonyBoardList");
+		mav.setViewName("board/passBoardList");
 
 		System.out.println("-----Controller : ABS ="+list);
 		System.out.println("-----Controller : ABS ="+totalContents);
@@ -308,5 +314,50 @@ public class BoardController {
 		
 	}
 	
+//	@RequestMapping("board/passBoardAddComment.ithrer")
+//	public ModelAndView passBoardAddComment(PassBoardComment comment, ModelAndView mav) {
+//		
+//		int result = 0;
+//		result = boardService.passBoardAddComment(comment);
+//		
+//		mav.addObject("result", result);
+//		mav.setViewName("redirect:/board/passBoardView");
+//		
+//		return mav;
+//
+//	}
+	
+	@RequestMapping("board/passBoardAddComment.ithrer")
+	public ModelAndView passBoardAddComment(@RequestParam(value="pbBoardRef")int pbBoardRef, PassBoardComment comment, ModelAndView mav) {
+		
+		int result = 0;
+		result = boardService.passBoardAddComment(comment);
+		
+		PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
+		
+		mav.addObject("passBoard", passBoard);
+		mav.addObject("result", result);
+		mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		
+		return mav;
+
+	}
+	
+	@RequestMapping("board/passBoardDeleteComment.ithrer")
+	public ModelAndView passBoardDeleteComment(@RequestParam(value="pbBoardRef")int pbBoardRef,
+											   @RequestParam(value="pbCommentNo")int pbCommentNo ,
+											   PassBoardComment comment, ModelAndView mav) {
+		
+		int result = 0;
+		result = boardService.passBoardDeleteComment(comment);
+		
+		PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
+		
+		mav.addObject("passBoard", passBoard);
+		mav.addObject("result", result);
+		mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		
+		return mav;
+	}
 	
 }

@@ -89,4 +89,6 @@ public interface CompanyService {
 
 	void updateCARead(Map<String, Object> map);
 
+	int updateRecruitment(Recruitment rect);
+
 }
