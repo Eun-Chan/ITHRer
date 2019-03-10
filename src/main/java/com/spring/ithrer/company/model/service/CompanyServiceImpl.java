@@ -449,4 +449,9 @@ public class CompanyServiceImpl implements CompanyService {
 		companyDao.updateCARead(map);
 	}
 
+	@Override
+	public int updateRecruitment(Recruitment rect) {
+		return companyDao.updateRecruitment(rect);
+	}
+
 }
