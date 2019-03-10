@@ -284,15 +284,16 @@ public class BoardController {
 		}	
 	}
 
-	/*
-     * 30분 마다 실행
-     */
-    @Scheduled(cron="0 0/30 * * * *")
+	/**
+	 * Annotation을 이용한 스케줄링
+	 * Cron 옵션을 통해 설정
+	 * 빈의 메소드를 어노테이션을 통해 태스크로 활용할수 있게함
+	 */
+	@Scheduled(cron="0 0 12 * * ?")
     public void autoDelete() {
     	int result = boardService.autoDelete();
     	
     	logger.debug("삭제된 익명게시판 수 : "+result);
-    	System.out.println("init()!!!");
     }
 	
 	

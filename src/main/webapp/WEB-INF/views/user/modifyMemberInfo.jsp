@@ -27,11 +27,11 @@
 <div id="checkPassword">
 	<h3 style="color:#f44283;">회원정보 수정</h3><br />
 	<div class="col-md-7">
-        <input type="password" class="form-control" placeholder="비밀번호입력" id="password" name="password">
+        <input type="password" class="form-control" placeholder="비밀번호입력" id="password" name="password" >
     </div>
     <br />
     <div class="col-md-9">
-        <input type="button" class="btn btn-primary" onclick="memberLoginCheck();"value="확인">
+        <input type="button" class="btn btn-primary" onclick="memberLoginCheck();"value="확인" onkeyup="enterkey()">
         <input type="button" class="btn btn-secondary" value="홈으로" onclick="goHome();">
     </div>
 </div>
@@ -183,7 +183,11 @@ $("#btn-submit-modify").on("click", function(){
 	
 });
 
-
+function enterkey(){
+	if(window.event.keyCode == 13){
+		companyLoginCheck();
+	}
+}
 
 </script>
 

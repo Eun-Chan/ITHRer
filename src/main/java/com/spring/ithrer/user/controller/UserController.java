@@ -34,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.listener.SessionBindingListener;
 import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
@@ -215,11 +216,21 @@ public class UserController {
 				res.addCookie(c);
 			}
 			
+			// 이미 접속한 아이디 인지 확인
+			if(SessionBindingListener.getInstance().isUsing(memberId)) {
+				logger.debug(memberId +"님이 이미 접속중 입니다.");
+				test.put("result", "already");
+				return test;
+			}
+			
+			
 			// 로그인 한 유저 세션에 넣기
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*1000);
 			session.setAttribute("member", member);
+			
+			SessionBindingListener.getInstance().setSession(session, memberId);
 			
 			test.put("result" , "true");
 			
@@ -273,11 +284,20 @@ public class UserController {
 				res.addCookie(c);
 			}
 			
+			// 이미 접속한 아이디 인지 확인
+			if(SessionBindingListener.getInstance2().isUsing(companyId)) {
+				logger.debug(companyId +"님이 이미 접속중 입니다.");
+				test.put("result", "already");
+				return test;
+			}
+			
 			// 로그인 한 유저 세션에 넣기
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*10);
 			session.setAttribute("companyLoggedIn", company);
+			
+			SessionBindingListener.getInstance2().setSession(session, companyId);
 			
 			test.put("result" , "true");
 		}
@@ -334,6 +354,14 @@ public class UserController {
 				member.setEmail(kakaoEmail);
 			}
 		}
+		
+		// 이미 접속한 아이디 인지 확인
+		if(SessionBindingListener.getInstance().isUsing(kakaoId)) {
+			logger.debug(kakaoId +"님이 이미 접속중 입니다.");
+			map.put("result", "already");
+			return map;
+		}
+		
 		map.put("result","true");
 		
 		// 카카오톡 유저 정보 세션에 담기
@@ -343,6 +371,8 @@ public class UserController {
 		session.setMaxInactiveInterval(60*10);
 		
 		session.setAttribute("member", member);
+		
+		SessionBindingListener.getInstance().setSession(session, kakaoId);
 		
 		return map;
 	}
@@ -758,6 +788,14 @@ public class UserController {
             Member naverLoginMember = userService.kakaoLogin(naverLoginId);
             System.out.println(naverLoginMember);
             
+            
+            // 이미 접속한 아이디 인지 확인
+         	if(SessionBindingListener.getInstance().isUsing(naverLoginId)) {
+         		logger.debug(naverLoginId +"님이 이미 접속중 입니다.");
+         		map.put("result", "already");
+         		return map;
+         	}
+            
             // 가입안된 회원이면 회원가입하기
             
             // 가입된 회원이면 회원가입 x
@@ -768,6 +806,7 @@ public class UserController {
 			session.setMaxInactiveInterval(60*10);
 			session.setAttribute("member", naverLoginMember);
             
+			SessionBindingListener.getInstance().setSession(session, naverLoginId);
 			map.put("result","true");
             
 			System.out.println("네이버 로그인 끝");

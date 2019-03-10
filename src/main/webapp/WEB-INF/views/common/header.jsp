@@ -155,7 +155,7 @@
 			 			<span class="headerMemberTitle" style="padding: 8px;">
 					   		${member.memberName }님
 					   </span>
-				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 	</ul>
 			 	</c:if>
 			 </div>
@@ -299,7 +299,7 @@
    				// 네이버 로그인후 새로고침	
    				if(data.result == 'true')
     				location.reload();
-   				else if(data == 'false'){
+   				else if(data == 'already'){
    					$("#login-help").text("이미 아이디가 접속중입니다!");
 					$("#login-help").addClass("text-danger");
    				}
@@ -358,9 +358,9 @@
    				// 카카오톡 로그인후 새로고침	
    				if(data.result == 'true')
     				location.reload();
-   				else if(data.result == 'false'){
-   					$("#login-help").text("이미 아이디가 접속중입니다!");
-					$("#login-help").addClass("text-danger");
+   				else if(data.result == 'already'){
+   					alert("이미 해당 카카오톡 아이디가 접속중입니다!");
+					location.reload();
    				}
     		}
     	});
@@ -402,6 +402,10 @@
 					$("#login-help").text("아이디 혹은 비밀번호가 알맞지 않습니다.");
 					$("#login-help").addClass("text-danger");
 				}
+				else if(data.result == "already"){
+					$("#login-help").text("이미 아이디가 접속중입니다.");
+					$("#login-help").addClass("text-danger");
+				}
 			}
 		});
 	}
@@ -427,6 +431,10 @@
 				}
 				else if(data.result == "false"){
 					$("#login-help2").text("아이디 혹은 비밀번호가 알맞지 않습니다.");
+					$("#login-help2").addClass("text-danger");
+				}
+				else if(data.result == "already"){
+					$("#login-help2").text("이미 아이디가 접속중입니다.");
 					$("#login-help2").addClass("text-danger");
 				}
 			}
