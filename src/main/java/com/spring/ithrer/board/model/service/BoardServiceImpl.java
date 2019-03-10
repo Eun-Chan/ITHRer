@@ -110,5 +110,10 @@ public class BoardServiceImpl implements BoardService{
 		return boardDao.passBoardCommentList(passBoardNo);
 	}
 
+	@Override
+	public int passBoardDeleteComment(PassBoardComment comment) {
+		return boardDao.passBoardDeleteComment(comment);
+	}
+
 	
 }

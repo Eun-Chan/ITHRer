@@ -51,4 +51,6 @@ public interface BoardService {
 
 	List<PassBoardComment> passBoardCommentList(int passBoardNo);
 
+	int passBoardDeleteComment(PassBoardComment comment);
+
 	}
