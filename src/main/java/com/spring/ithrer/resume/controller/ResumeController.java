@@ -245,102 +245,109 @@ public class ResumeController {
     	  int awardcnt = award.getAwardnameArr().length;
     	  mav.addObject("awardcnt", awardcnt);   
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	 int awardcnt = 0;
       }
       try {
     	  int carrercnt = career.getCorpnameArr().length;
     	  mav.addObject("carrercnt", carrercnt);   
     	  System.out.println("carrercnt="+carrercnt);
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int carrercnt = 0;
       }
       try {
     	  int certificationcnt = certification.getCertnameArr().length;
     	  mav.addObject("certificationcnt", certificationcnt);   
     	  System.out.println("certificationcnt="+certificationcnt);
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int certificationcnt = 0;
       }
       try {
     	  int interncnt = intern.getInterndivisionArr().length;
     	  mav.addObject("interncnt", interncnt);   
     	  System.out.println("interncnt="+interncnt);
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int interncnt = 0;
       }
       try {
     	  int learncnt = learn.getLearntitleArr().length;
     	  mav.addObject("learncnt", learncnt);   
     	  System.out.println("learncnt="+learncnt);
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int learncnt = 0;
       }
       try {
     	  int lettercnt = letter.getLettertextArr().length;
     	  mav.addObject("lettercnt", lettercnt);   
     	  System.out.println("lettercnt="+lettercnt);
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int lettercnt = 0;
       }
       try {
     	  int overseascnt = overseas.getCountryArr().length;
     	  mav.addObject("overseascnt", overseascnt);   
     	  System.out.println("overseascnt="+overseascnt);
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int overseascnt = 0;
       }
       try {
     	  String portFoliorename = portFolio.getPRenamedFileName();
     	  mav.addObject("portFoliorename", portFoliorename);   
     	  System.out.println("portFoliocon="+portFoliorename);    	  
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  String portFoliorename = null;
+      }
+      try {
+    	  int prefercheckcnt = preference.getPrefercheck().length;
+    	  mav.addObject("prefercheckcnt", prefercheckcnt);  
+    	  System.out.println("prefercheckcnt="+prefercheckcnt);    	   	    	  	  
+      } catch(NullPointerException e1) {
+    	  int prefercheckcnt = 0;
       }
       try {
     	  int languagecnt = language.getLanguagedivisionArr().length;
     	  mav.addObject("languagecnt", languagecnt);  
     	  System.out.println("languagecnt="+languagecnt);    	   	    	  	  
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int languagecnt = 0;
       }
       try {
     	  int ablitycnt = language.getSpeakingdivisionArr().length;
     	  mav.addObject("ablitycnt", ablitycnt);   
     	  System.out.println("ablitycnt="+ablitycnt);  
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int ablitycnt = 0;
       }
       try {
     	  int examcnt = language.getExamnameArr().length;
     	  mav.addObject("examcnt", examcnt);   
     	  System.out.println("examcnt="+examcnt);    
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int examcnt = 0;
       }
       try {
     	  int educationcnt = education.getGraduactionArr().length;
     	  mav.addObject("educationcnt", educationcnt);      	   
     	  System.out.println("educationcnt="+educationcnt);    	  
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int educationcnt = 0;
       }
       try {
     	  int hschoolcnt = education.getHighgraduationdateArr().length;
     	  mav.addObject("hschoolcnt", hschoolcnt);      
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int hschoolcnt = 0;
       }
       try {
     	  int uschoolcnt = education.getGraducationstateArr().length;
     	  mav.addObject("uschoolcnt", uschoolcnt);        
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int uschoolcnt = 0;
       }
       try {
     	  int gschoolcnt = education.getDegreeArr().length;
     	  mav.addObject("gschoolcnt", gschoolcnt);       
       } catch(NullPointerException e1) {
-    	  e1.printStackTrace();
+    	  int gschoolcnt = 0;
       }
       mav.setViewName("/resume/resumeView");
       return mav;
@@ -376,5 +383,82 @@ public class ResumeController {
 		new Gson().toJson(path,response.getWriter());
 		
 	}
+   @RequestMapping(value="/resume/updateResume.ithrer")
+   public ModelAndView myResumeUpdate(ModelAndView mav,Award award,Career career,Certification certification,
+								      Hopework hopework, Intern intern,
+								      Language language, Learn learn,
+								      Overseas overseas, PortFolio portFolio,
+								      Preference preference, Profile profile,
+								      Education education, @RequestParam("memberIdHide") String memberIdHide,
+								      Letter letter, MultipartHttpServletRequest req, MultipartFile file,
+								      HttpServletResponse res) {
+	   logger.info("award="+award);
+	   logger.info("career="+career);
+	   logger.info("certification="+certification);
+	   logger.info("hopework="+hopework);
+	   logger.info("intern="+intern);
+	   logger.info("language="+language);
+	   logger.info("overseas="+overseas);
+	   logger.info("portFolio="+portFolio);
+	   logger.info("preference="+preference);
+	   logger.info("profile="+profile);
+	   logger.info("education="+education);
+	   logger.info("letter="+letter);
+	   logger.info("memberIdHide="+memberIdHide);
+	   
+	   	Map<String,Object> awardMap = new HashMap<>();
+	   	awardMap.put("award", award);
+	   	awardMap.put("memberIdHide", memberIdHide);
+		Map<String,Object> careerMap = new HashMap<>();
+		careerMap.put("career",career);
+		careerMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> certificateMap = new HashMap<>();
+		certificateMap.put("certification",certification);
+		certificateMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> hopeworkMap = new HashMap<>();
+		hopeworkMap.put("hopework",hopework);
+		hopeworkMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> internMap = new HashMap<>();
+		internMap.put("intern",intern);
+		internMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> languageMap = new HashMap<>();
+		languageMap.put("language",language);
+		languageMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> learnMap = new HashMap<>();
+		learnMap.put("learn",learn);
+		learnMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> overseasMap = new HashMap<>();
+		overseasMap.put("overseas",overseas);
+		overseasMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> preferenceMap = new HashMap<>();
+		preferenceMap.put("preference",preference);
+		preferenceMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> profileMap = new HashMap<>();
+		profileMap.put("profile",profile);
+		profileMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> educationMap = new HashMap<>();
+		educationMap.put("education",education);
+		educationMap.put("memberIdHide",memberIdHide);
+		Map<String,Object> letterMap = new HashMap<>();
+		letterMap.put("letter",letter);
+		letterMap.put("memberIdHide",memberIdHide);
+		
+	   int proresult = resumeService.proUpdate(profileMap);
+	   int awardresult = resumeService.awardUpdate(awardMap);
+	   int careerresult = resumeService.careerUpdate(careerMap);
+	   int certificateresult = resumeService.certificateUpdate(certificateMap);
+	   int hopeworkresult = resumeService.hopeworkUpdate(hopeworkMap);
+	   int internresult = resumeService.internUpdate(internMap);
+	   int languageresult = resumeService.languageUpdate(languageMap);
+	   int learnresult = resumeService.learnUpdate(learnMap);
+	   int overseasresult = resumeService.overseasUpdate(overseasMap);
+	   int preferenceresult = resumeService.preferenceUpdate(preferenceMap);
+	   int educationresult = resumeService.educationUpdate(educationMap);
+	   int letterresult = resumeService.letterUpdate(letterMap);
+	 
+	   mav.setViewName("redirect:/");
+	   return mav;
+	   
+   }
 }
 

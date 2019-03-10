@@ -22,14 +22,7 @@
 
 <script>
 $(function(){
-	$("[name=upFile1]").on('click',function(){
-		if($("input:radio[name=charged]:checked").length == 0){
-			console.log($("input:radio[name=charged]:checked"))
-			alert("상단의 등록할 회사를 먼저 선택하세요!:D");
-			return;
-		}
-	});
-	
+		
 	$("[name=upFile1]").on('change', function(){
 		
 		//var fileName = $(this).val();
@@ -39,6 +32,17 @@ $(function(){
 	});
 	
 	$("#btn-charged-submit").on("click", function(){
+		
+		if($("#upFile1")[0].files[0] == null){
+			alert("파일을 선택해 주세요!");
+			return;
+		}
+		
+		if($("input:radio[name=charged]:checked").length == 0){
+			alert("배너를 추가할 회사을 선택해 주세요!");
+			return;
+		}
+		
 		var directory = 'images/banner';
 		var form = $("#frm-charged")[0];
 		var formData = new FormData(form);

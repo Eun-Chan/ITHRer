@@ -19,17 +19,10 @@
 	<style><!------------------------------------------------style------------------------------------------->
 	
 		div.text-center{width:100%;}
-		div#board-container{width:1000px; margin:0 auto; text-align:center;}
-		div#board-container{margin-top:40px;}		
-		/*댓글 등록 버튼 */
-		div#comment-container button#btn-insert{
-			width: 60px;
-			height: 50px;
-			color: white;
-			background: #30f;
-			position: relative;	
-			top: -20px;
-		}
+		div#board-container{width:90%; margin:0 auto; text-align:center;}
+		div#board-container{margin-top:40px;}
+		#comment-container{width:80%; margin:0 auto}
+		.noresize {resize: none;}
 		
 		/* 댓글테이블 */
 		table#tbl-comment{
@@ -44,7 +37,7 @@
 			padding: 5px;
 			text-align: left;
 			line-height: 120%;
-}
+		}
 		table#tbl-comment tr td:first-of-type{
 			padding: 5px 5px 5px 50px;
 		}
@@ -52,14 +45,8 @@
 			text-align: right;
 			width: 131px;
 		}
-		table#tbl-comment button.btn-reply{
-			display: none;
-		}
 		table#tbl-comment tr:hover {
-			background: lightgray;
-		}
-		table#tbl-comment tr:hover button.btn-reply{
-			display: inline;
+			background: #a8bdff;
 		}
 		table#tbl-comment sub.comment-writer {
 			color: navy;
@@ -83,26 +70,8 @@
 			margin: 4px 0 0 0;
 		}
 		
-		table#tbl-comment button.btn-insert2{
-			width: 60px;
-			height: 23px;
-			color: white;
-			background: #30f;
-			position: relative;
-			top: -5px;
-			left: 10px; 
-		}
 		
-		/*삭제버튼 */
-		table#tbl-comment button.btn-delete{
-			background: red;
-			color: white;
-			display: none;
-		}
-		table#tbl-comment tr:hover button.btn-delete{
-			display: inline;
-		}
-	</style><!------------------------------------------------style------------------------------------------->
+</style><!------------------------------------------------style------------------------------------------->
 <script><!------------------------------------------------script------------------------------------------->
 function fn_goBoardDelete(){
 	var memberId = "<%=member.getMemberId()%>"
@@ -153,7 +122,6 @@ function fn_goBoardUpdate(){
 			location.href = "${pageContext.request.contextPath}/board/passBoardMoveUpdate?passBoardNo="+passBoardNo;
 		}
 	};
-
 </script><!------------------------------------------------script------------------------------------------->
 
 <!-- 부트스트랩관련 라이브러리 -->
@@ -197,7 +165,7 @@ function fn_goBoardUpdate(){
         </tr>
      
 		</div>
-		
+		<br /><br />
 <!-- 댓글시작 -->
     <div id="comment-container"  class="table table-responsive">
     	<div>
@@ -208,7 +176,7 @@ function fn_goBoardUpdate(){
     			<input type="hidden" name="pbCommentWriter" value="${member.memberId}" />
     			<input type="hidden" name="pbCommentLevel" value="1" /><!-- 댓글레벨 : 1  -->
     			<input type="hidden" name="pbCommentRef" value="0" />
-    			<textarea name="pbCommentContent" id="reply-textarea" cols="60" rows="3" placeholder="댓글을 입력해주세요~" style="width:100%"></textarea>
+    			<textarea name="pbCommentContent" id="reply-textarea" cols="60" rows="3" placeholder="댓글을 입력해주세요~" class="noresize" style="width:100%"></textarea>
     			<button type="submit" class="btn btn-outline-success">등록</button>
     		</form>	
     	</div><!-- end of .comment-editor -->
@@ -220,7 +188,7 @@ function fn_goBoardUpdate(){
     		<c:if test="${p.pbCommentLevel ==1}">
     		<tr class="level1">
     			<td>
-    				<sub class="comment-writer">
+    				<sub class="comment-writer" id="reWriter">
     					${p.pbCommentWriter}
     				</sub>
     				<sub class="comment-date">
@@ -230,11 +198,10 @@ function fn_goBoardUpdate(){
     					${p.pbCommentContent}
     			</td>
     			<td>
-    				<button class="btn btn-outline-success rereply" value="${p.pbCommentNo}">
+    				<button class="btn btn-outline-success reply" value="${p.pbCommentNo}">
     					답글
     				</button>
-   				<!-- 관리자이거나, 본인이 쓴 댓글(대댓글)에 대해서만 삭제버튼이 보여야 한다.
-    							삭제요청처리후에는 현재페이지가 다시 보여줘야 한다. -->
+   				
     				<button class="btn btn-outline-danger replyDelete">삭제</button>
     			</td>
     		</tr>
@@ -277,7 +244,7 @@ function fn_goBoardUpdate(){
     	//boardCommentContent 유효성검사
     	var len = $("[name=pbCommentContent]").val().trim().length;
     	 if(len == 0){
-			alert("댓글을 작성하세요.");    		
+			alert("댓글을 작성하세요.");
     		e.preventDefault();
     	}
     });
@@ -288,13 +255,15 @@ function fn_goBoardUpdate(){
     }
     
     $(".replyDelete").on("click", function(){
-    	var rereWriter = $("#rereWriter").text().trim();
+    	var reWriter = $("#reWriter").text().trim();
     	var memberId = "<%=member.getMemberId()%>"
-    	console.log(rereWriter);
+    	console.log(reWriter);
     	console.log(memberId);
-    	if(memberId!=rereWriter){
+    	if(memberId!=reWriter){
     		alert("댓글의 작성자만 삭제할수 있습니다.");
+    		console.log($(".reply").val());
     	}
+
     	
     });
     
@@ -305,12 +274,13 @@ function fn_goBoardUpdate(){
     	console.log(memberId);
     	if(memberId!=rereWriter){
     		alert("댓글의 작성자만 삭제할수 있습니다.");
+    		console.log($(".rereply").val());
     	}
     	
     });
     
     
-    $(".rereply").on("click", function(){
+    $(".reply").on("click", function(){
     	if(member != null){
     	<%--로그인한경우--%>
 			var tr = $("<tr></tr>");

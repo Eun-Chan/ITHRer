@@ -171,6 +171,11 @@ public class BoardDaoImpl implements BoardDao{
 	public List<PassBoardComment> passBoardCommentList(int passBoardNo) {
 		return sqlSession.selectList("passboard.passBoardCommentList", passBoardNo);
 	}
+
+	@Override
+	public int passBoardDeleteComment(PassBoardComment comment) {
+		return sqlSession.delete("passboard.passBoardDeleteComment", comment);
+	}
 	
 	
 }
