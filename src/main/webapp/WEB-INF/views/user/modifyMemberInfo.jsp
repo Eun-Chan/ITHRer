@@ -27,11 +27,11 @@
 <div id="checkPassword">
 	<h3 style="color:#f44283;">회원정보 수정</h3><br />
 	<div class="col-md-7">
-        <input type="password" class="form-control" placeholder="비밀번호입력" id="password" name="password" >
+        <input type="password" class="form-control" placeholder="비밀번호입력" id="password" name="password" onkeyup="enterkey();">
     </div>
     <br />
     <div class="col-md-9">
-        <input type="button" class="btn btn-primary" onclick="memberLoginCheck();"value="확인" onkeyup="enterkey()">
+        <input type="button" class="btn btn-primary" onclick="memberLoginCheck();" value="확인">
         <input type="button" class="btn btn-secondary" value="홈으로" onclick="goHome();">
     </div>
 </div>
@@ -111,6 +111,10 @@ function memberLoginCheck(){
 				$("#checkPassword").hide();
 				$("#modify-card-container").show();
 			}	
+			else if(data.result == "already"){
+				$("#checkPassword").hide();
+				$("#modify-card-container").show();
+			}
 			else if(data.result == "false"){
 				alert("비밀번호가 알맞지 않습니다.");
 			}
