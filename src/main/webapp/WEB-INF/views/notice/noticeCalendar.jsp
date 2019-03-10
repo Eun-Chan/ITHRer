@@ -36,7 +36,7 @@
 
 <script>
 	
-$('#calendar').fullCalendar('destroy');
+//$('#calendar').fullCalendar('destroy');
 
 $(document).ready(function() {
 
@@ -70,7 +70,7 @@ $(document).ready(function() {
 	
 							for(var i = 0; i < doc.length; i++){
 								var url = "${pageContext.request.contextPath}/index/ithrerNotice.ithrer?no="
-										+ doc[i].RECRUITMENT_NO;//(수정 요!!)추후에 공고 번호로 바꿔야함
+										+ doc[i].RECRUITMENT_NO;
 								var eventObject = {
 									title : "시작  "+doc[i].COMP_NAME,
 									start : doc[i].OPENING_DATE,
