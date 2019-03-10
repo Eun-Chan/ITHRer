@@ -456,7 +456,7 @@ public class ResumeController {
 	   int educationresult = resumeService.educationUpdate(educationMap);
 	   int letterresult = resumeService.letterUpdate(letterMap);
 	 
-	   mav.setViewName("/resume/resumeView");
+	   mav.setViewName("redirect:/");
 	   return mav;
 	   
    }
