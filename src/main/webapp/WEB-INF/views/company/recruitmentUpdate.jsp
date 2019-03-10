@@ -1211,7 +1211,7 @@ html
 			</th>
 			<td colspan="5" class="input-content" id="process-td">
 				<span>서류전형 ></span>
-				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-1">
+				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-0">
 					<option value="기능구분" selected>면접전형</option>
 					<option value="기능구분" >2차면접전형</option>
 					<option value="기능구분" >3차면접전형</option>
@@ -1220,7 +1220,7 @@ html
 					<option value="기능구분" >최종심사</option>
 				</select>
 				<span> > </span>
-				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-2">
+				<select class="form-control formStyleChange inlineblock-select fore-select join-process" id="processBox-1">
 					<option value="기능구분" >면접전형</option>
 					<option value="기능구분" >2차면접전형</option>
 					<option value="기능구분" >3차면접전형</option>
@@ -1395,10 +1395,10 @@ function frm4hiddenInput()
 	/* ============= 전형단계 ============= */
 	var result_process = "서류전형-";
 	var processCnt = $("#process-td select").length;
-	for(var i=1; i<=processCnt; i++)
+	for(var i=0; i<=processCnt; i++)
 	{
 		result_process += $("#processBox-"+i+" option:selected").text();
-		result_process += "-";
+		if(i != processCnt) result_process += "-";
 	}
 	result_process += "최종합격";
 	console.log("전형단계:"+result_process);
@@ -2122,9 +2122,9 @@ function addJob()
 /* 전형을 추가하는 함수 */
 function processAdd()
 {
-	var id_index = ($("#process-td select").length)+1;
+	var id_index = ($("#process-td select").length);
 	var html = "<span> > </span><select class='form-control formStyleChange inlineblock-select fore-select join-process' id='processBox-"+id_index+"'><option value='기능구분' >면접전형</option><option value='기능구분'>2차면접전형</option>	<option value='기능구분'>3차면접전형</option><option value='기능구분' selected>시험전형</option><option value='기능구분'>검사전형</option><option value='기능구분'>최종심사</option></select>";
-	if(id_index > 4) return;
+	if(id_index > 3) return;
 	else ($("#process-td select").last()).after(html);
 }
 /* 전공계열 입력 시 결과폼에 출력하는 함수 */
@@ -2347,6 +2347,7 @@ $("#Employ_Ty_Cd_select_1").on("click", function(){
 });
 /* 페이지 완전로딩 후 뷰 */
 $(document).ready(function(){
+	console.log(' dk\'dk ');
 	//페이지에 필요한 정보를 가져오는 AJAX
 	$.ajax({
 		url: "${pageContext.request.contextPath}/company/recruitmentAddLoad.ithrer",
@@ -2406,8 +2407,10 @@ $(document).ready(function(){
         success: function(url) {
         	console.log(url);
         	console.log("이미지 전송 성공!!!!!!");
+        	var html = "<img src="+"${pageContext.request.contextPath}/displayFile.ithrer?fileName="+url+"&directory=summernote"+" alt='채용공고' width='100px'/>";
+        	url = "${pageContext.request.contextPath}/displayFile.ithrer?fileName="+url+"&directory=summernote";
         	$(el).summernote('editor.insertImage', url);
-            $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+            $('#imageBoard > ul').append('<li>'+html+'</li>');
         },
         error: function(){
         	console.log("이미지 전송 ajax 실패");
@@ -2710,29 +2713,49 @@ $(document).ready(function(){
 	var result_frm4_5 = "<%=rect.getRecruitmentStage().replaceAll("-", "/")%>";
 	if(result_frm4_5 != 'null')
 	{
-		console.log("전형단계:"+result_frm4_5);
 		result_frm4_5 = result_frm4_5.substr(5);
 		result_frm4_5 = result_frm4_5.substr(0,result_frm4_5.length-5);
-
 		var result_frm4_5_Arr = new Array(result_frm4_5.split("/"));
-		var result_frm4_5_Arr_Cnt = result_frm4_5_Arr.length;
-		for(var i=0; i<result_frm4_5_Arr_Cnt; i++)
+		var result_frm4_5_Arr_Cnt = result_frm4_5_Arr[0].length;
+		console.log(result_frm4_5_Arr);
+		console.log(result_frm4_5_Arr_Cnt);
+		for(var i=2; i<result_frm4_5_Arr_Cnt; i++)
 		{
+			console.log("클릭");
 			processAdd();
 		}
 		console.log(result_frm4_5_Arr);
-		var frm4_5_selectCnt = $("#processBox-"+i+" option").length;
-		for(var i=1; i<=result_frm4_5_Arr_Cnt+2; i++)
+		var frm4_5_selectCnt = $("#processBox-1 option").length;
+		console.log("j길이"+frm4_5_selectCnt);
+		console.log("i길이"+result_frm4_5_Arr_Cnt);
+		for(var i=0; i<=result_frm4_5_Arr_Cnt; i++)
 		{
+			console.log(i+"번째 선택중");
 			for(var j=0; j<frm4_5_selectCnt; j++)
 			{
-				if($("#processBox-"+i).children().eq(i-1).text() == result_frm4_5_Arr[0][j])
+				console.log($("#processBox-"+i).children().eq(j).text() + " ::: " + result_frm4_5_Arr[0][i]);
+				console.log(($("#processBox-"+i).children().eq(j).text()));
+				console.log(result_frm4_5_Arr[0][i]);
+				if($("#processBox-"+i).children().eq(j).text() == result_frm4_5_Arr[0][i])
 				{
-					$("#processBox-"+i).children().eq(i-1).attr("selected","selected");
+					console.log("적용");
+					$("#processBox-"+i).children().eq(j).attr("selected","selected");
+					break;
 				}
 			}
 		}
 	}
+	//frm4-6 : 서머노트
+	
+	var result_frm4_6 = '<%=rect.getSummernoteHtml()%>';
+	if(result_frm4_6 != 'null')
+	{
+		console.log("summernote:"+result_frm4_6);
+		//$('#summernote').summernote('insertText', HTMLstring);
+		$(".note-editable").append(result_frm4_6);
+		//$('#imageBoard > ul').append('<li>'+result_frm4_6+'</li>');
+	}
+	
 });
 /* 경력 - 경력, 신입경력에서 연차무관을 선택할 경우 : 초기화 후 읽기전용 속성으로 변경 */
 var checked_irrelevant_crr = false;

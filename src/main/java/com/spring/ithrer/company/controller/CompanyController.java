@@ -672,7 +672,7 @@ public class CompanyController {
 		rect.setApplicationMethod(applicationMethod);
 		rect.setApplicationForm(applicationForm);
 		rect.setRecruitmentStage(recruitmentStage);
-		rect.setSummernoteHtml(summernoteHtml);
+		rect.setSummernoteHtml(summernoteHtml.replaceAll("'", "\'"));
 		
 		/* frm5 */
 		rect.setCompId(compId);
@@ -917,7 +917,7 @@ public class CompanyController {
 		rect.setApplicationMethod(applicationMethod);
 		rect.setApplicationForm(applicationForm);
 		rect.setRecruitmentStage(recruitmentStage);
-		rect.setSummernoteHtml(summernoteHtml);
+		rect.setSummernoteHtml(summernoteHtml.replaceAll("'", "\'"));
 		rect.setWorkDay(workDay);
 		rect.setCompId(compId);
 		rect.setLocationCode(locationCode);
@@ -925,7 +925,7 @@ public class CompanyController {
 		rect.setRecruitmentNo(recruitmentNo);
 		
 		int result = companyService.updateRecruitment(rect);
-		
+		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+rect.getSummernoteHtml());
 		mav.addObject("compId", compId);
 		//mav.setViewName("redirect:index.ithrer");
 		
