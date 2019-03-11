@@ -56,9 +56,9 @@
       #{education.graducationstate},#{education.transfer,typeHandler=com.spring.ithrer.common.typehandler.StringArrayTypeHandler},#{education.major},#{education.score},#{education.totalscore},
       #{education.degree},#{education.otherdepartsel},#{education.secmajor},#{education.otherdeparttext},#{memberIdHide})
    </insert>
-   <insert id="insertPortFolio" parameterType="hashmap">
+   <!-- <insert id="insertPortFolio" parameterType="hashmap">
       insert into PORTFOLIO values(#{pf.url},#{pf.pOriginalFileNameTest},#{pf.pRenamedFileName},#{memberIdHide},seq_pf_no.nextval)
-   </insert>
+   </insert> -->
    
    <select id="awardView" resultMap="awardViewMap">
       select * from award where member_id = #{memberId}
@@ -147,9 +147,9 @@
 		<result column="overseastextarea" property="overseastextareaArr" typeHandler="strArrTypeHandler"/>
 	</resultMap>
 	
-   <select id="portFolioView" resultType="portfolio">
+  <!--  <select id="portFolioView" resultType="portfolio">
       select * from portfolio where member_id = #{memberId}
-   </select>
+   </select> -->
    
    <select id="preferenceView" resultMap="preferenceViewMap">
       select * from preference where member_id = #{memberId}
@@ -198,7 +198,8 @@
 	</resultMap>
 	
 	<update id="proUpdate" parameterType="hashmap">
-		update profile set birth = #{profile.birth},
+		update profile set userresumetitle = #{profile.userresumetitle},
+						   birth = #{profile.birth},
 						   gender = #{profile.gender}, 
 						   email = #{profile.email}, 
 						   phone = #{profile.phone}, 
@@ -289,5 +290,12 @@
 	<update id="letterUpdate" parameterType="hashmap">
 		update letter set lettertext = #{letter.lettertext},
 						  letterarea = #{letter.letterarea} where member_id = #{memberIdHide}
+	</update>
+	<update id="updateMember" parameterType="hashmap">
+		update member set  birth = #{profile.birth},
+						   gender = #{profile.gender}, 
+						   email = #{profile.email}, 
+						   address = #{profile.address}, 
+						   photo = #{profile.photo} where member_id = #{memberIdHide}
 	</update>
 </mapper>

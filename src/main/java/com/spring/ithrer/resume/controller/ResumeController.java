@@ -3,7 +3,6 @@ package com.spring.ithrer.resume.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.spring.ithrer.common.util.UploadFileUtils;
-import com.spring.ithrer.common.util.Utils;
 import com.spring.ithrer.resume.model.service.ResumeService;
 import com.spring.ithrer.resume.model.vo.Award;
 import com.spring.ithrer.resume.model.vo.Career;
@@ -41,6 +39,7 @@ import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
+import com.spring.ithrer.user.model.vo.Member;
 
 
 
@@ -70,7 +69,7 @@ public class ResumeController {
 	@ResponseBody
 	public ModelAndView saveResume(ModelAndView mav,
 								   Award award,Career career,Certification certification,
-								   Hopework hopework, Intern intern,
+								   Hopework hopework, Intern intern, Member member,
 								   Language language, Learn learn,
 								   Overseas overseas, PortFolio portFolio,
 								   Preference preference, Profile profile,
@@ -90,91 +89,138 @@ public class ResumeController {
 		logger.info("profile="+profile);
 		logger.info("letter="+letter);
 		
+		try {
+			award.setAwardtextarea(award.getAwardtextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> awardMap = new HashMap<>();
 		awardMap.put("award", award);
 		awardMap.put("memberIdHide", memberIdHide);
+		
+		try {
+			career.setDescription(career.getDescription().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> careerMap = new HashMap<>();
 		careerMap.put("career",career);
 		careerMap.put("memberIdHide",memberIdHide);
+		
 		Map<String,Object> certificateMap = new HashMap<>();
 		certificateMap.put("certification",certification);
 		certificateMap.put("memberIdHide",memberIdHide);
+		
+		try {
+			hopework.setHopeplace(hopework.getHopeplace().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+			hopework.setHopeduty(hopework.getHopeduty().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> hopeworkMap = new HashMap<>();
 		hopeworkMap.put("hopework",hopework);
 		hopeworkMap.put("memberIdHide",memberIdHide);
+		
+		try {
+			intern.setInterntextarea(intern.getInterntextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> internMap = new HashMap<>();
 		internMap.put("intern",intern);
 		internMap.put("memberIdHide",memberIdHide);
+		
 		Map<String,Object> languageMap = new HashMap<>();
 		languageMap.put("language",language);
 		languageMap.put("memberIdHide",memberIdHide);
+		
+		try {
+			learn.setLearntextarea(learn.getLearntextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> learnMap = new HashMap<>();
 		learnMap.put("learn",learn);
 		learnMap.put("memberIdHide",memberIdHide);
+		
+		try {
+			overseas.setOverseastextarea(overseas.getOverseastextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> overseasMap = new HashMap<>();
 		overseasMap.put("overseas",overseas);
 		overseasMap.put("memberIdHide",memberIdHide);
+		
 		Map<String,Object> preferenceMap = new HashMap<>();
 		preferenceMap.put("preference",preference);
 		preferenceMap.put("memberIdHide",memberIdHide);
+		
 		Map<String,Object> profileMap = new HashMap<>();
 		profileMap.put("profile",profile);
 		profileMap.put("memberIdHide",memberIdHide);
+		
 		Map<String,Object> educationMap = new HashMap<>();
 		educationMap.put("education",education);
 		educationMap.put("memberIdHide",memberIdHide);
+		
+		try {
+			letter.setLetterarea(letter.getLetterarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));			
+		} catch(NullPointerException e1) {
+			e1.printStackTrace();
+		}
 		Map<String,Object> letterMap = new HashMap<>();
 		letterMap.put("letter",letter);
 		letterMap.put("memberIdHide",memberIdHide);
 		
-		res.setCharacterEncoding("utf-8");
-		/* file들어왔는지 확인용 */
-		if(file != null) {
-			logger.info("originalName:" + file.getOriginalFilename());
-			logger.info("size:" + file.getSize());
-			logger.info("ContentType:" + file.getContentType());
-		}else {
-			
-			System.out.println("FILE IS NULL");
-		}			    
-		
-	    //1.파일업로드 (업로드할 경로 찾기)
-	    Iterator<String> itr = req.getFileNames();
-	    if(itr.hasNext()) {
-	 	   file = req.getFile(itr.next());
-	    }
-	    String saveDirectory = "resume/portfolio";
-	    String o_fileName = "";
-	    String r_fileName = "";
-	    ResponseEntity<String> img_path = null;
-	    try {
-	    	if(!file.isEmpty()) {
-	    		//오리지널 파일네임
-	    		o_fileName = file.getOriginalFilename();
-	    		
-	    		//리네임해서 서버 저장용 
-	    		r_fileName = Utils.getRenamedFileName(o_fileName);
-	    		
-	    		img_path = new ResponseEntity<>(
-	    				UploadFileUtils.uploadFile(saveDirectory, o_fileName, file.getBytes()),
-	    				HttpStatus.CREATED);
-	    	}	    	
-	    } catch (NullPointerException e1) {
-	    	e1.printStackTrace();
-	    } catch (IOException e1) {
-			e1.printStackTrace();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-	   	//String path = (String)img_path.getBody();
-		PortFolio pf = new PortFolio();
-		pf.setPOriginalFileNameTest(o_fileName);
-		pf.setPRenamedFileName(r_fileName);
-		//pf.setUrl(path);
-		pf.setUrl(portFolio.getUrl());
-		Map<String,Object> portFolioMap = new HashMap<>();
-		portFolioMap.put("pf",pf);
-		portFolioMap.put("memberIdHide",memberIdHide);
+//		res.setCharacterEncoding("utf-8");
+//		/* file들어왔는지 확인용 */
+//		if(file != null) {
+//			logger.info("originalName:" + file.getOriginalFilename());
+//			logger.info("size:" + file.getSize());
+//			logger.info("ContentType:" + file.getContentType());
+//		}else {
+//			
+//			System.out.println("FILE IS NULL");
+//		}			    
+//		
+//	    //1.파일업로드 (업로드할 경로 찾기)
+//	    Iterator<String> itr = req.getFileNames();
+//	    if(itr.hasNext()) {
+//	 	   file = req.getFile(itr.next());
+//	    }
+//	    String saveDirectory = "resume/portfolio";
+//	    String o_fileName = "";
+//	    String r_fileName = "";
+//	    ResponseEntity<String> img_path = null;
+//	    try {
+//	    	if(!file.isEmpty()) {
+//	    		//오리지널 파일네임
+//	    		o_fileName = file.getOriginalFilename();
+//	    		
+//	    		//리네임해서 서버 저장용 
+//	    		r_fileName = Utils.getRenamedFileName(o_fileName);
+//	    		
+//	    		img_path = new ResponseEntity<>(
+//	    				UploadFileUtils.uploadFile(saveDirectory, o_fileName, file.getBytes()),
+//	    				HttpStatus.CREATED);
+//	    	}	    	
+//	    } catch (NullPointerException e1) {
+//	    	e1.printStackTrace();
+//	    } catch (IOException e1) {
+//			e1.printStackTrace();
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//		}
+//	   	//String path = (String)img_path.getBody();
+//		PortFolio pf = new PortFolio();
+//		pf.setPOriginalFileNameTest(o_fileName);
+//		pf.setPRenamedFileName(r_fileName);
+//		//pf.setUrl(path);
+//		pf.setUrl(portFolio.getUrl());
+//		Map<String,Object> portFolioMap = new HashMap<>();
+//		portFolioMap.put("pf",pf);
+//		portFolioMap.put("memberIdHide",memberIdHide);
 		
 		int awardresult = resumeService.insertAward(awardMap);
 		int careerresult = resumeService.insertCareer(careerMap);
@@ -187,13 +233,13 @@ public class ResumeController {
 		int preferenceresult = resumeService.insertPreference(preferenceMap);
 		int profileresult = resumeService.insertProfile(profileMap);
 		int educationresult = resumeService.insertEducation(educationMap);
-		int portFolioresult = resumeService.insertPortFolio(portFolioMap);
+//		int portFolioresult = resumeService.insertPortFolio(portFolioMap);
 		try {
 			int letterresult = resumeService.insertLetter(letterMap);			
 		} catch(NullPointerException e1) {
 			e1.printStackTrace();
 		}
-		
+		int memberresult = resumeService.updateMember(profileMap);
 		mav.setViewName("redirect:/");
 		return mav;	
 	}
@@ -218,8 +264,8 @@ public class ResumeController {
       logger.info("learn="+learn);
       Overseas overseas = resumeService.overseasView(memberId);
       logger.info("overseas="+overseas);
-      PortFolio portFolio = resumeService.portFolioView(memberId);
-      logger.info("portFolio="+portFolio);
+//      PortFolio portFolio = resumeService.portFolioView(memberId);
+//      logger.info("portFolio="+portFolio);
       Preference preference = resumeService.preferenceView(memberId);
       logger.info("preference="+preference);
       Profile profile = resumeService.profileView(memberId);
@@ -238,7 +284,7 @@ public class ResumeController {
       mav.addObject("learn", learn);
       mav.addObject("letter", letter);
       mav.addObject("overseas", overseas);
-      mav.addObject("portFolio", portFolio);
+//      mav.addObject("portFolio", portFolio);
       mav.addObject("preference", preference);
       mav.addObject("profile", profile);
       try {
@@ -289,13 +335,13 @@ public class ResumeController {
       } catch(NullPointerException e1) {
     	  int overseascnt = 0;
       }
-      try {
-    	  String portFoliorename = portFolio.getPRenamedFileName();
-    	  mav.addObject("portFoliorename", portFoliorename);   
-    	  System.out.println("portFoliocon="+portFoliorename);    	  
-      } catch(NullPointerException e1) {
-    	  String portFoliorename = null;
-      }
+//      try {
+//    	  String portFoliorename = portFolio.getPRenamedFileName();
+//    	  mav.addObject("portFoliorename", portFoliorename);   
+//    	  System.out.println("portFoliocon="+portFoliorename);    	  
+//      } catch(NullPointerException e1) {
+//    	  String portFoliorename = null;
+//      }
       try {
     	  int prefercheckcnt = preference.getPrefercheck().length;
     	  mav.addObject("prefercheckcnt", prefercheckcnt);  

@@ -16,6 +16,7 @@ import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
+import com.spring.ithrer.user.model.vo.Member;
 
 public interface ResumeDao {
 
@@ -43,7 +44,7 @@ public interface ResumeDao {
 
    int insertEducation(Map<String, Object> educationMap);
 
-   int insertPortFolio(Map<String, Object> portFolioMap);
+//   int insertPortFolio(Map<String, Object> portFolioMap);
 
 	Award awardView(String memberId);
 
@@ -61,7 +62,7 @@ public interface ResumeDao {
 
 	Overseas overseasView(String memberId);
 
-	PortFolio portFolioView(String memberId);
+//	PortFolio portFolioView(String memberId);
 
 	Preference preferenceView(String memberId);
 
@@ -96,6 +97,8 @@ public interface ResumeDao {
 	int educationUpdate(Map<String, Object> educationMap);
 
 	int letterUpdate(Map<String, Object> letterMap);
+
+	int updateMember(Map<String, Object> profileMap);
 
 
 
