@@ -195,7 +195,7 @@
 
 	<!-- 배너광고 파일이름을 가져오는 쿼리 -->
 	<select id="selectListCharged" resultType="map">
-		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date]]>
+		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate >= cs_start_date and sysdate <= cs_end_date and cs_file_name != 'null']]>
 	</select>
 	
 

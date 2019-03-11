@@ -202,8 +202,8 @@ function fn_goBoardUpdate(){
     		</c:if>
     		
     		<c:if test="${p.pbCommentLevel ==1 and p.delPlag == 'Y'}">
-    			<tr class="lever1">
-    				<td>삭제된 댓글입니다.</td>
+    			<tr class="lever1" >
+    				<td colspan="2">삭제된 댓글입니다.</td>
     			</tr>
     		</c:if>
     		
@@ -231,7 +231,7 @@ function fn_goBoardUpdate(){
     	
     	<c:if test="${p.pbCommentLevel ==2 and p.delPlag == 'Y'}">
     		<tr class="lever2">
-    				<td>삭제된 댓글입니다.</td>
+    				<td colspan="2">삭제된 댓글입니다.</td>
     			</tr>
     	</c:if>
     	

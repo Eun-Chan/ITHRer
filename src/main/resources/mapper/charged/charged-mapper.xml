@@ -4,7 +4,7 @@
 
 	<!-- 현재 결제 날짜가 남아있는 리시트 찾기 -->
 	<select id="selectListCharged" resultType="map">
-		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate <= cs_end_date]]>
+		<![CDATA[select ch.*, co.comp_name from chargedService ch join company co on ch.comp_id = co.comp_id where sysdate <= cs_end_date order by cs_no desc]]>
 	</select>
 	
 	<!-- 배너광고 파일이름 s3루트 저장 -->

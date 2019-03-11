@@ -337,11 +337,10 @@ $(".rcrt-end-btn").on("click",function(){
 
 /* 관심인재 등록 버튼 */
 $(".fav-add-btn").on("click",function(){
-	
 	var $this = $(this);
 	
 	$.ajax({
-		url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId="+$this.attr("mi")+"&recruitmentNo=${rcrtEndList[0].recruitmentNo}",
+		url: "${pageContext.request.contextPath}/company/favorite?compId=${companyLoggedIn.compId}&memberId="+$this.attr("mi")+"&recruitmentNo=${rcrtList[0].recruitmentNo}",
 		type: "post",
 		success: function(data){
 			console.log(data);
