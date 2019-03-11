@@ -14,53 +14,51 @@
 <style>
 #category-container{
 	border: 1px solid gray;
-	max-width: 165px;
+	width : 1140px;
 	background-color: #b89dff;
 	color: white;
-	margin-top: 200px;
-	display: block;
-	float: left;
-	position: fixed;
+	left: 50%; 
+	margin-left : -570px;
+	position : fixed;
+	z-index : 1; 
 }
-#category-container ul {
-	padding:10px;
-	width : 200px;
-}
-#category-container li {
-	margin-left : 5px;
-}
-#category-container ul li {
-	list-style:none;
+#category-table {
+	margin : 0 auto;
+	width : 800px;
 	font-size : 20px;
-	margin-top : 5px;
 }
-#category-container li:first-child{
-	margin-left : 22px;
-	margin-bottom : 5px;
+#category-table th{
+	text-align : center;
 }
-a[name=hovercheck] span {
-	cursor: pointer;
+#category-table td{
+	text-align : center;
 }
-a[name=hovercheck] span:hover {
-	color : darkgreen;
+#category-table td a{
+	cursor : pointer;
 }
 </style>
 <div id="category-container">
-	<ul class="nav flex-column">
-		<li class="nav-item"><span>이력서 항목</span></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addEducation();"><span>학력</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addCareer();"><span>경력</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addIntern();"><span>인턴,대외활동</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addLearn();"><span>교육이수</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addCertificate();"><span>자격증</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addAward();"><span>수상</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addOverseas();"><span>해외경험</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addLanguage();"><span>어학</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addPotfolio();"><span>포트폴리오</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addPreference();"><span>취업우대</span></a></li>
-		<li class="nav-item"><a name="hovercheck" onclick="addLetter();"><span>자기소개서</span></a></li>
-	</ul>
+	<table id="category-table">
+		<tr>
+			<th colspan="5">이력서 항목</th>
+		</tr>
+		<tr>
+			<td><a name="hovercheck" onclick="addEducation();"><span>학력</span></a></td>
+			<td><a name="hovercheck" onclick="addCareer();"><span>경력</span></a></td>
+			<td><a name="hovercheck" onclick="addOverseas();"><span>해외경험</span></a></td>
+			<td><a name="hovercheck" onclick="addLearn();"><span>교육이수</span></a></td>
+			<td><a name="hovercheck" onclick="addCertificate();"><span>자격증</span></a></td>
+		</tr>
+		<tr>
+			<td><a name="hovercheck" onclick="addAward();"><span>수상</span></a></td>
+			<td><a name="hovercheck" onclick="addLanguage();"><span>어학</span></a></td>
+			<td><a name="hovercheck" onclick="addIntern();"><span>인턴,대외활동</span></a></td>
+			<td><a name="hovercheck" onclick="addPreference();"><span>취업우대</span></a></td>
+			<td><a name="hovercheck" onclick="addLetter();"><span>자기소개서</span></a></td>
+		</tr>
+	</table>
 </div>
+<br /><br /><br /><br />
 <script>
 var educount = 0;
 var carerrcount = 0;
@@ -163,7 +161,7 @@ function addLanguage() {
 		$("#languageTotal").show();
 	}
 }
-function addPotfolio() {
+/* function addPotfolio() {
 	potfoliocount++;
 	if(potfoliocount%2==0) {
 		$("#potfolioTotal").hide();
@@ -172,7 +170,7 @@ function addPotfolio() {
 	else {
 		$("#potfolioTotal").show();
 	}
-}
+} */
 function addPreference() {
 	preferencecount++;
 	if(preferencecount%2==0) {

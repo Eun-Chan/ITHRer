@@ -20,6 +20,7 @@ import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
+import com.spring.ithrer.user.model.vo.Member;
 
 @Service
 public class ResumeServiceImpl implements ResumeService {
@@ -100,11 +101,11 @@ public class ResumeServiceImpl implements ResumeService {
 		return result;
 	}
 
-	@Override
-	public int insertPortFolio(Map<String, Object> portFolioMap) {
-		int result = resumeDao.insertPortFolio(portFolioMap);
-		return result;
-	}
+//	@Override
+//	public int insertPortFolio(Map<String, Object> portFolioMap) {
+//		int result = resumeDao.insertPortFolio(portFolioMap);
+//		return result;
+//	}
 	
 	@Override
 	public Award awardView(String memberId) {
@@ -154,11 +155,11 @@ public class ResumeServiceImpl implements ResumeService {
 		return overseas;
 	}
 
-	@Override
-	public PortFolio portFolioView(String memberId) {
-		PortFolio portFolio = resumeDao.portFolioView(memberId);
-		return portFolio;
-	}
+//	@Override
+//	public PortFolio portFolioView(String memberId) {
+//		PortFolio portFolio = resumeDao.portFolioView(memberId);
+//		return portFolio;
+//	}
 
 	@Override
 	public Preference preferenceView(String memberId) {
@@ -259,6 +260,12 @@ public class ResumeServiceImpl implements ResumeService {
 	@Override
 	public int letterUpdate(Map<String, Object> letterMap) {
 		int result = resumeDao.letterUpdate(letterMap);
+		return result;
+	}
+
+	@Override
+	public int updateMember(Map<String, Object> profileMap) {
+		int result = resumeDao.updateMember(profileMap);
 		return result;
 	}
 }
