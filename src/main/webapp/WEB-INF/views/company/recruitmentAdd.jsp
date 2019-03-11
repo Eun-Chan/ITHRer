@@ -1120,7 +1120,7 @@ html
 			<h3>접수기간과 접수방법은 어떻게 되나요?</h3>
 		</div>
 		<div class="explanation-footer">
-			<p class="explanation-footer-text">구직자는 PC와 모바일 어디서나손쉽게 바로지원 가능한 인크루트 이력서를 선호합니다.</p>
+			<p class="explanation-footer-text">구직자는 손쉽게 바로지원 가능한 ITHRER 이력서를 선호합니다.</p>
 		</div>
 	</div>
 	<table id="term-content" class="td-inputFrm">
@@ -1240,7 +1240,7 @@ html
 			<h3>공고등록 전에 입력하신 내용을 최종 확인해주세요</h3>
 		</div>
 		<div class="explanation-footer">
-			<p class="explanation-footer-text">지금까지 입력하신 내용을 입력한 내용 적용하기 버튼을 클릭하여 상세요강을 채워주세요.</p>
+			<p class="explanation-footer-text">지금까지 입력하신 내용을 다시한번 정리해서 알려주세요.</p>
 		</div>
 	</div>
 	<div id="summernoteDiv">

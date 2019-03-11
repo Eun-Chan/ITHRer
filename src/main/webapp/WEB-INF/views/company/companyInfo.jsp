@@ -37,7 +37,15 @@ div[id$=-container]{
 div.border-top.border-bottom{
 	border-width: 4px !important;
 }
-
+#dateOfEstablishmentInput
+{
+	width:100%;
+	min-height: 38px;
+	border: 1px solid #ced4da;
+	padding-left: 12px;
+	color: #495057;
+	border-radius: .25rem;
+}
 </style>
 
 
@@ -127,7 +135,7 @@ div.border-top.border-bottom{
 				<div class="col-sm-6">
 					<div class="form-group">
 						<label for="dateOfEstablishment">설립일</label><br />
-						<input type="date" name="dateOfEstablishment" id="" value="${ companyMap.company.doe }"/>
+						<input type="date" name="dateOfEstablishment" id="dateOfEstablishmentInput" value="${ companyMap.company.doe }"/>
 					</div>
 				</div>
 				<div class="col-sm-6">
