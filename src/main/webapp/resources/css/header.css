@@ -1,0 +1,40 @@
+@charset "UTF-8";
+a#chat_cnt:hover
+{
+	cursor: pointer;
+}
+
+#chatting_div
+{
+   z-index: 9;
+   width: 30%;
+   position: fixed !important;
+   left: 70%;
+   height : 90%;
+   text-align : center;
+   display : none;
+   background-color : #428bca;
+}
+
+#messageWindow{
+	resize : none;
+}
+
+#inputMessage
+{
+	 width: 70%;
+	 display: inline;
+ 	 margin-top : 5%;
+}
+
+#chat-Container
+{ 
+	z-index: 99999;
+	width: 70%;
+	position: fixed !important;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	min-width: 300px;
+	width: 300px
+} 

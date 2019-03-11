@@ -12,7 +12,7 @@
 	// 개인 회원 세션에 있는 정보 가져오기
 	Member member = (Member)session.getAttribute("member");
 	// 기업 회원 세션에 있는 정보 가져오기\
-	Company company = (Company)session.getAttribute("company");
+	Company company = (Company)session.getAttribute("companyLoggedIn");
 	
 	// 전송된 쿠키확인
 	boolean memberSaveId = false;
@@ -90,7 +90,8 @@
 <!-- 페이스북 로그인용(로그인 버튼) -->
 <script async defer src="https://connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v3.2&appId=1894308784031760&autoLogAppEvents=1"></script>
 
-
+<!-- header.css -->
+<link rel="stylesheet" href="${pageContext.request.contextPath }/resources/css/header.css" />
 
 </head>
 <body>
@@ -110,7 +111,10 @@
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume.ithrer">이력서</a></li>		
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판</a></li>    
-				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>
+				      <c:if test="${not empty member or not empty company }">
+				      	<li class="nav-item"><a class="nav-link" onclick="chatting();" id="chat_cnt">채팅</a></li>
+				      </c:if>		     
 				    </ul>
 			    </c:if>
 			    <c:if test="${member!=null and member.memberId eq 'ithreradmin' }">
@@ -270,6 +274,15 @@
   </div> <!-- modal-dialog 끝 -->
 </div> <!-- modal fade 끝 -->
 
+<!-- 채팅 -->
+<div id="chatting_div">
+   <div style="height: 90%">
+   	<textarea id="messageWindow" readonly="true" style="height: 100%; width: 100%"></textarea>
+   </div>
+   <input id="inputMessage" class="form-control" type="text" onkeyup="chat_enterkey()" placeholder="채팅을 입력해줭"/>
+   <input type="submit" id="sendBtn" class="btn btn-default" value="보내기" onclick="chat_send()" />
+</div>
+
 <script>
   	//<![CDATA[
     function addPlusFriend() {
@@ -382,6 +395,12 @@
 		}
 	}
 	
+	function chat_enterkey(){
+		if(window.event.keyCode == 13){
+			chat_send();
+		}
+	}
+	
 	function memberLoginCheck(){
 		var memberId = $("#memberId").val().trim();
 		var memberPassword = $("#memberPassword").val().trim();
@@ -450,7 +469,65 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
-	 
+	
+	function chatting(){
+		$("#chatting_div").toggle();
+    }
+	
+	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ채팅ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ */
+	var textarea = $("#messageWindow");
+	 <%if(member != null || company != null) {%>
+    	var webSocket = new WebSocket('ws://52.78.61.219:8080/ITHRer/websocket/chat.ithrer');
+    <%}%> 
+    
+    var inputMessage = $("#inputMessage"); 
+    
+    webSocket.onerror = function(event) {
+      onError(event)
+    };
+    webSocket.onopen = function(event) {
+      onOpen(event)
+    };
+    webSocket.onmessage = function(event) {
+      onMessage(event)
+    };
+    function onMessage(event) {
+		if(event.data.indexOf('접속자 : ') == 0){
+			$("#chat_cnt").text("채팅 ("+event.data+")");
+			return;
+		}
+        textarea.val(textarea.val() + event.data + "\n");
+        const top = textarea.prop('scrollHeight');
+        textarea.scrollTop(top);
+    }
+    function onOpen(event) {
+        textarea.val("채팅방에 입장 하셨습니다❤\n");
+        console.log(event);
+    }
+    function onError(event) {
+      alert(event.data);
+    }
+    
+    function chat_send() {
+    	if(inputMessage.val().length != 0){
+    	<%if(member != null){%>
+        textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n");
+        webSocket.send('<%=member.getMemberName()%>님 : ' + inputMessage.val());
+        inputMessage.val("");
+        /* 채팅창 스크롤 자동 내리기 */
+        const top = textarea.prop('scrollHeight');
+        textarea.scrollTop(top);
+    	<%}else if(company != null){%>
+        textarea.val(textarea.val() + '<%=company.getCompName()%>님 : ' + inputMessage.val() + "\n");
+        webSocket.send('<%=company.getCompName()%>님 : ' + inputMessage.val());
+        inputMessage.val("");
+        /* 채팅창 스크롤 자동 내리기 */
+        const top = textarea.prop('scrollHeight');
+        textarea.scrollTop(top);
+    	<%}%>
+    	}
+    }
+	
 </script>
 	
 	<section id="content">
