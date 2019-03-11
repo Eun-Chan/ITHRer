@@ -67,8 +67,8 @@
 			and applicant_age_end >= #{age}
 		</if>
 		
-		<if test='gender != null and gender !="0" and gender !=""'>
-			and gender_cut = #{gender} or gender_cut = '0'
+		<if test='gender != null and gender !=""'>
+			and (gender_cut = #{gender} or gender_cut = '0')
 		</if>
 		
 		<if test="subway != null and subway != '' and subway != 'null'">
