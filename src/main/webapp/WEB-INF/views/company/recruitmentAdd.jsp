@@ -534,7 +534,7 @@ html
 					<input type="checkbox" class='ipt-chkBox employ-type' name="Employ_Ty_CdName" id="Employ_Ty_Cd_select_7" value="7" ><label label for="Employ_Ty_Cd_select_7">알바</label>
 				</div>
 				<!-- 숨겨진 영역 -->
-				<div id="employType0" class="hiddenDiv" style="height: 140px;">
+<!-- 				<div id="employType0" class="hiddenDiv" style="height: 140px;">
 					<table class="employType-table" id="emploType0-table" style="width: 100%;">
 						<tr class="td-line">
 							<th class="content-title"><span class="content-title-in hiddenTitle">정규직</span></th>
@@ -551,8 +551,8 @@ html
 						</tr>
 					</table>
 					
-				</div>
-				<div id="employType1" class="hiddenDiv" style="height: 140px">
+				</div> -->
+				<!-- <div id="employType1" class="hiddenDiv" style="height: 140px">
 					<table class="employType-table" id="emploType1-table" style="width: 100%;">
 						<tr class="td-line">
 							<th class="content-title"><span class="content-title-in hiddenTitle">계약직</span></th>
@@ -704,7 +704,7 @@ html
 					</table>
 				</div>
 			</td>
-		</tr>
+		</tr> -->
 		<!-- 모집인원 -->
 		
 		<tr class="td-line">
@@ -830,7 +830,6 @@ html
 								<option name="fore-lang2" value="영어">영어</option>
 								<option name="fore-lang3" value="일본어">일본어</option>
 								<option name="fore-lang4" value="중국어">중국어</option>
-								<option name="fore-lang5" value="직접입력">직접입력</option>
 							</select>
 						</li>
 						<li>
@@ -1326,9 +1325,48 @@ html
 
 <!-- 스크립트 영역 -->
 <script>
+var passSubmit = false;
+var checkFrm1_0 = false;
+var checkFrm1_1 = false;
+var checkFrm1_2 = false;
+var checkFrm1_3 = false;
+var checkFrm2_1 = false;
+var checkFrm3_0 = false;
+var checkFrm3_1 = false;
+var checkFrm3_3_1 = false;
+var checkFrm3_3_2 = false;
+var checkFrm4_1 = false;
+var checkFrm4_2 = false;
+var checkFrm4_3 = false;
+var checkFrm4_4 = false;
+var checkFrm4_5 = false;
 /*test*/
 
 /* === submit === */
+function checkSubmit()
+{
+	$("#frm1-0").val()==""?checkFrm1_0=false:checkFrm1_0=true;
+	console.log("frm1-0", checkFrm1_0);
+	$("#frm1-1").val()==""?checkFrm1_1=false:checkFrm1_1=true;
+	$("#frm1-2").val()==""?checkFrm1_2=false:checkFrm1_2=true;
+	$("#frm1-3").val()==""?checkFrm1_3=false:checkFrm1_3=true;
+	$("#frm2-1").val()==""?checkFrm2_1=false:checkFrm2_1=true;
+	$("#frm3-0").val()==""?checkFrm3_0=false:checkFrm3_0=true;
+	$("#frm3-1").val()==""?checkFrm3_1=false:checkFrm3_1=true;
+	$("#frm3-3-1").val()==""?checkFrm3_3_1=false:checkFrm3_3_1=true;
+	$("#frm3-3-2").val()==""?checkFrm3_3_2=false:checkFrm3_3_2=true;
+	$("#frm4-1").val()==""?checkFrm4_1=false:checkFrm4_1=true;
+	$("#frm4-2").val()==""?checkFrm4_2=false:checkFrm4_2=true;
+	$("#frm4-3").val()==""?checkFrm4_3=false:checkFrm4_3=true;
+	$("#frm4-4").val()==""?checkFrm4_4=false:checkFrm4_4=true;
+	$("#frm4-5").val()==""?checkFrm4_5=false:checkFrm4_5=true;
+	
+	if(checkFrm1_0==true && checkFrm1_1==true && checkFrm1_2==true && checkFrm1_3 == true && checkFrm2_1==true && checkFrm3_0==true && checkFrm3_3_1==true &&checkFrm3_3_2==true&&checkFrm4_1==true&&checkFrm4_2==true&&checkFrm4_3==true&&checkFrm4_4==true&&checkFrm4_5==true)
+	{
+		passSubmit = true;
+		console.log("성공");
+	}
+}
 /* --- total --- */
 function recruitmentSend()
 {
@@ -1337,8 +1375,17 @@ function recruitmentSend()
 	frm3hiddenInput();
 	frm4hiddenInput();
 	frm5hiddenInput();
-	alert("정상적으로 등록되었습니다.");
-	$("#testFrm").submit();
+	checkSubmit();
+	if(passSubmit)
+	{
+		alert("정상적으로 등록되었습니다.");
+		$("#testFrm").submit();
+	}
+	else
+	{
+		alert("필수사항을 모두 입력해주세요.");
+		return;
+	}
 }
 /* 기타정보 */
 function frm5hiddenInput()
@@ -1571,7 +1618,7 @@ function frm1hiddenInput()
 		result_empType += ",";
 	});
 	console.log("고용형태 : "+result_empType);
-	$("#frm1-3").val(result_empType);
+	$("#frm1-3").val(result_empType.substr(0, result_empType.length-1));
 	
 	/* ============= 고용인원 ============= */
 	var result_empCnt = $("input#input-cnt").val();
@@ -2274,22 +2321,50 @@ $(document).ready(function(){
         }
       });
     }
-	//서머노트 준비
-	$("#summernote-area").summernote({
-		width: "100%",
-		height: 300,
-		lang: 'ko-KR',
-		fontNames: ['fontA',  'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
-		callbacks: {
-			// 이미지 업로드시 사용될 콜백함수
-			onImageUpload: function(files, editor, welEditable){
-				for(var i = files.length -1; i>=0; i--)
-				{
-					sendFile(files[i], this);				
+	var sendFile = function (upFile, el) {
+		  var directory = 'images/summernote';
+		  var form = $("#testFrm")[0];
+	      var form_data = new FormData();
+	      form_data.append('upFile', upFile);
+	      form_data.append("directory", directory);
+	      $.ajax({
+	        data: form_data,
+	        type: "POST",
+	        url: '${pageContext.request.contextPath}/fileUploadSummernote.ithrer',
+	        cache: false,
+	        processData: false,
+	        contentType: false,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+	        success: function(url) {
+	        	console.log(url);
+	        	console.log("이미지 전송 성공!!!!!!");
+	        	var html = "<img src="+"${pageContext.request.contextPath}/displayFile.ithrer?fileName="+url+"&directory=summernote"+" alt='채용공고' width='100px'/>";
+	        	url = "${pageContext.request.contextPath}/displayFile.ithrer?fileName="+url+"&directory=summernote";
+	        	$(el).summernote('editor.insertImage', url);
+	            $('#imageBoard > ul').append('<li>'+html+'</li>');
+	        },
+	        error: function(){
+	        	console.log("이미지 전송 ajax 실패");
+	        }
+	      });
+	    }
+		//서머노트 준비
+		$("#summernote-area").summernote({
+			width: "100%",
+			height: 300,
+			lang: 'ko-KR',
+			fontNames: ['fontA',  'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+			callbacks: {
+				// 이미지 업로드시 사용될 콜백함수
+				onImageUpload: function(files, editor, welEditable){
+					for(var i = files.length -1; i>=0; i--)
+					{
+						sendFile(files[i], this);				
+					}
 				}
 			}
-		}
-	});
+		});
 });
 /* 경력 - 경력, 신입경력에서 연차무관을 선택할 경우 : 초기화 후 읽기전용 속성으로 변경 */
 var checked_irrelevant_crr = false;

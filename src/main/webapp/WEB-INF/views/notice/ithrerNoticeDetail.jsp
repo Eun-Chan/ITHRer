@@ -190,7 +190,7 @@
 					<dt>고용형태</dt>
 					<dd style="color:#ffb6c1;">${rc.employmentType }</dd>
 					<dt>급여</dt>
-					<dd>${rc.payCondition }</dd>
+					<dd>${rc.salaryType} ${rc.payCondition }</dd>
 					<dt>지역</dt>
 					<dd>${rc.location }</dd>
 				</dl>
