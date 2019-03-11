@@ -159,6 +159,65 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public Letter letterView(String memberId) {
 		return sqlSession.selectOne("resume.letterView",memberId);
-	} 
+	}
 
+	@Override
+	public int proUpdate(Map<String, Object> profileMap) {
+		return sqlSession.update("resume.proUpdate",profileMap);
+	}
+
+	@Override
+	public int awardUpdate(Map<String, Object> awardMap) {
+		return sqlSession.update("resume.awardUpdate",awardMap);
+	}
+
+	@Override
+	public int careerUpdate(Map<String, Object> careerMap) {
+		return sqlSession.update("resume.careerUpdate",careerMap);
+	}
+
+	@Override
+	public int certificateUpdate(Map<String, Object> certificateMap) {
+		return sqlSession.update("resume.certificateUpdate",certificateMap);
+	}
+
+	@Override
+	public int hopeworkUpdate(Map<String, Object> hopeworkMap) {
+		return sqlSession.update("resume.hopeworkUpdate",hopeworkMap);
+	}
+
+	@Override
+	public int internUpdate(Map<String, Object> internMap) {
+		return sqlSession.update("resume.internUpdate",internMap);
+	}
+
+	@Override
+	public int languageUpdate(Map<String, Object> languageMap) {
+		return sqlSession.update("resume.languageUpdate",languageMap);
+	}
+
+	@Override
+	public int learnUpdate(Map<String, Object> learnMap) {
+		return sqlSession.update("resume.learnUpdate",learnMap);
+	}
+
+	@Override
+	public int overseasUpdate(Map<String, Object> overseasMap) {
+		return sqlSession.update("resume.overseasUpdate",overseasMap);
+	}
+
+	@Override
+	public int preferenceUpdate(Map<String, Object> preferenceMap) {
+		return sqlSession.update("resume.preferenceUpdate",preferenceMap);
+	}
+
+	@Override
+	public int educationUpdate(Map<String, Object> educationMap) {
+		return sqlSession.update("resume.educationUpdate",educationMap);
+	}
+
+	@Override
+	public int letterUpdate(Map<String, Object> letterMap) {
+		return sqlSession.update("resume.letterUpdate",letterMap);
+	}
 }

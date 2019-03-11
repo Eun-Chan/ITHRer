@@ -34,4 +34,10 @@ public interface UserService {
 	int createKakaoUser(Map<String, String> user);
 
 	int memberPasswordUpdate(Member member);
+
+	Company findCompanyId(Company company);
+
+	Company findPasswordEmailAuth2(Company company);
+
+	int companyPasswordUpdate(Company company);
 }

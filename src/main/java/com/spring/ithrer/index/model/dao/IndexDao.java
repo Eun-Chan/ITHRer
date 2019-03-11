@@ -44,7 +44,7 @@ public interface IndexDao {
 
    List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
 
-   List<PortFolio> selectListPortFolio(String memberId);
+   PortFolio selectOnePortFolio(String memberId);
 
    int deletePortFolio(int pfNo);
 
@@ -66,6 +66,8 @@ public interface IndexDao {
 	Recruitment selectOneRecruitmentEndCheck(int recruitmentNo);
 	
 	int updateProfile(Map<String, Object> param);
+
+	int deletePortFolio(String memberId);
 
 
 

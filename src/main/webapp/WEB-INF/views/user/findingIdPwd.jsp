@@ -135,7 +135,7 @@
 									<!-- 기업회원 -->
 									<div class="container mt-3" id="company">
 										<h3>기업회원</h3>
-										<form class="form">
+										<form action="${pageContext.request.contextPath }/user/companyPasswordUpdateGoing.ithrer" method="POST" id="companyPasswordUpdateGoing">
 											<div class="form-group row mb-2">
 												<div class="col">
 													<input class="form-control" placeholder="아이디" id="compId" name="compId"/>
@@ -144,19 +144,35 @@
 											</div>
 											<div class="form-group row mb-2">
 												<div class="col">
-													<input class="form-control" placeholder="가입자명" id="compName" name="compName"/>
+													<input class="form-control" placeholder="가입자명" id="compName2" name="compName"/>
 													<span><p id="name-help2"></p></span>
 												</div>	
 											</div>
 											<div class="form-group row mb-2">
 												<div class="col">
-													<input class="form-control" placeholder="사업자번호(10자리)" type="text" id="licenseNo" name="licenseNo" maxlength="10"/>
+													<input class="form-control" placeholder="사업자번호(10자리)" type="text" id="licenseNo2" name="licenseNo" maxlength="10"/>
+													<span><p id="license-help2"></p></span>
+												</div>
+											</div>
+											<div class="form-group row mb-2">
+												<div class="col-8">
+													<input class="form-control" placeholder="이메일주소(ithrer@ithrer.com)" type="email" id="compEmail" name="compEmail"/>
+													<span><p id="email-help2""></p></span>
+												</div>
+												<div class="col-4">
+													<input type="button" class="btn btn-secondary" value="인증번호 전송" onclick="companyEmailAuth();"/>
+												</div>
+											</div>
+											<div class="form-group row mb-2">
+												<div class="col">
+													<input class="form-control" placeholder="이메일 인증번호" type="text" id="emailAuth2"/>
+													<span><p id="emailAuth-help3"></p></span>
 												</div>
 											</div>
 											<div class="form group row mb-2">
 												<div class="col">
 													<span><p id="companyIdCheck-help"></p></span>														
-													<input type="button" class="btn btn-secondary submitBtn" value="확인" onclick="companyIdFind();"/>
+													<input type="button" class="btn btn-secondary submitBtn" value="확인" onclick="companyInfoCheck();"/>
 													<br />
 												</div>
 											</div>
@@ -176,6 +192,16 @@
 </body>
 
 <script>	
+	/* 사업자 번호 숫자만 입력만 가능 */
+	$("#licenseNo").on("keyup", function() {
+		$(this).val($(this).val().replace(/[^0-9]/g,""));
+	});
+	
+	$("#licenseNo2").on("keyup", function() {
+		$(this).val($(this).val().replace(/[^0-9]/g,""));
+	});
+	
+	
 	var memberName_OK = 0;
 	var memberEmail_OK = 0;
 
@@ -297,18 +323,69 @@
 	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업회원 아이디 찾기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 	
 	function companyIdFind(){
-		var compName = $("#compName").val().trim();
+		var representive = $("#compName").val().trim();
 		var licenseNo = $("#licenseNo").val().trim();
+		
+		
 		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/user/findCompanyId.ithrer",
 			type : "POST",
-			data : {compName : compName, licenseNo : licenseNo},
+			data : {representive : representive, licenseNo : licenseNo},
 			success : function(data){
-				
+				if(data.result =="true"){
+					alert("메일에서 아이디를 확인하시기 바랍니다.");
+					location.href = "/ithrer";
+				}
+				else{
+					alert("일치하는 회원정보가 없습니다. \n회원정보를 다시 확인하거나 회원가입을 진행해주십시오.");
+					location.reload();
+				}
 			}
 		});
 	}
+	
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업회원 아이디 찾기 끝ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업회원 비밀번호 찾기 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+	/* 이메일 인증번호 보내기 */
+	function companyEmailAuth(){
+		var compId = $("#compId").val().trim();
+		var representive = $("#compName2").val().trim();
+		var licenseNo = $("#licenseNo2").val().trim();
+		var compEmail = $("#compEmail").val().trim();
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/user/findPasswordEmailAuth2.ithrer",
+			type : "POST",
+			data : {compId : compId , representive : representive , licenseNo : licenseNo , compEmail : compEmail},
+			success : function(data){
+				if(data.result == "true"){
+					alert("메일에서 인증번호를 확인하시기 바랍니다.");
+					authNum = data.authNum;
+				}
+				else{
+					alert("일치하는 회원정보가 없습니다. \n회원정보를 다시 확인하거나 회원가입을 진행해주십시오.");
+					location.reload();
+				}
+			}
+		});
+	}
+	
+	function companyInfoCheck(){
+		var inputAuthNum = $("#emailAuth2").val().trim();
+		
+		if(authNum == inputAuthNum){
+			$("#companyPasswordUpdateGoing").submit();
+		}
+		else{
+			$("#emailAuth-help3").text("인증번호가 틀립니다.");
+			$("#emailAuth-help3").removeClass("text-success");
+			$("#emailAuth-help3").addClass("text-danger");
+		}
+		
+	}
+	/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 기업회원 비밀번호 찾기 끝 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 </script>
 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

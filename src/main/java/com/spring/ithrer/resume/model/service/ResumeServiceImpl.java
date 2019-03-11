@@ -189,4 +189,76 @@ public class ResumeServiceImpl implements ResumeService {
 		Letter letter = resumeDao.letterView(memberId);
 		return letter;
 	}
+
+	@Override
+	public int proUpdate(Map<String, Object> profileMap) {
+		int result = resumeDao.proUpdate(profileMap);
+		return result;
+	}
+
+	@Override
+	public int awardUpdate(Map<String, Object> awardMap) {
+		int result = resumeDao.awardUpdate(awardMap);
+		return result;
+	}
+
+	@Override
+	public int careerUpdate(Map<String, Object> careerMap) {
+		int result = resumeDao.careerUpdate(careerMap);
+		return result;
+	}
+
+	@Override
+	public int certificateUpdate(Map<String, Object> certificateMap) {
+		int result = resumeDao.certificateUpdate(certificateMap);
+		return result;
+	}
+
+	@Override
+	public int hopeworkUpdate(Map<String, Object> hopeworkMap) {
+		int result = resumeDao.hopeworkUpdate(hopeworkMap);
+		return result;
+	}
+
+	@Override
+	public int internUpdate(Map<String, Object> internMap) {
+		int result = resumeDao.internUpdate(internMap);
+		return result;
+	}
+
+	@Override
+	public int languageUpdate(Map<String, Object> languageMap) {
+		int result = resumeDao.languageUpdate(languageMap);
+		return result;
+	}
+
+	@Override
+	public int learnUpdate(Map<String, Object> learnMap) {
+		int result = resumeDao.learnUpdate(learnMap);
+		return result;
+	}
+
+	@Override
+	public int overseasUpdate(Map<String, Object> overseasMap) {
+		int result = resumeDao.overseasUpdate(overseasMap);
+		return result;
+	}
+
+	@Override
+	public int preferenceUpdate(Map<String, Object> preferenceMap) {
+		int result = resumeDao.preferenceUpdate(preferenceMap);
+		return result;
+	}
+
+	@Override
+	public int educationUpdate(Map<String, Object> educationMap) {
+		int result = resumeDao.educationUpdate(educationMap);
+		return result;
+	}
+
+	@Override
+	public int letterUpdate(Map<String, Object> letterMap) {
+		int result = resumeDao.letterUpdate(letterMap);
+		return result;
+	}
 }

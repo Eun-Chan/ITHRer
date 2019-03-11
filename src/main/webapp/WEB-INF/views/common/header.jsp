@@ -105,7 +105,7 @@
 		  	</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
-				<c:if test="${(empty member and empty companyLoggedIn ) or member.memberId ne 'ithreradmin'  }">
+				<c:if test="${empty companyLoggedIn  and member.memberId ne 'ithreradmin'  }">
 					<ul class="navbar-nav mr-auto">	     
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume.ithrer">이력서</a></li>		
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
@@ -122,10 +122,11 @@
 			    	<ul class="navbar-nav">
 					    <!-- 로그인,회원가입 버튼 -->
 		        		<li class="nav-item"><a class="nav-link" href="" data-toggle="modal" data-target="#loginModal">로그인</a></li>
-						<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 	        		</ul>
 			 	</c:if>
 			 	<c:if test="${!empty companyLoggedIn }">
+			 	 	<ul class="navbar-nav mr-auto">	     	
+				    </ul>
 					<ul class="navbar-nav">
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/index.ithrer?compId=${companyLoggedIn.compId }">기업홈</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${companyLoggedIn.compId }">기업정보관리</a></li>
@@ -142,12 +143,14 @@
 					  <div class="dropdown-menu">
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
-					    <a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
+					  	<c:if test="${not empty member.password }">
+					    	<a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
+					  	</c:if>					  
 					  </div>
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
 				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
-				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 		</ul>
 			 	</c:if>
 			 	<c:if test="${member != null and member.memberId eq 'ithreradmin' }">
@@ -155,7 +158,7 @@
 			 			<span class="headerMemberTitle" style="padding: 8px;">
 					   		${member.memberName }님
 					   </span>
-				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.do'">로그아웃</button></li>
+				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 	</ul>
 			 	</c:if>
 			 </div>
@@ -216,9 +219,20 @@
 				  				<!-- 카카오로그인 -->
 				  				<img src="${pageContext.request.contextPath }/resources/images/kakao_login.png" class="rounded-circle" onclick="kakaoLogin()" width="50px">
 				  				<!-- 페이스북로그인 -->
-				  				<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false"></div>
+<!--  				  			<div class="fb-login-button" data-size="small" data-button-type="login_with" data-auto-logout-link="false" data-use-continue-as="false" onlogin="facebookLogin()"></div>  -->
+								<%-- <img src="${pageContext.request.contextPath }/resources/images/facebook.png" class="rounded-circle" onclick="facebookLogin()" width="50px"/> --%>
 				  				<!-- 네이버로그인 -->
 				  				<img height="35" src="http://static.nid.naver.com/oauth/small_g_in.PNG" onclick="naverPopup();" style="cursor: pointer;"/>
+				  			</div>
+				  			<br />
+				  			<div class="form-group">
+				  				<p class="font-italic text-info">ITHRer 플친</p>
+				  				<a href="javascript:void addPlusFriend()">
+  									<img src="${pageContext.request.contextPath }/resources/images/plusFriend.png" width="50px"/>
+								</a>
+								<a href="javascript:void plusFriendChat()">
+								  <img src="${pageContext.request.contextPath }/resources/images/chatbot.png" width="50px"/>
+								</a>								
 				  			</div>
 						</form>	
 					</div>
@@ -257,6 +271,22 @@
 </div> <!-- modal fade 끝 -->
 
 <script>
+  	//<![CDATA[
+    function addPlusFriend() {
+      Kakao.PlusFriend.addFriend({
+        plusFriendId: '_jFIej' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+      });
+    }
+ 	 //]]>
+  	
+  	//<![CDATA[
+    function plusFriendChat() {
+      Kakao.PlusFriend.chat({
+        plusFriendId: '_jFIej' // 플러스친구 홈 URL에 명시된 id로 설정합니다.
+      });
+    }
+  	//]]>
+  
 	/* 네이버 로그인 새창 띄우기용 */
 	function naverPopup(){
 		window.open("<%=apiURL%>","_blank","width=300, height=300;"); 
@@ -264,7 +294,8 @@
 	/* 네이버 로그인 새창에서 access token 받아와서 로그인 처리 */
 	function naverLogin(accessToken){
 		$.ajax({
-    		url : "${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken="+accessToken,
+    		/* url : "${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken="+accessToken, */
+    		url : "http://52.78.61.219:8080/ITHRer/user/naverLogin.ithrer?naverAccessToken="+accessToken,
     		//data : {naverAccessToken: accessToken},
     		type : "POST",
     		success : function(data){
@@ -272,7 +303,7 @@
    				// 네이버 로그인후 새로고침	
    				if(data.result == 'true')
     				location.reload();
-   				else if(data == 'false'){
+   				else if(data == 'already'){
    					$("#login-help").text("이미 아이디가 접속중입니다!");
 					$("#login-help").addClass("text-danger");
    				}
@@ -329,11 +360,11 @@
     		type : "POST",
     		success : function(data){
    				// 카카오톡 로그인후 새로고침	
-   				if(data == 'true')
+   				if(data.result == 'true')
     				location.reload();
-   				else if(data == 'false'){
-   					$("#login-help").text("이미 아이디가 접속중입니다!");
-					$("#login-help").addClass("text-danger");
+   				else if(data.result == 'already'){
+   					alert("이미 해당 카카오톡 아이디가 접속중입니다!");
+					location.reload();
    				}
     		}
     	});
@@ -375,6 +406,10 @@
 					$("#login-help").text("아이디 혹은 비밀번호가 알맞지 않습니다.");
 					$("#login-help").addClass("text-danger");
 				}
+				else if(data.result == "already"){
+					$("#login-help").text("이미 아이디가 접속중입니다.");
+					$("#login-help").addClass("text-danger");
+				}
 			}
 		});
 	}
@@ -384,7 +419,6 @@
 		var companyPassword = $("#companyPassword").val().trim();
 		var companySaveId = $("#companySaveId").is(":checked");
 		
-		alert(companyPassword);
 		if(companyId == 0 || companyPassword == 0){
 			$("#login-help2").text("아이디 혹은 비밀번호를 입력해 주시길 바랍니다.");
 			$("#login-help2").addClass("text-danger");
@@ -403,6 +437,10 @@
 					$("#login-help2").text("아이디 혹은 비밀번호가 알맞지 않습니다.");
 					$("#login-help2").addClass("text-danger");
 				}
+				else if(data.result == "already"){
+					$("#login-help2").text("이미 아이디가 접속중입니다.");
+					$("#login-help2").addClass("text-danger");
+				}
 			}
 		});
 	}
@@ -412,44 +450,7 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
-	
-	/* ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ 페이스북 로그인 ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-	window.fbAsyncInit = function() {
-	    FB.init({
-	      appId      : '1894308784031760',
-	      cookie     : true,
-	      xfbml      : true,
-	      version    : 'v3.2'
-	    });
-      
-    	FB.AppEvents.logPageView();   
-      
- 	};
- 	
- 	(function(d, s, id){
- 	     var js, fjs = d.getElementsByTagName(s)[0];
- 	     if (d.getElementById(id)) {return;}
- 	     js = d.createElement(s); js.id = id;
- 	     js.src = "https://connect.facebook.net/en_US/sdk.js";
- 	     fjs.parentNode.insertBefore(js, fjs);
- 	   }(document, 'script', 'facebook-jssdk'));
- 	
- 	function checkLoginState() {
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-          });
-    }
-  	
- 	function statusChangeCallback(response) {
-    	if (response.status === 'connected') {
-         	FB.AppEvents.logPageView();
-         	testAPI();
-    	}
-    	else {
-    		FB.AppEvents.logPageView();
-    	}
-  	}
- 
+	 
 </script>
 	
 	<section id="content">

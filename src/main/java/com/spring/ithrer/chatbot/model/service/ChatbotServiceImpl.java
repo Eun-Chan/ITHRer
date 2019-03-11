@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.ithrer.board.model.vo.AnonyBoard;
+import com.spring.ithrer.board.model.vo.PassBoard;
 import com.spring.ithrer.chatbot.model.dao.ChatbotDao;
 
 @Service
@@ -21,5 +22,10 @@ public class ChatbotServiceImpl implements ChatbotService {
 	@Override
 	public List<AnonyBoard> selectBoardList() {
 		return chatbotDao.selectBoardList();
+	}
+
+	@Override
+	public List<PassBoard> selectPassBoardList() {
+		return chatbotDao.selectPassBoardList();
 	}
 }

@@ -88,4 +88,19 @@ public class UserDaoImpl implements UserDao {
 	public int memberPasswordUpdate(Member member) {
 		return sqlSession.update("user.memberPasswordUpdate", member);
 	}
+
+	@Override
+	public Company findCompanyId(Company company) {
+		return sqlSession.selectOne("user.findCompanyId", company);
+	}
+
+	@Override
+	public Company findPasswordEmailAuth2(Company company) {
+		return sqlSession.selectOne("user.findPasswordEmailAuth2" , company);
+	}
+
+	@Override
+	public int companyPasswordUpdate(Company company) {
+		return sqlSession.update("user.companyPasswordUpdate", company);
+	}
 }

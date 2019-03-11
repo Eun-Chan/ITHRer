@@ -135,6 +135,9 @@ public class ChargedController {
 		}
 		else if(directory.equals("memberPhoto")) {
 			inputDirectory = "images/memberPhoto";
+		}else if(directory.equals("summernote")) {
+			fileName = fileName.replaceAll("'", "");
+			inputDirectory = "images/summernote";
 		}
 		
 		

@@ -34,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.company.model.vo.Company;
+import com.spring.ithrer.listener.SessionBindingListener;
 import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
@@ -188,7 +189,8 @@ public class UserController {
 		map.put("password" , memberPassword);
 		
 		Member member = userService.memberCheck(map);
-		
+		logger.debug("member = "+member);
+		System.out.println("member = "+member);
 		Map<String,String> test = new HashMap<String, String>();
 		if(member != null) {
 			// 비밀번호가 맞는지 확인
@@ -214,13 +216,24 @@ public class UserController {
 				res.addCookie(c);
 			}
 			
+			// 이미 접속한 아이디 인지 확인
+			if(SessionBindingListener.getInstance().isUsing(memberId)) {
+				logger.debug(memberId +"님이 이미 접속중 입니다.");
+				test.put("result", "already");
+				return test;
+			}
+			
+			
 			// 로그인 한 유저 세션에 넣기
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*1000);
 			session.setAttribute("member", member);
 			
+			SessionBindingListener.getInstance().setSession(session, memberId);
+			
 			test.put("result" , "true");
+			
 		}
 		else {
 			System.out.println("로긴 실패");
@@ -271,11 +284,20 @@ public class UserController {
 				res.addCookie(c);
 			}
 			
+			// 이미 접속한 아이디 인지 확인
+			if(SessionBindingListener.getInstance2().isUsing(companyId)) {
+				logger.debug(companyId +"님이 이미 접속중 입니다.");
+				test.put("result", "already");
+				return test;
+			}
+			
 			// 로그인 한 유저 세션에 넣기
 			HttpSession session = req.getSession();
 			
 			session.setMaxInactiveInterval(60*10);
 			session.setAttribute("companyLoggedIn", company);
+			
+			SessionBindingListener.getInstance2().setSession(session, companyId);
 			
 			test.put("result" , "true");
 		}
@@ -333,6 +355,15 @@ public class UserController {
 			}
 		}
 		
+		// 이미 접속한 아이디 인지 확인
+		if(SessionBindingListener.getInstance().isUsing(kakaoId)) {
+			logger.debug(kakaoId +"님이 이미 접속중 입니다.");
+			map.put("result", "already");
+			return map;
+		}
+		
+		map.put("result","true");
+		
 		// 카카오톡 유저 정보 세션에 담기
 		// 로그인 한 유저 세션에 넣기
 		HttpSession session = req.getSession();
@@ -340,6 +371,8 @@ public class UserController {
 		session.setMaxInactiveInterval(60*10);
 		
 		session.setAttribute("member", member);
+		
+		SessionBindingListener.getInstance().setSession(session, kakaoId);
 		
 		return map;
 	}
@@ -401,8 +434,6 @@ public class UserController {
 		Member mem = userService.memberIdView(member);
 		
 		// 1. 사용자의 이메일로 아이디 보내기
-		// 인증번호 생성
-		authNum = getAuthNum();
 		// 보낼 이메일 주소		
 		String to = memberEmail;
 		
@@ -449,6 +480,35 @@ public class UserController {
 		
 	}
 	
+	/**
+	 * 기업회원 비밀번호 찾기 시 이메일 인증
+	 * @throws Exception 
+	 */
+	@RequestMapping(value="/user/findPasswordEmailAuth2" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> findPasswordEmailAuth2(Company company) throws Exception{
+		Map<String,String> result = new HashMap<>();
+		company.setLicenseNo(company.getLicenseNo()+ "  ");
+		// 0. Company 의 아이디, 이름 , 사업자 번호 , 이메일이 맞는지 확인
+		Company com = userService.findPasswordEmailAuth2(company);
+		
+		// 조회 성공! => 이메일로 인증번호 보내주기
+		if(com != null ) {
+			result.put("result", "true");
+			authNum = getAuthNum();
+			emailSend(com.getCompEmail(), "인증번호 = "+String.valueOf(authNum), "ITHRer 비밀번호 찾기 인증번호");
+			result.put("authNum" , String.valueOf(authNum));
+		}
+		// 조회 실패 => 정보가 없으므로 location.reload
+		else {
+			result.put("rresult", "false");
+		}
+		return result;
+	}
+	
+	/**
+	 * 개인회원 비밀번호 변경하러 가기 view 이동
+	 */
 	@RequestMapping(value="/user/memberPasswordUpdateGoing" , method=RequestMethod.POST)
 	public ModelAndView memberPasswordUpdateGoing(Member member , ModelAndView mav) {
 		mav.addObject("member", member);
@@ -456,6 +516,19 @@ public class UserController {
 		mav.setViewName("user/memberUpdatePwd");
 		
 		return mav;
+	}
+	
+	/**
+	 * 기업회원 비밀번호 변경하러 가기 view 이동
+	 */
+	@RequestMapping(value="/user/companyPasswordUpdateGoing" , method=RequestMethod.POST)
+	public ModelAndView companyPasswordUpdateGoing(Company company , ModelAndView mav) {
+		mav.addObject("company", company);
+		
+		mav.setViewName("user/companyUpdatePwd");
+		
+		return mav;
+		
 	}
 	
 	/**
@@ -539,16 +612,30 @@ public class UserController {
 	
 	/**
 	 * 기업회원 아이디 찾기
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/user/findCompanyId" , method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, String> findCompanyId(Company company){
+	public Map<String, String> findCompanyId(Company company) throws Exception{
 		Map<String,String> result = new HashMap<>();
-		result.put("result", "true");
 		
-		// 0. 입력 값 확인
-		logger.debug("compName = "+company.getCompName());
-		logger.debug("licenseNo = "+company.getLicenseNo());
+		logger.debug("company = "+company);
+		company.setLicenseNo(company.getLicenseNo()+"  ");
+		Company com = userService.findCompanyId(company);
+		logger.debug("com = "+com);
+		if(com != null) {
+			result.put("result", "true");
+			// 기업아이디 이메일로 전송			
+			// 1. 사용자의 이메일로 아이디 보내기
+			// 보낼 이메일 주소		
+			String to = com.getCompEmail();
+			
+			// 아이디 이메일로 보내주기
+			emailSend(to, "회원 아이디 = "+com.getCompId(), "ITHRer 아이디 조회 결과 입니다.");
+		}
+		else {
+			result.put("result", "false");
+		}
 		
 		return result;
 	}
@@ -577,6 +664,29 @@ public class UserController {
 	}
 	
 	/**
+	 * 기업회원 비밀번호 변경
+	 */
+	@RequestMapping(value="/user/companyPasswordUpdate" , method=RequestMethod.POST)
+	public ModelAndView companyPasswordUpdate(ModelAndView mav, Company company) {
+		logger.debug("암호화 하기 전 : " +company.getPassword());
+		String tmp = company.getPassword();
+		company.setPassword(bcryptPasswordEncoder.encode(tmp));
+		logger.debug("암호화 후 : "+company.getPassword());
+		
+		int result = userService.companyPasswordUpdate(company);
+		
+		if(result > 0) {
+			logger.debug("비밀번호 변경 성공!");
+		}
+		else {
+			logger.debug("비밀번호 변경 실패!");
+		}
+		
+		mav.setViewName("redirect:/");
+		return mav;
+	}
+	
+	/**
 	 * 이메일 보내기
 	 */
 	public void emailSend(String to , String text, String subject) throws Exception {
@@ -592,7 +702,7 @@ public class UserController {
 	/*
 	 * 로그아웃 
 	 */
-	@RequestMapping("/member/memberLogout.do")
+	@RequestMapping("/member/memberLogout.ithrer")
 	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
 		
 		req.getSession().removeAttribute("member");
@@ -678,6 +788,14 @@ public class UserController {
             Member naverLoginMember = userService.kakaoLogin(naverLoginId);
             System.out.println(naverLoginMember);
             
+            
+            // 이미 접속한 아이디 인지 확인
+         	if(SessionBindingListener.getInstance().isUsing(naverLoginId)) {
+         		logger.debug(naverLoginId +"님이 이미 접속중 입니다.");
+         		map.put("result", "already");
+         		return map;
+         	}
+            
             // 가입안된 회원이면 회원가입하기
             
             // 가입된 회원이면 회원가입 x
@@ -688,6 +806,7 @@ public class UserController {
 			session.setMaxInactiveInterval(60*10);
 			session.setAttribute("member", naverLoginMember);
             
+			SessionBindingListener.getInstance().setSession(session, naverLoginId);
 			map.put("result","true");
             
 			System.out.println("네이버 로그인 끝");
@@ -710,7 +829,8 @@ public class UserController {
 			String clientSecret = "mjQDsfEB9_";//애플리케이션 클라이언트 시크릿값";
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-			String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
+//			String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
+			String redirectURI = URLEncoder.encode("http://52.78.61.219:8080/ITHRer/user/naverLoginCallback.ithrer", "UTF-8");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + clientId;
@@ -757,6 +877,31 @@ public class UserController {
 		mav.setViewName("naver/naverCallback");
 		
 		return mav;
+	}
+	
+	/**
+	 * 페이스북 로그인
+	 */
+	@RequestMapping(value="/user/facebookLogin" , method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,String> facebookLogin(@RequestParam(name="memberId") String memberId,
+											@RequestParam(name="memberName") String memberName,
+											@RequestParam(name="email") String email){
+		Map<String, String> res = new HashMap<>();
+		
+		logger.debug("memberId = "+memberId);
+		logger.debug("memberName = "+memberName);
+		logger.debug("email = "+email);
+		System.out.println("memberId = "+memberId);
+		System.out.println("memberName = "+memberName);
+		System.out.println("email = "+email);
+		
+		res.put("memberId" , memberId);
+		res.put("memberName" , memberName);
+		res.put("email" , email);
+		res.put("result" ,"true");
+		
+		return res;
 	}
 	
 	// 네이버 연동 로그아웃

@@ -11,7 +11,7 @@
 <br /><br />
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
-	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.do" 
+	  method="post" action="${pageContext.request.contextPath}/resume/updateResume.ithrer" 
 	  encType="multipart/form-data" onsubmit = "return checkNull()">
 	 
 <br /><br />
@@ -25,13 +25,23 @@
 <div id="profileTotal" class="wrap-container">
 	<h3>인적사항</h3>
 	<div id="profileWrap">
+		<div>
+			<input type="file" id="memberPhoto"  />
+			<input type="hidden" name="photo" value="${profile.photo}"/>
+			<c:if test="${empty profile.photo }">
+				<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />
+			</c:if>
+			<c:if test="${not empty profile.photo }">
+				<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${profile.photo }&directory=memberPhoto" alt="회원사진" width="150px"/>
+			</c:if>
+		</div>
 		<div id="formProfile1" class="input-group-prepend">
 			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value="${member.memberName}" readonly/>
 			<input type="text" id="birth" name="birth" class="form-control" placeholder="생년월일(예.1991.01.01)" value = "${profile.birth}"/>
 			<select id="gender" name="gender" class="custom-select">
 				<option value="" disabled selected>성별</option>
-			 	<option value="남" ${profile.gender == '남  '?'selected="selected"':"" } disabled>남</option>								
-		 		<option value="여" ${profile.gender == '여  '?'selected="selected"':"" } disabled>여</option>								
+			 	<option value="남" ${profile.gender == '남'?'selected="selected"':"" }>남</option>								
+		 		<option value="여" ${profile.gender == '여'?'selected="selected"':"" }>여</option>								
 			</select>
 			<input type="email" id="email" name="email" class="form-control" placeholder="이메일" value = "${profile.email}"/>
 		</div>
@@ -212,12 +222,12 @@
 			<div id="formIntern1" class="input-group-prepend">
 				<select name="interndivision" id="interndivision0" class="custom-select">
 					<option value="" disabled selected>활동구분</option>
-					<option value="인턴">인턴</option>
-					<option value="아르바이트">아르바이트</option>
-					<option value="동아리">동아리</option>
-					<option value="자원봉사">자원봉사</option>
-					<option value="사회활동">사회활동</option>
-					<option value="교내활동">교내활동</option>
+					<option value="인턴" ${intern.interndivisionArr[0] == '인턴'?'selected="selected"':"" }>인턴</option>
+					<option value="아르바이트" ${intern.interndivisionArr[0] == '아르바이트'?'selected="selected"':"" }>아르바이트</option>
+					<option value="동아리" ${intern.interndivisionArr[0] == '동아리'?'selected="selected"':"" }>동아리</option>
+					<option value="자원봉사" ${intern.interndivisionArr[0] == '자원봉사'?'selected="selected"':"" }>자원봉사</option>
+					<option value="사회활동" ${intern.interndivisionArr[0] == '사회활동'?'selected="selected"':"" }>사회활동</option>
+					<option value="교내활동" ${intern.interndivisionArr[0] == '교내활동'?'selected="selected"':"" }>교내활동</option>
 				</select>
 				<input type="text" name="socialinst" id="socialinst0" class="form-control" placeholder="회사/기관/단체명" value="${intern.socialinstArr[0]}"/>
 				<input type="text" name="internstartdate" id="internstartdate0" class="form-control" placeholder="시작년월(예.1991.01)" value="${intern.internstartdateArr[0]}"/>
@@ -417,23 +427,23 @@
 			<div id="divCheckbox">
 				<ul>
 					<li>
-						<input type="checkbox" name="prefercheck" id="veteran" aria-label="Checkbox for following text input" value="보훈대상" ${preference.prefercheck[0] == "보훈대상"?'checked':''}/>
+						<input type="checkbox" name="prefercheck" id="veteran" aria-label="Checkbox for following text input" value="보훈대상"/>
 						<label for="veteran">보훈대상</label>
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="protected" aria-label="Checkbox for following text input" value="취업보호대상" ${preference.prefercheck[1] == "취업보호대상"?'checked':''}/>
+						<input type="checkbox" name="prefercheck" id="protected" aria-label="Checkbox for following text input" value="취업보호대상"/>
 						<label for="protected">취업보호 대상</label>
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="subsidy" aria-label="Checkbox for following text input" value="고용지원금대상" ${preference.prefercheck[2] == "고용지원금대상"?'checked':''}/>
+						<input type="checkbox" name="prefercheck" id="subsidy" aria-label="Checkbox for following text input" value="고용지원금대상"/>
 						<label for="subsidy">고용지원금 대상</label>	
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="disorder" aria-label="Checkbox for following text input" value="장애" ${preference.prefercheck[3] == "장애"?'checked':''}/>
+						<input type="checkbox" name="prefercheck" id="disorder" aria-label="Checkbox for following text input" value="장애"/>
 						<label for="disorder">장애</label>
 					</li>
 					<li>
-						<input type="checkbox" name="prefercheck" id="military" aria-label="Checkbox for following text input" value="병역" ${preference.prefercheck[4] == "병역"?'checked':''}/>
+						<input type="checkbox" name="prefercheck" id="military" aria-label="Checkbox for following text input" value="병역"/>
 						<label for="military">병역</label>
 					</li>
 				</ul>
@@ -539,7 +549,7 @@
 </div>
 </form>
 </div>
-
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 var langFrmcount = 1;
 var OverseasFrmcount = 1;
@@ -554,6 +564,52 @@ var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
 var lettercount = 0;
+
+/* 주소api */
+$("input#address").on("click",function(){
+	
+	var $this = $(this);
+	
+	new daum.Postcode({
+		oncomplete: function(data) {
+	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        console.log(data.address);
+	        console.log($this);
+	    	$this.val(data.address);
+	    }
+	}).open();
+});
+/* 회원 사진 넣기 */
+$("input#memberPhoto").on("change",function(){
+	var $this = $(this);
+	var fileName = $(this).prop("files")[0].name;
+	
+	var formData = new FormData();
+	var directory = 'images/memberPhoto';
+	
+	formData.append("upFile",$this[0].files[0]);
+	formData.append("directory",directory);
+	
+	$.ajax({
+		url: "${pageContext.request.contextPath}/uploadMemberPhoto.ithrer",
+		contentType: false,
+		processData: false,
+		data: formData, 
+		type: "post",
+		success: function(data){
+			console.log(data);
+			
+			html = '<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName='+data+'&directory=memberPhoto" alt="회원사진" width="150px"/>';
+			$("input:hidden[name=photo]").val(data);
+			$this.parent().append(html);
+			
+		},
+		error: function(){
+			console.log("회원사진 S3 업로드 ajax error!");
+		}
+	});
+});
 
 /* 영어 막기*/
 function validateText(event) {
@@ -787,6 +843,7 @@ for(var eduFrmcount=1;eduFrmcount<educationcnt;eduFrmcount++) {
 	$('#educationWrap').append(html);
 };
 /* if문 view처리 노가다 */
+<c:if test="${not empty education.graduactionArr}">
 if(schoolgraArr[0] == '고등학교'){
 		$("#formEducation2").show();
 		$("#highgraduationdate0").show();
@@ -835,10 +892,13 @@ else if(schoolgraArr[0] == '대학원') {
 else {
 	
 }
+</c:if>
+<c:if test="${not empty education.nonHigh}">
 if(nhighArr[0] == '고졸') {
 	console.log("왔냐?");
 	$('#educationWrap').hide();
 }
+</c:if>
 var hcnt = 0;
 var ucnt = 0;
 var gcnt = 0;
@@ -947,7 +1007,6 @@ for(var eduFrmcount = 1;eduFrmcount<educationcnt;eduFrmcount++){
 }
 var eduFrmcount = educationcnt;
 $("#addEducation").on("click",function() {
-	var eduFrmcount = eduArr.length;
 	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" name="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="고등학교">고등학교</option><option value="대학교2년제">대학(2,3년)</option><option value="대학교4년제">대학교(4년)</option><option value="대학원">대학원</option></select></li>';
@@ -1067,6 +1126,7 @@ $("#addCareer").on("click",function() {
 });
 /* 인턴 */
 var internexist = "${intern}";
+console.log("intern",internexist);
 if(internexist != '') {
 	$("#internTotal").show();
 	var interncnt = "${interncnt}";
@@ -1100,6 +1160,7 @@ if(internexist != '') {
 		html += '<input type="text" name="internenddate" id="internenddate'+internFrmcount+'" class="form-control" placeholder="종료년월(예.2019.01)" value="'+iedateArr[internFrmcount]+'"/></div>';
 		html += '<div id="formIntern2" class="input-group-prepend"><ul><li>활동내용 :</li><li><textarea name="interntextarea" class="form-control" aria-label="With textarea" id="interntextarea'+internFrmcount+'" placeholder="직무와 관련된 경험에 대해 (상황-노력-결과)순으로 작성하는것이 좋습니다.">'+itextArr[internFrmcount]+'</textarea></li></ul></div></div>';
 		$('#internWrap').append(html);
+		$("#interndivision"+internFrmcount).val(idivisionArr[internFrmcount]);
 	}
 }
 var internFrmcount = interncnt;
@@ -1123,6 +1184,7 @@ $(document).on("mouseout", "textarea[name=interntextarea]", function() {
 });
 /* 교육 */
 var learnexist = "${learn}";
+console.log("learn",learnexist);
 if(learnexist != '') {
 	$("#learnTotal").show();
 	var learncnt = "${learncnt}";
@@ -1433,6 +1495,7 @@ for(var langFrmcount = 1;langFrmcount<languagecnt;langFrmcount++) {
 	}	
 }
 /* 어학 view뿌리기 if문 */
+<c:if test="${not empty intern.interndivisionArr}">
 if(landiArr[0] == '회화능력') {
 	if(lanameArr[0] == '직접입력') {
 		$("#selftext0").show();
@@ -1451,6 +1514,7 @@ if(landiArr[0] == '공인시험') {
 		$("#selfexam0").show();
 	}
 }
+</c:if>
 
 var langFrmcount = languagecnt;
 $("#addLanguage").on("click",function() {
@@ -1556,17 +1620,32 @@ $("#addFile").on("click",function() {
 });
 /* 취업우대 */
 var preferexist = "${preference}";
+var prefercheckcnt = "${prefercheckcnt}";
+console.log(preferexist);
 if(preferexist != '') {
 	$("#preferenceTotal").show();
 	var preferArr = new Array();
 	<c:forEach items="${preference.prefercheck}" var="prefer" varStatus="p">
 		preferArr['${p.index}'] = '${prefer}';
 	</c:forEach>
-	if(preferArr[3] == '장애'){
-		$('#preferdisorder').show();
-	}
-	if(preferArr[4] == '병역'){
-		$('#prefermilitary').show();
+	for(var prefercnt = 0;prefercnt<prefercheckcnt;prefercnt++){
+		if(preferArr[prefercnt] == '보훈대상') {
+			$("#veteran").prop("checked",true);
+		}
+		else if(preferArr[prefercnt] == '취업보호대상') {
+			$("#protected").prop("checked",true);
+		}
+		else if(preferArr[prefercnt] == '고용지원금대상') {
+			$("#subsidy").prop("checked",true);
+		}
+		else if(preferArr[prefercnt] == '장애') {
+			$("#disorder").prop("checked",true);
+			$('#preferdisorder').show();
+		}
+		else {
+			$("#military").prop("checked",true);
+			$('#prefermilitary').show();
+		}
 	}
 }
 $("#disorder").change(function() {

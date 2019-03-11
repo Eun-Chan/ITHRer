@@ -49,5 +49,9 @@
 	<update id="anonyBoardReadCount" parameterType="_int">
 		update anonyBoard set anonyBoardReadCount = anonyBoardReadCount+1 where anonyBoardNo = #{anonyBoardNo}
 	</update>
-
+	
+	<!-- 3일 지난 게시물 지우기 -->
+	<delete id="autoDelete" parameterType="_int">
+		delete from anonyboard where to_date(to_char(sysdate, 'yyyymmdd'),'YYYY-MM-DD') - to_date(to_char(anonyboarddate,'yyyymmdd'),'YYYY-MM-DD') >= 3
+	</delete>
 </mapper>

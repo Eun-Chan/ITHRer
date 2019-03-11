@@ -150,8 +150,8 @@
 	<select id="selectListPortFolio" parameterType="string" resultType="portfolio">
 		select * from PORTFOLIO where member_id = #{memberId}
 	</select>
-	<delete id="deletePortFolio" parameterType="_int">
-		delete from portfolio where pf_no = #{pfNo}
+	<delete id="deletePortFolio" parameterType="string">
+		delete from portfolio where member_Id = #{memberId}
 	</delete>
 	<select id="selectListRandomRecruitment" parameterType="string" resultType="recruitment">
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
