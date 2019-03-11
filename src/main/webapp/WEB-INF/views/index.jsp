@@ -1166,8 +1166,9 @@
           <!-- Indicators -->
           <ul class="carousel-indicators">
             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
+          <c:forEach items="${bannerList}" var="banner" varStatus="index">
+            <li data-target="#myCarousel" data-slide-to="${index.count}"></li>
+          </c:forEach>
           </ul>
           
          <div class="carousel-inner">    

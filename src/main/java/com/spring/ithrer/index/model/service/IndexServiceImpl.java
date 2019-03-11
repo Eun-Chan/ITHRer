@@ -161,5 +161,15 @@ public int deletePortFolio(String memberId) {
 	 return indexDao.deletePortFolio(memberId);
 }
 
+@Override
+public int selectCountCompanyapplication(String memberId) {
+	return indexDao.selectCountCompanyapplication(memberId);
+}
+
+@Override
+public List<Recruitment> selectListMemberCompanyApplicationList(String memberId, int cPage, int numPerPage) {
+	return indexDao.selectListMemberCompanyApplicationList(memberId,cPage,numPerPage);
+}
+
 }
 

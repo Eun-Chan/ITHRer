@@ -141,7 +141,7 @@ div.border-top.border-bottom{
 							</a>
 						</div>
 						<div class="col">
-							<button class="btn btn-warning btn-sm rcrt-reregi-btn">재등록</button>
+							<button rn="${rcrtEnd.recruitmentNo}" compid="${companyLoggedIn.compId}" class="btn btn-warning btn-sm rcrt-reregi-btn">재등록</button>
 						</div>
 						<div class="col">
 							<a href="${pageContext.request.contextPath }/company/viewApplicantList.ithrer?recruitmentNo=${rcrtEnd.recruitmentNo}&compId=${companyLoggedIn.compId}">
@@ -445,7 +445,7 @@ $(".fav-delete-btn").on("click",function(){
 });
 
 /* 채용공고 수정버튼 클릭 시 페이지 이동 */
-$(".rcrt-revision-btn").on("click", function(){
+$(".rcrt-revision-btn, .rcrt-reregi-btn").on("click", function(){
 	var no = $(this).attr('rn');
 	var compid = $(this).attr('compid');
 	location.href = "${pageContext.request.contextPath}/company/joinRecruitment?no="+no+"&compid="+compid;

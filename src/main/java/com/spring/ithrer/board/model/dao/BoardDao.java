@@ -56,6 +56,6 @@ public interface BoardDao {
 
 	List<PassBoardComment> passBoardCommentList(int passBoardNo);
 
-	int passBoardDeleteComment(PassBoardComment comment);
+	int passBoardDeleteComment(Map<String, Integer> map);
 
 }

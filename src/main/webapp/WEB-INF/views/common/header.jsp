@@ -75,7 +75,7 @@
 </style>
 <head>
 <meta charset="UTF-8">
-<title>Hello Spring</title>
+<title>ITHRer</title>
 
 <!-- 부트스트랩관련 라이브러리 -->
 <script
@@ -108,7 +108,6 @@
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
 				<c:if test="${empty companyLoggedIn  and member.memberId ne 'ithreradmin'  }">
 					<ul class="navbar-nav mr-auto">	     
-				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume.ithrer">이력서</a></li>		
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판</a></li>    
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
@@ -142,8 +141,10 @@
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
 					  <div class="dropdown-menu">
+					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resume.ithrer';">내 이력서등록</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
+					  	<a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/memberApplyCompany.ithrer?memberId=${member.memberId }'">내가 지원한 공고</a>
 					  	<c:if test="${not empty member.password }">
 					    	<a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
 					  	</c:if>					  

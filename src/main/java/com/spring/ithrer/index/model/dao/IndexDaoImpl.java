@@ -170,5 +170,16 @@ public int deletePortFolio(String memberId) {
 	return sqlSession.delete("index.deletePortFolio", memberId);
 }
 
+@Override
+public int selectCountCompanyapplication(String memberId) {
+	return sqlSession.selectOne("index.selectCountCompanyapplication",memberId);
+}
+
+@Override
+public List<Recruitment> selectListMemberCompanyApplicationList(String memberId, int cPage, int numPerPage) {
+	RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+	return sqlSession.selectList("index.selectListMemberCompanyApplicationList", memberId,rowBounds);
+}
+
 }
 
