@@ -115,8 +115,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int passBoardDeleteComment(PassBoardComment comment) {
-		return boardDao.passBoardDeleteComment(comment);
+	public int passBoardDeleteComment(Map<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return boardDao.passBoardDeleteComment(map);
 	}
 	
 }

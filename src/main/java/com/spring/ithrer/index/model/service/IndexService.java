@@ -71,4 +71,8 @@ public interface IndexService {
 
 	int deletePortFolio(String memberId);
 
+	int selectCountCompanyapplication(String memberId);
+
+	List<Recruitment> selectListMemberCompanyApplicationList(String memberId, int cPage, int numPerPage);
+
 }

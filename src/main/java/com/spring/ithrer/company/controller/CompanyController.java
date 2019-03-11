@@ -370,7 +370,7 @@ public class CompanyController {
 	    Language language = resumeService.languageView(memberId);
 	    Learn learn = resumeService.learnView(memberId);
 	    Overseas overseas = resumeService.overseasView(memberId);
-	    PortFolio portFolio = resumeService.portFolioView(memberId);
+//	    PortFolio portFolio = resumeService.portFolioView(memberId);
 	    Preference preference = resumeService.preferenceView(memberId);
 	    Letter letter = resumeService.letterView(memberId);
 	    
@@ -424,7 +424,7 @@ public class CompanyController {
 	    mav.addObject("language",language);
 	    mav.addObject("learn",learn);
 	    mav.addObject("overseas",overseas);
-	    mav.addObject("portFolio",portFolio);
+//	    mav.addObject("portFolio",portFolio);
 	    mav.addObject("preference",preference);
 	    mav.addObject("education",education);
 	    mav.addObject("letter",letter);
@@ -927,7 +927,7 @@ public class CompanyController {
 		int result = companyService.updateRecruitment(rect);
 		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+rect.getSummernoteHtml());
 		mav.addObject("compId", compId);
-		//mav.setViewName("redirect:index.ithrer");
+		mav.setViewName("redirect:index.ithrer");
 		
 		return mav;
 	}

@@ -22,4 +22,6 @@ public class PassBoardComment {
 	private int pbCommentRef; //게시판 댓글 참조번호
 	private Date pbCommentDate; //댓글 작성 날짜
 	
+	private String delPlag;
+	
 }

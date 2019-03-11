@@ -64,8 +64,12 @@
 		select * from passBoardComment where pbBoardRef= #{pbBoardRef} start with pbCommentLevel = 1 connect by prior pbCommentNo = pbCommentRef order siblings by pbCommentNo
 	</select>
 	
-	<delete id="passBoardDeleteComment" parameterType="com.spring.ithrer.board.model.vo.PassBoardComment">
-		delete from passBoardComment where pbBoardRef = #{pbBoardRef} and pbCommentNo = #{pbCommentNo};
+	<!-- <select id="passBoardCommentList" resultType="com.spring.ithrer.board.model.vo.PassBoardComment" parameterType="com.spring.ithrer.board.model.vo.PassBoardComment" >
+		select * from passBoardComment where pbBoardRef= #{pbBoardRef} order by pbCommentNo
+	</select> -->
+	
+	<delete id="passBoardDeleteComment" parameterType="map">
+		update passBoardComment set delplag = 'Y' where pbBoardRef = #{pbBoardRef} and pbCommentNo = #{pbCommentNo} 
 	</delete>
 	
 </mapper>

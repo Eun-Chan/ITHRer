@@ -69,6 +69,10 @@ public interface IndexDao {
 
 	int deletePortFolio(String memberId);
 
+	int selectCountCompanyapplication(String memberId);
+
+	List<Recruitment> selectListMemberCompanyApplicationList(String memberId, int cPage, int numPerPage);
+
 
 
 }
