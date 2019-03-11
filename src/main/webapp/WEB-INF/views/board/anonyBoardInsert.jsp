@@ -28,17 +28,6 @@ function validate(){
 				return false;
 		}
 }
-/* $(function(){
-	$("#boardFrm").on("click", function(){
-		var title = $("#anonyBoardTitle").val();
-		var content = $("#anonyBoardContent").val();
-		console.log("여기오냐시발");
-		$.ajax({
-			url : "${pageContext.request.contextPath}/board/anonyBoardList"
-			
-		});
-	});
-}); */
 </script>
 <div id="board-container">
 	<form name="boardFrm"
@@ -46,12 +35,8 @@ function validate(){
 		  method="post" accept-charset="UTF-8" >
 		
 		<input type="text" class="form-control" name="anonyBoardTitle" id="anonyBoardTitle"  placeholder="제목" required>
-		
-<!-- 		<label for="anonyBoardWriter">작성자</label> -->
 		<input type="text" class="form-control" name="anonyBoardWriter" value="익 명" required>
-<!-- 		<label for="password">비밀번호</label> -->
 		<input type="password" class="form-control" name="anonyBoardPassword" placeholder="비밀번호"/>
-	    
 	    <textarea class="form-control" rows="10"  name="anonyBoardContent" placeholder="내용" required></textarea>
 		<br />
 		<input type="submit" class="btn btn-outline-success" value="저장" onclick="return validate();">
