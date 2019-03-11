@@ -499,10 +499,12 @@ public class IndexController {
 	   Recruitment rc = indexService.selectOneRecruitment(map);
 	   System.out.println(rc);
 	   Company com = indexService.selectOneCompany(rc.getCompId());
-	   String date = com.getDateOfEstablishment();
-	   System.out.println("substring전 : "+date);
-	   String date2 = date.substring(0,10);
-	   com.setDateOfEstablishment(date2);
+	   if(com.getDateOfEstablishment()!=null) {
+		   String date = com.getDateOfEstablishment();
+		   System.out.println("substring전 : "+date);
+		   String date2 = date.substring(0,10);
+		   com.setDateOfEstablishment(date2);		   
+	   }
 	   //해당 회사에 아이디로 지원한 적이 있는지 검사하는 쿼리
 	   int count = indexService.selectCountCompanyApplication(map);
 	 

@@ -72,6 +72,10 @@
     background: #f8f9fa!important;
     cursor: pointer;
 }
+.dropdown-menu a{
+	cursor: pointer;
+}
+
 </style>
 <head>
 <meta charset="UTF-8">
