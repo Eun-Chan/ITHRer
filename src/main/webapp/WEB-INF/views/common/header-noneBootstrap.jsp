@@ -43,7 +43,8 @@
 	
 	// 네이버 로그인 시작
 		String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
- 	    String redirectURI = URLEncoder.encode("http://localhost:9090/ithrer/user/naverLoginCallback.ithrer", "UTF-8");
+		/* String redirectURI = URLEncoder.encode("http://localhost:9090/ithrer/user/naverLoginCallback.ithrer", "UTF-8"); */
+ 	    String redirectURI = URLEncoder.encode("http://52.78.61.219:8080/ITHRer/user/naverLoginCallback.ithrer", "UTF-8");
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();
 	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
@@ -103,11 +104,14 @@
 			<div class="collapse navbar-collapse" id="navbarNav">
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
 
-				<ul class="navbar-nav mr-auto">	     
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume">이력서</a></li>		
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-itme"></li>	     
+					<li class="nav-itme"></li>
+					<li class="nav-itme"></li>
+			      <%-- <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume">이력서</a></li>		
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
 			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판(임시)</a></li>    
-			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>		     
+			      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li> --%>		     
 			    </ul>
 			    <c:if test="${empty member and empty companyLoggedIn }">
 			    	<ul class="navbar-nav">

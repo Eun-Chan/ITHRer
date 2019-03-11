@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -280,9 +281,21 @@ public class BoardController {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
+
+	/**
+	 * Annotation을 이용한 스케줄링
+	 * Cron 옵션을 통해 설정
+	 * 빈의 메소드를 어노테이션을 통해 태스크로 활용할수 있게함
+	 */
+	@Scheduled(cron="0 0 12 * * ?")
+    public void autoDelete() {
+    	int result = boardService.autoDelete();
+    	
+    	logger.debug("삭제된 익명게시판 수 : "+result);
+    }
+	
 	
 	@RequestMapping("/board/passBoardMoveUpdate")
 	public ModelAndView passBoardMoveUpdate(@RequestParam("passBoardNo") int passBoardNo, ModelAndView mav) {
@@ -359,5 +372,4 @@ public class BoardController {
 		
 		return mav;
 	}
-	
 }

@@ -43,6 +43,7 @@ public interface BoardService {
 
 	int passBoardDelete(int passBoardNo);
 
+	int autoDelete();
 	
 	int passBoardUpdate(PassBoard passBoard);
 

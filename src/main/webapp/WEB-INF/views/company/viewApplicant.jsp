@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page import="com.spring.ithrer.resume.model.vo.Letter" %>
 <fmt:requestEncoding value="UTF-8" />
 
 <!-- index.jsp ===> header.jsp 로 데이터 전송 -->
@@ -88,7 +89,7 @@ div#letter-box{
 					<div class="col">희망연봉</div>
 					<div class="col">희망근무형태</div>
 					<div class="col">희망근무지</div>
-					<div class="col">포트폴리오</div>
+					<!-- <div class="col">포트폴리오</div> -->
 				</div>
 				<div class="row mb-2">
 					<div class="col">
@@ -106,7 +107,7 @@ div#letter-box{
 					<div class="col">${hopework.wantpay } 만원</div>
 					<div class="col">${hopework.jobtype }</div>
 					<div class="col">${hopework.hopeplace }</div>
-					<div class="col">6</div>
+					<!-- <div class="col">6</div> -->
 				</div>
 			</div>
 		</div>
@@ -211,7 +212,7 @@ div#letter-box{
 						${career.descriptionArr[i] }
 					</div>
 					<div class="col">
-						${career.incomeArr[i] }
+						${career.incomeArr[i] } 만원
 					</div>
 				</div>
 			</c:forEach>
@@ -380,7 +381,8 @@ div#letter-box{
 			<div id="letter-box" class="container border">
 			<h2>${letter.lettertextArr[0] }</h2>
 			<br />
-			${letter.letterareaArr[0] }
+			<%-- ${letter.letterareaArr[0] } --%>
+			<%=((Letter)request.getAttribute("letter")).getLetterareaArr()[0].replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>
 			</div>
 		</div>
 		</c:if>

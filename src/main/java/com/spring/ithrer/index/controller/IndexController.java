@@ -145,7 +145,7 @@ public class IndexController {
     	 Map<String, org.jsoup.nodes.Element> doc = Utils.apiCrwaling(id);
          
     	 //크롤링으로 들고오는 iframe의 설정을 변경하는 부분
-         String addUrl = "http://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
+         String addUrl = "https://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
          
          StringBuffer sb = new StringBuffer(doc.get("detail").html());
                   

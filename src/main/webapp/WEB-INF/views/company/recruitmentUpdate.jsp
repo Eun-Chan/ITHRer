@@ -537,8 +537,8 @@ html
 					<input type="checkbox" class='ipt-chkBox employ-type' name="Employ_Ty_CdName" id="Employ_Ty_Cd_select_7" value="알바" ><label label for="Employ_Ty_Cd_select_7">알바</label>
 				</div>
 				<!-- 숨겨진 영역 -->
-				<div id="employType0" class="hiddenDiv" style="height: 140px;">
-					<table class="employType-table" id="emploType0-table" style="width: 100%;">
+				<!-- <div id="employType0" class="hiddenDiv" style="height: 140px;"> -->
+					<!-- <table class="employType-table" id="emploType0-table" style="width: 100%;">
 						<tr class="td-line">
 							<th class="content-title"><span class="content-title-in hiddenTitle">정규직</span></th>
 							<td colspan="5" class="input-content">
@@ -552,10 +552,10 @@ html
 								<input type='checkbox' class='ipt-chkBox employ-chkbox' name="Employ_Ty_Cd" id="Employ_Ty_Cd_time_11" value="1" style="margin-bottom: 0px;"><label for='Employ_Ty_Cd_time_1' style="margin-bottom: 0px;">시간(선택)제로 채용하는 경우에 선택하세요.</label>
 							</td>
 						</tr>
-					</table>
+					</table> -->
 					
-				</div>
-				<div id="employType1" class="hiddenDiv" style="height: 140px">
+				<!-- </div> -->
+				<!-- <div id="employType1" class="hiddenDiv" style="height: 140px">
 					<table class="employType-table" id="emploType1-table" style="width: 100%;">
 						<tr class="td-line">
 							<th class="content-title"><span class="content-title-in hiddenTitle">계약직</span></th>
@@ -707,7 +707,7 @@ html
 					</table>
 				</div>
 			</td>
-		</tr>
+		</tr> -->
 		<!-- 모집인원 -->
 		
 		<tr class="td-line">
@@ -833,7 +833,6 @@ html
 								<option name="fore-lang2" value="영어">영어</option>
 								<option name="fore-lang3" value="일본어">일본어</option>
 								<option name="fore-lang4" value="중국어">중국어</option>
-								<option name="fore-lang5" value="직접입력">직접입력</option>
 							</select>
 						</li>
 						<li>
@@ -1124,7 +1123,7 @@ html
 			<h3>접수기간과 접수방법은 어떻게 되나요?</h3>
 		</div>
 		<div class="explanation-footer">
-			<p class="explanation-footer-text">구직자는 PC와 모바일 어디서나손쉽게 바로지원 가능한 인크루트 이력서를 선호합니다.</p>
+			<p class="explanation-footer-text">구직자는 손쉽게 바로지원 가능한 ITHRER 이력서를 선호합니다.</p>
 		</div>
 	</div>
 	<table id="term-content" class="td-inputFrm">
@@ -1245,7 +1244,7 @@ html
 			<h3>공고등록 전에 입력하신 내용을 최종 확인해주세요</h3>
 		</div>
 		<div class="explanation-footer">
-			<p class="explanation-footer-text">지금까지 입력하신 내용을 입력한 내용 적용하기 버튼을 클릭하여 상세요강을 채워주세요.</p>
+			<p class="explanation-footer-text">지금까지 입력하신 내용을 다시한번 정리해서 알려주세요.</p>
 		</div>
 	</div>
 	<div id="summernoteDiv">
@@ -1332,9 +1331,48 @@ html
 
 <!-- 스크립트 영역 -->
 <script>
+var passSubmit = false;
+var checkFrm1_0 = false;
+var checkFrm1_1 = false;
+var checkFrm1_2 = false;
+var checkFrm1_3 = false;
+var checkFrm2_1 = false;
+var checkFrm3_0 = false;
+var checkFrm3_1 = false;
+var checkFrm3_3_1 = false;
+var checkFrm3_3_2 = false;
+var checkFrm4_1 = false;
+var checkFrm4_2 = false;
+var checkFrm4_3 = false;
+var checkFrm4_4 = false;
+var checkFrm4_5 = false;
 /*test*/
 
 /* === submit === */
+function checkSubmit()
+{
+	$("#frm1-0").val()==""?checkFrm1_0=false:checkFrm1_0=true;
+	console.log("frm1-0", checkFrm1_0);
+	$("#frm1-1").val()==""?checkFrm1_1=false:checkFrm1_1=true;
+	$("#frm1-2").val()==""?checkFrm1_2=false:checkFrm1_2=true;
+	$("#frm1-3").val()==""?checkFrm1_3=false:checkFrm1_3=true;
+	$("#frm2-1").val()==""?checkFrm2_1=false:checkFrm2_1=true;
+	$("#frm3-0").val()==""?checkFrm3_0=false:checkFrm3_0=true;
+	$("#frm3-1").val()==""?checkFrm3_1=false:checkFrm3_1=true;
+	$("#frm3-3-1").val()==""?checkFrm3_3_1=false:checkFrm3_3_1=true;
+	$("#frm3-3-2").val()==""?checkFrm3_3_2=false:checkFrm3_3_2=true;
+	$("#frm4-1").val()==""?checkFrm4_1=false:checkFrm4_1=true;
+	$("#frm4-2").val()==""?checkFrm4_2=false:checkFrm4_2=true;
+	$("#frm4-3").val()==""?checkFrm4_3=false:checkFrm4_3=true;
+	$("#frm4-4").val()==""?checkFrm4_4=false:checkFrm4_4=true;
+	$("#frm4-5").val()==""?checkFrm4_5=false:checkFrm4_5=true;
+	
+	if(checkFrm1_0==true && checkFrm1_1==true && checkFrm1_2==true && checkFrm1_3 == true && checkFrm2_1==true && checkFrm3_0==true && checkFrm3_3_1==true &&checkFrm3_3_2==true&&checkFrm4_1==true&&checkFrm4_2==true&&checkFrm4_3==true&&checkFrm4_4==true&&checkFrm4_5==true)
+	{
+		passSubmit = true;
+		console.log("성공");
+	}
+}
 /* --- total --- */
 function recruitmentSend()
 {
@@ -1343,8 +1381,17 @@ function recruitmentSend()
 	frm3hiddenInput();
 	frm4hiddenInput();
 	frm5hiddenInput();
-	alert("정상적으로 수정되었습니다.");
-	$("#updateFrm").submit();
+	checkSubmit();
+	if(passSubmit)
+	{
+		alert("정상적으로 등록되었습니다.");
+		$("#testFrm").submit();
+	}
+	else
+	{
+		alert("필수사항을 모두 입력해주세요.");
+		return;
+	}
 }
 /* 기타정보 */
 function frm5hiddenInput()
@@ -1577,7 +1624,7 @@ function frm1hiddenInput()
 		result_empType += ",";
 	});
 	console.log("고용형태 : "+result_empType);
-	$("#frm1-3").val(result_empType);
+	$("#frm1-3").val(result_empType.substr(0, result_empType.length-1));
 	
 	/* ============= 고용인원 ============= */
 	var result_empCnt = $("input#input-cnt").val();
@@ -1673,7 +1720,7 @@ function input_workLocation()
 		var result_val = $("#location-select-2 option:selected").val();
 		
 		$("#workLocation-select-result").append("<li value='"+result_val+"'>"+result_text1+" "+result_text2+"</li>");
-		$("#workLocation-code-result-Div").show();	
+		$("#workLocation-code-result-Div").show();			
 	//}
 }
 /* 근무지역 1차 선택 시 2차 선택지 출력 */
@@ -2436,11 +2483,11 @@ $(document).ready(function(){
 	
 	/* 기존정보 불러오기 rlwhs */
 	//frm1-1 : 모집직종
-	var result_frm1_1 = "<%=rect.getTypeOfOccupation()%>";
+	var result_frm1_1 = "<%=rect.getTypeOfOccupation()==null?" ":rect.getTypeOfOccupation()%>";
 	console.log("모집직종:"+result_frm1_1);
 	if(result_frm1_1 != 'null') $("#jobs-select-result").append(result_frm1_1);
 	//frm1-2 : 경력
-	var result_frm1_2 = "<%=rect.getCareer()%>";
+	var result_frm1_2 = "<%=rect.getCareer()==null?" ":rect.getCareer()%>";
 	if(result_frm1_2 != 'null')
 	{
 		console.log("경력:"+result_frm1_2);
@@ -2470,7 +2517,7 @@ $(document).ready(function(){
 		}
 	}
 	//frm1-3 : 고용형태
-	var result_frm1_3 = "<%=rect.getEmploymentType()%>";
+	var result_frm1_3 = "<%=rect.getEmploymentType()==null?" ":rect.getEmploymentType()%>";
 	if(result_frm1_3 != 'null')
 	{
 		console.log("고용형태:"+result_frm1_3);
@@ -2506,7 +2553,7 @@ $(document).ready(function(){
 		$("#input-department").val(result_frm1_6);
 	}
 	//frm1-7 : 모집직책/직급
-	var result_frm1_7 = "<%=rect.getPosition()%>";
+	var result_frm1_7 = "<%=rect.getPosition().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
 	if(result_frm1_7 != 'null')
 	{
 		console.log("모집직책/직급:"+result_frm1_7);
