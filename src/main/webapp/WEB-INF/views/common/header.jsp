@@ -145,7 +145,6 @@
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
 					  <div class="dropdown-menu" style="z-index: 999">
-					  <div class="dropdown-menu">
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resume.ithrer';">내 이력서등록</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
