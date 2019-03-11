@@ -913,4 +913,72 @@ public class IndexController {
 	   mav.setViewName("common/error");
 	   return mav;
    }
+   
+   //내가 지원한 공고 보기
+   @RequestMapping("/index/memberApplyCompany.ithrer")
+   public ModelAndView memberApplyCompany(@RequestParam("memberId") String memberId , ModelAndView mav , HttpServletRequest req) {
+	   if(memberId == null) {
+			  memberId ="";
+	   }
+	   int cPage = 0;
+	   try {
+		   cPage = Integer.parseInt(req.getParameter("cPage"));		   
+	   } catch(NumberFormatException e) {
+		   cPage = 0;
+	   }
+	   
+	   //컨텐츠 갯수 가져오기
+	   int totalCount = indexService.selectCountCompanyapplication(memberId);
+	   
+	   int numPerPage = 5;
+	   int totalPages = (int)Math.ceil(((double)totalCount/numPerPage));
+	   int pageBarSize = 5;
+	    
+	   int startPage = ((cPage - 1) / pageBarSize) * pageBarSize + 1;
+	   int endPage = startPage + pageBarSize - 1;
+	       
+	   int pageNo = startPage;
+	   List<Recruitment> memberCompanyApplicationList = indexService.selectListMemberCompanyApplicationList(memberId,cPage,numPerPage);
+	   for(int i =0 ; i<memberCompanyApplicationList.size() ; i++) {
+		   memberCompanyApplicationList.get(i).setClosingDate(memberCompanyApplicationList.get(i).getClosingDate().substring(0,10));
+	   }
+	   // bootstrap 처리위해 리스트로 처리
+	   	String url = req.getContextPath()+"/index/fmemberApplyCompany.ithrer?";
+	    String pageBar = "<ul class='pagination'>";
+	       
+	    // [이전] 이전
+	    if(pageNo == 1) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+(pageNo-1)+"&memberId="+memberId+ "'>이전</a></li>";
+	    }
+	    
+	    // 페이지 숫자 영역
+	    while(!(pageNo > endPage || pageNo > totalPages)) {
+	       if(pageNo == cPage) {
+	          pageBar += "<li class='page-item active'><a class='page-link' href='#'>" + pageNo + "</a></li>";
+	       }
+	       else {
+	          pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+pageNo +"&memberId="+memberId+"'>" + pageNo + "</a></li>";
+	       }
+	       pageNo++;
+	    }
+	    // [다음] 영역
+	    if(pageNo > totalPages) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+pageNo+"&memberId="+memberId + "'>다음</a>";
+	    }
+	    pageBar += "</ul>";
+	   
+	   mav.addObject("mca", memberCompanyApplicationList);
+	   mav.addObject("pageBar", pageBar);	    
+	   
+	   mav.setViewName("notice/memberApplyCompany");
+	   
+	   return mav;
+	   
+   }
 } 
