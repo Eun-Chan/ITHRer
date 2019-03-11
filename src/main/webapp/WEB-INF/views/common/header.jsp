@@ -294,7 +294,8 @@
 	/* 네이버 로그인 새창에서 access token 받아와서 로그인 처리 */
 	function naverLogin(accessToken){
 		$.ajax({
-    		url : "${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken="+accessToken,
+    		/* url : "${pageContext.request.contextPath}/user/naverLogin.ithrer?naverAccessToken="+accessToken, */
+    		url : "http://52.78.61.219:8080/ITHRer/user/naverLogin.ithrer?naverAccessToken="+accessToken,
     		//data : {naverAccessToken: accessToken},
     		type : "POST",
     		success : function(data){
