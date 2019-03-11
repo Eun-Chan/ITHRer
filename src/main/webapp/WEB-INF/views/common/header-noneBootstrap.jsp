@@ -43,7 +43,8 @@
 	
 	// 네이버 로그인 시작
 		String clientId = "RvdQ_2FS1H_N5lnKNCSX";//애플리케이션 클라이언트 아이디값";
- 	    String redirectURI = URLEncoder.encode("http://localhost:9090/ithrer/user/naverLoginCallback.ithrer", "UTF-8");
+		/* String redirectURI = URLEncoder.encode("http://localhost:9090/ithrer/user/naverLoginCallback.ithrer", "UTF-8"); */
+ 	    String redirectURI = URLEncoder.encode("http://52.78.61.219:8080/ITHRer/user/naverLoginCallback.ithrer", "UTF-8");
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString();
 	    String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";

@@ -169,24 +169,22 @@
 			<div class="row content two">
 				<div class="col-sm-12 row1">
 					<div class="uploadFile">
-					<strong style="padding: 10px 0px 0px 5px; float: left;">포트폴리오(최대 3개까지 추가 가능)</strong>
-				 	<form enctype="multipart/form-data" id="uploadForm" method="post">
-							<label for="Addportfolio">파일 추가</label>
-							<input type="file" name="portfolio" id="Addportfolio" accept=".ppt, .pdf"/>
- 					</form>
+					<strong style="padding: 10px 0px 0px 5px; float: left;">포트폴리오(최대 1개까지 추가 가능)</strong>
+					<c:if test="${empty portFolio }">
+					 	<form enctype="multipart/form-data" id="uploadForm" method="post">
+								<label for="Addportfolio" class="fileAdd">파일 추가</label>
+								<input type="file" name="portfolio" id="Addportfolio" accept=".ppt, .pdf"/>
+	 					</form>
+					</c:if>
 					</div>
 				</div>
 				<div class="col-sm-12 row2 port">
-						<c:forEach items="${portFolio }" var="port">
-						<c:if test="${not empty port.url}">
+						<c:if test="${not empty portFolio.url}">
 							<div class="portfolioDiv">
-								<span style="font-size: 0.9em; letter-spacing: 1px;" >${port.url }</span>
+								<span style="font-size: 0.9em; letter-spacing: 1px;" id="fileName">${portFolio.url }</span>
 								<button class="btn btn-outline-danger deletePortFolio">삭제</button>
-								<input type="hidden" value="${port.pfNo }" id="hiddenPfNo"/>
-								<input type="hidden" value="${port.url }" id="hiddenUrl" />
 							</div>
 						</c:if>
-						</c:forEach>	
 				</div>
 			</div>
 			<button type="button" class="btn btn-success applybutton">지원 하기</button>	
@@ -272,8 +270,8 @@ $("#emailSelect").on("change",function(){
 });
 
 $("#Addportfolio").on("change",function(){
-	if($(".portfolioDiv").length == 3){
-		alert("포트폴리오 추가는 3개 까지만 가능합니다.");
+	if($(".portfolioDiv").length == 1){
+		alert("포트폴리오 추가는 1개 까지만 가능합니다.");
 		return;
 	}
 	var formData = new FormData();
@@ -288,10 +286,11 @@ $("#Addportfolio").on("change",function(){
 		data:formData,
 		type:"POST",
 		success:function(data){
-			/* var url = JSON.parse(data).url.substr(JSON.parse(data).url.indexOf("_")+1); */
-			html+=JSON.parse(data).url+"</span>";
-			html+="<button class='btn btn-outline-danger'>삭제</button></div>";
+			/* var url = JSON.parse(data).url.substr(JSON.parse(data).url); */
+			html+=JSON.parse(data)+"</span>";
+			html+="<button class='btn btn-outline-danger deletePortFolio'>삭제</button></div>";
 			div.append(html);
+			$(".fileAdd").hide();
 		}	
 	});
 });
@@ -350,11 +349,9 @@ $(".applybutton").on("click",function(){
 });
 $(document).on("click",".deletePortFolio",function(){
 	var button = $(this);
-	var pfNo = $("#hiddenPfNo").val();
-	var url = $("#hiddenUrl").val();
+	var memberId = "${member.memberId}";
 	var data = {
-			pfNo:pfNo,
-			url:url
+			memberId:memberId
 	}
 	$.ajax({
 		url:"${pageContext.request.contextPath}/index/deletePortFolio.ithrer",
@@ -362,6 +359,7 @@ $(document).on("click",".deletePortFolio",function(){
 		success:function(data){
 			if(data==1){
 				button.parent().remove();
+				$(".fileAdd").show();
 			}
 			
 		}

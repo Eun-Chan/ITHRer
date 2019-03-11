@@ -28,6 +28,12 @@
 		<div>
 			<input type="file" id="memberPhoto"  />
 			<input type="hidden" name="photo" value="${profile.photo}"/>
+			<c:if test="${empty profile.photo }">
+				<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />
+			</c:if>
+			<c:if test="${not empty profile.photo }">
+				<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${profile.photo }&directory=memberPhoto" alt="회원사진" width="150px"/>
+			</c:if>
 		</div>
 		<div id="formProfile1" class="input-group-prepend">
 			<input type="text" id="name" name="name" class="form-control" placeholder="이름" value="${member.memberName}" readonly/>
@@ -543,7 +549,7 @@
 </div>
 </form>
 </div>
-
+<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 var langFrmcount = 1;
 var OverseasFrmcount = 1;
@@ -558,6 +564,22 @@ var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
 var lettercount = 0;
+
+/* 주소api */
+$("input#address").on("click",function(){
+	
+	var $this = $(this);
+	
+	new daum.Postcode({
+		oncomplete: function(data) {
+	        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+	        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+	        console.log(data.address);
+	        console.log($this);
+	    	$this.val(data.address);
+	    }
+	}).open();
+});
 /* 회원 사진 넣기 */
 $("input#memberPhoto").on("change",function(){
 	var $this = $(this);
@@ -985,7 +1007,6 @@ for(var eduFrmcount = 1;eduFrmcount<educationcnt;eduFrmcount++){
 }
 var eduFrmcount = educationcnt;
 $("#addEducation").on("click",function() {
-	var eduFrmcount = eduArr.length;
 	var html = '<div id="formEducation"><div id="deleteBox"><button type="button" name="deleteEdu" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formEducation1" class="input-group-prepend"><ul><li><select id="graduaction'+eduFrmcount+'" name = "graduaction" class="custom-select"><option value="" disabled selected>학교구분</option>';
 	html += '<option value="고등학교">고등학교</option><option value="대학교2년제">대학(2,3년)</option><option value="대학교4년제">대학교(4년)</option><option value="대학원">대학원</option></select></li>';

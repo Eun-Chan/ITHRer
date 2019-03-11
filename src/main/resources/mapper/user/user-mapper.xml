@@ -38,7 +38,12 @@
 	<select id="findPasswordEmailAuth" parameterType="map" resultType="member">
 		select * from member where member_id = #{memberId} and email = #{memberEmail}
 	</select>
-	<!-- 기업회원 회+원가입시 아이디 중복 -->
+	<!--기업회원 비밀번호 찾기 시 이메일 인증 -->
+	<select id="findPasswordEmailAuth2" parameterType="company" resultType="company">
+		select * from company where comp_id = #{compId} and representive = #{representive} and license_No = #{licenseNo} and comp_email = #{compEmail}
+	</select>
+	
+	<!-- 기업회원 회원가입시 아이디 중복 -->
 	<select id="compIdCheck" parameterType="string" resultType="company">
 		select count(*) from company where comp_id = #{compId}
 	</select>
@@ -59,5 +64,12 @@
 	<update id="memberPasswordUpdate" parameterType="member">
 		update member set password = #{password} where member_id = #{memberId}
 	</update>
-	
+	<!-- 기업회원 비밀번호 변경(비밀번호 찾기시) -->
+	<update id="companyPasswordUpdate" parameterType="company">
+		update company set password = #{password} where comp_id = #{compId}
+	</update>
+	<!-- 기업회원 아이디 찾기 -->
+	<select id="findCompanyId" parameterType="company" resultType="company">
+		select * from company where representive = #{representive} and license_No = #{licenseNo}
+	</select>
 </mapper>
