@@ -86,73 +86,73 @@ html
 								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-3" id="position-3" ><label for="position-3">계장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-4" ><label for="position-rank">대리</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-4" ><label for="position-4">대리</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-5" ><label for="position-rank">과장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-5" ><label for="position-5">과장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-6" ><label for="position-rank">차장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-6" ><label for="position-6">차장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-7" ><label for="position-rank">부장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-7" ><label for="position-7">부장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-8" ><label for="position-rank">감사</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-8" ><label for="position-8">감사</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-9" ><label for="position-rank">이사</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-9" ><label for="position-9">이사</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-10" ><label for="position-rank">상무</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-10" ><label for="position-10">상무</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-11" ><label for="position-rank">전무</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-11" ><label for="position-11">전무</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-12" ><label for="position-rank">부사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-12" ><label for="position-12">부사장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-13" ><label for="position-rank">사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-13" ><label for="position-13">사장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-14" ><label for="position-rank">회장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-14" ><label for="position-14">회장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-15" ><label for="position-rank">전문직</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-15" ><label for="position-15">전문직</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-16" ><label for="position-rank">IR 책임자</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-16" ><label for="position-16">IR 책임자</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-17" ><label for="position-rank">연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-17" ><label for="position-17">연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-18" ><label for="position-rank">주임연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-18" ><label for="position-18">주임연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-19" ><label for="position-rank">선임연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-19" ><label for="position-19">선임연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-20" ><label for="position-rank">책임연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-20" ><label for="position-20">책임연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-21" ><label for="position-rank">수석연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-21" ><label for="position-21">수석연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-22" ><label for="position-rank">연구소장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-22" ><label for="position-22">연구소장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-23" ><label for="position-rank">프리랜서</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-23" ><label for="position-23">프리랜서</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-24" ><label for="position-rank">CTO</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-24" ><label for="position-24">CTO</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-25" ><label for="position-rank">CEO</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-25" ><label for="position-25">CEO</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-26" ><label for="position-rank">COO</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-26" ><label for="position-26">COO</label>
 							</li>
 						</ul>
 					</td>	
@@ -163,70 +163,70 @@ html
 					<td>
 						<ul class="inlineblock-select positionPopup">
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-0" ><label for="position-rank-bottom">팀원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-0" ><label for="position-bottom-0">팀원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-1" ><label for="position-rank-bottom">총무</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-1" ><label for="position-bottom-1">총무</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-2" ><label for="position-rank-bottom">부팀장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-2" ><label for="position-bottom-2">부팀장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-3" ><label for="position-rank-bottom">실장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-3" ><label for="position-bottom-3">실장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-4" ><label for="position-rank-bottom">팀장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-4" ><label for="position-bottom-4">팀장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-5" ><label for="position-rank-bottom">파트장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-5" ><label for="position-bottom-5">파트장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-6" ><label for="position-rank-bottom">지점장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-6" ><label for="position-bottom-6">지점장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-7" ><label for="position-rank-bottom">공장장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-7" ><label for="position-bottom-7">공장장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-8" ><label for="position-rank-bottom">지사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-8" ><label for="position-bottom-8">지사장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-9" ><label for="position-rank-bottom">그룹장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-9" ><label for="position-bottom-9">그룹장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-10" ><label for="position-rank-bottom">센터장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-10" ><label for="position-bottom-10">센터장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-11" ><label for="position-rank-bottom">본부장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-11" ><label for="position-bottom-11">본부장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-12" ><label for="position-rank-bottom">사업부장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-12" ><label for="position-bottom-12">사업부장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-13" ><label for="position-rank-bottom">국장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-13" ><label for="position-bottom-13">국장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-14" ><label for="position-rank-bottom">원장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-14" ><label for="position-bottom-14">원장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-15" ><label for="position-rank-bottom">매니저</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-15" ><label for="position-bottom-15">매니저</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-16" ><label for="position-rank-bottom">지배인</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-16" ><label for="position-bottom-16">지배인</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-17" ><label for="position-rank-bottom">총지배인</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-17" ><label for="position-bottom-17">총지배인</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-18" ><label for="position-rank-bottom">고문</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-18" ><label for="position-bottom-18">고문</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-19" ><label for="position-rank-bottom">소장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-19" ><label for="position-bottom-19">소장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-20" ><label for="position-rank-bottom">관장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-20" ><label for="position-bottom-20">관장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-21" ><label for="position-rank-bottom">이사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-21" ><label for="position-bottom-21">이사장</label>
 							</li>
 						</ul>
 					</td>
@@ -514,7 +514,7 @@ html
 							<span>미만</span>
 						</li>
 						<li style="padding-top: 8px;">
-							<input type='checkbox' class='ipt-chkBox' name="irrelevant" id="irrelevant-crr" ><label for="irrelevant">연차무관</label> 
+							<input type='checkbox' class='ipt-chkBox' name="irrelevant" id="irrelevant-crr" ><label for="irrelevant-crr">연차무관</label> 
 						</li>
 					</ul>
 				</div>
@@ -1169,7 +1169,7 @@ html
 			<td colspan="5" class="input-content">
 				<!-- 자사시스템 이용 -->
 				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox howCon' id="how-contact-0" value="1" ><label for='how-contact-1'>ITHRER 채용 시스템</label> 
+					<input type='checkbox' class='ipt-chkBox howCon' id="how-contact-0" value="1" ><label for='how-contact-0'>ITHRER 채용 시스템</label> 
 				</div>
 				<!-- 일반 이용 -->
 				<div class="how-contact">
@@ -1190,7 +1190,7 @@ html
 			<td colspan="5" class="input-content">
 				<!-- 자사시스템 이용 -->
 				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox appForm' id="frm-contact-0" value="1" ><label for='frm-contact-1'>ITHRER 이력서</label> 
+					<input type='checkbox' class='ipt-chkBox appForm' id="frm-contact-0" value="1" ><label for='frm-contact-0'>ITHRER 이력서</label> 
 				</div>
 				<!-- 일반 이용 -->
 				<div class="frm-contact">
@@ -1385,7 +1385,7 @@ function recruitmentSend()
 	if(passSubmit)
 	{
 		alert("정상적으로 등록되었습니다.");
-		$("#testFrm").submit();
+		$("#updateFrm").submit();
 	}
 	else
 	{
@@ -2483,54 +2483,60 @@ $(document).ready(function(){
 	
 	/* 기존정보 불러오기 rlwhs */
 	//frm1-1 : 모집직종
-	var result_frm1_1 = "<%=rect.getTypeOfOccupation()==null?" ":rect.getTypeOfOccupation()%>";
-	console.log("모집직종:"+result_frm1_1);
-	if(result_frm1_1 != 'null') $("#jobs-select-result").append(result_frm1_1);
+	<c:if test="${not empty rect.typeOfOccupation }">
+		var result_frm1_1 = "<%=rect.getTypeOfOccupation()==null?" ":rect.getTypeOfOccupation()%>";
+		console.log("모집직종:"+result_frm1_1);
+		if(result_frm1_1 != 'null') $("#jobs-select-result").append(result_frm1_1);
+	</c:if>
 	//frm1-2 : 경력
-	var result_frm1_2 = "<%=rect.getCareer()==null?" ":rect.getCareer()%>";
-	if(result_frm1_2 != 'null')
-	{
-		console.log("경력:"+result_frm1_2);
-		var resultArr_frm1_2 = new Array(result_frm1_2.split("/"));
-		var crr_Contentli = $("#crr-Content li");
-		for(var i in crr_Contentli)
+	<c:if test="${not empty rect.career }">
+		var result_frm1_2 = "<%=rect.getCareer()==null?" ":rect.getCareer()%>";
+		if(result_frm1_2 != 'null')
 		{
-			if(crr_Contentli[i].innerText == null) break;
-			if(resultArr_frm1_2[0][0] == (crr_Contentli[i].innerText).trim())
+			console.log("경력:"+result_frm1_2);
+			var resultArr_frm1_2 = new Array(result_frm1_2.split("/"));
+			var crr_Contentli = $("#crr-Content li");
+			for(var i in crr_Contentli)
 			{
-				$(crr_Contentli[i].children).find("input").trigger("click");
+				if(crr_Contentli[i].innerText == null) break;
+				if(resultArr_frm1_2[0][0] == (crr_Contentli[i].innerText).trim())
+				{
+					$(crr_Contentli[i].children).find("input").trigger("click");
+				}
+			}
+			if(result_frm1_2.includes("경력"))
+			{
+				if(resultArr_frm1_2[0][1] == "연차무관")
+				{
+					$("#irrelevant-crr").trigger("click");
+					$("#crr-cntUp, #crr-cntDown").attr("disabled", "disabled");	
+				}
+				else
+				{
+					var result_frm1_2rate = new Array(resultArr_frm1_2[0][1].split("~"));
+					$("#crr-cntUp option[value="+result_frm1_2rate[0][0]+"]").attr("selected", "selected");	
+					$("#crr-cntDown option[value="+result_frm1_2rate[0][1]+"]").attr("selected", "selected");		
+				}
 			}
 		}
-		if(result_frm1_2.includes("경력"))
-		{
-			if(resultArr_frm1_2[0][1] == "연차무관")
-			{
-				$("#irrelevant-crr").trigger("click");
-				$("#crr-cntUp, #crr-cntDown").attr("disabled", "disabled");	
-			}
-			else
-			{
-				var result_frm1_2rate = new Array(resultArr_frm1_2[0][1].split("~"));
-				$("#crr-cntUp option[value="+result_frm1_2rate[0][0]+"]").attr("selected", "selected");	
-				$("#crr-cntDown option[value="+result_frm1_2rate[0][1]+"]").attr("selected", "selected");		
-			}
-		}
-	}
+	</c:if>
 	//frm1-3 : 고용형태
-	var result_frm1_3 = "<%=rect.getEmploymentType()==null?" ":rect.getEmploymentType()%>";
-	if(result_frm1_3 != 'null')
-	{
-		console.log("고용형태:"+result_frm1_3);
-		var frm1_3_Content = $("#employType-Div input");
-		for(var i in frm1_3_Content)
+	<c:if test="${not empty rect.employmentType }">
+		var result_frm1_3 = "<%=rect.getEmploymentType()==null?" ":rect.getEmploymentType()%>";
+		if(result_frm1_3 != 'null')
 		{
-			if(frm1_3_Content[i].value == null) break;
-			if(result_frm1_3.includes(frm1_3_Content[i].value))
+			console.log("고용형태:"+result_frm1_3);
+			var frm1_3_Content = $("#employType-Div input");
+			for(var i in frm1_3_Content)
 			{
-				$(frm1_3_Content[i]).trigger("click");
+				if(frm1_3_Content[i].value == null) break;
+				if(result_frm1_3.includes(frm1_3_Content[i].value))
+				{
+					$(frm1_3_Content[i]).trigger("click");
+				}
 			}
 		}
-	}
+	</c:if>
 	//frm1-4 : 모집인원
 	var result_frm1_4 = "<%=rect.getRecruitmentPersonnel()%>";
 	if(result_frm1_4 != 'null')
@@ -2539,79 +2545,94 @@ $(document).ready(function(){
 		$("#input-cnt").val(result_frm1_4);
 	}
 	//frm1-5 : 담당업무
-	var result_frm1_5 = "<%=(rect.getAsignedTask()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
-	if(result_frm1_5 != 'null')
-	{
-		console.log("담당업무:"+result_frm1_5);
-		$("#asignedTaskArea").val(result_frm1_5.replace(/<br>/gi,"\r\n"));
-	}
+	<c:if test="${not empty rect.asignedTask }">
+		var result_frm1_5 = "<%=rect.getAsignedTask()==null?" ":(rect.getAsignedTask()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
+		if(result_frm1_5 != 'null')
+		{
+			console.log("담당업무:"+result_frm1_5);
+			$("#asignedTaskArea").val(result_frm1_5.replace(/<br>/gi,"\r\n"));
+		}
+	</c:if>
 	//frm1-6 : 근무부서
-	var result_frm1_6 = "<%=rect.getDepartment()%>";
-	if(result_frm1_6 != 'null')
-	{
-		console.log("근무부서:"+result_frm1_6);
-		$("#input-department").val(result_frm1_6);
-	}
+	<c:if test="${not empty rect.department }">
+		var result_frm1_6 = "<%=rect.getDepartment()==null?" ":rect.getDepartment()%>";
+		if(result_frm1_6 != 'null')
+		{
+			console.log("근무부서:"+result_frm1_6);
+			$("#input-department").val(result_frm1_6);
+		}
+	</c:if>
 	//frm1-7 : 모집직책/직급
-	var result_frm1_7 = "<%=rect.getPosition().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
-	if(result_frm1_7 != 'null')
-	{
-		console.log("모집직책/직급:"+result_frm1_7);
-		$("#job-code-result-Div").append(result_frm1_7);
-	}
-	
+	<c:if test="${not empty rect.position }">
+		var result_frm1_7 = "<%=rect.getPosition()==null?" ":rect.getPosition().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
+		if(result_frm1_7 != 'null')
+		{
+			console.log("모집직책/직급:"+result_frm1_7);
+			$("#job-code-result-Div").append(result_frm1_7);
+		}
+	</c:if>
 	//frm2-1 : 학력조건
-	var result_frm2_1 = "<%=rect.getEducation()%>";
-	if(result_frm2_1 != 'null')
-	{
-		console.log("학력조건:"+result_frm2_1)	;
-		var frm2_1_Content = $("#education-select option");
-		for(var i in frm2_1_Content)
+	<c:if test="${not empty rect.education }">
+		var result_frm2_1 = "<%=rect.getEducation()==null?" ":rect.getEducation()%>";
+		if(result_frm2_1 != 'null')
 		{
-			if(frm2_1_Content[i].value == null) break;
-			if($(frm2_1_Content[i]).val() == result_frm2_1)
-				$(frm2_1_Content[i]).attr("selected", "selected");
+			console.log("학력조건:"+result_frm2_1)	;
+			var frm2_1_Content = $("#education-select option");
+			for(var i in frm2_1_Content)
+			{
+				if(frm2_1_Content[i].value == null) break;
+				if($(frm2_1_Content[i]).val() == result_frm2_1)
+					$(frm2_1_Content[i]).attr("selected", "selected");
+			}
 		}
-	}
+	</c:if>
 	//frm2-2 : 전공계열
-	var result_frm2_2 = "<%=rect.getMajor()%>";
-	if(result_frm2_2 != 'null')
-	{
-		console.log("전공계열:"+result_frm2_2)	;
-		$("#major-code-result-Div").show();
-		var frm2_2_Content = $("#major-select option");
-		$("#major-select-result").append(result_frm2_2);
-	}
-	//frm2-3 : 외국어
-	var result_frm2_3 = "<%=rect.getForeLang()%>";
-	if(result_frm2_3 != 'null')
-	{
-		console.log("외국어:"+result_frm2_3);
-		$("#fore-code-result-Div").show();
-		$("#fore-select-result").append(result_frm2_3);
-	}
-	//frm2-4 : 자격증
-	var result_frm2_4 = "<%=(rect.getCertificate()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
-	if(result_frm2_4 != 'null')
-	{
-		console.log("자격증:"+result_frm2_4);
-		var result_frm2_4_end = new Array(result_frm2_4.split("-"));
-		$("#comAbill-code-result-Div").show();
-		for(var i in result_frm2_4_end[0])
+	<c:if test="${not empty rect.major }">
+		var result_frm2_2 = "<%=rect.getMajor()==null?" ":rect.getMajor()%>";
+		if(result_frm2_2 != 'null')
 		{
-			if(i == 0) continue;
-			$("#comAbill-select-result").append("<li style='list-style:none;'> - "+result_frm2_4_end[0][i]+"</li>");		
+			console.log("전공계열:"+result_frm2_2)	;
+			$("#major-code-result-Div").show();
+			var frm2_2_Content = $("#major-select option");
+			$("#major-select-result").append(result_frm2_2);
 		}
-	}
+	</c:if>
+	//frm2-3 : 외국어
+	<c:if test="${not empty rect.foreLang }">
+		var result_frm2_3 = "<%=rect.getForeLang()==null?" ":rect.getForeLang()%>";
+		if(result_frm2_3 != 'null')
+		{
+			console.log("외국어:"+result_frm2_3);
+			$("#fore-code-result-Div").show();
+			$("#fore-select-result").append(result_frm2_3);
+		}
+	</c:if>
+	//frm2-4 : 자격증
+	<c:if test="${not empty rect.certificate }">
+		var result_frm2_4 = "<%=(rect.getCertificate()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")==null?" ":(rect.getCertificate()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
+		if(result_frm2_4 != 'null')
+		{
+			console.log("자격증:"+result_frm2_4);
+			var result_frm2_4_end = new Array(result_frm2_4.split("-"));
+			$("#comAbill-code-result-Div").show();
+			for(var i in result_frm2_4_end[0])
+			{
+				if(i == 0) continue;
+				$("#comAbill-select-result").append("<li style='list-style:none;'> - "+result_frm2_4_end[0][i]+"</li>");		
+			}
+		}
+	</c:if>
 	//frm2-5 : 삭제됨
 	//frm2-6 : 우대사항
-	var result_frm2_6 = "<%=rect.getEmploymentPreference()%>";
-	if(result_frm2_6 != 'null')
-	{
-		console.log("우대사항:"+result_frm2_6);
-		$("#preference-code-result-Div").show();
-		$("#preference-code-result-Div").append(result_frm2_6);
-	}
+	<c:if test="${not empty rect.employmentPreference }">
+		var result_frm2_6 = "<%=rect.getEmploymentPreference()==null?" ":rect.getEmploymentPreference()%>";
+		if(result_frm2_6 != 'null')
+		{
+			console.log("우대사항:"+result_frm2_6);
+			$("#preference-code-result-Div").show();
+			$("#preference-code-result-Div").append(result_frm2_6);
+		}
+	</c:if>
 	//frm2-7 : 연령
 	var result_frm2_7_start = "<%=rect.getApplicantAgeStart()%>";
 	var result_frm2_7_end = "<%=rect.getApplicantAgeEnd()%>";
@@ -2630,7 +2651,7 @@ $(document).ready(function(){
 		}
 	}
 	//frm2-8 : 성별
-	var result_frm2_8 = "<%=rect.getGenderCut()%>";
+	var result_frm2_8 = "<%=rect.getGenderCut()==null?" ":rect.getGenderCut()%>";
 	if(result_frm2_8 != 'null')
 	{
 		console.log("성별:"+result_frm2_8);
@@ -2638,87 +2659,96 @@ $(document).ready(function(){
 		else if(result_frm2_8 == 'F') $("#gender-f").trigger("click");
 		else $("#gender-none").trigger("click");
 	}
-	//frm2-9 : 기타자격요건 ★테스트해봐야함
-	var result_frm2_9 = "<%=rect.getEtcQualificationRequirement()%>";
-	if(result_frm2_9 != 'null')
-	{
-		console.log("기타자격요건:"+result_frm2_9);
-		$("#otherRequirement").val(result_frm2_9);
-	}
-	
-	//frm3-0 : 근무지역명
-	var result_frm3_0 = "<%=rect.getLocation().replaceAll(" ",":")%>";
-	if(result_frm3_0 != 'null')
-	{
-		console.log("근무지역명:"+result_frm3_0);
-		result_frm3_0_Arr = new Array(result_frm3_0.split(":"));
-		console.log(result_frm3_0_Arr);
-		var location1_Option = $("#location-select-1 option");
-		
-		for(var i in location1_Option)
+	//frm2-9 : 기타자격요건
+	<c:if test="${not empty rect.etcQualificationRequirement }">
+		var result_frm2_9 = "<%=rect.getEtcQualificationRequirement()==null?" ":rect.getEtcQualificationRequirement()%>";
+		if(result_frm2_9 != 'null')
 		{
-			if(location1_Option[i].innerText == null) break;
-			if(result_frm3_0.includes(location1_Option[i].innerText))
-			{
-				$(location1_Option[i]).attr("selected","selected");
-				selectLocation(result_frm3_0);
-			}
+			console.log("기타자격요건:"+result_frm2_9);
+			$("#otherRequirement").val(result_frm2_9);
 		}
-		
-		
-		
-		
-	}	
+	</c:if>
+	//frm3-0 : 근무지역명
+	<c:if test="${not empty rect.location }">
+		var result_frm3_0 = "<%=rect.getLocation()==null?" ":rect.getLocation().replaceAll(" ",":")%>";
+		if(result_frm3_0 != 'null')
+		{
+			console.log("근무지역명:"+result_frm3_0);
+			result_frm3_0_Arr = new Array(result_frm3_0.split(":"));
+			console.log(result_frm3_0_Arr);
+			var location1_Option = $("#location-select-1 option");
+			
+			for(var i in location1_Option)
+			{
+				if(location1_Option[i].innerText == null) break;
+				if(result_frm3_0.includes(location1_Option[i].innerText))
+				{
+					$(location1_Option[i]).attr("selected","selected");
+					selectLocation(result_frm3_0);
+				}
+			}
+		}	
+	</c:if>
 	//frm3-1 : 근무코드 - pass
 	//frm3-2 : 인근전철역
-	var result_frm3_2 = "<%=rect.getNearbyStation().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
-	if(result_frm3_2 != 'null')
-	{
-		console.log("인근전철역:"+result_frm3_2);
-		$("#subway-code-result-Div").show();
-		$("#subway-select-result").append(result_frm3_2.replace("<br>","\r\n"));
-	}
+	<c:if test="${not empty rect.nearbyStation }">
+		var result_frm3_2 = "<%=rect.getNearbyStation()==null?" ":rect.getNearbyStation().replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
+		if(result_frm3_2 != 'null')
+		{
+			console.log("인근전철역:"+result_frm3_2);
+			$("#subway-code-result-Div").show();
+			$("#subway-select-result").append(result_frm3_2.replace("<br>","\r\n"));
+		}
+	</c:if>
 	//frm3-5 : 근무시간
-	var result_frm3_5 = "<%=rect.getWorkDay()%>";
-	if(result_frm1_3 != 'null')
-	{
-		console.log("근무시간:"+result_frm3_5);
-		var frm3_5_Content = $(".workTime").next();
-		var frm3_5_Chk = $(".workTime");
-		for(var i in frm3_5_Content)
+	<c:if test="${not empty rect.workDay }">
+		var result_frm3_5 = "<%=rect.getWorkDay()==null?" ":rect.getWorkDay()%>";
+		if(result_frm1_3 != 'null')
 		{
-			if(frm3_5_Content[i].innerText == null) break;
-			if(result_frm3_5.includes(frm3_5_Content[i].innerText))
-				$(frm3_5_Chk[i]).trigger("click");
+			console.log("근무시간:"+result_frm3_5);
+			var frm3_5_Content = $(".workTime").next();
+			var frm3_5_Chk = $(".workTime");
+			for(var i in frm3_5_Content)
+			{
+				if(frm3_5_Content[i].innerText == null) break;
+				if(result_frm3_5.includes(frm3_5_Content[i].innerText))
+					$(frm3_5_Chk[i]).trigger("click");
+			}
 		}
-	}
+	</c:if>
 	//frm3-3-1 : 급여조건 구분
-	var result_frm3_3_1 = "<%=rect.getSalaryType()%>";
-	if(result_frm3_3_1 != 'null')
-	{
-		console.log("급여조건(구분):"+result_frm3_3_1)	;
-		var frm3_3_1_Content = $("#salary-select option");
-		for(var i in frm3_3_1_Content)
+	<c:if test="${not empty rect.salaryType }">
+		var result_frm3_3_1 = "<%=rect.getSalaryType()==null?" ":rect.getSalaryType()%>";
+		if(result_frm3_3_1 != 'null')
 		{
-			if(frm3_3_1_Content[i].value == null) break;
-			if($(frm3_3_1_Content[i]).val() == result_frm3_3_1)
-				$(frm3_3_1_Content[i]).attr("selected", "selected");
+			console.log("급여조건(구분):"+result_frm3_3_1)	;
+			var frm3_3_1_Content = $("#salary-select option");
+			for(var i in frm3_3_1_Content)
+			{
+				if(frm3_3_1_Content[i].value == null) break;
+				if($(frm3_3_1_Content[i]).val() == result_frm3_3_1)
+					$(frm3_3_1_Content[i]).attr("selected", "selected");
+			}
 		}
-	}
+	</c:if>
 	//frm3-3-2 : 급여금액
-	var result_frm3_3_2 = "<%=rect.getPayCondition().replaceAll("만원","")%>";
-	if(result_frm3_3_2 != 'null')
-	{
-		console.log("급여(금액):"+result_frm3_3_2);
-		$("#salary").val(result_frm3_3_2);
-	}
+	<c:if test="${not empty rect.payCondition }">
+		var result_frm3_3_2 = "<%=rect.getPayCondition().replaceAll("만원","")%>";
+		if(result_frm3_3_2 != 'null')
+		{
+			console.log("급여(금액):"+result_frm3_3_2);
+			$("#salary").val(result_frm3_3_2);
+		}
+	</c:if>
 	//frm3-4 : 복리후생
-	var result_frm3_4 = "<%=rect.getWelfare()%>";
-	if(result_frm3_4 != 'null')
-	{
-		console.log("복리후생:"+result_frm3_4);
-		$("#input-Benefits").val(result_frm3_4);
-	}
+	<c:if test="${not empty rect.welfare }">
+		var result_frm3_4 = "<%=rect.getWelfare()==null?" ":rect.getWelfare()%>";
+		if(result_frm3_4 != 'null')
+		{
+			console.log("복리후생:"+result_frm3_4);
+			$("#input-Benefits").val(result_frm3_4);
+		}
+	</c:if>
 	//frm4-1, frm4-2 : 접수기간
 	var result_frm4_1 = "<%=rect.getOpeningDate().replaceAll(" 00:00:00","")%>";
 	var result_frm4_2 = "<%=rect.getClosingDate().replaceAll(" 00:00:00","")%>";
@@ -2872,7 +2902,7 @@ $(document).on("click", ".jobList-selectLi", function(){
 	for(var i in dataJobList)
 	{
 		if(dataJobList[i].job1==$(this).text())
-		$("#job3").append("<li class='jobList-select2'><input type='checkbox' class='ipt-chkBox jobList2' name='jobDetail-"+i+"'><label for='jobDetail-"+i+"'>"+dataJobList[i].job2+"</label></li>");
+		$("#job3").append("<li class='jobList-select2'><input type='checkbox' class='ipt-chkBox jobList2' id='jobDetail-"+i+"'><label for='jobDetail-"+i+"'>"+dataJobList[i].job2+"</label></li>");
 	}
 });
 /* 2차직종 선택 시 하단 결과 div출력 */

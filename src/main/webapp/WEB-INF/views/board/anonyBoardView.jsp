@@ -11,7 +11,7 @@
 	<jsp:param value="익명게시판" name="pageTitle"/>
 </jsp:include>
 	<style>
-		div#board-container{width:1000px; margin:0 auto; text-align:center;}
+		div#board-container{width:90%; margin:0 auto; text-align:center;}
 		div#board-container{margin-top:40px;}
 		#content-area{height:300px;}	
 	</style>
@@ -74,7 +74,7 @@
 		</tr>	
 		<tr id="content-area">	
 			<th class="table-primary">작성내용</th>
-			<td colspan="6" >${anonyBoard.anonyBoardContent}</td>
+			<td colspan="6" ><textarea class="form-control" readonly="readonly" rows="15">${anonyBoard.anonyBoardContent}</textarea></td>
 		</tr>
 	</table>
 		<tr>

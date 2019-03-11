@@ -248,6 +248,7 @@
             p.member_id,
 			p.name,
 			p.gender,
+			p.photo,
 			ca.read,
 			ca.cu_resdate,
             ca.recruitment_no,
@@ -271,6 +272,7 @@
 		<result column="name" property="name"/>
       	<result column="age" property="age"/>
       	<result column="gender" property="gender"/>
+      	<result column="photo" property="photo"/>
  		<association javaType="ca" property="ca">
 			<result column="cu_resdate" property="cuResdate"/>
 			<result column="read" property="read"/>
@@ -306,7 +308,7 @@
 	
 	<!-- 채용공고 업데이트 -->
 	<update id="updateRecruitment" parameterType="recruitment">
-		UPDATE RECRUITMENT SET RECRUITMENT_TITLE = #{recruitmentTitle}, EMPLOYMENT_TYPE=#{employmentType}, TYPE_OF_OCCUPATION=#{typeOfOccupation}, ASIGNED_TASK=#{asignedTask}, RECRUITMENT_PERSONNEL=#{recruitmentPersonnel}, POSITION=#{position}, DEPARTMENT=#{department}, CAREER=#{career}, EDUCATION=#{education}, ETC_QUALIFICATION_REQUIREMENT=#{etcQualificationRequirement}, EMPLOYMENT_PREFERENCE=#{employmentPreference}, APPLICANT_AGE_START=#{applicantAgeStart}, APPLICATION_METHOD=#{applicationMethod}, APPLICATION_FORM=#{applicationForm}, RECRUITMENT_STAGE=#{recruitmentStage}, LOCATION=#{location}, PAY_CONDITION=#{payCondition}, NEARBY_STATION=#{nearbyStation}, WELFARE=#{welfare}, OPENING_DATE=TO_DATE(#{openingDate}, 'YY/MM/DD'), CLOSING_DATE=TO_DATE(#{closingDate},'YY/MM/DD'), APPLICANT_AGE_END=#{applicantAgeEnd}, CERTIFICATE=#{certificate}, MAJOR=#{major}, WORK_DAY=#{workDay}, FORE_LANG=#{foreLang}, SUMMERNOTE_HTML=#{summernoteHtml}, SALARY_TYPE=#{salaryType}, LOCATION_CODE=#{locationCode}, GENDER_CUT=#{genderCut}  WHERE COMP_ID=#{compId} AND RECRUITMENT_NO = #{recruitmentNo}
+		UPDATE RECRUITMENT SET RECRUITMENT_TITLE = #{recruitmentTitle}, EMPLOYMENT_TYPE=#{employmentType}, TYPE_OF_OCCUPATION=#{typeOfOccupation}, ASIGNED_TASK=#{asignedTask}, RECRUITMENT_PERSONNEL=#{recruitmentPersonnel}, POSITION=#{position}, DEPARTMENT=#{department}, CAREER=#{career}, EDUCATION=#{education}, ETC_QUALIFICATION_REQUIREMENT=#{etcQualificationRequirement}, EMPLOYMENT_PREFERENCE=#{employmentPreference}, APPLICANT_AGE_START=#{applicantAgeStart}, APPLICATION_METHOD=#{applicationMethod}, APPLICATION_FORM=#{applicationForm}, RECRUITMENT_STAGE=#{recruitmentStage}, LOCATION=#{location}, PAY_CONDITION=#{payCondition}, NEARBY_STATION=#{nearbyStation}, WELFARE=#{welfare}, OPENING_DATE=TO_DATE(#{openingDate}, 'YY/MM/DD'), CLOSING_DATE=TO_DATE(#{closingDate},'YY/MM/DD'), APPLICANT_AGE_END=#{applicantAgeEnd}, CERTIFICATE=#{certificate}, MAJOR=#{major}, WORK_DAY=#{workDay}, FORE_LANG=#{foreLang}, SUMMERNOTE_HTML=#{summernoteHtml}, SALARY_TYPE=#{salaryType}, LOCATION_CODE=#{locationCode}, GENDER_CUT=#{genderCut}, END='N'  WHERE COMP_ID=#{compId} AND RECRUITMENT_NO = #{recruitmentNo}
 	</update>
 
 </mapper>

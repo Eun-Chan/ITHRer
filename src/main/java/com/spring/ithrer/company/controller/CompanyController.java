@@ -497,7 +497,49 @@ public class CompanyController {
 			map2.put("newCount",1);
 			// 관심인재 리스트 가져오기
 			List<Favorites> favoriteAppList = companyService.selectFavoriteAppList(compId);
+			
+			for(int i=0; i<favoriteAppList.size(); i++) {
+				if(favoriteAppList.get(i).getCareer() != null && favoriteAppList.get(i).getCareer().getHireddate() != null && favoriteAppList.get(i).getCareer().getRetireddate() != null) {
+					
+					// 총 경력 계산
+					String[] hireddateArr = favoriteAppList.get(i).getCareer().getHireddate().split(",");
+					String[] retireddateArr = favoriteAppList.get(i).getCareer().getRetireddate().split(",");
+					
+					String workingPeriod = "";
+					int intWorkingPeriod = 0;
+					for(int j=0; j<hireddateArr.length; j++) {
+						String[] hiredDate = hireddateArr[j].split("\\.");
+						Calendar hiredDateCal = new GregorianCalendar();
+						hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
+						
+						String[] retiredDate = retireddateArr[j].split("\\.");
+						Calendar retiredDateCal = new GregorianCalendar();
+						retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
+						
+						Calendar result2 = Calendar.getInstance();
+						result2.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
+						
+						intWorkingPeriod += (int)(result2.getTimeInMillis()/1000/60/60/24/30);
+						logger.debug(j+"커리어"+intWorkingPeriod);
+						logger.debug(j+"커리어"+(int)result2.getTimeInMillis());
+					}
+					if(intWorkingPeriod >= 12) {
+						int year = intWorkingPeriod/12;
+						int month = intWorkingPeriod%12;
+						workingPeriod = year+"년 "+month+"개월";
+					}
+					else {
+						workingPeriod = intWorkingPeriod+"개월";
+					}
+					favoriteAppList.get(i).getCareer().setWorkingPeriod(workingPeriod);
+					
+				}
+				
+			}
+			
+			
 			map2.put("favoriteAppList",favoriteAppList);
+			logger.debug("디버그:"+favoriteAppList);
 		}
 		else {
 			map2.put("newCount",0);
@@ -567,37 +609,37 @@ public class CompanyController {
 	 */
 	@RequestMapping("/testSend")
 	public ModelAndView test(ModelAndView mav,
-					 @RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
-					 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
-					 @RequestParam(defaultValue="", value="career") String career,
-					 @RequestParam(defaultValue="", value="employment_type") String employment_type,
+					 @RequestParam(defaultValue=" ", value="recruitmentTitle") String recruitmentTitle,
+					 @RequestParam(defaultValue=" ", value="typeOfOccupation") String typeOfOccupation,
+					 @RequestParam(defaultValue=" ", value="career") String career,
+					 @RequestParam(defaultValue=" ", value="employment_type") String employment_type,
 					 @RequestParam(defaultValue="0", value="recruitmentPersonnel") int recruitmentPersonnel,
-					 @RequestParam(defaultValue="", value="asignedTask") String asignedTask,
-					 @RequestParam(defaultValue="", value="resultDepartment") String resultDepartment,
-					 @RequestParam(defaultValue="", value="jobGrade") String jobGrade,
-					 @RequestParam(defaultValue="", value="education") String education,
-					 @RequestParam(defaultValue="", value="major") String major,
-					 @RequestParam(defaultValue="", value="foreLang") String foreLang,
-					 @RequestParam(defaultValue="", value="certificate") String certificate,
-					 @RequestParam(defaultValue="", value="computerLiteracy") String computerLiteracy,
-					 @RequestParam(defaultValue="", value="employmentPreference") String employmentPreference,
-					 @RequestParam(defaultValue="", value="applicantAge") String applicantAge,
-					 @RequestParam(defaultValue="", value="genderCut") String genderCut,
-					 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
-					 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
-					 @RequestParam(defaultValue="", value="payCondition") String payCondition,
-					 @RequestParam(defaultValue="", value="salaryType") String salaryType,
-					 @RequestParam(defaultValue="", value="welfare") String welfare,
+					 @RequestParam(defaultValue=" ", value="asignedTask") String asignedTask,
+					 @RequestParam(defaultValue=" ", value="resultDepartment") String resultDepartment,
+					 @RequestParam(defaultValue=" ", value="jobGrade") String jobGrade,
+					 @RequestParam(defaultValue=" ", value="education") String education,
+					 @RequestParam(defaultValue=" ", value="major") String major,
+					 @RequestParam(defaultValue=" ", value="foreLang") String foreLang,
+					 @RequestParam(defaultValue=" ", value="certificate") String certificate,
+					 @RequestParam(defaultValue=" ", value="computerLiteracy") String computerLiteracy,
+					 @RequestParam(defaultValue=" ", value="employmentPreference") String employmentPreference,
+					 @RequestParam(defaultValue=" ", value="applicantAge") String applicantAge,
+					 @RequestParam(defaultValue=" ", value="genderCut") String genderCut,
+					 @RequestParam(defaultValue=" ", value="etcQualificationRequirement") String etcQualificationRequirement,
+					 @RequestParam(defaultValue=" ", value="nearbyStation") String nearbyStation,
+					 @RequestParam(defaultValue=" ", value="payCondition") String payCondition,
+					 @RequestParam(defaultValue=" ", value="salaryType") String salaryType,
+					 @RequestParam(defaultValue=" ", value="welfare") String welfare,
 					 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
 					 @RequestParam(defaultValue="SYSDATE", value="closingDate") String closingDate,
-					 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
-					 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
-					 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
-					 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
-					 @RequestParam(defaultValue="", value="workDay") String workDay,
-					 @RequestParam(defaultValue="", value="compId") String compId,
-					 @RequestParam(defaultValue="", value="locationCode") String locationCode,
-					 @RequestParam(defaultValue="", value="location") String location)
+					 @RequestParam(defaultValue=" ", value="applicationMethod") String applicationMethod,
+					 @RequestParam(defaultValue=" ", value="applicationForm") String applicationForm,
+					 @RequestParam(defaultValue=" ", value="recruitmentStage") String recruitmentStage,
+					 @RequestParam(defaultValue=" ", value="summernoteHtml") String summernoteHtml,
+					 @RequestParam(defaultValue=" ", value="workDay") String workDay,
+					 @RequestParam(defaultValue=" ", value="compId") String compId,
+					 @RequestParam(defaultValue=" ", value="locationCode") String locationCode,
+					 @RequestParam(defaultValue=" ", value="location") String location)
 	{
 		/*frm1*/
 		String result_recruitmentTitle = recruitmentTitle;
@@ -704,7 +746,9 @@ public class CompanyController {
 				// 최종 학교이름 추출
 				if(applicantList.get(i).getEducation().getSchoolname() != null) {
 					String[] schoolName = applicantList.get(i).getEducation().getSchoolname().split(",");
-					applicantList.get(i).getEducation().setSchoolname(schoolName[schoolName.length-1]);
+					if(schoolName.length != 0) {
+						applicantList.get(i).getEducation().setSchoolname(schoolName[schoolName.length-1]);
+					}
 				}
 				
 				// 최종 학점 추출
@@ -720,7 +764,10 @@ public class CompanyController {
 				// 최종 학점 만점 추출
 				if(applicantList.get(i).getEducation().getTotalscore() != null) {
 					String[] totalScore = applicantList.get(i).getEducation().getTotalscore().split(",");
-					applicantList.get(i).getEducation().setTotalscore(totalScore[totalScore.length-1]);
+					if(totalScore.length != 0) {
+						applicantList.get(i).getEducation().setTotalscore(totalScore[totalScore.length-1]);
+					}
+					
 				}
 			}
 			if(applicantList.get(i).getCareer() != null && applicantList.get(i).getCareer().getHireddate() != null && applicantList.get(i).getCareer().getRetireddate() != null) {
@@ -729,33 +776,36 @@ public class CompanyController {
 				String[] hireddateArr = applicantList.get(i).getCareer().getHireddate().split(",");
 				String[] retireddateArr = applicantList.get(i).getCareer().getRetireddate().split(",");
 				
-				String workingPeriod = "";
-				int intWorkingPeriod = 0;
-				for(int j=0; j<hireddateArr.length; j++) {
-					String[] hiredDate = hireddateArr[j].split("\\.");
-					Calendar hiredDateCal = new GregorianCalendar();
-					hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
-					
-					String[] retiredDate = retireddateArr[j].split("\\.");
-					Calendar retiredDateCal = new GregorianCalendar();
-					retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
-					
-					Calendar result = Calendar.getInstance();
-					result.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
-					
-					intWorkingPeriod += (int)(result.getTimeInMillis()/1000/60/60/24/30);
-					logger.debug(j+"커리어"+intWorkingPeriod);
-					logger.debug(j+"커리어"+(int)result.getTimeInMillis());
+				if(hireddateArr.length != 0 && retireddateArr.length != 0) {
+					String workingPeriod = "";
+					int intWorkingPeriod = 0;
+					for(int j=0; j<hireddateArr.length; j++) {
+						String[] hiredDate = hireddateArr[j].split("\\.");
+						Calendar hiredDateCal = new GregorianCalendar();
+						hiredDateCal.set(Integer.parseInt(hiredDate[0]),Integer.parseInt(hiredDate[1]),1,0,0,0);
+						
+						String[] retiredDate = retireddateArr[j].split("\\.");
+						Calendar retiredDateCal = new GregorianCalendar();
+						retiredDateCal.set(Integer.parseInt(retiredDate[0]),Integer.parseInt(retiredDate[1]),1,0,0,0);
+						
+						Calendar result = Calendar.getInstance();
+						result.setTimeInMillis(retiredDateCal.getTimeInMillis()-hiredDateCal.getTimeInMillis());
+						
+						intWorkingPeriod += (int)(result.getTimeInMillis()/1000/60/60/24/30);
+						logger.debug(j+"커리어"+intWorkingPeriod);
+						logger.debug(j+"커리어"+(int)result.getTimeInMillis());
+					}
+					if(intWorkingPeriod >= 12) {
+						int year = intWorkingPeriod/12;
+						int month = intWorkingPeriod%12;
+						workingPeriod = year+"년 "+month+"개월";
+					}
+					else {
+						workingPeriod = intWorkingPeriod+"개월";
+					}
+					applicantList.get(i).getCareer().setWorkingPeriod(workingPeriod);
 				}
-				if(intWorkingPeriod >= 12) {
-					int year = intWorkingPeriod/12;
-					int month = intWorkingPeriod%12;
-					workingPeriod = year+"년 "+month+"개월";
-				}
-				else {
-					workingPeriod = intWorkingPeriod+"개월";
-				}
-				applicantList.get(i).getCareer().setWorkingPeriod(workingPeriod);
+				
 				
 			}
 			
@@ -848,38 +898,38 @@ public class CompanyController {
 	 */
 	@RequestMapping("/updateSend")
 	public ModelAndView updateSend(ModelAndView mav,
-			 @RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
-			 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
-			 @RequestParam(defaultValue="", value="career") String career,
-			 @RequestParam(defaultValue="", value="employment_type") String employmentType,
+			 @RequestParam(defaultValue=" ", value="recruitmentTitle") String recruitmentTitle,
+			 @RequestParam(defaultValue=" ", value="typeOfOccupation") String typeOfOccupation,
+			 @RequestParam(defaultValue=" ", value="career") String career,
+			 @RequestParam(defaultValue=" ", value="employment_type") String employmentType,
 			 @RequestParam(defaultValue="0", value="recruitmentPersonnel") int recruitmentPersonnel,
-			 @RequestParam(defaultValue="", value="asignedTask") String asignedTask,
-			 @RequestParam(defaultValue="", value="resultDepartment") String department,
-			 @RequestParam(defaultValue="", value="jobGrade") String position,
-			 @RequestParam(defaultValue="", value="education") String education,
-			 @RequestParam(defaultValue="", value="major") String major,
-			 @RequestParam(defaultValue="", value="foreLang") String foreLang,
-			 @RequestParam(defaultValue="", value="certificate") String certificate,
-			 @RequestParam(defaultValue="", value="computerLiteracy") String computerLiteracy,
-			 @RequestParam(defaultValue="", value="employmentPreference") String employmentPreference,
-			 @RequestParam(defaultValue="", value="applicantAge") String applicantAge,
-			 @RequestParam(defaultValue="", value="genderCut") String genderCut,
-			 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
-			 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
-			 @RequestParam(defaultValue="", value="payCondition") String payCondition,
-			 @RequestParam(defaultValue="", value="salaryType") String salaryType,
-			 @RequestParam(defaultValue="", value="welfare") String welfare,
+			 @RequestParam(defaultValue=" ", value="asignedTask") String asignedTask,
+			 @RequestParam(defaultValue=" ", value="resultDepartment") String department,
+			 @RequestParam(defaultValue=" ", value="jobGrade") String position,
+			 @RequestParam(defaultValue=" ", value="education") String education,
+			 @RequestParam(defaultValue=" ", value="major") String major,
+			 @RequestParam(defaultValue=" ", value="foreLang") String foreLang,
+			 @RequestParam(defaultValue=" ", value="certificate") String certificate,
+			 @RequestParam(defaultValue=" ", value="computerLiteracy") String computerLiteracy,
+			 @RequestParam(defaultValue=" ", value="employmentPreference") String employmentPreference,
+			 @RequestParam(defaultValue=" ", value="applicantAge") String applicantAge,
+			 @RequestParam(defaultValue=" ", value="genderCut") String genderCut,
+			 @RequestParam(defaultValue=" ", value="etcQualificationRequirement") String etcQualificationRequirement,
+			 @RequestParam(defaultValue=" ", value="nearbyStation") String nearbyStation,
+			 @RequestParam(defaultValue=" ", value="payCondition") String payCondition,
+			 @RequestParam(defaultValue=" ", value="salaryType") String salaryType,
+			 @RequestParam(defaultValue=" ", value="welfare") String welfare,
 			 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
 			 @RequestParam(defaultValue="SYSDATE", value="closingDate") String closingDate,
-			 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
-			 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
-			 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
-			 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
-			 @RequestParam(defaultValue="", value="workDay") String workDay,
-			 @RequestParam(defaultValue="", value="compId") String compId,
-			 @RequestParam(defaultValue="", value="locationCode") String locationCode,
-			 @RequestParam(defaultValue="", value="location") String location,
-			 @RequestParam(defaultValue="", value="recruitmentNo") int recruitmentNo) {
+			 @RequestParam(defaultValue=" ", value="applicationMethod") String applicationMethod,
+			 @RequestParam(defaultValue=" ", value="applicationForm") String applicationForm,
+			 @RequestParam(defaultValue=" ", value="recruitmentStage") String recruitmentStage,
+			 @RequestParam(defaultValue=" ", value="summernoteHtml") String summernoteHtml,
+			 @RequestParam(defaultValue=" ", value="workDay") String workDay,
+			 @RequestParam(defaultValue=" ", value="compId") String compId,
+			 @RequestParam(defaultValue=" ", value="locationCode") String locationCode,
+			 @RequestParam(defaultValue=" ", value="location") String location,
+			 @RequestParam(defaultValue=" ", value="recruitmentNo") int recruitmentNo) {
 		
 		Recruitment rect = new Recruitment();
 		rect.setRecruitmentTitle(recruitmentTitle);
@@ -930,7 +980,6 @@ public class CompanyController {
 		rect.setRecruitmentNo(recruitmentNo);
 		
 		int result = companyService.updateRecruitment(rect);
-		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+rect.getSummernoteHtml());
 		mav.addObject("compId", compId);
 		mav.setViewName("redirect:index.ithrer");
 		

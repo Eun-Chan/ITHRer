@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +75,8 @@ public class ResumeController {
                            Overseas overseas, PortFolio portFolio,
                            Preference preference, Profile profile,
                            Education education, @RequestParam("memberIdHide") String memberIdHide,
-                           Letter letter, MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res) {
+                           Letter letter, MultipartHttpServletRequest req, MultipartFile file,HttpServletResponse res
+                           ,HttpServletRequest request) {
       logger.info("award="+award);
       logger.info("career="+career);
       logger.info("certification="+certification);
@@ -240,6 +242,14 @@ public class ResumeController {
          e1.printStackTrace();
       }
       int memberresult = resumeService.updateMember(profileMap);
+      // 현재 사용중인 세션을 반환
+      HttpSession session = request.getSession(true);
+      member = (Member)session.getAttribute("member");
+      
+      // 변경된 이메일과 닉네임을 세션에 저장
+      member.setGender(profile.getGender());
+      member.setAddress(profile.getAddress());
+      session.setAttribute("member", member);
       mav.setViewName("redirect:/");
       return mav;   
    }
