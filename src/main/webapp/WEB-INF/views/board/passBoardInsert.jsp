@@ -41,7 +41,7 @@ function validate(){
 		<input type="text" class="form-control" placeholder="제목" name="passBoardTitle" id="passBoardTitle" required>
  		<input type="text" class="form-control" name="passBoardWriter" value="${member.memberId}" readonly required>
 		
-	    <textarea class="form-control" rows="10"  name="passBoardContent" placeholder="내용" required></textarea>
+	    <textarea class="form-control" rows="10"  name="passBoardContent" id="textarea" placeholder="내용" required></textarea>
 		<br />
 		<input type="submit" class="btn btn-outline-success" value="저장" onclick="return validate();">
 		<input type="button" class="btn btn-primary" value="돌아가기" onclick="location.href='passBoardList'">
