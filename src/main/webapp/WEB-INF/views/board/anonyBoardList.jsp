@@ -49,7 +49,7 @@ $(function(){
 		<tbody>
 			<c:forEach items="${list}" var="b" varStatus="vs" > 
 			<tr no="${b.ANONYBOARDNO}" class="table-info">
-				<td>${vs.count}</td>
+				<td>${b.ANONYBOARDNO}</td>
 				<td id="title">${b.ANONYBOARDTITLE}</td>
 				<td>${b.ANONYBOARDWRITER}</td>
 				<td><fmt:formatDate value="${b.ANONYBOARDDATE}" pattern="yy.MM.dd HH:mm:ss" type="date"/></td>

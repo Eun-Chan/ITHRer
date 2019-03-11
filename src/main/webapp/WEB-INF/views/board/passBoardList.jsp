@@ -47,7 +47,7 @@ $(function(){
 		<tbody>
 			<c:forEach items="${list}" var="b" varStatus="vs"> 
 			<tr no="${b.PASSBOARDNO}" class="table-info">
-				<td>${vs.count}</td>
+				<td>${b.PASSBOARDNO}</td>
 				<td id="title">${b.PASSBOARDTITLE}</td>
 				<td>${b.PASSBOARDWRITER}</td>
 				<td><fmt:formatDate value="${b.PASSBOARDDATE}" pattern="yy.MM.dd HH:mm:ss" type="date"/></td>
@@ -81,7 +81,7 @@ $(function(){
 		String cPageTemp = request.getParameter("cPage");
 		int cPage = 1;
 		try{
-			cPage = Integer.parseInt(cPageTemp);
+			cPage = Integer.parseInt(cPageTemp); 
 		} catch(NumberFormatException e){
 			
 		}

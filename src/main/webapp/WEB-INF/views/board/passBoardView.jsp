@@ -145,7 +145,7 @@ function fn_goBoardUpdate(){
 		</tr>	
 		<tr>	
 			<th class="table-primary">작성내용</th>
-			<td colspan="6" >${passBoard.passBoardContent}</td>
+			<td colspan="6"><textarea class="form-control" readonly="readonly" rows="15">${passBoard.passBoardContent}</textarea></td>
 		</tr>
  	</table>
 	
