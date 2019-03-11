@@ -145,7 +145,7 @@ public class IndexController {
     	 Map<String, org.jsoup.nodes.Element> doc = Utils.apiCrwaling(id);
          
     	 //크롤링으로 들고오는 iframe의 설정을 변경하는 부분
-         String addUrl = "http://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
+         String addUrl = "https://www.saramin.co.kr";//iframe태그 src 앞에 들어갈 url
          
          StringBuffer sb = new StringBuffer(doc.get("detail").html());
                   
@@ -542,8 +542,11 @@ public class IndexController {
    
 	   Company com = indexService.selectOneCompany(rc.getCompId());
 	   
-	   List<PortFolio> portFolio = indexService.selectListPortFolio(memberId);
-	   
+	   PortFolio portFolio = indexService.selectOnePortFolio(memberId);
+	   if(portFolio!=null) {
+		   String url = portFolio.getUrl();
+		   portFolio.setUrl(url.substring(url.indexOf("_")+1));		   
+	   }
 	   mav.addObject("pf", pf);
 	   mav.addObject("portFolio", portFolio);
 	   mav.addObject("rc", rc);
@@ -657,14 +660,14 @@ public class IndexController {
 			e1.printStackTrace();
 		}
 	   	String path = (String)img_path.getBody();
-	   	String url = path.substring(path.indexOf("_")+1);
 	   	System.out.println(path);
 	   	logger.debug("indexController path="+path);
 		PortFolio pf = new PortFolio();
+		String url = path.substring(path.indexOf("_")+1);
 		/* 되는걸로 하세요 */
 		//pf.setPOriginalFileName(o_fileName);
 		pf.setPRenamedFileName(r_fileName);
-		pf.setUrl(url);
+		pf.setUrl(path);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("memberId", memberId);
 		map.put("pf", pf);
@@ -674,7 +677,7 @@ public class IndexController {
 		Gson gson = new Gson();
 		if(result == 1) {			
 			try {
-				gson.toJson(pf,res.getWriter());
+				gson.toJson(url,res.getWriter());
 			} catch (JsonIOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -740,9 +743,10 @@ public class IndexController {
    }
    //포트폴리오 삭제
    @RequestMapping("/index/deletePortFolio.ithrer")
-   public void deleteFolio(@RequestParam("pfNo") int pfNo,@RequestParam("url") String url,HttpServletResponse res) {
-	   int result = indexService.deletePortFolio(pfNo);
-	   url = "resume/portfolio"+url;
+   public void deleteFolio(@RequestParam("memberId") String memberId,HttpServletResponse res) {
+	   PortFolio portFolio = indexService.selectOnePortFolio(memberId);
+	   String url = "resume/portfolio"+portFolio.getUrl();
+	   int result = indexService.deletePortFolio(memberId);
 	   if(result>0) {
 		   S3Util s3 = new S3Util();
 		   for(int i = 0 ; i<s3.getBucketList().size(); i++) {
@@ -787,8 +791,11 @@ public class IndexController {
 	       
 	   int pageNo = startPage;
 	   
+	   //스크랩한 공고 가져오기
 	   List<Favorites> favorites = indexService.selectListFavorites(memberId,cPage,numPerPage);
+	  
 	   List<String>  categoryList = new ArrayList<String>(); 		   
+	   //스크랩한 공고를 올린 회사의 카테고리를 가져온다
 	   for(int i = 0 ; i<favorites.size(); i++) {
 		   categoryList.add(favorites.get(i).getCategory());
 		   String closingDate = favorites.get(i).getClosingDate();
@@ -808,18 +815,21 @@ public class IndexController {
 			   }
 		   }
 	   }
-	  SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-     
-      String sysdate1 = format.format(sysdate);
-      Date sysdate2 = format.parse(sysdate1);
-      int endTime = 0;
-      Date date = null;
+	
 	   Map<String, Object> map = new HashMap<String, Object>();
 	   map.put("array",categoryLists);
 	   map.put("memberId", memberId);
+	   //스크랩한 공고를 올린회사의 카테고리를 기준으로 랜덤으로 4가지 공고를 가져옴
 	   List<Recruitment> recommendationRecruitmentList = indexService.selectListRecommendRecruitmentList(map);
 	   
 	   
+	   
+	   SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	     
+	      String sysdate1 = format.format(sysdate);
+	      Date sysdate2 = format.parse(sysdate1);
+	      int endTime = 0;
+	      Date date = null;
 	   for(int i = 0 ; i<recommendationRecruitmentList.size() ; i++) {
 	     	  date = format.parse(recommendationRecruitmentList.get(i).getClosingDate());    	  
 	    	  endTime = (int)((date.getTime()-sysdate2.getTime())/(24*60*60*1000));
@@ -902,5 +912,73 @@ public class IndexController {
 	   
 	   mav.setViewName("common/error");
 	   return mav;
+   }
+   
+   //내가 지원한 공고 보기
+   @RequestMapping("/index/memberApplyCompany.ithrer")
+   public ModelAndView memberApplyCompany(@RequestParam("memberId") String memberId , ModelAndView mav , HttpServletRequest req) {
+	   if(memberId == null) {
+			  memberId ="";
+	   }
+	   int cPage = 0;
+	   try {
+		   cPage = Integer.parseInt(req.getParameter("cPage"));		   
+	   } catch(NumberFormatException e) {
+		   cPage = 0;
+	   }
+	   
+	   //컨텐츠 갯수 가져오기
+	   int totalCount = indexService.selectCountCompanyapplication(memberId);
+	   
+	   int numPerPage = 5;
+	   int totalPages = (int)Math.ceil(((double)totalCount/numPerPage));
+	   int pageBarSize = 5;
+	    
+	   int startPage = ((cPage - 1) / pageBarSize) * pageBarSize + 1;
+	   int endPage = startPage + pageBarSize - 1;
+	       
+	   int pageNo = startPage;
+	   List<Recruitment> memberCompanyApplicationList = indexService.selectListMemberCompanyApplicationList(memberId,cPage,numPerPage);
+	   for(int i =0 ; i<memberCompanyApplicationList.size() ; i++) {
+		   memberCompanyApplicationList.get(i).setClosingDate(memberCompanyApplicationList.get(i).getClosingDate().substring(0,10));
+	   }
+	   // bootstrap 처리위해 리스트로 처리
+	   	String url = req.getContextPath()+"/index/fmemberApplyCompany.ithrer?";
+	    String pageBar = "<ul class='pagination'>";
+	       
+	    // [이전] 이전
+	    if(pageNo == 1) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>이전</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+(pageNo-1)+"&memberId="+memberId+ "'>이전</a></li>";
+	    }
+	    
+	    // 페이지 숫자 영역
+	    while(!(pageNo > endPage || pageNo > totalPages)) {
+	       if(pageNo == cPage) {
+	          pageBar += "<li class='page-item active'><a class='page-link' href='#'>" + pageNo + "</a></li>";
+	       }
+	       else {
+	          pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+pageNo +"&memberId="+memberId+"'>" + pageNo + "</a></li>";
+	       }
+	       pageNo++;
+	    }
+	    // [다음] 영역
+	    if(pageNo > totalPages) {
+	       pageBar += "<li class='page-item disabled'><a class='page-link' href='#'>다음</a></li>";
+	    }
+	    else {
+	       pageBar += "<li class='page-item'><a class='page-link' href='" + url+"cPage="+pageNo+"&memberId="+memberId + "'>다음</a>";
+	    }
+	    pageBar += "</ul>";
+	   
+	   mav.addObject("mca", memberCompanyApplicationList);
+	   mav.addObject("pageBar", pageBar);	    
+	   
+	   mav.setViewName("notice/memberApplyCompany");
+	   
+	   return mav;
+	   
    }
 } 

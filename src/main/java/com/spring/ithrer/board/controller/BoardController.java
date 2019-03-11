@@ -1,6 +1,7 @@
 package com.spring.ithrer.board.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -280,9 +283,21 @@ public class BoardController {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		
+		}	
 	}
+
+	/**
+	 * Annotation을 이용한 스케줄링
+	 * Cron 옵션을 통해 설정
+	 * 빈의 메소드를 어노테이션을 통해 태스크로 활용할수 있게함
+	 */
+	@Scheduled(cron="0 0 12 * * ?")
+    public void autoDelete() {
+    	int result = boardService.autoDelete();
+    	
+    	logger.debug("삭제된 익명게시판 수 : "+result);
+    }
+	
 	
 	@RequestMapping("/board/passBoardMoveUpdate")
 	public ModelAndView passBoardMoveUpdate(@RequestParam("passBoardNo") int passBoardNo, ModelAndView mav) {
@@ -343,21 +358,25 @@ public class BoardController {
 
 	}
 	
+	@ResponseBody
 	@RequestMapping("board/passBoardDeleteComment.ithrer")
-	public ModelAndView passBoardDeleteComment(@RequestParam(value="pbBoardRef")int pbBoardRef,
-											   @RequestParam(value="pbCommentNo")int pbCommentNo ,
-											   PassBoardComment comment, ModelAndView mav) {
+	public int passBoardDeleteComment(@RequestParam(value="pbBoardRef")int pbBoardRef,
+											   @RequestParam(value="pbCommentNo")int pbCommentNo,
+											   ModelAndView mav) {
 		
 		int result = 0;
-		result = boardService.passBoardDeleteComment(comment);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("pbBoardRef", pbBoardRef);
+		map.put("pbCommentNo", pbCommentNo);
 		
-		PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
+		result = boardService.passBoardDeleteComment(map);
 		
-		mav.addObject("passBoard", passBoard);
-		mav.addObject("result", result);
-		mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		//PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
 		
-		return mav;
+		//mav.addObject("passBoard", passBoard);
+		//mav.addObject("result", result);
+		//mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		
+		return result;
 	}
-	
 }

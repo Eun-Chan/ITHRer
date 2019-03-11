@@ -190,7 +190,7 @@
 					<dt>고용형태</dt>
 					<dd style="color:#ffb6c1;">${rc.employmentType }</dd>
 					<dt>급여</dt>
-					<dd>${rc.payCondition }</dd>
+					<dd>${rc.salaryType} ${rc.payCondition }</dd>
 					<dt>지역</dt>
 					<dd>${rc.location }</dd>
 				</dl>
@@ -274,18 +274,14 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-4">
 			<span>연령별</span>
-			<div  id="age" style="width: 220px; height: 160px;">
+			<div  id="age" style="width: 270px; height: 160px;">
 			</div>
 		</div>
-		<div class="col-sm-3">
+		<div class="col-sm-4">
 			<span>성별</span>
-			<div id= "gender" style="width: 220px; height: 160px;"></div>
-		</div>
-		<div class="col-sm-3">
-			<span>학력별</span>
-			<div id="education" style="width: 220px; height: 160px;"></div>
+			<div id= "gender" style="width: 270px; height: 160px;"></div>
 		</div>
 	</div>
 	<div class="DetailHeader">
@@ -466,10 +462,12 @@ google.charts.setOnLoadCallback(genderChart);
 
 
 function genderChart() {
+	//차트에 넣을 데이터 가져오기
+	//배열을 선언한다
 	var list = new Array();
 	var man = 0 ;
 	var girl = 0;
-	//el을 스크립트 안에서 쓰는법
+	//넘겨준 데이터를 선언한 배열에 차례로 담아줌
 	<c:forEach items="${list}" var="item">
 		list.push("${item.gender}");
 	</c:forEach>

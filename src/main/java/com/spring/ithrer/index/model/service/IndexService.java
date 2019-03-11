@@ -46,7 +46,7 @@ public interface IndexService {
 
    List<Map<String, String>> selectListSearchIthrer(Map<String, Object> map);
 
-   List<PortFolio> selectListPortFolio(String memberId);
+   PortFolio selectOnePortFolio(String memberId);
 
    int deletePortFolio(int pfNo);
 
@@ -68,5 +68,11 @@ public interface IndexService {
 	Recruitment selectOneRecruitmentEndCheck(int recruitmentNo);
 	
 	int updateProfile(Map<String, Object> param);
+
+	int deletePortFolio(String memberId);
+
+	int selectCountCompanyapplication(String memberId);
+
+	List<Recruitment> selectListMemberCompanyApplicationList(String memberId, int cPage, int numPerPage);
 
 }

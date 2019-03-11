@@ -67,8 +67,8 @@
 			and applicant_age_end >= #{age}
 		</if>
 		
-		<if test='gender != null and gender !="0" and gender !=""'>
-			and gender_cut = #{gender} or gender_cut = '0'
+		<if test='gender != null and gender !=""'>
+			and (gender_cut = #{gender} or gender_cut = '0')
 		</if>
 		
 		<if test="subway != null and subway != '' and subway != 'null'">
@@ -150,8 +150,8 @@
 	<select id="selectListPortFolio" parameterType="string" resultType="portfolio">
 		select * from PORTFOLIO where member_id = #{memberId}
 	</select>
-	<delete id="deletePortFolio" parameterType="_int">
-		delete from portfolio where pf_no = #{pfNo}
+	<delete id="deletePortFolio" parameterType="string">
+		delete from portfolio where member_Id = #{memberId}
 	</delete>
 	<select id="selectListRandomRecruitment" parameterType="string" resultType="recruitment">
 		select t.* from(select s.*,(select comp_name from company where comp_id = s.comp_id)compName,
@@ -211,4 +211,13 @@
 	<update id="updateProfile" parameterType="map">
 		update profile set email = #{email}, phone =#{phone} where member_id=#{memberId}
 	</update>
+	
+	<!-- 내가지원한 공고 카운트 가져오기 -->
+	<select id="selectCountCompanyapplication" resultType="_int">
+		select count(*) count from companyapplication where member_id = #{memberId}
+	</select>
+	<select id="selectListMemberCompanyApplicationList" parameterType="string" resultType="recruitment">
+		select r.* from companyapplication c join recruitment r on c.recruitment_no = r.recruitment_no
+		where c.member_id = #{memberId} and r.end ='N'
+	</select>
 </mapper>

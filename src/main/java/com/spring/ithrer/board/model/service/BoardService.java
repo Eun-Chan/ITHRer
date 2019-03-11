@@ -43,6 +43,7 @@ public interface BoardService {
 
 	int passBoardDelete(int passBoardNo);
 
+	int autoDelete();
 	
 	int passBoardUpdate(PassBoard passBoard);
 
@@ -51,6 +52,6 @@ public interface BoardService {
 
 	List<PassBoardComment> passBoardCommentList(int passBoardNo);
 
-	int passBoardDeleteComment(PassBoardComment comment);
+	int passBoardDeleteComment(Map<String, Integer> map);
 
 	}

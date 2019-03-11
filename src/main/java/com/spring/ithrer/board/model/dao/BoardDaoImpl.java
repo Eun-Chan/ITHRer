@@ -158,6 +158,11 @@ public class BoardDaoImpl implements BoardDao{
     }
 
 	@Override
+	public int autoDelete() {
+		return sqlSession.delete("anonyboard.autoDelete");
+	}
+	
+	@Override
 	public int passBoardUpdate(PassBoard passBoard) {
 		return sqlSession.update("passboard.passBoardUpdate", passBoard);
 	}
@@ -173,9 +178,7 @@ public class BoardDaoImpl implements BoardDao{
 	}
 
 	@Override
-	public int passBoardDeleteComment(PassBoardComment comment) {
-		return sqlSession.delete("passboard.passBoardDeleteComment", comment);
+	public int passBoardDeleteComment(Map<String, Integer> map) {
+		return sqlSession.delete("passboard.passBoardDeleteComment", map);
 	}
-	
-	
 }

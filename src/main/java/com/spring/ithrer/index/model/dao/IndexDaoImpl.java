@@ -104,14 +104,11 @@ public class IndexDaoImpl implements IndexDao{
    }
 
    @Override
-   public List<PortFolio> selectListPortFolio(String memberId) {
-      return sqlSession.selectList("index.selectListPortFolio",memberId);
+   public PortFolio selectOnePortFolio(String memberId) {
+      return sqlSession.selectOne("index.selectListPortFolio",memberId);
    }
 
-   @Override
-   public int deletePortFolio(int pfNo) {
-      return sqlSession.delete("index.deletePortFolio", pfNo);
-   }
+
 
    @Override
    public List<Recruitment> selectListRandomRecruitment(String memberId) {
@@ -160,6 +157,28 @@ public Recruitment selectOneRecruitmentEndCheck(int recruitmentNo) {
 @Override
 public int updateProfile(Map<String, Object> param) {
 	return sqlSession.update("index.updateProfile", param);
+}
+
+@Override
+public int deletePortFolio(int pfNo) {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+@Override
+public int deletePortFolio(String memberId) {
+	return sqlSession.delete("index.deletePortFolio", memberId);
+}
+
+@Override
+public int selectCountCompanyapplication(String memberId) {
+	return sqlSession.selectOne("index.selectCountCompanyapplication",memberId);
+}
+
+@Override
+public List<Recruitment> selectListMemberCompanyApplicationList(String memberId, int cPage, int numPerPage) {
+	RowBounds rowBounds = new RowBounds((cPage-1)*numPerPage, numPerPage);
+	return sqlSession.selectList("index.selectListMemberCompanyApplicationList", memberId,rowBounds);
 }
 
 }

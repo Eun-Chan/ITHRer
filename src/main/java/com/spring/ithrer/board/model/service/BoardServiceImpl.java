@@ -101,6 +101,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public int autoDelete() {
+		return boardDao.autoDelete();
+	}
+	
 	public int passBoardAddComment(PassBoardComment comment) {
 		return boardDao.passBoardAddComment(comment);
 	}
@@ -111,9 +115,9 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public int passBoardDeleteComment(PassBoardComment comment) {
-		return boardDao.passBoardDeleteComment(comment);
+	public int passBoardDeleteComment(Map<String, Integer> map) {
+		// TODO Auto-generated method stub
+		return boardDao.passBoardDeleteComment(map);
 	}
-
 	
 }

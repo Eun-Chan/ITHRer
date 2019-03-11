@@ -88,4 +88,19 @@ public class UserServiceImpl implements UserService {
 	public int memberPasswordUpdate(Member member) {
 		return userDao.memberPasswordUpdate(member);
 	}
+
+	@Override
+	public Company findCompanyId(Company company) {
+		return userDao.findCompanyId(company);
+	}
+
+	@Override
+	public Company findPasswordEmailAuth2(Company company) {
+		return userDao.findPasswordEmailAuth2(company);
+	}
+
+	@Override
+	public int companyPasswordUpdate(Company company) {
+		return userDao.companyPasswordUpdate(company);
+	}
 }

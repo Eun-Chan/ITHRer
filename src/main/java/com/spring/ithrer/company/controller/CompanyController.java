@@ -927,7 +927,7 @@ public class CompanyController {
 		int result = companyService.updateRecruitment(rect);
 		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+rect.getSummernoteHtml());
 		mav.addObject("compId", compId);
-		//mav.setViewName("redirect:index.ithrer");
+		mav.setViewName("redirect:index.ithrer");
 		
 		return mav;
 	}
