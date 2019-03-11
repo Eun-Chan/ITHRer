@@ -99,6 +99,9 @@
 		<result column="name" property="name"/>
 		<result column="birth" property="birth"/>
 		<result column="gender" property="gender"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="address" property="address"/>
 		<result column="photo" property="photo"/>
 		<result column="age" property="age"/>
 		<result column="count" property="count"/>
