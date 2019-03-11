@@ -29,7 +29,6 @@ public class BroadSocket {
 					client.getBasicRemote().sendText("접속자 : "+clients.size());
 					System.out.println("클라 아이디"+client.getId());
 					System.out.println(client.hashCode());
-					
 				}
 			}
 		}

@@ -281,8 +281,8 @@
    <div style="height: 90%">
    	<div id="messageWindow" readonly="true" style="height: 100%; width: 100%"></div>
    </div>
-   <input id="inputMessage" class="form-control" type="text" onkeyup="chat_enterkey()" placeholder="채팅을 입력해줭"/>
-   <input type="submit" id="sendBtn" class="btn btn-default" value="보내기" onclick="chat_send()" />
+   <input id="inputMessage" class="form-control" type="text" onkeyup="chat_enterkey()"/>
+   <input type="submit" id="sendBtn" class="btn btn-default" value="보내기" onclick="chat_send()" disabled="disabled"/>
 </div>
 
 <script>
@@ -398,6 +398,17 @@
 	}
 	
 	function chat_enterkey(){
+		var cnt = $("#inputMessage").val().trim();
+		
+		if(cnt == 0){
+			$("#sendBtn").attr('disabled',true);
+			$("#sendBtn").css('background','gainsboro');
+		}
+		else{
+			$("#sendBtn").attr('disabled',false);
+			$("#sendBtn").css('background','yellow');
+		}
+		
 		if(window.event.keyCode == 13){
 			chat_send();
 		}
@@ -506,8 +517,7 @@
         var div = document.createElement('div');
         var text = document.createTextNode(event.data);
        	div.appendChild(text);
-       	div.style.background = "${pageContext.request.contextPath}/resources/images/logo.png";
-       	
+		div.className= 'kakao_other';
        	$("#messageWindow").append(div);
         
         const top = textarea.prop('scrollHeight');
@@ -525,14 +535,24 @@
     	if(inputMessage.val().length != 0){
     	<%if(member != null){%>
         <%-- textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n"); --%>
-        webSocket.send('<%=member.getMemberName()%>님 : ' + inputMessage.val());
+        /* 동적으로 div만들어서 추가 */
+        var div = document.createElement('div');
+        var memberName = "${member.memberName}";
+        var inputMessage2 = inputMessage.val();
+        var text = document.createTextNode(memberName +" : "+inputMessage2);
+        div.appendChild(text);
+        div.className= 'kakao_me';
+        $("#messageWindow").append(div);
+		$("#sendBtn").attr('disabled',true);
+		$("#sendBtn").css('background','gainsboro');
+        webSocket.send('<%=member.getMemberName()%> : ' + inputMessage.val());
         inputMessage.val("");
         /* 채팅창 스크롤 자동 내리기 */
         const top = textarea.prop('scrollHeight');
         textarea.scrollTop(top);
     	<%}else if(company != null){%>
         textarea.val(textarea.val() + '<%=company.getCompName()%>님 : ' + inputMessage.val() + "\n");
-        webSocket.send('<%=company.getCompName()%>님 : ' + inputMessage.val());
+        webSocket.send('<%=company.getCompName()%> : ' + inputMessage.val());
         inputMessage.val("");
         /* 채팅창 스크롤 자동 내리기 */
         const top = textarea.prop('scrollHeight');

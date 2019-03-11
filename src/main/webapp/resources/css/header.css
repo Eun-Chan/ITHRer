@@ -13,7 +13,7 @@ a#chat_cnt:hover
    height : 90%;
    text-align : center;
    display : none;
-   background-color : #428bca;
+   background-color : rgb(233,236,239);
 }
 
 #messageWindow{
@@ -23,9 +23,10 @@ a#chat_cnt:hover
 
 #inputMessage
 {
-	 width: 70%;
+	 width: 80%;
 	 display: inline;
- 	 margin-top : 5%;
+ 	 margin-top : 0;
+ 	 height : 10%;
 }
 
 #chat-Container
@@ -39,3 +40,30 @@ a#chat_cnt:hover
 	min-width: 300px;
 	width: 300px
 } 
+
+.kakao_other{
+    background-color : rgb(245,255,95);
+	position : relative;
+	float : left;
+	clear : both;
+	left : 5px;
+	padding : 5px;
+	margin : 5px;
+	border-radius: 10px;
+}
+
+.kakao_me{
+	background-color : rgb(255,255,255);
+	position : relative;
+	float : right;
+	clear : both;
+	right : 5px;
+	padding : 5px;
+	margin : 5px;
+	border-radius: 10px;
+}
+
+#sendBtn{
+	background: gainsboro;
+	height : 8%;
+}
