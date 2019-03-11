@@ -1,6 +1,7 @@
 package com.spring.ithrer.board.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -356,20 +358,25 @@ public class BoardController {
 
 	}
 	
+	@ResponseBody
 	@RequestMapping("board/passBoardDeleteComment.ithrer")
-	public ModelAndView passBoardDeleteComment(@RequestParam(value="pbBoardRef")int pbBoardRef,
-											   @RequestParam(value="pbCommentNo")int pbCommentNo ,
-											   PassBoardComment comment, ModelAndView mav) {
+	public int passBoardDeleteComment(@RequestParam(value="pbBoardRef")int pbBoardRef,
+											   @RequestParam(value="pbCommentNo")int pbCommentNo,
+											   ModelAndView mav) {
 		
 		int result = 0;
-		result = boardService.passBoardDeleteComment(comment);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("pbBoardRef", pbBoardRef);
+		map.put("pbCommentNo", pbCommentNo);
 		
-		PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
+		result = boardService.passBoardDeleteComment(map);
 		
-		mav.addObject("passBoard", passBoard);
-		mav.addObject("result", result);
-		mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		//PassBoard passBoard = boardService.passBoardSelectOne(pbBoardRef);
 		
-		return mav;
+		//mav.addObject("passBoard", passBoard);
+		//mav.addObject("result", result);
+		//mav.setViewName("redirect:/board/passBoardView?no="+pbBoardRef);
+		
+		return result;
 	}
 }
