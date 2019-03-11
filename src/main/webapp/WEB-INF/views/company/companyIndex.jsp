@@ -369,19 +369,32 @@ $(".fav-add-btn").on("click",function(){
 				for(var i=0; i<data.favoriteAppList.length; i++){
 					if(data.favoriteAppList[i].memberId == $this.attr("mi")){
 						var html = '<div class="row d-flex flex-wrap align-items-center py-2 border-bottom">';
+						html += '<div class="col-sm-2">';
+						if(data.favoriteAppList[i].profile.photo == null){
+							html += '<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />';
+						}
+						else{
+							html += '<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName='+data.favoriteAppList[i].profile.photo+'&directory=memberPhoto" alt="회원사진" width="50px"/>';
+						}
+						html += '</div>';
 						html += '<div class="col">';
-						html += '<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=${favorite.recruitmentNo}&memberId=${favorite.memberId}">';
-						html += data.favoriteAppList[i].memberId;
+						html += '<a href="${pageContext.request.contextPath }/company/viewApplicant.ithrer?compId=${companyMap.company.compId }&recruitmentNo=0&memberId='+data.favoriteAppList[i].memberId+'">';
+						html += data.favoriteAppList[i].profile.name+'/'+data.favoriteAppList[i].profile.age+'세/'+data.favoriteAppList[i].profile.gender;
 						html += '</a>';
 						html += '</div>';
-						html += '<div class="col">';
+						html += '<div class="col-sm-5">';
+						html += data.favoriteAppList[i].profile.userresumetitle;
 						html += '</div>';
 						html += '<div class="col">';
+						if(data.favoriteAppList[i].career != null){
+							html += data.favoriteAppList[i].career.workingPeriod;
+						}
 						html += '</div>';
 						html += '<div class="col">';
 						html += '<button del="del" mi="'+data.favoriteAppList[i].memberId+'" class="btn btn-danger btn-sm fav-delete-btn">관심인재 해제</button>'
 						html += '</div>';
 						html += '</div>';
+						
 						$("div#person-bookmark-tab").append(html);
 					}
 				}

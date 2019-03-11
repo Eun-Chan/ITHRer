@@ -248,6 +248,7 @@
             p.member_id,
 			p.name,
 			p.gender,
+			p.photo,
 			ca.read,
 			ca.cu_resdate,
             ca.recruitment_no,
@@ -271,6 +272,7 @@
 		<result column="name" property="name"/>
       	<result column="age" property="age"/>
       	<result column="gender" property="gender"/>
+      	<result column="photo" property="photo"/>
  		<association javaType="ca" property="ca">
 			<result column="cu_resdate" property="cuResdate"/>
 			<result column="read" property="read"/>
