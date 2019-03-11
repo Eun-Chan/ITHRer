@@ -1104,8 +1104,6 @@ if(careerexist != '') {
 	<c:forEach items="${career.descriptionArr}" var="descri" varStatus="da">
 		dscriArr['${da.index}'] = '${descri}';
 	</c:forEach>
-	var dscriArr0 = dscriArr[0];
-	$("#description0").text(dscriArr0.replace(/<br>/g,"\n"));
 	for(var careerFrmcount=1;careerFrmcount<carrercnt;careerFrmcount++){
 		var html ='<div id="formCareer"><div id="deleteBox"><button type="button" name="deleteCareer" class="deleteWrap"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formCareer1" class="input-group-prepend input-group-text"><ul><li><input type="text" name="corpname" id="corpname'+careerFrmcount+'" class="form-control" placeholder="회사명" value="'+cnameArr[careerFrmcount]+'"/></li>';
@@ -1120,6 +1118,8 @@ if(careerexist != '') {
 		$("#careerWrap").append(html);
 	};
 };
+var dscriArr0 = dscriArr[0];
+$("#description0").text(dscriArr0.replace(/<br>/g,"\n"));	
 var careerFrmcount = carrercnt;
 $(document).on("change","input[name=buttonworking]",function() {
 	$(this).parent().parent().children().eq(3).toggle();
