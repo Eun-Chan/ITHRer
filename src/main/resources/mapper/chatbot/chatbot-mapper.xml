@@ -5,6 +5,6 @@
 		select * from (select * from anonyboard order by anonyboarddate desc) where rownum between 1 and 5 
 	</select>
 	<select id="selectPassBoardList" resultType="passboard">
-		select * from (select * from passboard order by passboarddate desc) where rownum between 1 and 5
+		select * from (select * from passboard order by passboarddate desc) where rownum between 1 and 4
 	</select>
 </mapper>
