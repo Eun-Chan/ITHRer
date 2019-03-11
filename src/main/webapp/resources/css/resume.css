@@ -26,7 +26,7 @@
 	background : white;
 }
 div[name=container] {
-	background : #b89dff;
+	background : lightsteelblue;
 	padding-bottom : 30px;
 }
 h3{
@@ -47,7 +47,7 @@ h3{
 }
 #finishButtonWrap{
 	width : 250px;
-	background : #b89dff;
+	background : lightsteelblue;
 }
 /* 경력 */
 #buttonCareer {
