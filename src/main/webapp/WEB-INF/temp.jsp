@@ -145,7 +145,7 @@
 					  <button type="button" data-toggle="dropdown" class="headerMemberTitle">
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
-					  <div class="dropdown-menu" style="z-index: 999">
+					  <div class="dropdown-menu">
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
 					  	<c:if test="${not empty member.password }">
@@ -278,7 +278,7 @@
 <!-- 채팅 -->
 <div id="chatting_div">
    <div style="height: 90%">
-   	<div id="messageWindow" readonly="true" style="height: 100%; width: 100%"></div>
+   	<textarea id="messageWindow" readonly="true" style="height: 100%; width: 100%"></textarea>
    </div>
    <input id="inputMessage" class="form-control" type="text" onkeyup="chat_enterkey()" placeholder="채팅을 입력해줭"/>
    <input type="submit" id="sendBtn" class="btn btn-default" value="보내기" onclick="chat_send()" />
@@ -496,19 +496,9 @@
     function onMessage(event) {
 		if(event.data.indexOf('접속자 : ') == 0){
 			$("#chat_cnt").text("채팅 ("+event.data+")");
-			console.log("요긴가?");
 			return;
 		}
-		console.log("여기는 들어오니?");
-        //textarea.val(textarea.val() + event.data + "\n");
-        /* 동적으로 div를 만들어서 div id = messageWindow 에 넣기 */
-        var div = document.createElement('div');
-        var text = document.createTextNode(event.data);
-       	div.appendChild(text);
-       	div.style.background = "${pageContext.request.contextPath}/resources/images/logo.png";
-       	
-       	$("#messageWindow").append(div);
-        
+        textarea.val(textarea.val() + event.data + "\n");
         const top = textarea.prop('scrollHeight');
         textarea.scrollTop(top);
     }
@@ -523,7 +513,7 @@
     function chat_send() {
     	if(inputMessage.val().length != 0){
     	<%if(member != null){%>
-        <%-- textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n"); --%>
+        textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n");
         webSocket.send('<%=member.getMemberName()%>님 : ' + inputMessage.val());
         inputMessage.val("");
         /* 채팅창 스크롤 자동 내리기 */
@@ -540,8 +530,6 @@
     	}
     }
 	
-    
-    
 </script>
 	
 	<section id="content">
