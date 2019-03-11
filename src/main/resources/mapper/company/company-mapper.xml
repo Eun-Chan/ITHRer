@@ -99,6 +99,9 @@
 		<result column="name" property="name"/>
 		<result column="birth" property="birth"/>
 		<result column="gender" property="gender"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="address" property="address"/>
 		<result column="photo" property="photo"/>
 		<result column="age" property="age"/>
 		<result column="count" property="count"/>
@@ -245,6 +248,7 @@
             p.member_id,
 			p.name,
 			p.gender,
+			p.photo,
 			ca.read,
 			ca.cu_resdate,
             ca.recruitment_no,
@@ -268,6 +272,7 @@
 		<result column="name" property="name"/>
       	<result column="age" property="age"/>
       	<result column="gender" property="gender"/>
+      	<result column="photo" property="photo"/>
  		<association javaType="ca" property="ca">
 			<result column="cu_resdate" property="cuResdate"/>
 			<result column="read" property="read"/>

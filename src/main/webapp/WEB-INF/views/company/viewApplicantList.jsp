@@ -56,11 +56,11 @@ div[read=Y]{
 	<c:forEach var="app" items="${applicantList }">
 	<div read="${app.ca.read }" class="row rounded border-bottom border-primary text-center py-3 d-flex flex-wrap align-items-center">
 		<div class="col-sm-2">
-			<c:if test="${empty app.profile.photo }">
+			<c:if test="${empty app.photo }">
 			<img src="${pageContext.request.contextPath}/resources/images/avatar.jpg" alt="이력서 사진 없는 회원 사진" width="50px" />
 			</c:if>
-			<c:if test="${not empty app.profile.photo }">
-			<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${app.profile.photo }&directory=memberPhoto" alt="회원사진" width="50px"/>
+			<c:if test="${not empty app.photo }">
+			<img src="${pageContext.request.contextPath}/displayFile.ithrer?fileName=${app.photo }&directory=memberPhoto" alt="회원사진" width="50px"/>
 			</c:if>
 		</div>
 		<div class="col font-weight-bold">

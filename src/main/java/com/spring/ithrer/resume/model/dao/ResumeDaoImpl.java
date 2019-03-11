@@ -20,6 +20,7 @@ import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
+import com.spring.ithrer.user.model.vo.Member;
 
 @Repository
 public class ResumeDaoImpl implements ResumeDao {
@@ -86,10 +87,10 @@ public class ResumeDaoImpl implements ResumeDao {
 		return sqlSession.insert("resume.insertEducation",educationMap);
 	}
 
-	@Override
-	public int insertPortFolio(Map<String, Object> portFolioMap) {
-		return sqlSession.insert("resume.insertPortFolio",portFolioMap);
-	}
+//	@Override
+//	public int insertPortFolio(Map<String, Object> portFolioMap) {
+//		return sqlSession.insert("resume.insertPortFolio",portFolioMap);
+//	}
 
 	@Override
 	public Award awardView(String memberId) {
@@ -131,10 +132,10 @@ public class ResumeDaoImpl implements ResumeDao {
 		return sqlSession.selectOne("resume.overseasView",memberId);
 	}
 
-	@Override
-	public PortFolio portFolioView(String memberId) {
-		return sqlSession.selectOne("resume.portFolioView",memberId);
-	}
+	/*
+	 * @Override public PortFolio portFolioView(String memberId) { return
+	 * sqlSession.selectOne("resume.portFolioView",memberId); }
+	 */
 
 	@Override
 	public Preference preferenceView(String memberId) {
@@ -219,5 +220,10 @@ public class ResumeDaoImpl implements ResumeDao {
 	@Override
 	public int letterUpdate(Map<String, Object> letterMap) {
 		return sqlSession.update("resume.letterUpdate",letterMap);
+	}
+
+	@Override
+	public int updateMember(Map<String, Object> profileMap) {
+		return sqlSession.update("resume.updateMember",profileMap);
 	}
 }

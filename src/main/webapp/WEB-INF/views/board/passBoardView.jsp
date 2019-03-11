@@ -122,16 +122,9 @@ function fn_goBoardUpdate(){
 			location.href = "${pageContext.request.contextPath}/board/passBoardMoveUpdate?passBoardNo="+passBoardNo;
 		}
 	};
+
 </script><!------------------------------------------------script------------------------------------------->
 
-<!-- 부트스트랩관련 라이브러리 -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-
-<!-- jquery -->
-<script src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.js"></script>
 <title>합소서게시판 - 상세보기</title>
 </head>
 <section id="board-container" class="container">
@@ -152,7 +145,7 @@ function fn_goBoardUpdate(){
 		</tr>	
 		<tr>	
 			<th class="table-primary">작성내용</th>
-			<td colspan="6" >${passBoard.passBoardContent}</td>
+			<td colspan="6"><textarea class="form-control" readonly="readonly" rows="15">${passBoard.passBoardContent}</textarea></td>
 		</tr>
  	</table>
 	
@@ -185,7 +178,7 @@ function fn_goBoardUpdate(){
     	
     	<table id="tbl-comment">
     	<c:forEach items="${list}" var="p">
-    		<c:if test="${p.pbCommentLevel ==1}">
+    		<c:if test="${p.pbCommentLevel ==1 and p.delPlag == 'N'}">
     		<tr class="level1">
     			<td>
     				<sub class="comment-writer" id="reWriter">
@@ -201,13 +194,21 @@ function fn_goBoardUpdate(){
     				<button class="btn btn-outline-success reply" value="${p.pbCommentNo}">
     					답글
     				</button>
-   				
-    				<button class="btn btn-outline-danger replyDelete">삭제</button>
+   					<c:if test="${p.pbCommentWriter eq member.memberId}">
+	    				<button class="btn btn-outline-danger replyDelete" value="${p.pbCommentNo}">삭제</button>   					
+   					</c:if>
     			</td>
     		</tr>
     		</c:if>
-    		<c:if test="${p.pbCommentLevel ==2}">
-    		<tr class="level2">
+    		
+    		<c:if test="${p.pbCommentLevel ==1 and p.delPlag == 'Y'}">
+    			<tr class="lever1" >
+    				<td colspan="2">삭제된 댓글입니다.</td>
+    			</tr>
+    		</c:if>
+    		
+    		<c:if test="${p.pbCommentLevel ==2 and p.delPlag == 'N'}">
+    		<tr class="level2 ${p.pbCommentRef}" >
     			<td>
     				<sub class="comment-writer" id="rereWriter">
     					${p.pbCommentWriter}
@@ -217,13 +218,23 @@ function fn_goBoardUpdate(){
     				</sub>
     				<br />
     					${p.pbCommentContent}
+    				<input type="hidden" name="${p.pbCommentRef}" value="${p.pbCommentRef}" />	
     			</td>
     			<td>
-    				<button class="btn btn-outline-danger rereplyDelete">삭제</button>
+    			<c:if test="${p.pbCommentWriter eq member.memberId}">
+    				<button class="btn btn-outline-danger rereplyDelete" value="${p.pbCommentNo}">삭제</button>
+    			</c:if>
     			</td>
     		</tr>
     	
     	</c:if>
+    	
+    	<c:if test="${p.pbCommentLevel ==2 and p.delPlag == 'Y'}">
+    		<tr class="lever2">
+    				<td colspan="2">삭제된 댓글입니다.</td>
+    			</tr>
+    	</c:if>
+    	
    		</c:forEach> 
     	</table>
     </div><!-- end of .comment-container -->
@@ -254,28 +265,83 @@ function fn_goBoardUpdate(){
     	$("#memberId").focus();
     }
     
-    $(".replyDelete").on("click", function(){
-    	var reWriter = $("#reWriter").text().trim();
+     $(".replyDelete").on("click", function(){
+    	if(!confirm("정말 삭제 하시겠습니까?")){
+    		return;
+    	}
+    	
+    	var del_area = $(this).parent().parent();
+    	console.log(del_area);
+    	var reWriter = $(this).parent().siblings().find('.comment-writer').text().trim();
     	var memberId = "<%=member.getMemberId()%>"
     	console.log(reWriter);
     	console.log(memberId);
-    	if(memberId!=reWriter){
+    	 if(memberId!=reWriter){
     		alert("댓글의 작성자만 삭제할수 있습니다.");
-    		console.log($(".reply").val());
-    	}
+  			return;
+    	} 
+    	var pbBoardRef = $("input:hidden[name=pbBoardRef]").val();
+    	var pbCommentNo = $(this).val();
+    	console.log(pbBoardRef);
+    	console.log(pbCommentNo);
+    	
+    	  $.ajax({
+    		url: '${pageContext.request.contextPath}/board/passBoardDeleteComment.ithrer',
+    		data: {"pbBoardRef":pbBoardRef, "pbCommentNo":pbCommentNo},
+    		success: function(result){
+    			console.log(result);
+    			if(result > 0){
+    				alert("댓글 삭제 성공!");
+    				if($("input:hidden[name="+pbCommentNo+"]").length <= 0){
+    					del_area.html("<td>삭제된 댓글입니다</td>");    					
+    				}else{
+    					del_area.html("<td>삭제된 댓글입니다</td>");
+    				}
+    			}else{
+    				alert("댓글 삭제 실패");
+    			}
+    		}
+    	 }); 
 
     	
     });
     
     $(".rereplyDelete").on("click", function(){
-    	var rereWriter = $("#rereWriter").text().trim();
-    	var memberId = "<%=member.getMemberId()%>"
-    	console.log(rereWriter);
-    	console.log(memberId);
-    	if(memberId!=rereWriter){
-    		alert("댓글의 작성자만 삭제할수 있습니다.");
-    		console.log($(".rereply").val());
+    	console.log("${member.memberId}")
+    	if(!confirm("정말 삭제 하시겠습니까?")){
+    		return;
     	}
+    	
+    	var del_area = $(this).parent().parent();
+    	console.log(del_area);
+    	var reWriter = $(this).parent().siblings().find('.comment-writer').text().trim();
+    	var memberId = "<%=member.getMemberId()%>"
+    	console.log(reWriter);
+    	console.log(memberId);
+    	 if(memberId!=reWriter){
+    		alert("댓글의 작성자만 삭제할수 있습니다.");
+  			return;
+    	} 
+    	var pbBoardRef = $("input:hidden[name=pbBoardRef]").val();
+    	var pbCommentNo = $(this).val();
+    	var pbCommenrRef = $(this).parent().siblings().find('input:hidden').val().trim();
+    	console.log(pbBoardRef);
+    	console.log(pbCommentNo);
+    	console.log(pbCommenrRef);
+    	
+    	  $.ajax({
+    		url: '${pageContext.request.contextPath}/board/passBoardDeleteComment.ithrer',
+    		data: {"pbBoardRef":pbBoardRef, "pbCommentNo":pbCommentNo},
+    		success: function(result){
+    			console.log(result);
+    			if(result > 0){
+    				alert("댓글 삭제 성공!");
+    				del_area.html("<td>삭제된 댓글입니다</td>");
+    			}else{
+    				alert("댓글 삭제 실패");
+    			}
+    		}
+    	 }); 
     	
     });
     

@@ -19,7 +19,7 @@
 	<input type="text" name="userresumetitle" id="userresumetitle" 
 		   class="form-control" aria-label="Sizing example input" 
 		   aria-describedby="inputGroup-sizing-lg" placeholder="기업에게 나에 대해 알려줍시다.강점,목표,관심분야도 좋아요."
-		   value="${profile.userresumetitle}" readonly/>
+		   value="${profile.userresumetitle}"/>
 	<input type="hidden" name="memberIdHide" value="${member.memberId}" />
 </div>
 <div id="profileTotal" class="wrap-container">
@@ -149,7 +149,7 @@
 				</ul>
 				<ul>
 					<li>
-						<textarea name="otherdeparttext" id="otherdeparttext0" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품">${education.otherdeparttextArr[0]}</textarea>
+						<textarea name="otherdeparttext" id="otherdeparttext0" class="form-control" aria-label="With textarea" onkeypress="validateenter(event)" placeholder="졸업/논문작품">${education.otherdeparttextArr[0]}</textarea>
 					</li>
 				</ul>
 			</div>
@@ -306,7 +306,7 @@
 			<div id="formAward1" class="input-group-prepend">
 				<input type="text" name="awardname" id="awardname0" class="form-control" placeholder="수상명" value="${award.awardnameArr[0]}"/>
 				<input type="text" name="awardagency" id="awardagency0" class="form-control" placeholder="수여기관" value="${award.awardagencyArr[0]}"/>
-				<input type="text" name="awarddate" id="awarddate0" class="form-control" placeholder="수상연도(예.2019)" value="${award.awarddateArr[0]}"/>
+				<input type="text" name="awarddate" id="awarddate0" class="form-control" placeholder="수상년월(예.2019.01)" value="${award.awarddateArr[0]}"/>
 			</div>
 			<div id="formAward2" class="input-group-prepend">
 				<ul>
@@ -396,7 +396,7 @@
 		<button type="button" id="addLanguage" class="btn btn-outline-info">어학 추가</button>	
 	</div>
 </div>
-<div id="potfolioTotal" class="wrap-container" style="display:none;">
+<!-- <div id="potfolioTotal" class="wrap-container" style="display:none;">
 	<h3>포트폴리오</h3>
 	<div id="potfolioWrap">
 		<div id="deleteBox">
@@ -414,7 +414,7 @@
 		</div>
 		<div id="potfolioList" class="input-group-prepend"></div>
 	</div>
-</div>
+</div> -->
 <div id="preferenceTotal" class="wrap-container" style="display:none;">
 	<h3>취업우대</h3>
 	<div id="preferenceWrap">
@@ -564,7 +564,11 @@ var fotFilecount = 0;
 var otherDepartcnt = 0;
 var otherDeparttextcnt = 0;
 var lettercount = 0;
-
+/* 희망근무사항 */
+var hplace = "${hopework.hopeplace}";
+var hduty = "${hopework.hopeduty}";
+$("#hopeplace").text(hplace.replace(/<br>/g,"\n"));
+$("#hopeduty").text(hduty.replace(/<br>/g,"\n"));
 /* 주소api */
 $("input#address").on("click",function(){
 	
@@ -619,6 +623,13 @@ function validateText(event) {
 	}
 	else {
 	   return;
+	}
+}
+/* 엔터막기 */
+function validateenter(event) {
+	var code = event.keyCode;
+	if(code = 13) {
+		event.preventDefault();
 	}
 }
 /* 항목지우기 */
@@ -746,10 +757,11 @@ $(document).on("change","input[name=ged]",function() {
 });
 /* 값들어온만큼 append시키기 */
 var eduexist = "${education}";
+var educationcnt = "${educationcnt}";
+console.log(educationcnt);
 console.log(eduexist);
 if(eduexist != '') {
 	$("#educationTotal").show();
-	var educationcnt = "${educationcnt}";
 	var hschoolcnt = "${hschoolcnt}";
 	var uschoolcnt = "${uschoolcnt}";
 	var gschoolcnt = "${gschoolcnt}";
@@ -932,7 +944,7 @@ for(var eduFrmcount = 1;eduFrmcount<educationcnt;eduFrmcount++){
 		$("#major"+eduFrmcount).val(majorArr[eduFrmcount]);
 		$("#score"+eduFrmcount).val(scoreArr[eduFrmcount]);
 		$("#secmajor"+eduFrmcount).val(smajorArr[eduFrmcount]);
-		$("#otherdeparttext"+eduFrmcount).val(odtextArr[eduFrmcount]);
+		$("#otherdeparttext"+eduFrmcount).text(odtextArr[eduFrmcount]);
 		if(tscoreval0 != null && gstateval0 != null && odselval0 != null && transfer0 != null) {
 			++ucnt;
 		}
@@ -970,7 +982,7 @@ for(var eduFrmcount = 1;eduFrmcount<educationcnt;eduFrmcount++){
 		$("#major"+eduFrmcount).val(majorArr[eduFrmcount]);
 		$("#score"+eduFrmcount).val(scoreArr[eduFrmcount]);
 		$("#secmajor"+eduFrmcount).val(smajorArr[eduFrmcount]);
-		$("#otherdeparttext"+eduFrmcount).val(odtextArr[eduFrmcount]);
+		$("#otherdeparttext"+eduFrmcount).text(odtextArr[eduFrmcount]);
 		if(tscoreval0 != null && gstateval0 != null && odselval0 != null && transfer0 != null) {
 			++ucnt;
 		}
@@ -1092,6 +1104,8 @@ if(careerexist != '') {
 	<c:forEach items="${career.descriptionArr}" var="descri" varStatus="da">
 		dscriArr['${da.index}'] = '${descri}';
 	</c:forEach>
+	var dscriArr0 = dscriArr[0];
+	$("#description0").text(dscriArr0.replace(/<br>/g,"\n"));
 	for(var careerFrmcount=1;careerFrmcount<carrercnt;careerFrmcount++){
 		var html ='<div id="formCareer"><div id="deleteBox"><button type="button" name="deleteCareer" class="deleteWrap"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formCareer1" class="input-group-prepend input-group-text"><ul><li><input type="text" name="corpname" id="corpname'+careerFrmcount+'" class="form-control" placeholder="회사명" value="'+cnameArr[careerFrmcount]+'"/></li>';
@@ -1102,7 +1116,7 @@ if(careerexist != '') {
 		html += '<div id="formCareer2" class="input-group-prepend  input-group-text"><ul><li><input type="text" name="jobposition" id="jobposition'+careerFrmcount+'" class="form-control" placeholder="직급/직책" value="'+jpositionArr[careerFrmcount]+'"/></li>';
 		html += '<li><input type="text" name= "job" id="job'+careerFrmcount+'" class="form-control" placeholder="직무" value="'+jArr[careerFrmcount]+'"/></li>';
 		html += '<li><input type="text" name= "income" id="income'+careerFrmcount+'" class="form-control" onkeydown="validateText(event)" placeholder="연봉(단위 :만원)" value="'+inArr[careerFrmcount]+'"/></li></ul></div>';
-		html += '<div id="formCareer3" class="input-group-prepend"><ul><li>담당업무 :</li><li><textarea name="description" class="form-control" aria-label="With textarea" id="description'+careerFrmcount+'" placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요.">'+dscriArr[careerFrmcount]+'</textarea></li></ul></div></div>';
+		html += '<div id="formCareer3" class="input-group-prepend"><ul><li>담당업무 :</li><li><textarea name="description" class="form-control" aria-label="With textarea" id="description'+careerFrmcount+'" placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요.">'+dscriArr[careerFrmcount].replace(/<br>/g,"\n")+'</textarea></li></ul></div></div>';
 		$("#careerWrap").append(html);
 	};
 };
@@ -1150,6 +1164,8 @@ if(internexist != '') {
 	<c:forEach items="${intern.interntextareaArr}" var="itext" varStatus="it">
 		itextArr['${it.index}'] = '${itext}';
 	</c:forEach>
+	var itextArr0 = itextArr[0];
+	$("#interntextarea0").text(itextArr0.replace(/<br>/g,"\n"));
 	for(var internFrmcount=1;internFrmcount<interncnt;internFrmcount++){
 		var html = '<div id="formIntern"><div id="deleteBox"><button type="button" name="deleteIT" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formIntern1" class="input-group-prepend"><select name="interndivision" id="interndivision'+internFrmcount+'" class="custom-select"><option value="" disabled selected>활동구분</option>';
@@ -1158,7 +1174,7 @@ if(internexist != '') {
 		html += '<input type="text" name="socialinst" id="socialinst'+internFrmcount+'" class="form-control" placeholder="회사/기관/단체명" value="'+isocialArr[internFrmcount]+'"/>';
 		html += '<input type="text" name="internstartdate" id="internstartdate'+internFrmcount+'" class="form-control" placeholder="시작년월(예.1991.01)" value="'+isdateArr[internFrmcount]+'"/>';
 		html += '<input type="text" name="internenddate" id="internenddate'+internFrmcount+'" class="form-control" placeholder="종료년월(예.2019.01)" value="'+iedateArr[internFrmcount]+'"/></div>';
-		html += '<div id="formIntern2" class="input-group-prepend"><ul><li>활동내용 :</li><li><textarea name="interntextarea" class="form-control" aria-label="With textarea" id="interntextarea'+internFrmcount+'" placeholder="직무와 관련된 경험에 대해 (상황-노력-결과)순으로 작성하는것이 좋습니다.">'+itextArr[internFrmcount]+'</textarea></li></ul></div></div>';
+		html += '<div id="formIntern2" class="input-group-prepend"><ul><li>활동내용 :</li><li><textarea name="interntextarea" class="form-control" aria-label="With textarea" id="interntextarea'+internFrmcount+'" placeholder="직무와 관련된 경험에 대해 (상황-노력-결과)순으로 작성하는것이 좋습니다.">'+itextArr[internFrmcount].replace(/<br>/g,"\n")+'</textarea></li></ul></div></div>';
 		$('#internWrap').append(html);
 		$("#interndivision"+internFrmcount).val(idivisionArr[internFrmcount]);
 	}
@@ -1208,13 +1224,15 @@ if(learnexist != '') {
 	<c:forEach items="${learn.learntextareaArr}" var="ltext" varStatus="ltx">
 		ltextArr['${ltx.index}'] = '${ltext}'
 	</c:forEach>
+	var ltextArr0 = ltextArr[0];
+	$("#learntextarea0").text(ltextArr0.replace(/<br>/g,"\n"));
 	for(var learnFrmcount=1;learnFrmcount<learncnt;learnFrmcount++){
 		var html = '<div id="formLearn"><div id="deleteBox"><button type="button" name="deleteLearn" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formLearn1" class="input-group-prepend"><input type="text" name="learntitle" id="learntitle'+learnFrmcount+'" class="form-control" placeholder="교육명" value="'+ltitleArr[learnFrmcount]+'"/>';
 		html += '<input type="text" name="learnagency" id="learnagency'+learnFrmcount+'" class="form-control" placeholder="교육기관" value="'+lagencyArr[learnFrmcount]+'"/>';
 		html += '<input type="text" name="learnstartdate" id="learnstartdate'+learnFrmcount+'" class="form-control" placeholder="시작년월(예.1991.01)" value="'+lsdateArr[learnFrmcount]+'"/>';
 		html += '<input type="text" name="learnenddate" id="learnenddate'+learnFrmcount+'" class="form-control" placeholder="종료년월(예.2019.01)" value="'+ledateArr[learnFrmcount]+'"/></div>';
-		html += '<div id="formLearn2" class="input-group-prepend"><ul><li>내용 :</li><li><textarea name="learntextarea" class="form-control" aria-label="With textarea" id="learntextarea'+learnFrmcount+'" placeholder="이수하신 교육과정에 대해 적어주세요.">'+ltextArr[learnFrmcount]+'</textarea></li></ul></div></div>';
+		html += '<div id="formLearn2" class="input-group-prepend"><ul><li>내용 :</li><li><textarea name="learntextarea" class="form-control" aria-label="With textarea" id="learntextarea'+learnFrmcount+'" placeholder="이수하신 교육과정에 대해 적어주세요.">'+ltextArr[learnFrmcount].replace(/<br>/g,"\n")+'</textarea></li></ul></div></div>';
 		$('#learnWrap').append(html);
 	}
 }
@@ -1320,12 +1338,15 @@ if(awardexist != '') {
 	<c:forEach items="${award.awardtextareaArr}" var="atext" varStatus="at">
 		awardtextareaArr['${at.index}'] = '${atext}';
 	</c:forEach>
+	var atextarea0 = awardtextareaArr[0];
+	$("#awardtextarea0").text(atextarea0.replace(/<br>/g,"\n"));
+	atextarea0.replace(/<br>/g,"\n")
 	for(var AwardFrmcount=1;AwardFrmcount<awardcnt;AwardFrmcount++) {
 		var html = '<div id="formAward"><div id="deleteBox"><button type="button" name="deleteAward" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formAward1" class="input-group-prepend"><input type="text" name="awardname" id="awardname'+AwardFrmcount+'" class="form-control" placeholder="수상명" value="'+anameArr[AwardFrmcount]+'"/>';
 		html += '<input type="text" name="awardagency" id="awardagency'+AwardFrmcount+'" class="form-control" placeholder="수여기관" value="'+aagencyArr[AwardFrmcount]+'"/>';
-		html += '<input type="text" name="awarddate" id="awarddate'+AwardFrmcount+'" class="form-control" placeholder="수상연도(예.2019)" value="'+awarddateArr[AwardFrmcount]+'"/></div>';
-		html += '<div id="formAward2" class="input-group-prepend"><ul><li>수여내용 :</li><li><textarea name="awardtextarea" class="form-control" aria-label="With textarea" id="awardtextarea'+AwardFrmcount+'" placeholder="수여 내용 및 결과를 자세히 입력해주세요.">'+awardtextareaArr[AwardFrmcount]+'</textarea></li></ul></div></div>';
+		html += '<input type="text" name="awarddate" id="awarddate'+AwardFrmcount+'" class="form-control" placeholder="수상년월(예.2019.01)" value="'+awarddateArr[AwardFrmcount]+'"/></div>';
+		html += '<div id="formAward2" class="input-group-prepend"><ul><li>수여내용 :</li><li><textarea name="awardtextarea" class="form-control" aria-label="With textarea" id="awardtextarea'+AwardFrmcount+'" placeholder="수여 내용 및 결과를 자세히 입력해주세요.">'+awardtextareaArr[AwardFrmcount].replace(/<br>/g,"\n")+'</textarea></li></ul></div></div>';
 		$('#awardWrap').append(html);
 	};
 };
@@ -1334,7 +1355,7 @@ $("#addAward").on("click",function() {
 	var html = '<div id="formAward"><div id="deleteBox"><button type="button" name="deleteAward" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 	html += '<div id="formAward1" class="input-group-prepend"><input type="text" name="awardname" id="awardname'+AwardFrmcount+'" class="form-control" placeholder="수상명"/>';
 	html += '<input type="text" name="awardagency" id="awardagency'+AwardFrmcount+'" class="form-control" placeholder="수여기관"/>';
-	html += '<input type="text" name="awarddate" id="awarddate'+AwardFrmcount+'" class="form-control" placeholder="수상연도(예.2019)"/></div>';
+	html += '<input type="text" name="awarddate" id="awarddate'+AwardFrmcount+'" class="form-control" placeholder="수상년월(예.2019.01)"/></div>';
 	html += '<div id="formAward2" class="input-group-prepend"><ul><li>수여내용 :</li><li><textarea name="awardtextarea" class="form-control" aria-label="With textarea" id="awardtextarea'+AwardFrmcount+'" placeholder="수여 내용 및 결과를 자세히 입력해주세요."></textarea></li></ul></div></div>';
 	$('#awardWrap').append(html);
 	AwardFrmcount++;
@@ -1366,12 +1387,14 @@ if(overseasexist != ''){
 	<c:forEach items="${overseas.overseastextareaArr}" var="otext" varStatus="otxt">
 	otxtArr['${otxt.index}'] = '${otext}'
 	</c:forEach>
+	var otxtArr0 = otxtArr[0];
+	$("#overseastextarea0").text(otxtArr0.replace(/<br>/g,"\n"));
 	for(var OverseasFrmcount=1;OverseasFrmcount<overseascnt;OverseasFrmcount++){
 		var html ='<div id="formOverseas"><div id="deleteBox"><button type="button" name="deleteOverseas" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formOverseas1" class="input-group-prepend"><input type="text" name="country" id="country'+OverseasFrmcount+'" class="form-control" placeholder="국가명" value="'+counArr[OverseasFrmcount]+'"/>';
 		html += '<input type="text" name="overseasstartdate" id="overseasstartdate'+OverseasFrmcount+'" class="form-control" placeholder="시작년월(예.1991.01)" value="'+osdArr[OverseasFrmcount]+'"/>';
 		html += '<input type="text" name="overseasenddate" id="overseasenddate'+OverseasFrmcount+'" class="form-control" placeholder="종료년월(예.2019.01)" value="'+oedArr[OverseasFrmcount]+'"/></div>';
-		html += '<div id="formOverseas2" class="input-group-prepend"><ul><li>내용 :</li><li><textarea name="overseastextarea"class="form-control" aria-label="With textarea" id="overseastextarea'+OverseasFrmcount+'" placeholder="해외에서 어떤 경험을 했는지 적어주세요.(ex.어학연수,교환학생,워킹홀리데이,해외근무)">'+otxtArr[OverseasFrmcount]+'</textarea></li></ul></div></div>';
+		html += '<div id="formOverseas2" class="input-group-prepend"><ul><li>내용 :</li><li><textarea name="overseastextarea"class="form-control" aria-label="With textarea" id="overseastextarea'+OverseasFrmcount+'" placeholder="해외에서 어떤 경험을 했는지 적어주세요.(ex.어학연수,교환학생,워킹홀리데이,해외근무)">'+otxtArr[OverseasFrmcount].replace(/<br>/g,"\n")+'</textarea></li></ul></div></div>';
 		$('#overseasWrap').append(html);
 	}
 }
@@ -1576,7 +1599,7 @@ $(document).on("change", ".language-select" , function(){
 	}
 });
 /* 포트폴리오 */
-var portexist = "${portFolio}";
+/* var portexist = "${portFolio}";
 var portexisturl = "${portFolio.url}";
 var portexistrename = "${portFoliorename}";
 
@@ -1617,7 +1640,7 @@ $("#addFile").on("click",function() {
 	html += '<li><button type="button" name="deletefotinput" onclick="deleteTwice(event);"><span aria-hidden="true">X</span></button></li></ul>';
 	$("#potfolioList").append(html);
 	fotFilecount++;
-});
+}); */
 /* 취업우대 */
 var preferexist = "${preference}";
 var prefercheckcnt = "${prefercheckcnt}";
@@ -1682,7 +1705,7 @@ if(letterexist !=''){
 	for(var lettercount = 0;lettercount<lettercnt;lettercount++){
 		var html = '<div class="letterDiv"><input type="text" name="lettertext" id="lettertext'+lettercount+'" placeholder="항목 제목을 입력하세요." value="'+ltextArr[lettercount]+'" >';
 		html += '<button type="button" class="deleteLetter" onclick="deleteone(event);"><span aria-hidden="true">X</span></button><div>';
-		html += '<textarea name="letterarea" id="letterarea'+lettercount+'" placeholder="해당내용을 입력하세요.">'+lareaArr[lettercount]+'</textarea></div></div>';
+		html += '<textarea name="letterarea" id="letterarea'+lettercount+'" placeholder="해당내용을 입력하세요.">'+lareaArr[lettercount].replace(/<br>/g,"\n")+'</textarea></div></div>';
 		$('#formLetter').append(html);
 	}
 }

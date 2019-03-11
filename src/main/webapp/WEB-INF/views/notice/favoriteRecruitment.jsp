@@ -4,11 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-<%
-	if(request.getSession().getAttribute("member") == null){
-		response.sendRedirect("/");
-	}
-%>
 <style>
 	.fareMain{
 		width: 1000px;

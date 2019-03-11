@@ -140,7 +140,7 @@
 				</ul>
 				<ul>
 					<li>
-						<textarea name="otherdeparttext" id="otherdeparttext0" class="form-control" aria-label="With textarea" placeholder="졸업/논문작품"></textarea>
+						<textarea name="otherdeparttext" id="otherdeparttext0" class="form-control" aria-label="With textarea" onkeypress="validateenter(event)" placeholder="졸업/논문작품"></textarea>
 					</li>
 				</ul>
 			</div>
@@ -295,7 +295,7 @@
 			<div id="formAward1" class="input-group-prepend">
 				<input type="text" name="awardname" id="awardname0" class="form-control" placeholder="수상명"/>
 				<input type="text" name="awardagency" id="awardagency0" class="form-control" placeholder="수여기관"/>
-				<input type="text" name="awarddate" id="awarddate0" class="form-control" placeholder="수상연도(예.2019)"/>
+				<input type="text" name="awarddate" id="awarddate0" class="form-control" placeholder="수상년월(예.2019.01)"/>
 			</div>
 			<div id="formAward2" class="input-group-prepend">
 				<ul>
@@ -598,6 +598,13 @@ function validateText(event) {
 	}
 	else {
 	   return;
+	}
+}
+/* 엔터막기 */
+function validateenter(event) {
+	var code = event.keyCode;
+	if(code = 13) {
+		event.preventDefault();
 	}
 }
 /* 항목지우기 */
