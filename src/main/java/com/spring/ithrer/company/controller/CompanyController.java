@@ -415,6 +415,7 @@ public class CompanyController {
 		}
 	    
 	    mav.addObject("profile",profile);
+	    logger.debug("디버그:"+profile);
 	    //mav.addObject("profile",profile);
 	    mav.addObject("award",award);
 	    mav.addObject("career",career);
@@ -709,7 +710,11 @@ public class CompanyController {
 				// 최종 학점 추출
 				if(applicantList.get(i).getEducation().getScore() != null) {
 					String[] score = applicantList.get(i).getEducation().getScore().split(",");
-					applicantList.get(i).getEducation().setScore(score[score.length-1]);
+					logger.debug("디버그:"+applicantList.get(i).getEducation().getScore());
+					if(score.length != 0) {
+						applicantList.get(i).getEducation().setScore(score[score.length-1]);
+						
+					}
 				}
 				
 				// 최종 학점 만점 추출

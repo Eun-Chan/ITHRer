@@ -381,8 +381,8 @@ div#letter-box{
 			<div id="letter-box" class="container border">
 			<h2>${letter.lettertextArr[0] }</h2>
 			<br />
-			<%-- ${letter.letterareaArr[0] } --%>
-			<%=((Letter)request.getAttribute("letter")).getLetterareaArr()[0].replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>
+			${letter.letterareaArr[0] }
+			<%-- <%=((Letter)request.getAttribute("letter")).getLetterareaArr()[0].replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%> --%>
 			</div>
 		</div>
 		</c:if>
