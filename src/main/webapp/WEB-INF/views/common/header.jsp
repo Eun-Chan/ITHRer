@@ -141,8 +141,13 @@
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
 					  <div class="dropdown-menu">
-					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resume.ithrer';">내 이력서등록</a>
-					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
+				  		<c:if test="${empty member.gender and empty companyLoggedIn}">
+						    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resume.ithrer';">내 이력서등록</a>				  		
+				  		</c:if>
+				  		<c:if test="${not empty member.gender and empty companyLoggedIn}">
+						    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
+				  		</c:if>
+					  	
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
 					  	<a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/memberApplyCompany.ithrer?memberId=${member.memberId }'">내가 지원한 공고</a>
 					  	<c:if test="${not empty member.password }">
@@ -151,7 +156,6 @@
 					  </div>
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
-				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 		</ul>
 			 	</c:if>
@@ -452,7 +456,6 @@
 	},function(){
 		$(this).css("color","rgba(0,0,0,.5)");
 	})
-	 
 </script>
 	
 	<section id="content">

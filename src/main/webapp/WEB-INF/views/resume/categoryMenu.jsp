@@ -15,7 +15,7 @@
 #category-container{
 	border: 1px solid gray;
 	width : 1140px;
-	background-color: #b89dff;
+	background-color: lightsteelblue;
 	color: white;
 	left: 50%; 
 	margin-left : -570px;
