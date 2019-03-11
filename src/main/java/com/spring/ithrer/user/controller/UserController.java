@@ -829,8 +829,8 @@ public class UserController {
 			String clientSecret = "mjQDsfEB9_";//애플리케이션 클라이언트 시크릿값";
 			String code = request.getParameter("code");
 			String state = request.getParameter("state");
-//			String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
-			String redirectURI = URLEncoder.encode("http://52.78.61.219:8080/ITHRer/user/naverLoginCallback.ithrer", "UTF-8");
+			String redirectURI = URLEncoder.encode("${pageContext.request.contextPath}/user/naverLoginCallback.ithrer", "UTF-8");
+//			String redirectURI = URLEncoder.encode("http://52.78.61.219:8080/FP_ITHRer/user/naverLoginCallback.ithrer", "UTF-8");
 			String apiURL;
 			apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
 			apiURL += "client_id=" + clientId;
