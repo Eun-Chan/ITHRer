@@ -2591,7 +2591,7 @@ $(document).ready(function(){
 		$("#fore-select-result").append(result_frm2_3);
 	}
 	//frm2-4 : 자격증
-	var result_frm2_4 = "<%=(rect.getCertificate()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
+	var result_frm2_4 = "<%=(rect.getCertificate()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")==null?" ":(rect.getCertificate()).replaceAll("(\r\n|\r|\n|\n\r)", "<br>")%>";
 	if(result_frm2_4 != 'null')
 	{
 		console.log("자격증:"+result_frm2_4);
