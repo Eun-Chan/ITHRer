@@ -462,6 +462,43 @@ public class ResumeController {
       logger.info("letter="+letter);
       logger.info("memberIdHide="+memberIdHide);
       
+      try {
+          career.setDescription(career.getDescription().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+       } catch(NullPointerException e1) {
+          e1.printStackTrace();
+       } 
+       
+       try {
+          hopework.setHopeplace(hopework.getHopeplace().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+          hopework.setHopeduty(hopework.getHopeduty().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+       } catch(NullPointerException e1) {
+          e1.printStackTrace();
+       }
+       
+       try {
+          intern.setInterntextarea(intern.getInterntextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+       } catch(NullPointerException e1) {
+          e1.printStackTrace();
+       }
+      
+       try {
+          learn.setLearntextarea(learn.getLearntextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+       } catch(NullPointerException e1) {
+          e1.printStackTrace();
+       }
+      
+       try {
+          overseas.setOverseastextarea(overseas.getOverseastextarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
+       } catch(NullPointerException e1) {
+          e1.printStackTrace();
+       }
+       
+       try {
+          letter.setLetterarea(letter.getLetterarea().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));         
+       } catch(NullPointerException e1) {
+          e1.printStackTrace();
+       }
+       
       Map<String,Object> awardMap = new HashMap<>();
       awardMap.put("award", award);
       awardMap.put("memberIdHide", memberIdHide);
@@ -499,6 +536,7 @@ public class ResumeController {
       letterMap.put("letter",letter);
       letterMap.put("memberIdHide",memberIdHide);
       
+       
       int proresult = resumeService.proUpdate(profileMap);
       int awardresult = resumeService.awardUpdate(awardMap);
       int careerresult = resumeService.careerUpdate(careerMap);
