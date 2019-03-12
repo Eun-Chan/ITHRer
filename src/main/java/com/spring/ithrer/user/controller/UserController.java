@@ -189,8 +189,10 @@ public class UserController {
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("member_Id" , memberId);
 		map.put("password" , memberPassword);
-		
+		System.out.println("member_id = " +memberId );
+		System.out.println("password = " +memberPassword);
 		Member member = userService.memberCheck(map);
+		System.out.println(member.getProfileCount()+"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
 		logger.debug("member = "+member);
 		System.out.println("member = "+member);
 		Map<String,String> test = new HashMap<String, String>();

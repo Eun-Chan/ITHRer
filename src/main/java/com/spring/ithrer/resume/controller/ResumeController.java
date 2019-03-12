@@ -40,6 +40,7 @@ import com.spring.ithrer.resume.model.vo.Overseas;
 import com.spring.ithrer.resume.model.vo.PortFolio;
 import com.spring.ithrer.resume.model.vo.Preference;
 import com.spring.ithrer.resume.model.vo.Profile;
+import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
 
@@ -51,6 +52,9 @@ public class ResumeController {
    @Autowired
    ResumeService resumeService;
 
+   @Autowired
+   UserService userService;
+   
    /* 이력서가기 */
    @RequestMapping(value="/resume/resume.ithrer")
    public ModelAndView resumeView(ModelAndView mav) {
@@ -249,6 +253,13 @@ public class ResumeController {
       // 변경된 이메일과 닉네임을 세션에 저장
       member.setGender(profile.getGender());
       member.setAddress(profile.getAddress());
+      
+	  Map<String,String> map = new HashMap<String, String>();
+	  map.put("member_Id" , memberIdHide);
+      
+      Member tmp = userService.memberCheck(map);
+      
+      member.setProfileCount(tmp.getProfileCount());
       session.setAttribute("member", member);
       mav.setViewName("redirect:/");
       return mav;   

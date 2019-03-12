@@ -20,7 +20,7 @@
 	left: 50%; 
 	margin-left : -570px;
 	position : fixed;
-	z-index : 1; 
+	z-index : 1000; 
 }
 #category-table {
 	margin : 0 auto;

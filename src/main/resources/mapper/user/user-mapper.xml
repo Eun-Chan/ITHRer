@@ -16,7 +16,7 @@
 	</insert>
 	<!-- 개인회원 있는지 확인용 -->
 	<select id="memberCheck" parameterType="map" resultType="member">
-		select * from member where member_Id = #{member_Id} and del_flag = 'N'
+		select m.*,(select count(*) from profile where member_id=m.member_id) profileCount  from member m where m.member_Id = #{member_Id} and m.del_flag = 'N'
 	</select>
 	<!-- 카카오 로그인 -->
 	<select id="kakaoLogin" parameterType="string" resultType="member">

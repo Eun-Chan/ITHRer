@@ -2910,7 +2910,7 @@ $(document).on("click", ".jobList2", function(){
 	//결과폼에 출력할 결과값
 	var resultSelect = $(this).next().text();
 	//아이디값 저장을 위한값
-	var resultId = $(this).attr("name");
+	var resultId = $(this).attr("id");
 	console.log("id값:"+resultId);
 	//첫요소인지 확인하기 위한 변수, 있다면 구분자를 추가
 	var divChar = $("#jobList-select-result li").length==0?"":"/&nbsp;";

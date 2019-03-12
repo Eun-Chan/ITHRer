@@ -149,11 +149,11 @@
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
 
-					  <div class="dropdown-menu" style="z-index: 999">
-				  		<c:if test="${empty member.gender and empty companyLoggedIn}">
+					  <div class="dropdown-menu" style="z-index: 2000">
+				  		<c:if test="${member.profileCount == 0 and empty companyLoggedIn}">
 						    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resume.ithrer';">내 이력서등록</a>				  		
 				  		</c:if>
-				  		<c:if test="${not empty member.gender and empty companyLoggedIn}">
+				  		<c:if test="${member.profileCount > 0 and empty companyLoggedIn}">
 						    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 				  		</c:if>
 					  	
@@ -544,6 +544,7 @@
     	if($("#inputMessage").val().trim() == 0){
     		return;
     	}
+    	
     	
     	if(inputMessage.val().length != 0){
     	<%if(member != null){%>

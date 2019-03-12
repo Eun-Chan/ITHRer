@@ -59,4 +59,6 @@ public class Member implements Serializable{
 	private int age;
 	// 기업이 회원 즐겨찾기용 필드(즐찾했으면 1 아니면 0)
 	private int count;
+	
+	private int profileCount;
 }
