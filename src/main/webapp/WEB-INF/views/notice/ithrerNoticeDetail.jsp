@@ -507,7 +507,7 @@ $("#apply").on("click",function(){
 			alert("로그인 후 이용 해 주세용");
 			return;
 	 }
-	 if("${count}"==1){
+	 if("${count}">0){
 		 alert("해당회사에 지원한 이력이 존재합니다.");
 		 return;
 	 }

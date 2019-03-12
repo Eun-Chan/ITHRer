@@ -626,42 +626,42 @@ function del_line(event, check){
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108010" id="108000_2" class="loc-detail"/>
-                     			<label for="108010_2">강화군</label>
+                     			<label for="108000_2">강화군</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108020" id="108000_3" class="loc-detail"/>
-                     			<label for="108020_3">계양구</label>
+                     			<label for="108000_3">계양구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108030" id="108000_4" class="loc-detail"/>
-                     			<label for="108030_4">남동구</label>
+                     			<label for="108000_4">남동구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108040" id="108000_5" class="loc-detail"/>
-                     			<label for="108040_5">동구</label>
+                     			<label for="108000_5">동구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108050" id="108000_6" class="loc-detail"/>
-                     			<label for="108050_6">미추홀구</label>
+                     			<label for="108000_6">미추홀구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108060" id="108000_7" class="loc-detail"/>
-                     			<label for="108060_7">부평구</label>
+                     			<label for="108000_7">부평구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108070" id="108000_8" class="loc-detail"/>
-                     			<label for="108070_8">서구</label>
+                     			<label for="108000_8">서구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108080" id="108000_9" class="loc-detail"/>
-                     			<label for="108080_9">연수구</label>
+                     			<label for="108000_9">연수구</label>
                      		</li>
                      		<li>
                      			<input type="checkbox" name="108090" id="108000_10" class="loc-detail"/>
-                     			<label for="108090_10">옹진군</label>
+                     			<label for="108000_10">옹진군</label>
                      		<li>
                      			<input type="checkbox" name="108100" id="108000_11" class="loc-detail"/>
-                     			<label for="108100_11">중구</label>
+                     			<label for="108000_11">중구</label>
                      		</li>
                      	</ul>
                      	<!-- 부산 -->
