@@ -341,7 +341,7 @@ $(".applybutton").on("click",function(){
 			recruitmentNo:recruitmentNo,
 			compId:compId
 	}
-	if(confirm("정말 지원하시겠습니까?")){
+	if(confirm("현재 이력서로 지원 하시겠습니까?")){
 		$.ajax({
 			url:"${pageContext.request.contextPath}/index/resumeSubmit.ithrer",
 			data:data,
