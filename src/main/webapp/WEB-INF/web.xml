@@ -94,12 +94,6 @@
 		<filter-name>cors</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!-- error Page 설정 -->
-	<error-page>
-	    <exception-type>java.lang.Throwable</exception-type>
-	    <location>/WEB-INF/views/common/error.jsp</location>
-	</error-page>
-	
 	<!-- spring security 중복 로그인 -->
 	<listener>
     	<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
@@ -115,6 +109,12 @@
 		<filter-name>springSecurityFilterChain</filter-name> 
 		<url-pattern>/*</url-pattern> 
 	</filter-mapping>
+	
+	<!-- error Page 설정 -->
+	<error-page>
+	    <exception-type>java.lang.Throwable</exception-type>
+	    <location>/WEB-INF/views/common/error.jsp</location>
+	</error-page>
 	
 	<error-page>
 	    <error-code>404</error-code>
