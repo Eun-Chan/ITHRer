@@ -218,6 +218,6 @@
 	</select>
 	<select id="selectListMemberCompanyApplicationList" parameterType="string" resultType="recruitment">
 		select r.* from companyapplication c join recruitment r on c.recruitment_no = r.recruitment_no
-		where c.member_id = #{memberId} and r.end ='N'
+		where c.member_id = #{memberId}
 	</select>
 </mapper>

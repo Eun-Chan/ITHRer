@@ -243,7 +243,7 @@ public class ChargedController {
 		//logger.info("compEmail: "+compEmail);
 		
 		//톰캣 버서에 임시 파일 업로드 시켜 이 경로를 통해 이메일 첨부에 사용
-		String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload/temp");
+		String saveDirectory = request.getSession().getServletContext().getRealPath("/resources/upload");
 		logger.info(saveDirectory);
 		
 		String originalFileName = upFile.getOriginalFilename();

@@ -327,6 +327,7 @@ $(".rcrt-end-btn").on("click",function(){
 				
 				$("#recruitment-end-tab").append(html);
 			}
+			location.reload();
 		},
 		error: function(){
 			console.log("채용공고 마감 ajax error!");

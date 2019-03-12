@@ -945,7 +945,7 @@ public class IndexController {
 		   memberCompanyApplicationList.get(i).setClosingDate(memberCompanyApplicationList.get(i).getClosingDate().substring(0,10));
 	   }
 	   // bootstrap 처리위해 리스트로 처리
-	   	String url = req.getContextPath()+"/index/fmemberApplyCompany.ithrer?";
+	   	String url = req.getContextPath()+"/index/memberApplyCompany.ithrer?";
 	    String pageBar = "<ul class='pagination'>";
 	       
 	    // [이전] 이전

@@ -335,7 +335,7 @@
 			success : function(data){
 				if(data.result =="true"){
 					alert("메일에서 아이디를 확인하시기 바랍니다.");
-					location.href = "/ithrer";
+					location.href = "/ITHRer";
 				}
 				else{
 					alert("일치하는 회원정보가 없습니다. \n회원정보를 다시 확인하거나 회원가입을 진행해주십시오.");
