@@ -541,6 +541,10 @@
     }
     
     function chat_send() {
+    	if($("#inputMessage").val().trim() == 0){
+    		return;
+    	}
+    	
     	if(inputMessage.val().length != 0){
     	<%if(member != null){%>
         <%-- textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n"); --%>
