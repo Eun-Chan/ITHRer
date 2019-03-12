@@ -83,73 +83,73 @@ html
 								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-3" id="position-3" ><label for="position-3">계장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-4" ><label for="position-rank">대리</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-4" ><label for="position-4">대리</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-5" ><label for="position-rank">과장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-5" ><label for="position-5">과장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-6" ><label for="position-rank">차장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-6" ><label for="position-6">차장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-7" ><label for="position-rank">부장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-7" ><label for="position-7">부장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-8" ><label for="position-rank">감사</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-8" ><label for="position-8">감사</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-9" ><label for="position-rank">이사</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-9" ><label for="position-9">이사</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-10" ><label for="position-rank">상무</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-10" ><label for="position-10">상무</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-11" ><label for="position-rank">전무</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-11" ><label for="position-11">전무</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-12" ><label for="position-rank">부사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-12" ><label for="position-12">부사장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-13" ><label for="position-rank">사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-13" ><label for="position-13">사장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-14" ><label for="position-rank">회장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-14" ><label for="position-14">회장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-15" ><label for="position-rank">전문직</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-15" ><label for="position-15">전문직</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-16" ><label for="position-rank">IR 책임자</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-16" ><label for="position-16">IR 책임자</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-17" ><label for="position-rank">연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-17" ><label for="position-17">연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-18" ><label for="position-rank">주임연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-18" ><label for="position-18">주임연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-19" ><label for="position-rank">선임연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-19" ><label for="position-19">선임연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-20" ><label for="position-rank">책임연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-20" ><label for="position-20">책임연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-21" ><label for="position-rank">수석연구원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-21" ><label for="position-21">수석연구원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-22" ><label for="position-rank">연구소장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-22" ><label for="position-22">연구소장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-23" ><label for="position-rank">프리랜서</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-23" ><label for="position-23">프리랜서</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-24" ><label for="position-rank">CTO</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-24" ><label for="position-24">CTO</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-25" ><label for="position-rank">CEO</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-25" ><label for="position-25">CEO</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-26" ><label for="position-rank">COO</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank" id="position-26" ><label for="position-26">COO</label>
 							</li>
 						</ul>
 					</td>	
@@ -160,70 +160,70 @@ html
 					<td>
 						<ul class="inlineblock-select positionPopup">
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-0" ><label for="position-rank-bottom">팀원</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-0" ><label for="position-bottom-0">팀원</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-1" ><label for="position-rank-bottom">총무</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-1" ><label for="position-bottom-1">총무</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-2" ><label for="position-rank-bottom">부팀장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-2" ><label for="position-bottom-2">부팀장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-3" ><label for="position-rank-bottom">실장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-3" ><label for="position-bottom-3">실장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-4" ><label for="position-rank-bottom">팀장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-4" ><label for="position-bottom-4">팀장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-5" ><label for="position-rank-bottom">파트장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-5" ><label for="position-bottom-5">파트장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-6" ><label for="position-rank-bottom">지점장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-6" ><label for="position-bottom-6">지점장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-7" ><label for="position-rank-bottom">공장장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-7" ><label for="position-bottom-7">공장장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-8" ><label for="position-rank-bottom">지사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-8" ><label for="position-bottom-8">지사장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-9" ><label for="position-rank-bottom">그룹장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-9" ><label for="position-bottom-9">그룹장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-10" ><label for="position-rank-bottom">센터장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-10" ><label for="position-bottom-10">센터장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-11" ><label for="position-rank-bottom">본부장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-11" ><label for="position-bottom-11">본부장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-12" ><label for="position-rank-bottom">사업부장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-12" ><label for="position-bottom-12">사업부장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-13" ><label for="position-rank-bottom">국장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-13" ><label for="position-bottom-13">국장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-14" ><label for="position-rank-bottom">원장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-14" ><label for="position-bottom-14">원장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-15" ><label for="position-rank-bottom">매니저</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-15" ><label for="position-bottom-15">매니저</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-16" ><label for="position-rank-bottom">지배인</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-16" ><label for="position-bottom-16">지배인</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-17" ><label for="position-rank-bottom">총지배인</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-17" ><label for="position-bottom-17">총지배인</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-18" ><label for="position-rank-bottom">고문</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-18" ><label for="position-bottom-18">고문</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-19" ><label for="position-rank-bottom">소장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-19" ><label for="position-bottom-19">소장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-20" ><label for="position-rank-bottom">관장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-20" ><label for="position-bottom-20">관장</label>
 							</li>
 							<li>
-								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-21" ><label for="position-rank-bottom">이사장</label>
+								<input type='checkbox' class='ipt-chkBox position-chkBox-popup' name="position-rank-bottom" id="position-bottom-21" ><label for="position-bottom-21">이사장</label>
 							</li>
 						</ul>
 					</td>
@@ -1165,7 +1165,7 @@ html
 			<td colspan="5" class="input-content">
 				<!-- 자사시스템 이용 -->
 				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox howCon' id="how-contact-0" value="1" ><label for='how-contact-1'>ITHRER 채용 시스템</label> 
+					<input type='checkbox' class='ipt-chkBox howCon' id="how-contact-0" value="1" ><label for='how-contact-0'>ITHRER 채용 시스템</label> 
 				</div>
 				<!-- 일반 이용 -->
 				<div class="how-contact">
@@ -1186,7 +1186,7 @@ html
 			<td colspan="5" class="input-content">
 				<!-- 자사시스템 이용 -->
 				<div class="how-contact">
-					<input type='checkbox' class='ipt-chkBox appForm' id="frm-contact-0" value="1" ><label for='frm-contact-1'>ITHRER 이력서</label> 
+					<input type='checkbox' class='ipt-chkBox appForm' id="frm-contact-0" value="1" ><label for='frm-contact-0'>ITHRER 이력서</label> 
 				</div>
 				<!-- 일반 이용 -->
 				<div class="frm-contact">
@@ -2425,7 +2425,7 @@ $(document).on("click", ".jobList-selectLi", function(){
 	for(var i in dataJobList)
 	{
 		if(dataJobList[i].job1==$(this).text())
-		$("#job3").append("<li class='jobList-select2'><input type='checkbox' class='ipt-chkBox jobList2' name='jobDetail-"+i+"'><label for='jobDetail-"+i+"'>"+dataJobList[i].job2+"</label></li>");
+		$("#job3").append("<li class='jobList-select2'><input type='checkbox' class='ipt-chkBox jobList2' id='jobDetail-"+i+"'><label for='jobDetail-"+i+"'>"+dataJobList[i].job2+"</label></li>");
 	}
 });
 /* 2차직종 선택 시 하단 결과 div출력 */

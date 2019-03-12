@@ -1,0 +1,69 @@
+@charset "UTF-8";
+a#chat_cnt:hover
+{
+	cursor: pointer;
+}
+
+#chatting_div
+{
+   z-index: 500;
+   width: 30%;
+   position: fixed !important;
+   left: 70%;
+   height : 90%;
+   text-align : center;
+   display : none;
+   background-color : rgb(233,236,239);
+}
+
+#messageWindow{
+	resize : none;
+	background-color: rgb(181,198,218); 
+}
+
+#inputMessage
+{
+	 width: 80%;
+	 display: inline;
+ 	 margin-top : 0;
+ 	 height : 10%;
+}
+
+#chat-Container
+{ 
+	z-index: 99999;
+	width: 70%;
+	position: fixed !important;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+	min-width: 300px;
+	width: 300px
+} 
+
+.kakao_other{
+    background-color : rgb(245,255,95);
+	position : relative;
+	float : left;
+	clear : both;
+	left : 5px;
+	padding : 5px;
+	margin : 5px;
+	border-radius: 10px;
+}
+
+.kakao_me{
+	background-color : rgb(255,255,255);
+	position : relative;
+	float : right;
+	clear : both;
+	right : 5px;
+	padding : 5px;
+	margin : 5px;
+	border-radius: 10px;
+}
+
+#sendBtn{
+	background: gainsboro;
+	height : 8%;
+}

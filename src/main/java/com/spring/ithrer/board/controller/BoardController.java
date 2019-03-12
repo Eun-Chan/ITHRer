@@ -44,6 +44,7 @@ public class BoardController {
 		System.out.println("익명게시판 페이지");
 		int numPerPage = 10;
 		List<Map<String, String>> list = boardService.anonyBoardList(cPage, numPerPage);
+
 //		System.out.println(list);
 		
 		int totalContents = boardService.selectAnonyBoardTotalContents();
@@ -134,7 +135,7 @@ public class BoardController {
 		System.out.println("합소서 게시판 페이지");
 		int numPerPage = 10;
 		List<Map<String, String>> list = boardService.passBoardList(cPage, numPerPage);
-		
+
 		int totalContents = boardService.selectPassBoardTotalContents();
 		
 		mav.addObject("list", list);

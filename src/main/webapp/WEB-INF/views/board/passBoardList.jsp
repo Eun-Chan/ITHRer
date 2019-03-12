@@ -6,6 +6,18 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp">
 	<jsp:param value="합소서 게시판" name="pageTitle"/>
 </jsp:include>
+	<% 
+		int totalContents = (int)request.getAttribute("totalContents");
+		int numPerPage = (int)request.getAttribute("numPerPage");
+		
+		String cPageTemp = request.getParameter("cPage");
+		int cPage = 1;
+		try{
+			cPage = Integer.parseInt(cPageTemp);
+		} catch(NumberFormatException e){
+			
+		}
+	%>
 <style>
 /*글쓰기버튼*/
 input#btn-add{float:right; margin: 0 0 15px;}
@@ -47,7 +59,12 @@ $(function(){
 		<tbody>
 			<c:forEach items="${list}" var="b" varStatus="vs"> 
 			<tr no="${b.PASSBOARDNO}" class="table-info">
-				<td>${b.PASSBOARDNO}</td>
+			<c:if test="${cPage>1 }">
+				<td>${vs.count+(cPage-1)*10 }</td>
+			</c:if>
+			<c:if test="${cPage==1 }">
+				<td>${vs.count}</td>
+			</c:if>
 				<td id="title">${b.PASSBOARDTITLE}</td>
 				<td>${b.PASSBOARDWRITER}</td>
 				<td><fmt:formatDate value="${b.PASSBOARDDATE}" pattern="yy.MM.dd HH:mm:ss" type="date"/></td>
@@ -73,18 +90,6 @@ $(function(){
 		</div>
 	
 </section>
-	
-	<% 
-		int totalContents = (int)request.getAttribute("totalContents");
-		int numPerPage = (int)request.getAttribute("numPerPage");
-		
-		String cPageTemp = request.getParameter("cPage");
-		int cPage = 1;
-		try{
-			cPage = Integer.parseInt(cPageTemp); 
-		} catch(NumberFormatException e){
-			
-		}
-	%>
+
   	<%= com.spring.ithrer.common.util.Utils.getPageBar(totalContents, cPage, numPerPage, "passBoardList") %></section> 
 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>

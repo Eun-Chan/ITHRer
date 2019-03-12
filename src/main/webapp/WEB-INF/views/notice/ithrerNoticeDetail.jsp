@@ -205,7 +205,12 @@
 				<dt>산업(업종)</dt>
 				<dd>${com.category }</dd>
 				<dt>설립년도</dt>
-				<dd>${com.dateOfEstablishment }</dd>
+				<c:if test="${not empty com.dateOfEstablishment }">
+					<dd>${com.dateOfEstablishment }</dd>
+				</c:if>
+				<c:if test="${empty com.dateOfEstablishment }">
+					<dd>회사 홈페이지 참조</dd>
+				</c:if>
 				<dt>기업형태</dt>
 				<dd>${com.bussinessScale }</dd>
 			</dl>

@@ -3,8 +3,9 @@
 <mapper namespace="passboard">
 
 	<select resultMap="boardMap" id="selectPassBoardList">
-		select * from passBoard order by passBoardNo desc</select>
-	<resultMap id="boardMap" type="map"> </resultMap>
+		select * from passBoard order by passBoardNo desc
+	</select>
+	<resultMap id="boardMap" type="map"></resultMap>
 	
 	<select id="selectPassBoardTotalContents" resultType="_int">
 		select count(*) from passboard
