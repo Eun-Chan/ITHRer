@@ -22,7 +22,7 @@
 	}
 	.headerUl:first-of-type button{
 	    float: left;
-	    padding: 8px 12px 10px;
+	    padding: 8px 12px 10px;ㄻ
 	    min-width: 54px;
 	    color: #333;
 	    background: white;
@@ -46,7 +46,6 @@
 		padding: 10px 25px 15px 25px;
 		width: 100%;
     	margin: 0;
-    	min-height: 500px;
 	}
 	.faRe{
 		float: left;

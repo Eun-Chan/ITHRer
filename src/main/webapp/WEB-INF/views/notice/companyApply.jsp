@@ -152,10 +152,14 @@
 					<strong>지원이력서</strong>
 				</div>
 				<div class="col-sm-12 row2">
-				<c:if test="${not empty pf.userresumetitle }">
+				<c:if test="${not empty pf and empty pf.userresumetitle }">
+					<span style="font-size: 0.9em; letter-spacing: 1px;" >이력서 제목을 작성해 주세요.</span>
+					<input type="button" value="작성하기" class="btn btn-info" style="float: right" id="profileTitleInsert"/>
+				</c:if>
+				<c:if test="${not empty pf }">
 					<span style="font-size: 0.9em; letter-spacing: 1px;" class="pfTitle">${pf.userresumetitle }</span>
 				</c:if>
-				<c:if test="${empty pf.userresumetitle }">
+				<c:if test="${empty pf }">
 					<span style="font-size: 0.9em; letter-spacing: 1px;" >이력서가 존재하지 않습니다 작성해주세요.</span>
 					<input type="button" value="작성하기" class="btn btn-info" style="float: right" id="profileInsert"/>
 				</c:if>
@@ -257,9 +261,15 @@ $(function(){
 
 $("#profileInsert").on("click",function(){
 	/* location.href="${pageContext.request.contextPath}/resume/resume"; */
-	window.open('${pageContext.request.contextPath}/resume/resume','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
+	window.open('${pageContext.request.contextPath}/resume/resume.ithrer','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
 	self.close();
 });
+$("#profileTitleInsert").on("click",function(){
+	window.open('${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}','height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
+	self.close();
+	
+});
+
 $("#emailSelect").on("change",function(){
 	console.log("아아");
 	if($("#emailSelect option:selected").val()=="etc" || $("#emailSelect option:selected").val()==""){
@@ -338,6 +348,7 @@ $(".applybutton").on("click",function(){
 			type:"POST",
 			success:function(data){
 				if(data==1){
+					alert("지원 완료");
 					window.opener.location.reload();
 					window.close();
 					
