@@ -12,7 +12,7 @@
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
 	  method="post" action="${pageContext.request.contextPath}/resume/saveResume.ithrer" 
-	  encType="multipart/form-data" onsubmit = "return checkNull()">
+	  encType="multipart/form-data">
 	 
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
@@ -1018,67 +1018,6 @@ function deleteTwice(event) {
 	var clicked = event.currentTarget.parentElement.parentElement;//button을 가리키게 함
 	console.log(clicked);
 	clicked.remove();
-}
-/* 필수사항체크 */
-function checkNull() {
-	if(resumeFrm.userResumeTitle.value == ""){
-		alert("이력서제목을 입력해주세요")
-		resumeFrm.userResumeTitle.focus();
-		return false;
-	}
-	else if(resumeFrm.name.value == "") {
-		alert("이름을 입력해주세요")
-		resumeFrm.name.focus();
-		return false;
-	}
-	else if(resumeFrm.birth.value == "") {
-		alert("생년월일을 입력해주세요")
-		resumeFrm.birth.focus();
-		return false;
-	}
-	else if(resumeFrm.gender.value == "") {
-		alert("성별을 설정해주세요")
-		resumeFrm.gender.focus();
-		return false;
-	}
-	else if(resumeFrm.email.value == "") {
-		alert("이메일을 입력해주세요")
-		resumeFrm.email.focus();
-		return false;
-	}
-	else if(resumeFrm.phone.value == "") {
-		alert("전화번호를 입력해주세요")
-		resumeFrm.phone.focus();
-		return false;
-	}
-	else if(resumeFrm.address.value == "") {
-		alert("주소를 입력해주세요")
-		resumeFrm.address.focus();
-		return false;
-	}
-	else if(resumeFrm.jobType.value == "") {
-		alert("고용형태를 입력해주세요")
-		resumeFrm.jobType.focus();
-		return false;
-	}
-	else if(resumeFrm.wantPay.value == "") {
-		alert("희망연봉을 입력해주세요")
-		resumeFrm.wantPay.focus();
-		return false;
-	}
-	else if(resumeFrm.hopePlace.value == "") {
-		alert("희망근무지를 입력해주세요")
-		resumeFrm.hopePlace.focus();
-		return false;
-	}
-	else if(resumeFrm.hopeDuty.value == "") {
-		alert("직무,산업,키워드를 입력해주세요")
-		resumeFrm.hopeDuty.focus();
-		return false;
-	}
-	else {
-		return true;
-	}
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>

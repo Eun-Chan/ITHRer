@@ -12,7 +12,7 @@
 <div name="container" class="container">
 <form class="resumeResultFrm" name = "resumeFrm" id = "resumeFrm" 
 	  method="post" action="${pageContext.request.contextPath}/resume/updateResume.ithrer" 
-	  encType="multipart/form-data" onsubmit = "return checkNull()">
+	  encType="multipart/form-data">
 	 
 <br /><br />
 <div id="resumeTitle" class="input-group input-group-lg">
@@ -534,7 +534,7 @@
 					<li>담당업무 :</li>
 					<li><textarea name="description" class="form-control" 
 								  aria-label="With textarea" id="description0" 
-								  placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요."/>${career.descriptionArr[0]}</textarea></li>
+								  placeholder="담당하신 업무와 성과에 대해 간단명료하게 적어주세요."/></textarea></li>
 				</ul>
 			</div>
 		</div>
@@ -1104,6 +1104,8 @@ if(careerexist != '') {
 	<c:forEach items="${career.descriptionArr}" var="descri" varStatus="da">
 		dscriArr['${da.index}'] = '${descri}';
 	</c:forEach>
+	var dscriArr0 = dscriArr[0];
+	$("#description0").text(dscriArr0.replace(/<br>/g,"\n"));	
 	for(var careerFrmcount=1;careerFrmcount<carrercnt;careerFrmcount++){
 		var html ='<div id="formCareer"><div id="deleteBox"><button type="button" name="deleteCareer" class="deleteWrap"><span aria-hidden="true">X</span></button></div>';
 		html += '<div id="formCareer1" class="input-group-prepend input-group-text"><ul><li><input type="text" name="corpname" id="corpname'+careerFrmcount+'" class="form-control" placeholder="회사명" value="'+cnameArr[careerFrmcount]+'"/></li>';
@@ -1118,8 +1120,6 @@ if(careerexist != '') {
 		$("#careerWrap").append(html);
 	};
 };
-var dscriArr0 = dscriArr[0];
-$("#description0").text(dscriArr0.replace(/<br>/g,"\n"));	
 var careerFrmcount = carrercnt;
 $(document).on("change","input[name=buttonworking]",function() {
 	$(this).parent().parent().children().eq(3).toggle();
@@ -1725,67 +1725,6 @@ function deleteone(event) {
 function deleteTwice(event) {
 	var clicked = event.currentTarget.parentElement.parentElement;//button을 가리키게 함
 	clicked.remove();
-}
-/* 필수사항체크 */
-function checkNull() {
-	if(resumeFrm.userResumeTitle.value == ""){
-		alert("이력서제목을 입력해주세요")
-		resumeFrm.userResumeTitle.focus();
-		return false;
-	}
-	else if(resumeFrm.name.value == "") {
-		alert("이름을 입력해주세요")
-		resumeFrm.name.focus();
-		return false;
-	}
-	else if(resumeFrm.birth.value == "") {
-		alert("생년월일을 입력해주세요")
-		resumeFrm.birth.focus();
-		return false;
-	}
-	else if(resumeFrm.gender.value == "") {
-		alert("성별을 설정해주세요")
-		resumeFrm.gender.focus();
-		return false;
-	}
-	else if(resumeFrm.email.value == "") {
-		alert("이메일을 입력해주세요")
-		resumeFrm.email.focus();
-		return false;
-	}
-	else if(resumeFrm.phone.value == "") {
-		alert("전화번호를 입력해주세요")
-		resumeFrm.phone.focus();
-		return false;
-	}
-	else if(resumeFrm.address.value == "") {
-		alert("주소를 입력해주세요")
-		resumeFrm.address.focus();
-		return false;
-	}
-	else if(resumeFrm.jobType.value == "") {
-		alert("고용형태를 입력해주세요")
-		resumeFrm.jobType.focus();
-		return false;
-	}
-	else if(resumeFrm.wantPay.value == "") {
-		alert("희망연봉을 입력해주세요")
-		resumeFrm.wantPay.focus();
-		return false;
-	}
-	else if(resumeFrm.hopePlace.value == "") {
-		alert("희망근무지를 입력해주세요")
-		resumeFrm.hopePlace.focus();
-		return false;
-	}
-	else if(resumeFrm.hopeDuty.value == "") {
-		alert("직무,산업,키워드를 입력해주세요")
-		resumeFrm.hopeDuty.focus();
-		return false;
-	}
-	else {
-		return true;
-	}
 }
 </script>
 <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
