@@ -72,14 +72,10 @@
     background: #f8f9fa!important;
     cursor: pointer;
 }
-.dropdown-menu a{
-	cursor: pointer;
-}
-
 </style>
 <head>
 <meta charset="UTF-8">
-<title>ITHRer</title>
+<title>Hello Spring</title>
 
 <!-- 부트스트랩관련 라이브러리 -->
 <script
@@ -113,6 +109,7 @@
 				<!-- 좌우정렬을 위해 mr-auto 추가 -->
 				<c:if test="${empty companyLoggedIn  and member.memberId ne 'ithreradmin'  }">
 					<ul class="navbar-nav mr-auto">	     
+				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/resume/resume.ithrer">이력서</a></li>		
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/anonyBoardList">익명게시판</a></li>     
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/board/passBoardList">합소서 게시판</a></li>    
 				      <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/calendar.ithrer">ITHRer달력</a></li>
@@ -148,23 +145,16 @@
 					  <button type="button" data-toggle="dropdown" class="headerMemberTitle">
 					   ${member.memberName }님&nbsp;<img src="${pageContext.request.contextPath }/resources/images/drop.svg" alt="" width="20px"/>
 					  </button>
-
-					  <div class="dropdown-menu" style="z-index: 999">
-				  		<c:if test="${empty member.gender and empty companyLoggedIn}">
-						    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resume.ithrer';">내 이력서등록</a>				  		
-				  		</c:if>
-				  		<c:if test="${not empty member.gender and empty companyLoggedIn}">
-						    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
-				  		</c:if>
-					  	
+					  <div class="dropdown-menu">
+					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/resume/resumeView.ithrer?memberId=${member.memberId}';">내 이력서</a>
 					    <a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/favoriteRecruitment.ithrer?memberId=${member.memberId}';">스크랩한 공고</a>
-					  	<a class="dropdown-item" onclick="location.href='${pageContext.request.contextPath}/index/memberApplyCompany.ithrer?memberId=${member.memberId }'">내가 지원한 공고</a>
 					  	<c:if test="${not empty member.password }">
 					    	<a class="dropdown-item" href="${pageContext.request.contextPath}/user/modifyMemberInfo.ithrer">회원정보 수정</a>
 					  	</c:if>					  
 					  </div>
 					</div>
 				 		<li class="nav-item"><span><a href="${pageContext.request.contextPath}/member/memberView.do?memberId=${member.memberId}" class="nav-link memberNames"></a></span></li>
+				 		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/common/signUpGoing.ithrer">이력서 관리</a></li>
 				 		<li class="nav-item"><button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/memberLogout.ithrer'">로그아웃</button></li>
 			 		</ul>
 			 	</c:if>
@@ -288,10 +278,10 @@
 <!-- 채팅 -->
 <div id="chatting_div">
    <div style="height: 90%">
-   	<div id="messageWindow" readonly="true" style="height: 100%; width: 100%"></div>
+   	<textarea id="messageWindow" readonly="true" style="height: 100%; width: 100%"></textarea>
    </div>
-   <input id="inputMessage" class="form-control" type="text" onkeyup="chat_enterkey()"/>
-   <input type="submit" id="sendBtn" class="btn btn-default" value="보내기" onclick="chat_send()" disabled="disabled"/>
+   <input id="inputMessage" class="form-control" type="text" onkeyup="chat_enterkey()" placeholder="채팅을 입력해줭"/>
+   <input type="submit" id="sendBtn" class="btn btn-default" value="보내기" onclick="chat_send()" />
 </div>
 
 <script>
@@ -407,17 +397,6 @@
 	}
 	
 	function chat_enterkey(){
-		var cnt = $("#inputMessage").val().trim();
-		
-		if(cnt == 0){
-			$("#sendBtn").attr('disabled',true);
-			$("#sendBtn").css('background','gainsboro');
-		}
-		else{
-			$("#sendBtn").attr('disabled',false);
-			$("#sendBtn").css('background','yellow');
-		}
-		
 		if(window.event.keyCode == 13){
 			chat_send();
 		}
@@ -517,18 +496,9 @@
     function onMessage(event) {
 		if(event.data.indexOf('접속자 : ') == 0){
 			$("#chat_cnt").text("채팅 ("+event.data+")");
-			console.log("요긴가?");
 			return;
 		}
-		console.log("여기는 들어오니?");
-        //textarea.val(textarea.val() + event.data + "\n");
-        /* 동적으로 div를 만들어서 div id = messageWindow 에 넣기 */
-        var div = document.createElement('div');
-        var text = document.createTextNode(event.data);
-       	div.appendChild(text);
-		div.className= 'kakao_other';
-       	$("#messageWindow").append(div);
-        
+        textarea.val(textarea.val() + event.data + "\n");
         const top = textarea.prop('scrollHeight');
         textarea.scrollTop(top);
     }
@@ -543,25 +513,15 @@
     function chat_send() {
     	if(inputMessage.val().length != 0){
     	<%if(member != null){%>
-        <%-- textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n"); --%>
-        /* 동적으로 div만들어서 추가 */
-        var div = document.createElement('div');
-        var memberName = "${member.memberName}";
-        var inputMessage2 = inputMessage.val();
-        var text = document.createTextNode(memberName +" : "+inputMessage2);
-        div.appendChild(text);
-        div.className= 'kakao_me';
-        $("#messageWindow").append(div);
-		$("#sendBtn").attr('disabled',true);
-		$("#sendBtn").css('background','gainsboro');
-        webSocket.send('<%=member.getMemberName()%> : ' + inputMessage.val());
+        textarea.val(textarea.val() + '<%=member.getMemberName()%>님 : ' + inputMessage.val() + "\n");
+        webSocket.send('<%=member.getMemberName()%>님 : ' + inputMessage.val());
         inputMessage.val("");
         /* 채팅창 스크롤 자동 내리기 */
         const top = textarea.prop('scrollHeight');
         textarea.scrollTop(top);
     	<%}else if(company != null){%>
         textarea.val(textarea.val() + '<%=company.getCompName()%>님 : ' + inputMessage.val() + "\n");
-        webSocket.send('<%=company.getCompName()%> : ' + inputMessage.val());
+        webSocket.send('<%=company.getCompName()%>님 : ' + inputMessage.val());
         inputMessage.val("");
         /* 채팅창 스크롤 자동 내리기 */
         const top = textarea.prop('scrollHeight');
@@ -569,6 +529,7 @@
     	<%}%>
     	}
     }
+	
 </script>
 	
 	<section id="content">

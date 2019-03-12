@@ -898,38 +898,38 @@ public class CompanyController {
 	 */
 	@RequestMapping("/updateSend")
 	public ModelAndView updateSend(ModelAndView mav,
-			 @RequestParam(defaultValue="", value="recruitmentTitle") String recruitmentTitle,
-			 @RequestParam(defaultValue="", value="typeOfOccupation") String typeOfOccupation,
-			 @RequestParam(defaultValue="", value="career") String career,
-			 @RequestParam(defaultValue="", value="employment_type") String employmentType,
+			 @RequestParam(defaultValue=" ", value="recruitmentTitle") String recruitmentTitle,
+			 @RequestParam(defaultValue=" ", value="typeOfOccupation") String typeOfOccupation,
+			 @RequestParam(defaultValue=" ", value="career") String career,
+			 @RequestParam(defaultValue=" ", value="employment_type") String employmentType,
 			 @RequestParam(defaultValue="0", value="recruitmentPersonnel") int recruitmentPersonnel,
-			 @RequestParam(defaultValue="", value="asignedTask") String asignedTask,
-			 @RequestParam(defaultValue="", value="resultDepartment") String department,
-			 @RequestParam(defaultValue="", value="jobGrade") String position,
-			 @RequestParam(defaultValue="", value="education") String education,
-			 @RequestParam(defaultValue="", value="major") String major,
-			 @RequestParam(defaultValue="", value="foreLang") String foreLang,
+			 @RequestParam(defaultValue=" ", value="asignedTask") String asignedTask,
+			 @RequestParam(defaultValue=" ", value="resultDepartment") String department,
+			 @RequestParam(defaultValue=" ", value="jobGrade") String position,
+			 @RequestParam(defaultValue=" ", value="education") String education,
+			 @RequestParam(defaultValue=" ", value="major") String major,
+			 @RequestParam(defaultValue=" ", value="foreLang") String foreLang,
 			 @RequestParam(defaultValue=" ", value="certificate") String certificate,
-			 @RequestParam(defaultValue="", value="computerLiteracy") String computerLiteracy,
-			 @RequestParam(defaultValue="", value="employmentPreference") String employmentPreference,
-			 @RequestParam(defaultValue="", value="applicantAge") String applicantAge,
-			 @RequestParam(defaultValue="", value="genderCut") String genderCut,
-			 @RequestParam(defaultValue="", value="etcQualificationRequirement") String etcQualificationRequirement,
-			 @RequestParam(defaultValue="", value="nearbyStation") String nearbyStation,
-			 @RequestParam(defaultValue="", value="payCondition") String payCondition,
-			 @RequestParam(defaultValue="", value="salaryType") String salaryType,
-			 @RequestParam(defaultValue="", value="welfare") String welfare,
+			 @RequestParam(defaultValue=" ", value="computerLiteracy") String computerLiteracy,
+			 @RequestParam(defaultValue=" ", value="employmentPreference") String employmentPreference,
+			 @RequestParam(defaultValue=" ", value="applicantAge") String applicantAge,
+			 @RequestParam(defaultValue=" ", value="genderCut") String genderCut,
+			 @RequestParam(defaultValue=" ", value="etcQualificationRequirement") String etcQualificationRequirement,
+			 @RequestParam(defaultValue=" ", value="nearbyStation") String nearbyStation,
+			 @RequestParam(defaultValue=" ", value="payCondition") String payCondition,
+			 @RequestParam(defaultValue=" ", value="salaryType") String salaryType,
+			 @RequestParam(defaultValue=" ", value="welfare") String welfare,
 			 @RequestParam(defaultValue="SYSDATE", value="openingDate") String openingDate,
 			 @RequestParam(defaultValue="SYSDATE", value="closingDate") String closingDate,
-			 @RequestParam(defaultValue="", value="applicationMethod") String applicationMethod,
-			 @RequestParam(defaultValue="", value="applicationForm") String applicationForm,
-			 @RequestParam(defaultValue="", value="recruitmentStage") String recruitmentStage,
-			 @RequestParam(defaultValue="", value="summernoteHtml") String summernoteHtml,
-			 @RequestParam(defaultValue="", value="workDay") String workDay,
-			 @RequestParam(defaultValue="", value="compId") String compId,
-			 @RequestParam(defaultValue="", value="locationCode") String locationCode,
-			 @RequestParam(defaultValue="", value="location") String location,
-			 @RequestParam(defaultValue="", value="recruitmentNo") int recruitmentNo) {
+			 @RequestParam(defaultValue=" ", value="applicationMethod") String applicationMethod,
+			 @RequestParam(defaultValue=" ", value="applicationForm") String applicationForm,
+			 @RequestParam(defaultValue=" ", value="recruitmentStage") String recruitmentStage,
+			 @RequestParam(defaultValue=" ", value="summernoteHtml") String summernoteHtml,
+			 @RequestParam(defaultValue=" ", value="workDay") String workDay,
+			 @RequestParam(defaultValue=" ", value="compId") String compId,
+			 @RequestParam(defaultValue=" ", value="locationCode") String locationCode,
+			 @RequestParam(defaultValue=" ", value="location") String location,
+			 @RequestParam(defaultValue=" ", value="recruitmentNo") int recruitmentNo) {
 		
 		Recruitment rect = new Recruitment();
 		rect.setRecruitmentTitle(recruitmentTitle);
@@ -980,7 +980,6 @@ public class CompanyController {
 		rect.setRecruitmentNo(recruitmentNo);
 		
 		int result = companyService.updateRecruitment(rect);
-		System.out.println("ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ"+rect.getSummernoteHtml());
 		mav.addObject("compId", compId);
 		mav.setViewName("redirect:index.ithrer");
 		
