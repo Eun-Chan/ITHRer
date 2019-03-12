@@ -140,7 +140,7 @@
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/info.ithrer?compId=${companyLoggedIn.compId }">기업정보관리</a></li>
 		        		<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/company/recruitmentAdd.ithrer?compId=${companyLoggedIn.compId }">채용공고 등록</a></li>
 		        	</ul>
-		        	<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/company/logout.ithrer'">로그아웃</button>
+		        	<button class="btn btn-outline-success" type="button" onclick="location.href='${pageContext.request.contextPath}/member/logout.ithrer'">로그아웃</button>
 			 	</c:if>
 			 	<c:if test="${member != null and member.memberId ne 'ithreradmin'}">
 			 		<ul class="navbar-nav">

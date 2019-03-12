@@ -285,15 +285,17 @@ public class CompanyController {
 		return mav;
 	}
 	
-	@RequestMapping("/logout.ithrer")
-	public ModelAndView logout(ModelAndView mav, SessionStatus sessionStatus) {
-		
-		sessionStatus.setComplete();
-		
-		mav.setViewName("redirect:/");
-		
-		return mav;
-	}
+//	@RequestMapping("/logout.ithrer")
+//	public ModelAndView logout(ModelAndView mav, SessionStatus sessionStatus, HttpServletRequest req) {
+//		
+//		sessionStatus.setComplete();
+//		
+//		req.getSession().removeAttribute("companyLoggedIn");
+//	
+//		mav.setViewName("redirect:/");
+//		
+//		return mav;
+//	}
 	
 	@RequestMapping("/viewApplicant.ithrer")
 	public ModelAndView viewApplicant(ModelAndView mav, @RequestParam("compId") String compId, @RequestParam("recruitmentNo") int recruitmentNo, @RequestParam("memberId") String memberId

@@ -8,28 +8,27 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionBindingEvent;
 import javax.servlet.http.HttpSessionBindingListener;
 
-public class SessionBindingListener implements HttpSessionBindingListener{
+public class SessionBindingListener2 implements HttpSessionBindingListener{
 	
 		// 싱글톤 객체를 담을 변수 (개인회원용)
-		private static SessionBindingListener SessionBindingListener = null;
+		private static SessionBindingListener2 SessionBindingListener2 = null;
 		
 		// 로그인한 접속자를 저장한 HashTable (데이터를 해시하여 테이블 내의 주소를 계산하고 데이터를 담는 것 , 해시함수 알고리즘은 나눗셈 법. 자릿수 접기 등등)
-		private static Hashtable loginUsers = new Hashtable();
+		private static Hashtable loginUsers2 = new Hashtable();
 		
 		// 싱글톤 처리
-		public static synchronized SessionBindingListener getInstance() {
-			if(SessionBindingListener == null) {
-				SessionBindingListener = new SessionBindingListener();
+		public static synchronized SessionBindingListener2 getInstance() {
+			if(SessionBindingListener2 == null) {
+				SessionBindingListener2 = new SessionBindingListener2();
 			}
-			return SessionBindingListener;
+			return SessionBindingListener2;
 		}
-		
 		
 		// 세션이 연결시 호출 (해시테이블에 접속자 저장)
 		@Override
 		public void valueBound(HttpSessionBindingEvent event) {
 			// TODO Auto-generated method stub
-			loginUsers.put(event.getSession(), event.getName());
+			loginUsers2.put(event.getSession(), event.getName());
 			System.out.println(event.getName() + " 로그인 완료");
 			System.out.println("현재 접속자 수 : " +  getUserCount());
 		}
@@ -38,18 +37,18 @@ public class SessionBindingListener implements HttpSessionBindingListener{
 		@Override
 		public void valueUnbound(HttpSessionBindingEvent event) {
 			// TODO Auto-generated method stub
-			loginUsers.remove(event.getSession());
+			loginUsers2.remove(event.getSession());
 			System.out.println(event.getName() + " 로그아웃 완료");
 			System.out.println("현재 접속자 수 : " +  getUserCount());
 		}
 		
 		// 입력받은 아이디를 해시테이블에서 삭제
 		public void removeSession(String userId) {
-			Enumeration e = loginUsers.keys();
+			Enumeration e = loginUsers2.keys();
 			HttpSession session = null;
 			while(e.hasMoreElements()){
 	            session = (HttpSession)e.nextElement();
-	            if(loginUsers.get(session).equals(userId)){
+	            if(loginUsers2.get(session).equals(userId)){
 	                //세션이 invalidate될때 HttpSessionBindingListener를 
 	                //구현하는 클레스의 valueUnbound()함수가 호출된다.
 	                session.invalidate();
@@ -61,8 +60,8 @@ public class SessionBindingListener implements HttpSessionBindingListener{
 	    * 해당 아이디의 동시 사용을 막기위해서 
 	    * 이미 사용중인 아이디인지를 확인한다.
 	    */
-	   public boolean isUsing(String userId){
-	       return loginUsers.containsValue(userId);
+	   public boolean isUsing2(String userId){
+	       return loginUsers2.containsValue(userId);
 	   }
 	    
 	   
@@ -82,7 +81,7 @@ public class SessionBindingListener implements HttpSessionBindingListener{
 	     * @return String : 접속자 아이디
 	    */
 	   public String getUserID(HttpSession session){
-	       return (String)loginUsers.get(session);
+	       return (String)loginUsers2.get(session);
 	   }
 	    
 	    
@@ -91,7 +90,7 @@ public class SessionBindingListener implements HttpSessionBindingListener{
 	    * @return int  현재 접속자 수
 	    */
 	   public int getUserCount(){
-	       return loginUsers.size();
+	       return loginUsers2.size();
 	   }
 	    
 	    
@@ -99,14 +98,14 @@ public class SessionBindingListener implements HttpSessionBindingListener{
 	    * 현재 접속중인 모든 사용자 아이디를 출력
 	    * @return void
 	    */
-	   public void printloginUsers(){
-	       Enumeration e = loginUsers.keys();
+	   public void printloginUsers2(){
+	       Enumeration e = loginUsers2.keys();
 	       HttpSession session = null;
 	       System.out.println("===========================================");
 	       int i = 0;
 	       while(e.hasMoreElements()){
 	           session = (HttpSession)e.nextElement();
-	           System.out.println((++i) + ". 접속자 : " +  loginUsers.get(session));
+	           System.out.println((++i) + ". 접속자 : " +  loginUsers2.get(session));
 	       }
 	       System.out.println("===========================================");
 	    }
@@ -116,7 +115,7 @@ public class SessionBindingListener implements HttpSessionBindingListener{
 	    * @return list
 	    */
 	   public Collection getUsers(){
-	       Collection collection = loginUsers.values();
+	       Collection collection = loginUsers2.values();
 	       return collection;
 	   }
 	

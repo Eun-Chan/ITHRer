@@ -30,11 +30,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.ithrer.company.model.vo.Company;
 import com.spring.ithrer.listener.SessionBindingListener;
+import com.spring.ithrer.listener.SessionBindingListener2;
 import com.spring.ithrer.user.model.service.UserService;
 import com.spring.ithrer.user.model.vo.Member;
 
@@ -285,11 +287,11 @@ public class UserController {
 			}
 			
 			// 이미 접속한 아이디 인지 확인
-			if(SessionBindingListener.getInstance2().isUsing(companyId)) {
-				logger.debug(companyId +"님이 이미 접속중 입니다.");
-				test.put("result", "already");
-				return test;
-			}
+//			if(SessionBindingListener2.getInstance().isUsing2(companyId)) {
+//				logger.debug(companyId +"님이 이미 접속중 입니다.");
+//				test.put("result", "already");
+//				return test;
+//			}
 			
 			// 로그인 한 유저 세션에 넣기
 			HttpSession session = req.getSession();
@@ -297,7 +299,7 @@ public class UserController {
 			session.setMaxInactiveInterval(60*10);
 			session.setAttribute("companyLoggedIn", company);
 			
-			SessionBindingListener.getInstance2().setSession(session, companyId);
+			SessionBindingListener2.getInstance().setSession(session, companyId);
 			
 			test.put("result" , "true");
 		}
@@ -700,12 +702,25 @@ public class UserController {
 		mailSender.send(message);
 	}
 	/*
-	 * 로그아웃 
+	 * 개인 로그아웃
 	 */
 	@RequestMapping("/member/memberLogout.ithrer")
 	public ModelAndView logout(ModelAndView mav, HttpServletRequest req) {
 		
 		req.getSession().removeAttribute("member");
+		
+		mav.setViewName("redirect:/");
+		
+		return mav;
+	}
+	
+	/**
+	 * 기업 로그아웃
+	 */
+	@RequestMapping("/member/logout.ithrer")
+	public ModelAndView logout(ModelAndView mav, SessionStatus sessionStatus, HttpServletRequest req) {
+		
+		req.getSession().removeAttribute("companyLoggedIn");
 		
 		mav.setViewName("redirect:/");
 		
@@ -960,7 +975,7 @@ public class UserController {
 		
 		
 		mav.setViewName("redirect:/resume/resume");
-		
+	
 		return mav;
 		}
 	
